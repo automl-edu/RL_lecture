@@ -1,7 +1,7 @@
 
 \input{../latex_main/main.tex}
 
-\title[Reinforcement Learning: Big Picture]{RL: Introduction}
+\title[ML-RL: Big Picture]{RL: Introduction}
 \subtitle{The Big Picture}
 
 
@@ -23,37 +23,69 @@
 \end{frame}
 %-----------------------------------------------------------------------
 %----------------------------------------------------------------------
-\begin{frame}[c]{Classical Fields in ML}
+\begin{frame}[c]{Supervised Learning}
+	
+\centering
+\includegraphics[width=0.4\textwidth]{images/classification.png}
 
-	TODO	
+\bigskip
+
+\begin{itemize}
+	\item Data: Features + Labels
+	\item Task: Discriminate classes based on features
+\end{itemize}	
+
 	
 \end{frame}
 %-----------------------------------------------------------------------
 %----------------------------------------------------------------------
 \begin{frame}[c]{Unsupervised Learning}
 	
-	TODO	--- only observations
+	\centering
+	\includegraphics[width=0.4\textwidth]{images/clustering.png}
 	
-\end{frame}
-%-----------------------------------------------------------------------
-%----------------------------------------------------------------------
-\begin{frame}[c]{Supervised Learning}
+	\bigskip
 	
-	TODO	--- observations + labels
+	\begin{itemize}
+		\item Data: Features 
+		\item Task: Find structure in feature observations
+	\end{itemize}	
+	
 	
 \end{frame}
 %-----------------------------------------------------------------------
 %----------------------------------------------------------------------
 \begin{frame}[c]{Reinforcement Learning}
 	
-	TODO	--- self-acquired observations + rewards
+		\centering
+	\includegraphics[width=0.6\textwidth]{images/rl_comic.png}\footnote{Image source: Morning Brew and Marius Haakestad on Unsplash}
+	
+	\bigskip
+	
+	\begin{itemize}
+		\item Data: Self-acquired observations + rewards
+		\item Task: Learn how to behave s.t. reward is maximized
+		\item[$\leadsto$] Not a single decision, but a sequence of good decisions
+	\end{itemize}	
+	
 	
 \end{frame}
 %-----------------------------------------------------------------------
 %----------------------------------------------------------------------
 \begin{frame}[c]{The Future of AI?}
 	
-	Combination of all three aspects?
+	\begin{itemize}
+		\item Sometimes we have a lot of labeled data
+		\item Sometimes we have little labeled data
+		\item Sometimes we can interact with our environment
+		\item Sometimes we have well-defined reward signals
+		\bigskip
+		\pause
+		\item[$\leadsto$] The future of AI will need a combination of many aspects
+		\item[$\leadsto$] The recent breakthroughs in RL were triggered by breakthroughs in supervised DL  
+	\end{itemize}
+
+
 
 \end{frame}
 %-----------------------------------------------------------------------
