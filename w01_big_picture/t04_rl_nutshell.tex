@@ -1,0 +1,64 @@
+% !TeX spellcheck = en_US
+
+\input{../latex_main/main.tex}
+
+\title[ML-RL: Big Picture]{RL: Introduction}
+\subtitle{In a Nutshell}
+
+
+
+\begin{document}
+	
+\maketitle
+
+%----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Components of RL Problems}
+	
+	\centering
+	\includegraphics[width=0.6\textwidth]{images/rl_comic.png}\footnote{Image source: Morning Brew and Marius Haakestad on Unsplash}
+	
+	\bigskip
+	
+	\begin{itemize}
+		\item Data: Self-acquired observations + rewards
+		\item Task: Learn how to behave s.t. reward is maximized
+	\end{itemize}	
+	
+\end{frame}
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{State?}
+	
+	\begin{itemize}
+		\item We constantly observe our environment (and our own state)
+		\item mostly via sensors
+		\begin{itemize}
+			\item images
+			\item sound
+			\item feeling by touch
+			\item feeling of acceleration
+			\item feeling of balance
+			\item ...
+		\end{itemize}
+		\pause
+		\smallskip
+		\item Sometimes we are also presented by explicit information from our env
+		\begin{itemize}
+			\item Documents
+			\item Scores
+			\item ...
+		\end{itemize}
+		\pause
+		\smallskip
+		\item[$\leadsto$] We never observe the full state, but only an abstraction of it
+		\pause
+		\item[$\leadsto$] \alert{Markov assumption:} We can make decisions based on the state information we can observe
+	\end{itemize}
+	
+	
+\end{frame}
+%-----------------------------------------------------------------------
+
+%-----------------------------------------------------------------------
+\end{document}

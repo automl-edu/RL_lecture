@@ -1,0 +1,112 @@
+
+\input{../latex_main/main.tex}
+
+\title[ML-RL: Big Picture]{RL: Introduction}
+\subtitle{What drives us?}
+
+
+
+\begin{document}
+	
+	\maketitle
+
+%----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{AutoML: Hyperparameters of an SVM}
+	
+	\centering
+	\includegraphics[width=0.7\textwidth]{images/sklearn_svm_doc.png}
+	
+\end{frame}
+%-----------------------------------------------------------------------	
+%----------------------------------------------------------------------
+\begin{frame}[c]{Hyperparameter Optimization}
+	
+	\begin{block}{Definition}
+		Let 
+		\begin{itemize}
+			\item $\conf$ be the hyperparameters of an ML algorithm $\algo$ with domain $\pcs$,
+			\pause
+			\item $\dataset_{opt}$ be a dataset which is split into $\datasettrain$ and $\datasetval$ 
+			\pause
+			\item $\cost(\algo_{\conf}, \dataset_{train}, \dataset_{valid})$ denote the cost of $\algo_{\conf}$ trained on $\datasettrain$ and evaluated on $\datasetval$.
+		\end{itemize}
+		\pause
+		The \emph{hyper-parameter optimization (HPO)} problem is to find a hyper-parameter configuration that minimizes this cost:
+		\begin{equation}
+		\optconf \in \argmin_{\conf \in \pcs} \cost(\algo_{\conf}, \dataset_{train}, \dataset_{valid}) \nonumber  
+		\end{equation}
+	\end{block}
+	
+\end{frame}
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Reason I: AutoML for RL}
+	
+	\begin{itemize}
+		\item RL algorithms also have many hyperparameters 
+		\item Deep RL depends on the network architecture used 
+		\item[$\leadsto$] Performance of RL depends on both\newline \lit{\href{https://arxiv.org/pdf/1709.06560.pdf}{Henderson et al. 2019}, \href{https://arxiv.org/pdf/2005.12729.pdf}{Engstrom et al. 2020}}
+		\pause
+		\bigskip
+		\item Hard to apply AutoML to RL because
+		\begin{itemize}
+			\item RL agents need a long time to really start learning 
+			\item Learning of RL agents is very noisy $\leadsto$ very noisy signal for AutoML
+		\end{itemize}
+	\end{itemize}
+	
+\end{frame}
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Reason II: Dynamic Algorithm Configuration}
+	
+	\begin{itemize}
+		\item Often we assume that an algorithm runs with some single settings
+		\pause
+		\item But some settings, e.g., learning rate, have to be dynamically adapted 
+	\end{itemize}
+	
+	\pause
+	
+	\begin{block}{Definition}
+		Let 
+		\begin{itemize}
+			\item $\conf$ be a hyperparameter configuration of an algorithm $\algo$,
+			\pause
+			\item $p(\dataset)$ be a probability distribution over datasets $\dataset \in \datasets$,
+			\pause
+			\item $\stateRL_t$ be a state description of $\algo$ solving $\dataset$ at time point $t$,
+			\pause
+			\item $\cost: \policies \times \datasets \to \perf$ be a cost metric assessing the \alert{cost of a conf. policy $\pi \in \Pi$} on $\dataset \in \datasets$
+		\end{itemize}
+		
+		\pause
+		the \emph{dynamic algorithm configuration problem (DAC)} is to obtain a configuration policy $\policy^* : \stateRL_t \times \dataset \mapsto \conf$ by optimizing its cost across a distribution of datasets:
+		\begin{equation}
+		\pi^* \in \argmin_{\policy \in \policies} \int_{\datasets} p(\dataset) c(\policy, \dataset) \diff \dataset \nonumber
+		\end{equation}
+	\end{block}
+	
+\end{frame}
+%-----------------------------------------------------------------------	
+%----------------------------------------------------------------------
+\begin{frame}[c]{RL for Dynamic Algorithm Configuration}
+	
+	\begin{itemize}
+		\item[$\leadsto$] We learn $\pi$ via RL! 
+		\item We showed that:
+		\begin{itemize}
+			\item Dynamic Algorithm Configuration can be formulated as a RL problem~\lit{\href{https://www.tnt.uni-hannover.de/papers/data/1432/20-ECAI-DAC.pdf}{Biedenkapp et al. 2020}}
+			\item Heuristics of planning solvers can be automatically and dynamically selected~\lit{\href{https://arxiv.org/abs/2006.08246}{Speck et al. 2020}}
+			\item We can use a teacher (i.e., existing heuristics) to efficiently learn step size settings of CMA-ES~\lit{\href{https://ml.informatik.uni-freiburg.de/papers/20-PPSN-LTO-CMA.pdf}{Shala et al. 2020}}
+			\item We can speed up learning by repeating actions~\lit{\href{https://www.tnt.uni-hannover.de/papers/data/1455/20-BIG-TempoRL.pdf}{Biedenkapp et al. 2020}}
+			\item We can speed up learning by learning an efficient schedule of task instances~\lit{\href{https://www.tnt.uni-hannover.de/papers/data/1454/space.pdf}{Eimer et al. 2020}}
+		\end{itemize}
+	\end{itemize}
+
+	
+\end{frame}
+%-----------------------------------------------------------------------	
+%-----------------------------------------------------------------------
+\end{document}
