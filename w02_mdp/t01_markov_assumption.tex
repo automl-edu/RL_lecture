@@ -1,0 +1,78 @@
+
+\input{../latex_main/main.tex}
+
+\title[Reinforcement Learning: Big Picture]{RL: MDP}
+\subtitle{The Markov Assumption}
+
+
+
+\begin{document}
+	
+	\maketitle
+
+%----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Markov Assumption}
+
+\begin{itemize}
+	\item Information state: sufficient statistic of history
+	\item State $s_t$ is Markov if and only if:
+	$$ p(s_{t+1} \mid s_t, a_t) = p(s_{t+1} \mid h_t, a_t)$$
+	\item with history $h_t = (a_1, s_1, r_1, \ldots, a_t, s_t, r_t)$
+	\pause
+	\medskip
+	\item \alert{Question:} Hypertension control: let state be current blood pressure, and action be whether to take medication or not. Is this system Markov?
+	\item \alert{Question:} Website shopping: state is current product viewed by customer, and action is what other product to recommend. Is this system Markov?
+\end{itemize}
+
+\end{frame}
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Why is Markov Assumption Popular?}
+	
+	\begin{itemize}
+		\item Can always be satisfied
+		\begin{itemize}
+			\item Setting state as history always Markov: $s_t = h_t$
+		\end{itemize}
+		\item \item In practice often assume most recent observation is sufficient statistic
+		of history: $s_t = o_t$
+		\item State representation has big implications for:
+		\begin{itemize}
+			\item Computational complexity
+			\item Data required
+			\item Resulting performance
+		\end{itemize}
+	\end{itemize}
+	
+\end{frame}
+%-----------------------------------------------------------------------
+
+
+
+%----------------------------------------------------------------------
+\begin{frame}[c]{Full Observable vs Partially Observable}
+	
+	\begin{itemize}
+		\item If we assume $s_t = o_t$, we have fully observable process
+		\pause
+		\item If some information of $s_t$ is hidden s.t. the hidden is important for the Markov property, we have a partially observable process
+		\begin{itemize}
+			\item Card game where you cannot see the cards of the other players
+		\end{itemize}
+		\pause
+		\medskip
+		\item In theory, we can transform any partially observable process into a fully observable by modelling non-deterministic state transitions and any possible outcome of the hidden information
+		\begin{itemize}
+			\item In partice, nevertheless infeasible
+			\item special subfield of RL that deals with such problems
+		\end{itemize}
+		\pause
+		\medskip
+		\item We will see later in the course that even if the Markov asumption is violated and some information is hidden, we can nevertheless train well-performing agents
+	\end{itemize}
+
+\end{frame}
+%-----------------------------------------------------------------------
+%-----------------------------------------------------------------------
+\end{document}

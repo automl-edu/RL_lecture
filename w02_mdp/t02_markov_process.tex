@@ -1,0 +1,110 @@
+
+\input{../latex_main/main.tex}
+
+\title[Reinforcement Learning: Big Picture]{RL: MDP}
+\subtitle{The Markov Process}
+
+
+
+\begin{document}
+	
+	\maketitle
+
+%----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Reminder: Markov Assumption}
+
+\begin{itemize}
+	\item Information state: sufficient statistic of history
+	\item State $s_t$ is Markov if and only if:
+	$$ p(s_{t+1} \mid s_t, a_t) = p(s_{t+1} \mid h_t, a_t)$$
+	\item with history $h_t = (a_1, s_1, r_1, \ldots, a_t, s_t, r_t)$
+\end{itemize}
+
+\end{frame}
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Markov Process or Markov Chain}
+	
+	\begin{itemize}
+		\item Memoryless random process (/walk)
+		\begin{itemize}
+			\item[$\leadsto$] Sequence of random states with Markov propery
+		\end{itemize}
+		\item Definition of Markov Process $M = (S, P)$
+		\begin{itemize}
+			\item $S$ is a (finite) set of states ($s \in S$)
+			\item $P$ is dynamics/transition model that specifies $p(s_{t+1} = s' \mid s_t = s)$
+		\end{itemize}
+		\item Note: no rewards, no actions
+		\item If finite number ($N$) of states, can express $P$ as a matrix
+	\end{itemize}
+
+$$P_{i,j} = P(s_i \mid s_j) $$
+	
+\end{frame}
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Mars Rover}
+	
+	\centering
+	\includegraphics[width=0.9\textwidth]{images/mars_rover.png}
+	
+	\bigskip
+	\begin{itemize}
+		\item States: Location of rover ($s_1, \ldots, s_7$)
+	%	\item Actions: TryLeft or TryRight
+	\end{itemize}
+	
+\end{frame}
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Mars Rover as Markov Process}
+	
+	\centering
+	\includegraphics[width=0.9\textwidth]{images/mars_rover_markov_process.png}
+	
+	
+\end{frame}
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Mars Rover as Markov Process (cont'd)}
+	
+	\begin{center}
+	\includegraphics[width=0.9\textwidth]{images/mars_rover_markov_process_2.png}
+	\end{center}
+	
+	\bigskip
+	Exemplary episodes:
+	\begin{itemize}
+		\item $s_4, s_5, s_6, s_7, s_7, s_7, \ldots$
+		\item $s_4, s_4, s_5, s_4, s_5, s_6, \ldots$
+		\item $s_4, s_3, s_2, s_1, \ldots$
+	\end{itemize}
+	
+\end{frame}
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Applications}
+
+	\begin{itemize}
+		\item Google's page rank with originally based on a random walk 
+		\begin{itemize}
+			\item Follow links on homepages
+			\item Rank webistes based on probability to discover this page
+		\end{itemize}
+		\pause
+		\smallskip
+		\item Modelling of navigation behavior on websites
+		\pause
+		\medskip
+		\item (Early?) versions of text completion based on markov processes
+		\pause
+		\medskip
+		\item used in forecasting of trends, e.g., prices and wind power
+	\end{itemize}	
+	
+\end{frame}
+%-----------------------------------------------------------------------
+%-----------------------------------------------------------------------
+\end{document}

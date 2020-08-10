@@ -1,0 +1,35 @@
+% !TeX spellcheck = en_US
+
+\input{../latex_main/main.tex}
+
+\title[Reinforcement Learning: Big Picture]{RL: MDP}
+\subtitle{The Markov Reward Process}
+
+
+
+\begin{document}
+	
+	\maketitle
+
+%----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Markov Reward Process (MRP)}
+
+\begin{itemize}
+	\item Extend Markov Process by rewards
+	\item Definition of Markov Reward Process (MRP) $M =(S, P, R, \gamma)$
+	\begin{itemize}
+		\item $S$ is a (finite)
+		\item P is dynamics/transition model that specifies $P(s_{t+1}=s' \mid s_t = s)$
+		\item R is a reward function $R(s_t = s) = \mathbb{E}[r_t \mid s_t = s]$
+		\item Discount factor $\gamma \in [0,1]$
+	\end{itemize}
+	\item Note: no actions
+	\item If finite number (N) of states, we can express $R$ as a vector
+\end{itemize}
+
+\end{frame}
+%-----------------------------------------------------------------------
+
+%-----------------------------------------------------------------------
+\end{document}

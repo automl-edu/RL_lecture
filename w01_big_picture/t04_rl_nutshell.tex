@@ -52,8 +52,7 @@
 		\pause
 		\smallskip
 		\item[$\leadsto$] We never observe the full state, but only an abstraction of it
-		\pause
-		\item[$\leadsto$] \alert{Markov assumption:} We can make decisions based on the state information we can observe
+		\item[$\leadsto$] some distinguish between states $s$ and observations $o$
 	\end{itemize}
 	
 	
@@ -82,6 +81,7 @@
 	
 \end{frame}
 %-----------------------------------------------------------------------
+
 %----------------------------------------------------------------------
 \begin{frame}[c]{Transitions}
 	
@@ -98,6 +98,11 @@
 		\begin{itemize}
 			\item Examples: games with randomized events (e.g., many card games), robotics -- often because the control over our robot is not perfect
 		\end{itemize}
+		\item Challenges:
+		\begin{itemize}
+			\item Was the action responsible for the stochasticity or the environment?
+			\item Harder to learn in such environment since you have a different notion of reproducibility
+		\end{itemize}
 	\end{itemize}
 	
 \end{frame}
@@ -111,9 +116,17 @@
 		\item Either immediate (or dense) reward: We directly get a reward signal after each transition
 		\item Or delayed (or sparse) reward: We have to wait some states to observe the reward
 		\begin{itemize}
+			\item Examples: Saving for retirement or Finding a key in video game Montezuma’s revenge
 			\item Extreme case: we get only feedback at the end of an episode\newline (e.g., who won a board game match)
 		\end{itemize}
-	\end{itemize}
+		\item Introduces two challenges
+		\begin{itemize}
+			\item When planning: decisions involve reasoning about not just immediate
+			benefit of a decision but also its longer term ramifications
+			\item When learning: temporal credit assignment is hard (what caused later
+			high or low rewards?)
+		\end{itemize}
+	\end{itemize}¸
 \end{frame}
 %-----------------------------------------------------------------------
 %----------------------------------------------------------------------
