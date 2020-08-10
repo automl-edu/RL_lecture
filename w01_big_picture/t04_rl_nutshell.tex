@@ -32,7 +32,7 @@
 	
 	\begin{itemize}
 		\item We constantly observe our environment (and our own state)
-		\item mostly via sensors
+		\item Mostly via sensors
 		\begin{itemize}
 			\item images
 			\item sound
@@ -59,6 +59,74 @@
 	
 \end{frame}
 %-----------------------------------------------------------------------
-
+%----------------------------------------------------------------------
+\begin{frame}[c]{Actions}
+	
+	\begin{itemize}
+		\item In a given state, an action will (potentially) change the state 
+		\medskip
+		\pause
+		\item Types of actions:
+		\begin{description}
+			\item[continuous] The value domain is continuous and often bounded by some range (e.g., $[0,1]$)
+			\begin{itemize}
+				\item Examples: velocity, angles, probabilities
+			\end{itemize}
+			\pause
+			\item[categorical and discrete] The action is to choose from a set of possible options (i.e., potentially no ordering between actions)
+			\begin{itemize}
+				\item Examples: button on a game controller, set of strategies, discrete position on a board
+			\end{itemize}
+		\end{description}
+	\end{itemize}
+	
+\end{frame}
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Transitions}
+	
+	\begin{itemize}
+		\item Given state $s$ and action $a$, in which state do we end up?
+		\smallskip
+		\pause
+		\item Either deterministic: We will end up exactly in one state
+		\begin{itemize}
+			\item Examples: board games like Go or Chess
+		\end{itemize}
+		\pause
+		\item Or non-deterministic: There is probability distribution over\newline in which states we will end up.
+		\begin{itemize}
+			\item Examples: games with randomized events (e.g., many card games), robotics -- often because the control over our robot is not perfect
+		\end{itemize}
+	\end{itemize}
+	
+\end{frame}
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Rewards}
+	\begin{itemize}
+		\item Feedback on whether we did something "good" or "bad"
+		\smallskip
+		\pause
+		\item Either immediate (or dense) reward: We directly get a reward signal after each transition
+		\item Or delayed (or sparse) reward: We have to wait some states to observe the reward
+		\begin{itemize}
+			\item Extreme case: we get only feedback at the end of an episode\newline (e.g., who won a board game match)
+		\end{itemize}
+	\end{itemize}
+\end{frame}
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Episode}
+	\begin{itemize}
+		\item An episode is sequence of state-action pair (i.e., steps)
+		\item The end of an episode is called an horizon
+		\smallskip
+		\pause
+		\item Finite horizon: We have a finite amount of steps\newline until the episode ends
+		\item Infinite horizon: The episode will never end (unless we abort it)
+	\end{itemize}
+\end{frame}
+%-----------------------------------------------------------------------
 %-----------------------------------------------------------------------
 \end{document}
