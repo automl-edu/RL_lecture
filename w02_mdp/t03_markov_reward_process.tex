@@ -30,6 +30,136 @@
 
 \end{frame}
 %-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Mars Rover as MRP}
+	
+\begin{center}
+	\includegraphics[width=0.9\textwidth]{images/mars_rover_markov_process_2.png}
+\end{center}
+
+Rewards:
+\begin{itemize}
+	\item $+1$ in $s_1$, 
+	\item $+10$ in $s_7$,
+	\item $0$ in all other states
+\end{itemize}
+	
+\end{frame}
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Return \& Value Function}
+	
+	\begin{itemize}
+		\item Definition of Horizon
+		\begin{itemize}
+			\item Number of time steps in each episode
+			\item Can be infinite
+			\item Otherwise called finite Markov reward process
+		\end{itemize}
+	\smallskip
+	\pause
+		\item Definition of Return: $G_t$ (for a MRP)
+		\begin{itemize}
+			\item Discounted sum of rewards from time step $t$ to horizon
+			$$ G_t = r_t + \gamma r_{t+1} + \gamma^2 r_{t+2} + \gamma^3 r_{t+3} + \ldots$$
+		\end{itemize}
+	\smallskip
+	\pause
+	\item Definition of State Value Function: $V(s)$ for a MRP
+	\begin{itemize}
+		\item Expected return from starting in state s
+		$$ V(s)  = \mathbb{E}[G_t \mid s_t=s] == \mathbb{E}[r_t + \gamma r_{t+1} + \gamma^2 r_{t+2} + \gamma^3 r_{t+3} + \ldots \mid s_t = s]$$
+	\end{itemize}
+	\end{itemize}
+	
+\end{frame}
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Discount Factor}
+	
+$$ V(s)  = \mathbb{E}[G_t \mid s_t=s] == \mathbb{E}[r_t + \gamma r_{t+1} + \gamma^2 r_{t+2} + \gamma^3 r_{t+3} + \ldots \mid s_t = s]$$
+	
+	\begin{itemize}
+		\item Mathematically convenient (avoid infinite returns and values)
+		\item Humans often act as if there’s a discount factor $\gamma < 1$
+		\item $\gamma = 0$: Only care about immediate reward
+		\item $\gamma = 1$: Future reward is as beneficial as immediate reward
+		\item If episode lengths are always finite, can use $\gamma = 1$ (but don't have to)
+	\end{itemize}
+	
+\end{frame}
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Mars Rover as MRP}
+	
+	\begin{center}
+		\includegraphics[width=0.9\textwidth]{images/mars_rover_markov_process_2.png}
+	\end{center}
+	
+	Rewards:
+	\begin{itemize}
+		\item $+1$ in $s_1$, 
+		\item $+10$ in $s_7$,
+		\item $0$ in all other states
+	\end{itemize}
+	
+	Sample returns for $4$-step episodes, $\gamma=1/2$
+	\begin{itemize}
+		\item $s_4,s_5,s_6,s_7: 0 + \frac{1}{2}\cdot 0 + \frac{1}{4}\cdot 0 + \frac{1}{8}\cdot 10 = 1.25$
+	\end{itemize}
+	
+\end{frame}
+%-----------------------------------------------------------------------
+
+%----------------------------------------------------------------------
+\begin{frame}[c]{Mars Rover as MRP}
+	
+	\begin{center}
+		\includegraphics[width=0.9\textwidth]{images/mars_rover_markov_process_2.png}
+	\end{center}
+	
+	Rewards:
+	\begin{itemize}
+		\item $+1$ in $s_1$, $+10$ in $s_7$, $0$ in all other states
+	\end{itemize}
+
+$$ V(s)  = \mathbb{E}[G_t \mid s_t=s] == \mathbb{E}[r_t + \gamma r_{t+1} + \gamma^2 r_{t+2} + \gamma^3 r_{t+3} + \ldots \mid s_t = s]$$
+
+	\begin{itemize}
+		\item[$\leadsto$] $V(s_1) = 1.53, V(s_2) = 0.37, \ldots, V(s_7) = 15.31$
+	\end{itemize}
+	
+\end{frame}
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Computing the Value of a Markov Reward Process}
+	
+	\begin{itemize}
+		\item Could estimate by simulation:
+		\begin{enumerate}
+			\item Generate a large number of episodes
+			\item Average returns
+		\end{enumerate}
+		\item Requires no assumption of Markov structure
+	\end{itemize}
+	
+\end{frame}
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Computing the Value of a Markov Reward Process}
+	
+	\begin{itemize}
+		\item Could estimate by simulation:
+		\item Markov property yields additional structure
+		\item MRP value function satisfies
+	\end{itemize}
+
+$$V(s) = R(s) + \gamma \sum_{s' \in S} P(s'\mid s) V(s')$$
+	
+\end{frame}
+%-----------------------------------------------------------------------
 
 %-----------------------------------------------------------------------
 \end{document}
+
+
