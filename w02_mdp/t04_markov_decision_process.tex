@@ -1,0 +1,106 @@
+% !TeX spellcheck = en_US
+
+\input{../latex_main/main.tex}
+
+\title[Reinforcement Learning: Big Picture]{RL: MDP}
+\subtitle{The Markov Reward Process}
+
+
+
+\begin{document}
+	
+	\maketitle
+
+%----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Markov Decision Process (MDP)}
+
+\begin{itemize}
+	\item Markov Decision Process is Markov Reward Process + actions
+	\item Definition of MDP
+	\begin{itemize}
+		\item $S$ is a (finite) set of Markov states $s \in S$
+		\item $A$ is a (finite) set of actions $a \in A$
+		\item $P$ is dynamics/transition model for each action, that specifies $P(s_{t+1} = s' \mid s_t=s, a_t=a)$
+		\item $R$ is a reward function 
+		$R(s_t=s, a_t=a) = \mathbb{E}[r_r \mid s_t=s, a_t=a] $
+		\begin{itemize}
+			\item Sometimes R is also defined based on $(s)$ or on $(s,a,s')$
+		\end{itemize}
+		\item Discount factor $\gamma \in [0, 1]$
+	\end{itemize}
+	\item MDP is tuple $(S,A,P, R, \gamma)$
+\end{itemize}
+
+\end{frame}
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Mars Rover as MRP}
+
+\begin{center}
+	\includegraphics[width=0.9\textwidth]{images/mars_rover.png}
+\end{center}
+
+\begin{itemize}
+	\item $2$ deterministic Actions: TryLeft and TryRight
+\end{itemize}
+
+
+
+\end{frame}
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{MDP Policies}
+
+\begin{itemize}
+	\item Policy specifies what action to take in each state
+	\begin{itemize}
+		\item Can be deterministic or stochastic
+	\end{itemize}
+	\item For generality, consider as a conditional distribution
+	\begin{itemize}
+		\item Given a state, specifies a distribution over actions
+	\end{itemize}
+	\item Policy: $\pi(a \mid s) = P(a_t=a | s_t = s)$
+\end{itemize}
+
+
+\end{frame}
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{MDP + Policy}
+
+\begin{itemize}
+	\item MDP + Policy $\pi(a \mid s)$ = Markov Reward Process
+	\item Precisely, it is the MRP $(S,R^pi, P^\pi, \gamma)$ where
+	$$R^\pi (s) = \sum_{a\in A} \pi(a\mid s ) R(s,a) $$
+   $$P^\pi (s'\mid s) = \sum_{a\in A} \pi(a \mid s) P(s' \mid s,a)$$
+   \item Implies we can use same techniques to evaluate the value of a policy  for a MDP as we could to compute the value of a MRP, by defining a
+   MRP with $R^\pi$ and $P^\pi$
+\end{itemize}
+
+\end{frame}
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{MDP Policy Evaluation, Iterative Algorithm}
+
+\begin{itemize}
+	\item Goal: For a given $\pi$, determine $V^\pi$
+	\item iterative approach:
+	\begin{itemize}
+		\item Initialize $V_0(s) = 0 $ for all s
+		\item For $k=1$ until convergence
+		\begin{itemize}
+			\item For all $s$ in $S$:
+			$$V^\pi_k  = r(s, ¸\pi(s)) + \gamma \sum_{s'\in S} p(s'\mid s, \pi(s)) V_{k-1}^\pi (s')$$
+		\end{itemize}
+	\end{itemize}
+	\item This is a Bellmann backup for a paticular policy
+\end{itemize}
+
+\end{frame}
+%-----------------------------------------------------------------------
+%-----------------------------------------------------------------------
+\end{document}
+
+

@@ -158,7 +158,67 @@ $$V(s) = R(s) + \gamma \sum_{s' \in S} P(s'\mid s) V(s')$$
 	
 \end{frame}
 %-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Matrix Form of Bellman Equation for MRP}
 
+$$\begin{pmatrix}
+V(s_1)\\
+\ldots\\
+V(s_n)
+\end{pmatrix} =
+\begin{pmatrix}
+R(s_1)\\
+\ldots\\
+R(s_n)
+\end{pmatrix} 
++ \gamma 
+\begin{pmatrix}
+P(s_1|s_2)  & \ldots &  P(s_n \mid s_1)\\
+\ldots\\ 	& \ldots & \ldots \\
+P(s_1| s_n) & \ldots & P(s_n \mid s_n)\\
+\end{pmatrix} 
+\begin{pmatrix}
+V(s_1)\\
+\ldots\\
+V(s_n)
+\end{pmatrix} 
+$$
+
+\pause
+
+\begin{eqnarray}
+V &=& R + \gamma P V\\
+V  - \gamma P V &=& R\\
+(1- \gamma P) V  &=& R\\
+V &=& (1- \gamma P)^{-1} R\\
+\end{eqnarray}
+
+\pause
+$\leadsto$ Solving directly requires taking a matrix inverse $O(n^3)$
+
+\end{frame}
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Iterative Algorithm for Computing Value of a MRP}
+
+\begin{itemize}
+	\item Dynamic Programming :
+	\begin{itemize}
+	\item Initialize $V_0(s) = 0$ for all $s$
+	\item For $k=1$ until convergence
+	\begin{itemize}
+		\item For all $s$ in $S$
+		$$V_k(s) = R(s) + \gamma \sum_{s' \in S} P(s' \mid s) V{k-1}(s')$$
+	\end{itemize}
+	\end{itemize}
+
+	\pause
+	\smallskip
+	\item Computational complexity: $O(|S|^2 )$ for each iteration $(|S| = n)$
+\end{itemize}
+
+\end{frame}
+%-----------------------------------------------------------------------
 %-----------------------------------------------------------------------
 \end{document}
 
