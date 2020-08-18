@@ -1,0 +1,141 @@
+% !TeX spellcheck = en_US
+
+\input{../latex_main/main.tex}
+
+\title[Reinforcement Learning: Basics]{RL: Basics}
+\subtitle{Policy Iteration}
+
+
+
+\begin{document}
+	
+	\maketitle
+
+%----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Policy Search (PS)}
+
+\begin{itemize}
+	\item One option is searching to compute best policy
+	\item Number of deterministic policies is $|A|^{|S|}$
+	\item Policy iteration is generally more efficient than enumeration
+\end{itemize}
+
+\end{frame}
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{MDP Policy Iteration (PI)}
+
+\begin{itemize}
+	\item Set $i=0$
+	\item Initialize $\pi_0(s)$ randomly for all states $s$
+	\item While $i == 0$ or $||\pi_i - \pi_{i-1}||_1 > 0$ (L1-norm, measures if the policy changed for any state)
+	\begin{itemize}
+		\item $V^{\pi_i} \gets$ MDP V function policy evaluation of $\pi$
+		\item $\pi_{i+1} \gets$ Policy improvement
+		\item $i \gets i+1$
+	\end{itemize}
+\end{itemize}
+
+\end{frame}
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Definition: State-Action Value Q}
+
+\begin{itemize}
+	\item State-action value of a policy
+	$$Q^\pi(s,a) = R(s,a) + \gamma \sum_{s' \in S} P(s' \mid s,a) V^\pi(s')$$
+	\item[$\leadsto$] Take action $a$, then follow the policy $\pi$
+\end{itemize}
+
+\end{frame}
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Policy Improvement}
+
+\begin{itemize}
+	\item Compute state-action value of a policy $\pi_i$
+	\begin{itemize}
+		\item For $s$ in $S$ and $a$ in $A$:
+				$$Q^\pi(s,a) = R(s,a) + \gamma \sum_{s' \in S} P(s' \mid s,a) V^\pi(s')$$
+	\end{itemize}
+	\medskip
+	\pause
+	\item Compute new policy $\pi_{i+1}$ for all $s\in S$
+	$$ \pi_{i+1}(s) \in \argmax_{a\in A} Q^{\pi_i} (s,a). \forall s \in S $$
+	
+
+\end{itemize}
+
+\end{frame}
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{MDP Policy Iteration (PI)}
+
+\begin{itemize}
+	\item Set $i=0$
+	\item Initialize $\pi_0(s)$ randomly for all states $s$
+	\item While $i == 0$ or $||\pi_i - \pi_{i-1}||_1 > 0$ (L1-norm, measures if the policy changed for any state)
+	\begin{itemize}
+		\item $V^{\pi_i} \gets$ MDP V function policy \alert{evaluation} of $\pi$ \hspace{1em} $\leadsto$ use $Q$
+		\item $\pi_{i+1} \gets$ Policy \alert{improvement}
+		\item $i \gets i+1$
+	\end{itemize}
+\end{itemize}
+
+\end{frame}
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Delving Deeper Into Policy Improvement Step}
+
+\begin{eqnarray}
+Q^\pi(s,a) = R(s,a) + \gamma \sum_{s' \in S} P(s' \mid s,a) V^\pi(s')\nonumber\\
+\max_a Q^\pi(s,a) \geq R(s,a) + \gamma \sum_{s' \in S} P(s' \mid s,a) V^\pi(s') = V^\pi (s)\nonumber \\
+\pi_{i+1}(s) \in \argmax_{a\in A} Q^{\pi_i} (s,a)\nonumber
+\end{eqnarray}
+
+\begin{itemize}
+	\item Suppose we take $\pi_{i+1}(s)$ for one action, then follow $\pi_i$ forever
+	\begin{itemize}
+		\item Our expected sum of rewards is at least as good as if we had always
+		followed $\pi_i$
+	\end{itemize}
+	\item But new proposed policy is to always follow $\pi_{i+1}$
+\end{itemize}
+
+\end{frame}
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Monotonic Improvement in Policy}
+
+\begin{itemize}
+	\item  Definition
+	$$ V^{\pi_2} \geq V^{\pi_1}: V^{\pi_2}(s) \geq V^{\pi_1}. \forall s \in S $$
+	\item Proposition: $V^{\pi_{i+1}} \geq V^{\pi_{i}}$ with strict inequality if $\pi_i$ is suboptimal,
+	where $\pi_{i+1}$ is the new policy we get from policy improvement on $\pi_i$
+\end{itemize}
+
+\end{frame}
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{MDP Policy Iteration (PI): Check your Understanding}
+
+\begin{itemize}
+	\item Set $i=0$
+	\item Initialize $\pi_0(s)$ randomly for all states $s$
+	\item While $i == 0$ or $||\pi_i - \pi_{i-1}||_1 > 0$ (L1-norm, measures if the policy changed for any state)
+	\begin{itemize}
+		\item $V^{\pi_i} \gets$ MDP V function policy \alert{evaluation} of $\pi$ \hspace{1em} $\leadsto$ use $Q$
+		\item $\pi_{i+1} \gets$ Policy \alert{improvement}
+		\item $i \gets i+1$
+	\end{itemize}
+	\item \alert{If policy doesn't change, can it ever change?}
+	\item \alert{Is there a maximum of iterations of policy iteration?}
+\end{itemize}
+
+\end{frame}
+%-----------------------------------------------------------------------
+%-----------------------------------------------------------------------
+\end{document}
+
+
