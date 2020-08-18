@@ -1,0 +1,102 @@
+
+\input{../latex_main/main.tex}
+
+\title[Reinforcement Learning: Policy Evaluation]{Policy Evaluation}
+\subtitle{The Big Picture}
+
+
+
+\begin{document}
+	
+	\maketitle
+
+%----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Recap I : Markov Decision Process (MDP)}
+
+\begin{itemize}
+	\item Markov Decision Process is Markov Reward Process + actions
+	\item Definition of MDP
+	\begin{itemize}
+		\item $S$ is a (finite) set of Markov states $s \in S$
+		\item $A$ is a (finite) set of actions $a \in A$
+		\item $P$ is dynamics/transition model for each action, that specifies $P(s_{t+1} = s' \mid s_t=s, a_t=a)$
+		\item $R$ is a reward function 
+		$R(s_t=s, a_t=a) = \mathbb{E}[r_r \mid s_t=s, a_t=a] $
+		\begin{itemize}
+			\item Sometimes R is also defined based on $(s)$ or on $(s,a,s')$
+		\end{itemize}
+		\item Discount factor $\gamma \in [0, 1]$
+	\end{itemize}
+	\item MDP is tuple $(S,A,P, R, \gamma)$
+\end{itemize}
+
+\pause
+
+\medskip
+$\leadsto$ Unforunately, we often do not have access to true MDP models
+
+\end{frame}
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Recap II}
+
+\begin{itemize}
+	\item Definition of Return $G_t$ (for a MRP)
+	\begin{itemize}
+		\item Discounted sum of rewards from time step t to horizon
+	\end{itemize}	
+$$ G_t = r_t + \gamma r_{t+1} + \gamma^2 r_{t+2} + \gamma^3 r_{t+3} + \ldots$$
+
+	\medskip
+	\pause
+	\item Definition of State Value Function $V^\pi (s) $
+	\begin{itemize}
+		\item Expected return from starting in state $s$ under policy $\pi$
+		$$V^\pi (s) = \mathbb{E} [G_t \mid s_t = s] = \mathbb{E}_\pi [r_t + \gamma r_{t+1} + \gamma^2 r_{t+2} + \gamma^3 r_{t+3} + \ldots \mid s_t = s] $$
+	\end{itemize}
+	\medskip
+	\pause
+	\item Definition of State-Action Value Function $Q^\pi (s,a)$
+	\begin{itemize}
+	\item Expected return from starting in state $s$, taking action $a$ and then following
+	policy $\pi$
+	\begin{eqnarray}
+	Q^\pi (s,a) &=& \mathbb{E}_{\pi}[G_t \mid s_t = s, a_t = a]  \nonumber \\
+	&=& \mathbb{E}_{\pi}  [r_t + \gamma r_{t+1} + \gamma^2 r_{t+2} + \gamma^3 r_{t+3} + \ldots \mid s_t = s, a_t = a]\nonumber
+	\end{eqnarray}
+
+	
+	\end{itemize}
+
+\end{itemize}
+
+
+\end{frame}
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Goal for this week}
+
+\begin{itemize}
+	\item Assumption: We don't have the exact model of the environment (i.e., model-free), but we can query the environment ("playing roll-outs")
+	\begin{itemize}
+		\item state space and action space are in principle known
+		\item we don't know the transition probabilities beforehand
+		\item we don't know the reward distribution beforehand
+	\end{itemize}
+	\medskip
+	\item Remarks:
+	\begin{itemize}
+		\item If we would know the MDP, we only have to do "planning" to find the optimal policy
+		\item If we first learn the MDP and then apply planning to the learned MDP, we do "model-based" RL (not today!)
+	\end{itemize}
+	\medskip\pause
+	\item Goal for this week: We want to learn $V^\pi(s)$ or $Q^\pi(s,a)$ (depending on the RL algorithm we want to use) by only quering the unknown MDP
+\end{itemize}
+
+
+\end{frame}
+%-----------------------------------------------------------------------
+
+%-----------------------------------------------------------------------
+\end{document}
