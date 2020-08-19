@@ -1,0 +1,35 @@
+
+\input{../latex_main/main.tex}
+
+\title[Reinforcement Learning: Policy Evaluation]{Policy Evaluation}
+\subtitle{Dynamic Programming}
+
+
+
+\begin{document}
+	
+	\maketitle
+
+%----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Dynamic Programming for Evaluating Value of Policy $\pi$}
+
+\begin{itemize}
+	\item Initialize $V^\pi_0(s) = 0$ for all $s\in S$
+	\item For $k=1$ until convergence
+	\begin{itemize}
+		\item For all $s$ in $S$
+		$$V^\pi_k (s)  = r(s, \pi(s)) + \gamma \sum_{s' \in S} p(s' \mid s, \pi(s)) V^\pi_{k-1} (s') $$
+	\end{itemize}
+	\item $V^\pi_k (s)$ is exact value of $k$-horizon value of state $s$ under policy $\pi$
+	\item $V^\pi_k (s)$ is an estimate of infinite horizon value of state $s$ under policy $\pi$
+	
+	$$V^\pi (s) = \mathbb{E}_\pi [G_t \mid s_t = s] \approx \mathbb{E} [r_t + \gamma V_{k-1} \mid s_t = s]$$
+\end{itemize}
+
+
+
+\end{frame}
+%-----------------------------------------------------------------------
+%-----------------------------------------------------------------------
+\end{document}
