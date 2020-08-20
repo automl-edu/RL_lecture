@@ -1,0 +1,93 @@
+% !TeX spellcheck = en_US
+
+\input{../latex_main/main.tex}
+
+\title[Reinforcement Learning: Policy Evaluation]{Policy Evaluation}
+\subtitle{Monte Carlo Evaluation: Bias and Variance}
+
+
+
+\begin{document}
+	
+	\maketitle
+
+%----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{First-Visit Monte Carlo (MC) On Policy Evaluation}
+
+Initialize $N(s) = 0$, $G(s) = 0$ $\forall s \in S$\\
+Loop 
+\begin{itemize}
+	\item Sample episode $i = s_{i,1}, a_{i,1}, r_{i,1}, s_{i,2}, a_{i,2}, r_{i,2}, \ldots$
+	\item Define $G_{i,t} = r_{i,t} + \gamma r_{i,t+1} + \gamma^2 r_{i,t+2} + \ldots$
+	\item For each state $s$ visited in episode $i$
+	\begin{itemize}
+		\item for first time $t$ that state $s$ is visited in episode $i$
+		\begin{itemize}
+			\item Increment counter of total first visits: $N(s) = N(s) + 1$
+			\item Increment total return $G(s) = G(s) + G_{i,t}$
+			\item Update estimate $V^\pi (s) = G(s) /N(s)$
+		\end{itemize}
+	\end{itemize}
+\end{itemize}
+	
+\end{frame}
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Recap: Bias, Variance and MSE}
+
+\begin{itemize}
+	\item Consider a statistical model that is parameterized by $\theta$ and that determines
+	a probability distribution over observed data $P(x|\theta)$
+	\item Consider a statistic $\hat{\theta}$ that provides an estimate of $\theta$ and is a function of
+	observed data $x$
+	\begin{itemize}
+		\item E.g. for a Gaussian distribution with known variance, the average of a set of
+		i.i.d data points is an estimate of the mean of the Gaussian
+	\end{itemize}
+	\item Definition: the bias of an estimator $\hat{\theta}$ is:
+	$$ Bias_{\theta} (\hat{\theta}) = \mathbb{E}_{x\mid \theta} [\hat{\theta}] - \theta$$
+	\item Definition: the variance of an estimator $\hat{\theta}$ is:
+	$$ Var (\hat{\theta}) = \mathbb{E}_{x\mid \theta} [(\hat{\theta} - \mathbb{E}[\hat{\theta}])^2] $$
+	\item Definition: mean squared error (MSE) of an estimator $\hat{\theta}$ is
+	$$MSE(\hat{\theta}) = Var(\hat{\theta})  + Bias_{\theta} (\hat{\theta}) $$
+\end{itemize}
+
+\end{frame}
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{First-Visit Monte Carlo (MC) On Policy Evaluation}
+
+Initialize $N(s) = 0$, $G(s) = 0$ $\forall s \in S$\\
+Loop 
+\begin{itemize}
+	\item Sample episode $i = s_{i,1}, a_{i,1}, r_{i,1}, s_{i,2}, a_{i,2}, r_{i,2}, \ldots$
+	\item Define $G_{i,t} = r_{i,t} + \gamma r_{i,t+1} + \gamma^2 r_{i,t+2} + \ldots$
+	\item For each state $s$ visited in episode $i$
+	\begin{itemize}
+		\item for first time $t$ that state $s$ is visited in episode $i$
+		\begin{itemize}
+			\item Increment counter of total first visits: $N(s) = N(s) + 1$
+			\item Increment total return $G(s) = G(s) + G_{i,t}$
+			\item Update estimate $V^\pi (s) = G(s) /N(s)$
+		\end{itemize}
+	\end{itemize}
+\end{itemize}
+
+Properties:
+\begin{itemize}
+	\item $V^\pi$ estimator is an unbiased estimator of true $\mathbb{E}_\pi [G_t \mid s_t = s]$
+	\item By law of large numbers, as $N(s) \to \inf, V^\pi(s) \to \mathbb{E}_\pi [G_t \mid s_t = s]$
+	\item \alert{every}-visit MC estimator:
+	\begin{itemize}
+		\item is biased estimator of $V^\pi$ (observations are correlated $\leadsto$ not i.i.d)
+		\item often better RMSE, because more data per state
+	\end{itemize}
+
+\end{itemize}
+
+\end{frame}
+%-----------------------------------------------------------------------
+
+%-----------------------------------------------------------------------
+\end{document}

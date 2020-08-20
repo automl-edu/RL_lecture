@@ -1,3 +1,4 @@
+% !TeX spellcheck = en_US
 
 \input{../latex_main/main.tex}
 
@@ -28,6 +29,56 @@
 \end{itemize}
 
 
+
+\end{frame}
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Dynamic Programming for Evaluating Value of Policy $\pi$}
+
+$$V^\pi (s) = \mathbb{E}_\pi [G_t \mid s_t = s] \approx \mathbb{E} [r_t + \gamma V_{k-1} \mid s_t = s]$$
+
+\begin{center}
+	\includegraphics[width=0.4\textwidth]{images/state_action_graph.png}
+\end{center}
+
+
+
+\end{frame}
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Dynamic Programming for Evaluating Value of Policy $\pi$}
+
+$$V^\pi (s) = \mathbb{E}_\pi [G_t \mid s_t = s] \approx \mathbb{E} [r_t + \gamma V_{k-1} \mid s_t = s]$$
+
+\begin{center}
+	\includegraphics[width=0.4\textwidth]{images/state_action_graph2.png}
+\end{center}
+
+\vspace{-1cm}
+\pause
+\begin{itemize}
+	\item[$\leadsto$] DP computes one step update at a time
+	\item[$\leadsto$] bootstrapping the rest of the expected return\newline by the value estimate $V_{k-1}$
+\end{itemize}
+
+\end{frame}
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Policy Evaluation: $V^\pi = \mathbb{E}[G_t \mid s_t = s]$}
+
+\begin{itemize}
+	\item $G_t = r_t + \gamma r_{t+1} + \gamma^2 r_{t+2} + \ldots$ in MDP $M$ under policy $\pi$
+	\item Dynamic Programming
+	\begin{itemize}
+		\item $V^\pi (s)  = \mathbb{E}_\pi [r_t + \gamma V_{k-1} \mid s_t = s]$
+		\item \alert{Requires model of MDP $M$}
+		\item Bootstraps future return using value estimate
+		\item Requires Markov assumption: bootstrapping regardless of history
+	\end{itemize}
+	\pause
+	\medskip
+	\item What if we don't know the dynamic model P and/or reward model R? ($\leadsto$ see next videos)
+\end{itemize}
 
 \end{frame}
 %-----------------------------------------------------------------------
