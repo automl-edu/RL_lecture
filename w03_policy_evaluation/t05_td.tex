@@ -1,0 +1,101 @@
+% !TeX spellcheck = en_US
+
+\input{../latex_main/main.tex}
+
+\title[Reinforcement Learning: Policy Evaluation]{Policy Evaluation}
+\subtitle{Monte Carlo Evaluation: Temporal Difference Learning}
+
+
+
+\begin{document}
+	
+	\maketitle
+
+%----------------------------------------------------------------------
+
+%----------------------------------------------------------------------
+\begin{frame}[c]{Temporal Difference Learning}
+	\begin{itemize}
+		\item ``If one had to identify one idea as central and novel to reinforcement learning, it would undoubtedly be temporal-difference (TD) learning." -- Sutton and Barto 2017
+		\item Combination of Monte Carlo \& dynamic programming methods
+		\item Model-free
+		\item \alert{bootstraps and samples}
+		\item Can be used in episodic or infinite-horizon non-episodic settings
+		\item Immediately updates estimate of $V$ after each $(s,a,r,s')$ tuple
+	\end{itemize}
+	
+\end{frame}
+%-----------------------------------------------------------------------
+
+%----------------------------------------------------------------------
+\begin{frame}[c]{Temporal Difference Learning for Estimating $V$}
+
+\begin{itemize}
+	\item Aim: estimate $V^\pi(s)$ given episodes generated under policy $\pi$
+	\item $G_t = r_t + \gamma r_{t+1} + \gamma^2 r_{t+2} + \ldots$  in MDP $M$ under policy $\pi$
+	\item $V^\pi(s) = \mathbb{E}[G_t \mid s_t = s]$
+	\smallskip
+	\pause
+	\item Recall Bellman operator (if known MDP models)
+	$$B^\pi V(s) = r(s,\pi(s)) + \gamma \sum_{s'\in S} p(s'\mid s, \pi(s)) V(s')$$
+	\pause
+	\item Insight: have an estimate of $V^\pi$, use to estimate expected return
+	$$ V^\pi(s) = V^\pi(s) + \alpha ([r_t + \gamma V^\pi (s_{t+1})] - V^\pi(s))$$
+\end{itemize}
+
+
+\end{frame}
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Temporal Difference [TD(0)] Learning}
+	
+	\begin{itemize}
+		\item Aim: estimate $V^\pi(s)$ given episodes generated under policy $\pi$
+		\item Simplest TD learning: update value towards estimated value
+		$$ V^\pi(s) = V^\pi(s) + \alpha (\underbrace{[r_t + \gamma V^\pi (s_{t+1})]}_{\text{TD target}} - V^\pi(s))$$
+		\pause
+		\item TD error:
+		$$ \delta_t = r_t + \gamma V^\pi(s_{t+1}) - V^\pi (s) $$
+		\pause
+		\item[$\leadsto$] Can immediately update value estimate after $(s,a,r,s')$ tuple
+		\item[$\leadsto$] Don’t need episodic setting
+	\end{itemize}
+	
+\end{frame}
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Temporal Difference [TD(0)] Learning Algorithm}
+	
+	Input: $\alpha$\\
+	Initialize $V^\pi(s) = 0. \forall s \in S$\\
+	Loop\\
+	\begin{itemize}
+		\item Sample tuple $(s_t, a_t, r_t, s_{t+1})$
+		\item $V^\pi(s) = V^\pi(s) + \alpha (\underbrace{[r_t + \gamma V^\pi (s_{t+1})]}_{\text{TD target}} - V^\pi(s))$
+	\end{itemize}
+	
+\end{frame}
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Temporal Difference [TD(0)] Learning Algorithm}
+
+\begin{columns}
+	
+	\column{0.5\textwidth}
+	
+	\includegraphics[width=1.0\textwidth]{images/td0.png}
+	
+	\column{0.5\textwidth}
+	
+	\begin{itemize}
+		\item TD updates the value estimate using a sample of $s_{t+1}$ to approximate an expectation
+		\item TD updates the value estimate by bootstrapping, uses estimates of $V(s_{t+1})$
+	\end{itemize}
+	
+	
+\end{columns}	
+
+\end{frame}
+%-----------------------------------------------------------------------
+%-----------------------------------------------------------------------
+\end{document}

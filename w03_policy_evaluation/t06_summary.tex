@@ -1,0 +1,140 @@
+% !TeX spellcheck = en_US
+
+\input{../latex_main/main.tex}
+
+\title[Reinforcement Learning: Policy Evaluation]{Policy Evaluation}
+\subtitle{Summary: Policy Evaluation}
+
+
+
+\begin{document}
+	
+	\maketitle
+
+%----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Bias/Variance of Model-free Policy Evaluation Algorithms}
+
+\begin{itemize}
+	\item Return $G_t$ is an unbiased estimate of $V^\pi(s_t)$
+	\item TD target $[r_t + \gamma V^\pi(s_{t+1})]$ is biased estimate of $V^\pi(s)$ 
+	\item But often TD much lower variance than a single return $G_t$
+	\begin{itemize}
+		\item MC: Return function of multi-step sequence of random actions, states \& rewards
+		\item TD target only has one random action, reward and next state
+	\end{itemize}
+	\pause
+	\item MC:
+	\begin{itemize}
+		\item Unbiased (for first visit MC)
+		\item High variance
+		\item Consistent (converges to true) even with function approximation
+	\end{itemize}
+	\pause
+	\item TD
+	\begin{itemize}
+		\item Some bias
+		\item Lower variance
+		\item $TD(0)$ converges to true value with tabular representation
+		\item $TD(0)$ does not always converge with function approximation 
+	\end{itemize}
+\end{itemize}
+	
+\end{frame}
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{AB Example \litw{Sutton \& Barto, 2018}}
+	
+	\centering
+	\includegraphics[width=0.4\textwidth]{images/ab_example.png}
+	
+	\begin{itemize}
+		\item Two states $A$, $B$ with $\gamma = 1$
+		\item Given $8$ episodes of experience:
+		\begin{itemize}
+			\item $A, 0, B, 0$
+			\item $B, 1$ (observed $6$ times)
+			\item $B, 0$ 
+		\end{itemize}
+		\item Under batch (offline) solution for this finite set of observations, what do MC and TD(0) converge to?
+		\item Imagine run TD updates over data infinite number of times?
+	\end{itemize}
+	
+\end{frame}
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{AB Example \litw{Sutton \& Barto, 2018}}
+	
+\begin{itemize}
+	\item Given $8$ episodes of experience:
+	\begin{itemize}
+		\item $A, 0, B, 0$
+		\item $B, 1$ (observed $6$ times)
+		\item $B, 0$ 
+	\end{itemize}
+	\item For $B$:
+	\begin{itemize}
+		\item MC: $V(B) = \frac{6}{8} =  0.75$
+		\item TD: $V(B) = \frac{6}{8} =  0.75$
+	\end{itemize} 
+	\pause
+	\item For $A$:
+	\begin{itemize}
+		\item MC: only one episode with $A$ $\leadsto$ $V(A) = 0$ 
+		\item TD: bootstraps from $V(B)$ $\leadsto$ $V(A) = 0.75$
+$$ V^\pi(s) = V^\pi(s) + \alpha (\underbrace{[r_t + \gamma V^\pi (s_{t+1})]}_{\text{TD target}} - V^\pi(s))$$
+	\end{itemize}	
+	\medskip
+	\item[$\leadsto$] Monte Carlo in batch setting converges to minimal\\ \alert{MSE} (mean squared error)
+	\item[$\leadsto$] TD(0) converges to DP policy $V^\pi$for the MDP with\\ the \alert{maximum likelihood model estimates}
+	
+\end{itemize}
+	
+\end{frame}
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Efficiency}
+	
+	\begin{itemize}
+		\item Data efficiency \& Computational efficiency
+		\item In simplest TD, use $(s,a,r,s_0)$ once to update $V(s)$
+		\begin{itemize}
+			\item $O(1)$ operation per update
+			\item In an episode of length $L$, $O(L)$
+		\end{itemize}		
+		\item In MC have to wait till episode finishes, then also $O(L)$
+		\item MC can be more data efficient than simple TD in non-Markov domains
+		\item TD can exploit Markov structure $\leadsto$ leveraging this is helpful
+	\end{itemize}
+	
+\end{frame}
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Summary: Policy Evaluation}
+	
+	Estimating the expected return of a particular policy if don’t have access to true MDP models. Example: evaluating average purchases per session of new product recommendation system
+	
+	\begin{itemize}
+		\item Dynamic Programming
+		\item Monte Carlo policy evaluation
+		\begin{itemize}
+			\item Policy evaluation when we don’t have a model of how the world works
+		\end{itemize}
+		\item Temporal Difference (TD)
+		\item Metrics to evaluate and compare algorithms
+		\begin{itemize}
+			\item Robustness to Markov assumption
+			\item Bias/variance characteristics
+			\item Data efficiency
+			\item Computational efficiency
+		\end{itemize}
+	\end{itemize}
+
+	
+\end{frame}
+%-----------------------------------------------------------------------
+
+
+
+%-----------------------------------------------------------------------
+\end{document}
