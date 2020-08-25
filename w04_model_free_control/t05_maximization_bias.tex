@@ -1,0 +1,105 @@
+% !TeX spellcheck = en_US
+
+\input{../latex_main/main.tex}
+
+\title[Reinforcement Learning: Model Free Control]{Model Free Control}
+\subtitle{Bias Maximization and Double Q-Learning}
+
+
+
+\begin{document}
+	
+	\maketitle
+
+%----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Maximization Bias}
+	
+	\begin{itemize}
+		\item Consider single-state MDP $(|S| = 1)$ with $2$ actions, and both actions have 0-mean random rewards: $(r \mid a = a_1 ) = (r \mid a = a_2) = 0$
+		\begin{itemize}
+				\item assume that reward is stochastic (e.g, $\mathcal{N}(0,1)$)
+		\end{itemize}
+		\item Then $Q(s,a_1) = Q(s,a_2) = 0 = V(s)$
+		\item Assume there are prior samples of taking action $a_1$ and $a_2$
+		\item Let $\hat{Q}(s,a_1)$, $Q(s,a_2)$ be the \alert{finite} sample estimate of Q
+		\item Use an unbiased estimator for $Q$, e.g., $Q(s,a_1) = \frac{1}{N(s,a_1)} \sum_{i=1}^{N(s,a_1)} r_i(s,a_1)$
+		\item Let $\hat{\pi}\in \argmax\hat{Q}(s,a)$ be the greedy policy wrt the estimated $\hat{Q}$
+		\item Even though each estimate of the state-action values is unbiased, the estimate of $\hat{\pi}$'s value $\hat{V}^{\hat{\hat{\pi}}}$ can be biased:
+	\end{itemize}
+
+\vspace{-1em}
+\begin{eqnarray}
+\hat{V}^{\hat{\pi}}(s) &=& \mathbb{E} [\max \hat{Q}(s,a_1), \hat{Q}(s,a_2)]\nonumber\\
+&\geq& \max [\mathbb{E}[\hat{Q}(s,a_1)],[\hat{Q}(s,a_2)]]\nonumber\\
+&=& max[0,0] = V^\pi\nonumber
+\end{eqnarray}
+(where the inequality comes from Jensens' inequality.)
+	
+\end{frame}
+%--------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Double Q-Learning}	
+	
+	\begin{itemize}
+		\item The greedy policy w.r.t. estimated Q values can yield a maximization
+		bias during finite-sample learning
+		\item Avoid using max of estimates as estimate of max of true values
+		\item Instead split samples and use to create two independent unbiased
+		estimates of $Q_1(s_1, a_i)$ and $Q_2(s_1, a_i). \forall a\in A$
+		\begin{itemize}
+			\item Use one estimate to select max action: $a^* \in \argmax_{a \in A} Q_1(s_1, a)$
+			\item Use other estimate to estimate value of $a^*$: $Q_2(s,a^*)$
+			\item Yields unbiased estimate: $\mathbb{E}(Q_2(s,a^*)) = Q(s,a^*)$
+		\end{itemize}
+		\item[$\leadsto$] Unbiased estimate of the max state-action value because of independent samples to estimate the value
+	\end{itemize}
+
+	
+\end{frame}
+%--------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Double Q-Learning for Full MDP}	
+	
+	\begin{itemize}
+		\item Initialization:
+		\begin{itemize}
+			\item $Q_1(s,a)$ and $Q_2(s,a)$ for $\forall s \in S, a\in A$
+			\item $t= 0$
+			\item initial state $s_t = s_0$
+		\end{itemize}
+		\item Loop
+		\begin{itemize}
+			\item Select $a_t$ using $\epsilon$-greedy $\pi(s) = \argmax_{a \in A} Q_1(s_t, a) + Q_2(s_t , a)$
+			\item Observe $(r_t, s_{t+1})$
+			\item With 50-50 probability either
+			\begin{enumerate}
+				\item $Q_1(s_t, a_t) \gets Q_1(s_t, a_t) + \alpha (r_t +\gamma \max_{a\in A} Q_2(s_{t+1}, a) - Q_1(s_t, a_t))$\\
+				or
+				\item $Q_2(s_t, a_t) \gets Q_2(s_t, a_t) + \alpha (r_t +\gamma \max_{a\in A} Q_1(s_{t+1}, a) - Q_2(s_t, a_t))$
+			\end{enumerate}
+			\item $t = t + 1 $
+		\end{itemize}
+		\bigskip
+		\pause
+		\item[$\leadsto$] Doubles the memory, same computation requirements, data requirements are subtle -- might reduce amount of exploration needed due to lower bias
+	\end{itemize}
+	
+	
+\end{frame}
+%--------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Double Q-Learning \litw{Sutton \& Barto 2018}}	
+	
+\begin{center}
+\includegraphics[width=0.8\textwidth]{images/double_q.png}
+\end{center}
+
+Due to the maximization bias, Q-learning spends much more time
+selecting sub-optimal actions ("left") than double Q-learning.
+	
+	
+\end{frame}
+%--------------------------------------------------------------
+%-----------------------------------------------------------------------
+\end{document}
