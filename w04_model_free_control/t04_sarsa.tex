@@ -1,0 +1,56 @@
+% !TeX spellcheck = en_US
+
+\input{../latex_main/main.tex}
+
+\title[Reinforcement Learning: Model Free Control]{Model Free Control}
+\subtitle{SARSA}
+
+
+
+\begin{document}
+	
+	\maketitle
+
+%----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Model-free Policy Iteration with TD Methods}
+	
+	\begin{itemize}
+		\item Use temporal difference methods for policy evaluation step
+		\item Initialize policy $\pi$
+		\item Repeat:
+		\begin{itemize}
+			\item Policy evaluation: compute $Q^\pi$ using temporal difference updating
+			with $Q$-greedy policy
+			\item Policy improvement: Same as Monte carlo policy improvement, set $\pi$
+			to $\epsilon$-greedy ($Q^\pi$)
+		\end{itemize}
+		\item First consider SARSA, which is an on-policy algorithm
+	\end{itemize}
+	
+\end{frame}
+%--------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{General Form of SARSA Algorithm}
+	
+	\begin{itemize}
+		\item Initialization:
+		\begin{itemize}
+			\item $\epsilon$-greedy policy 
+			\item $t=0$
+			\item initial state $s_t = s_0$
+		\end{itemize} 
+		\item Loop
+		\begin{itemize}
+			\item Take action $a_{t+1} \sim \pi(s_{t+1})$
+			\item Observe $(r_{t+1}, s_{t+2})$
+			\item $Q(s_t,a_t) \to Q(s_t, a_t) + \alpha (r_t + \gamma Q(s_{t+1}, a_{t+1}) - Q(s_t, a_t))$
+			\item $\pi(s_t) \in \argmax_{a\in A} Q(s_t, a)$ with probability $1-\epsilon$, else random
+			\item $t = t+1$
+		\end{itemize} 
+	\end{itemize}
+	
+\end{frame}
+%--------------------------------------------------------------
+%-----------------------------------------------------------------------
+\end{document}

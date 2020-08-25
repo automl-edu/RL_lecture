@@ -1,0 +1,119 @@
+% !TeX spellcheck = en_US
+
+\input{../latex_main/main.tex}
+
+\title[Reinforcement Learning: Model Free Control]{Model Free Control}
+\subtitle{Exploration}
+
+
+
+\begin{document}
+	
+	\maketitle
+
+%----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Recap Model-free Policy Iteration}
+	
+	\begin{itemize}
+		\item Initialize policy $\pi$
+		\item Repeat:
+		\begin{itemize}
+			\item Policy evaluation: compute $Q^\pi$
+			\item Policy improvement: update $\pi$ given $Q^\pi$
+		\end{itemize}
+		\bigskip
+		\pause
+		\item May need to policy evaluation 
+		\begin{itemize}
+			\item If $\pi$ is deterministic, we may not observe all possible actions $A$ in a state $s$
+			\item So, we cannot compute $Q(s,a)$ for any $a \neq \pi(s)$
+		\end{itemize}
+		\pause
+		\item[$\leadsto$] How to interleave policy evaluation and improvement?
+	\end{itemize}
+	
+\end{frame}
+%--------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Policy Evaluation with Exploration}
+	
+	\begin{itemize}
+		\item Want to compute a model-free estimate of $Q^\pi$
+		\item In general seems subtle
+		\begin{itemize}
+			\item Need to try all $(s,a)$ pairs but then follow $\pi$
+			\item Want to ensure resulting estimate $Q^\pi$ is good enough so that policy
+			improvement is a monotonic operator
+		\end{itemize}
+		\item For certain classes of policies can ensure all $(s,a)$ pairs are tried such
+		that asymptotically $Q^\pi$ converges to the true value
+	\end{itemize}
+	
+\end{frame}
+%--------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{$\epsilon$-greedy Policies}
+	
+	\begin{itemize}
+	\item Simple idea to balance exploration and exploitation
+	\item Let $|A|$ be the number of actions
+	\item Then an $\epsilon$-greedy policy wrt a state-action value $Q(s,a)$ is $\pi(a\mid s) \in $
+	\begin{itemize}
+		\item $\argmax_{a\in A} Q(s,a)$ with probability $1 - \epsilon$
+		\item a random action with probability $\epsilon$
+	\end{itemize}
+\end{itemize}
+	
+\end{frame}
+%--------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Monotonic $\epsilon$-greedy Policy Improvement}
+	
+	\begin{itemize}
+		\item Theorem: For any $\epsilon$-greedy policy $\pi_i$, the $\epsilon$-greedy policy wrt $Q^{\pi}_i$ is a monotonic improvement $V^{\pi_{i+1}} \geq V^{\pi_i}$
+	\end{itemize}
+
+\footnotesize
+\begin{eqnarray}
+Q^\pi (s,\pi_{i+1} (s)) &=& \sum_{a \in A} \pi_{i+1}(a \mid s) Q^{\pi_{i}}(s,a)\nonumber\\
+	&=& (\epsilon / |A|) \left[\sum_{a\in A} Q^{\pi_{i}}(s,a) \right] + (1- \epsilon) \max_{a\in A} Q^{\pi_{i}}(s,a)\nonumber\\
+	&=& (\epsilon / |A|) \left[\sum_{a\in A} Q^{\pi_{i}}(s,a) \right] + (1- \epsilon) \max_{a\in A} Q^{\pi_{i}}(s,a)\frac{1-\epsilon}{1-\epsilon}\nonumber\\
+	&=& (\epsilon / |A|) \left[\sum_{a\in A} Q^{\pi_{i}}(s,a) \right] + (1- \epsilon) \max_{a\in A} Q^{\pi_{i}}(s,a)\sum_{a\in A}\frac{\pi_i(a\mid s) - \frac{\epsilon}{|A|}}{1-\epsilon}\nonumber\\
+	&=& (\epsilon / |A|) \left[\sum_{a\in A} Q^{\pi_{i}}(s,a) \right] + (1- \epsilon) \sum_{a\in A}\frac{\pi_i(a\mid s) - \frac{\epsilon}{|A|}}{1-\epsilon} Q^{\pi_{i}}(s,a)\nonumber\\
+	&=& \sum_{a\in A} \pi_i (a \mid s) Q^{\pi_i}(s,a) = V^{\pi_i}(s)\nonumber
+\end{eqnarray}
+	
+\end{frame}
+%--------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Greedy in the Limit of Infinite Exploration (GLIE)}
+	
+	\begin{itemize}
+		\item Definition of GLIE:
+		\begin{itemize}
+			\item All state-action pairs are visited an infinite number of times
+			$$ \lim_{i\to\infty} N_i(s,a) \to \infty$$
+			\item Behavior policy (policy used to act in the world) converges to greedy
+			policy
+			$$\lim_{i\to \infty} \pi(a\mid s) \to \argmax_{a\in A} Q(s,a)$$ with probability 1
+		\end{itemize}
+		\medskip
+		\pause
+		\item Simple Strategy:
+		\begin{itemize}
+			\item $\epsilon$-greedy where $\epsilon$ is annealed to $0$ with $\epsilon_i = 1 / i$
+		\end{itemize}
+		\medskip
+		\pause
+		\item Theorem:
+		\begin{itemize}
+			\item GLIE Monte-Carlo control converges to the optimal state-action value
+			function $Q(s,a) \to Q^*(s,a)$
+		\end{itemize}
+	\end{itemize}
+	
+\end{frame}
+%--------------------------------------------------------------¸
+%-----------------------------------------------------------------------
+\end{document}
