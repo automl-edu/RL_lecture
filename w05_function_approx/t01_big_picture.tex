@@ -1,0 +1,98 @@
+% !TeX spellcheck = en_US
+
+\input{../latex_main/main.tex}
+
+\title[Reinforcement Learning: Function Approximation]{Function Approximation}
+\subtitle{Introduction}
+
+
+\begin{document}
+	
+	\maketitle
+
+%----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Overview}
+	
+	
+\begin{itemize}
+	\item Last time: Control (making decisions) without a model of how the world works
+	\begin{itemize}
+		\item We have to search for a well-performing policy
+		\item We still don't know the MDP model
+		\item We assume that we can model everything \alert{by table look-ups}
+	\end{itemize}
+	\medskip
+	\pause
+	\item This time: How can we learn if it does not fit into a table
+	\begin{itemize}
+		\item table-based RL is often only applicable to toy problems
+		\item the real-world is much more complex
+		\item often we cannot see all kinds of states
+		\item Solution: we approximate the value functions by some kind of function
+		\item[$\leadsto$] First step towards deep reinforcement learning
+	\end{itemize}
+	
+\end{itemize}
+
+\end{frame}
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Value Function Approximation (VFA)}
+	
+	
+	\begin{itemize}
+		\item Represent a (state-action/state) value function with a parameterized
+		function instead of a table
+	\end{itemize}
+	
+	\begin{center}
+		\includegraphics[width=0.6\textwidth]{images/vfa.png}
+	\end{center}
+
+	\begin{itemize}
+		\item For finite action spaces, often represent the Q function as a vector:
+		takes s as input and outputs a vector with one value for each action
+		$[Q(s,a_1), Q(s,a_2), \ldots]$
+	\end{itemize}
+	
+\end{frame}
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Motivation for Value Function Approximation (VFA)}
+	
+	\begin{itemize}
+		\item Don’t want to have to explicitly store or learn for every single state a
+		\begin{itemize}
+			\item Dynamics or reward model
+			\item Value
+			\item State-action value
+			\item Policy
+		\end{itemize}
+		\pause
+		\item Want more compact representation that generalizes across state or
+		states and actions
+		\pause
+		\item When is this possible / a reasonable thing to hope for?
+		\begin{itemize}
+			\item smoothness in the state space (and action space)\\
+			$\leadsto$ in similar states, actions should have similar effects 
+			\item structure in the problem
+		\end{itemize}
+	\end{itemize}
+	
+\end{frame}
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Benefits of Generalization}
+	
+	\begin{itemize}
+		\item Reduce memory needed to store $(P,R) / V / Q / \pi$
+		\item Reduce computation needed to compute $(P,R) / V / Q / \pi$
+		\item Reduce experience needed to find a good $(P,R) / V / Q / \pi$
+	\end{itemize}
+	
+\end{frame}
+%-----------------------------------------------------------------------
+%-----------------------------------------------------------------------
+\end{document}

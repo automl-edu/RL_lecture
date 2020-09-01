@@ -1,0 +1,178 @@
+% !TeX spellcheck = en_US
+
+\input{../latex_main/main.tex}
+
+\title[Reinforcement Learning: Function Approximation]{Function Approximation}
+\subtitle{Gradient Descent and Linear Models}
+
+
+\begin{document}
+	
+	\maketitle
+
+%----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Overview}
+	
+	
+\begin{itemize}
+	\item Represent a (state-action/state) value function with a parameterized
+	function instead of a table
+\end{itemize}
+
+\begin{center}
+	\includegraphics[width=0.6\textwidth]{images/vfa.png}
+\end{center}
+
+\begin{itemize}
+	\item \alert{Which function approximator}
+\end{itemize}
+
+\end{frame}
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Function Approximators}
+	
+	
+	\begin{itemize}
+		\item Many possible function approximators including
+		\begin{itemize}
+			\item linear combinations of features
+			\item Neural networks
+			\item Decision trees
+			\item Nearest neighbors 
+			\item Fourier / wavelet bases
+		\end{itemize}
+		\item Focus on differentiable function approximators
+		\item Let's start with linear feature representations
+	\end{itemize}
+	
+\end{frame}
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Recap: Gradient Descent}
+	
+	
+	\begin{itemize}
+		\item Consider a function $J(\vec{w})$ that is differentiable function of a parameter vector $\vec{w}$
+		\item Goal is to find parameter $\vec{w}$ that minimizes $J$
+		\item The gradient of $J(\vec{w})$ is 
+	\end{itemize}
+	$$
+	\nabla J(\vec{w}) = \left[ \frac{\partial J}{\vec{w}_1} \ldots \frac{\partial J}{\vec{w}_n} \right]
+	$$
+	$$\vec{w}_t = \vec{w}_{t-1} - \alpha \nabla_w J(\vec{w})$$
+	
+	where $\alpha$ is the learning rate.
+
+	
+\end{frame}
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Value Function Approximation for Policy Evaluation with
+		an Oracle}
+	
+	
+	\begin{itemize}
+		\item First assume we could query any state s and an \alert{oracle} would return
+		the true value for $V^\pi (s)$
+		\item The objective was to find the best approximate representation of $V^\pi$
+		given a particular parameterized function
+	\end{itemize}
+	
+\end{frame}
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Stochastic Gradient Descent}
+	
+	
+	\begin{itemize}
+		\item Goal: Find the parameter vector $\vec{w}$ that minimizes the loss between a
+		true value function $V^\pi(s)$ and its approximation $\hat{V}^\pi(s; \vec{w})$ as
+		represented with a particular function class parameterized by $\vec{w}$.
+		\item Generaly use mean squared error and define the loss as 
+		$$ J(\vec{w}) = \mathbb{E}_\pi [(V^\pi(s) - \hat{V}^\pi(s;\vec{w}))^2]$$
+		\item Use gradient descent to find a local minimum 
+		$$ \Delta \vec{w} = - \frac{1}{2} \alpha \nabla_\vec{w} J(\vec{w})$$
+		\item Stochastic gradient descent (SGD) uses a finite number of samples to compute an approximate gradient:
+		$$ \nabla_\vec{w} J(\vec{w}) = \nabla_{\vec{w}} \mathbb{E}_\pi[V^\pi (s) - \hat{V}^\pi (s; \vec{w})]^2$$
+		$$= \mathbb{E}_\pi [2 (V^\pi(s) - \hat{V}^\pi (s;\vec{w})) \nabla_\vec{w} \hat{V}(s,\vec{w})]$$
+	\end{itemize}
+	
+\end{frame}
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Model Free VFA Policy Evaluation}
+	
+	
+	\begin{itemize}
+		\item In practice, we don’t actually have access to an oracle to tell true $V^\pi(s)$ for any
+		state $s$
+		\item Now consider how to do model-free value function approximation for
+		prediction / evaluation / policy evaluation without a model
+	\end{itemize}
+	
+\end{frame}
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Model Free VFA Prediction / Policy Evaluation}
+	
+	
+	\begin{itemize}
+		\item Recall model-free policy evaluation
+		\begin{itemize}
+			\item Following a fixed policy $\pi$ (or had access to prior data)
+			\item Goal is to estimate $V^\pi$ and/or $Q^\pi$
+		\end{itemize}
+		\item Maintained a lookup table to store estimates $V^\pi$ and/or $Q^\pi$
+		\item Updated these estimates after each episode (Monte Carlo methods)
+		or after each step (TD methods)
+		\item New: in value function approximation, change the estimate
+		update step to include fitting the function approximator
+	\end{itemize}
+	
+\end{frame}
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Model Free VFA Prediction / Policy Evaluation}
+	
+	
+	\begin{itemize}
+		\item Use a feature vector to represent a state $s$
+	\end{itemize}
+
+$$\vec{x}(s) = \begin{pmatrix}
+\vec{x}_1(s)\\
+\vec{x}_2(s)\\
+\ldots\\
+\vec{x}_n(s)
+\end{pmatrix} $$
+
+\begin{itemize}
+	\item For table lookups, we have not really needed that because we only needed to know which table entry to look up
+\end{itemize}
+	
+\end{frame}
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Linear Value Function Approximation for Prediction With
+		An Oracle}
+	
+	
+	\begin{itemize}
+		\item Represent a value function (or state-action value function) for a
+		particular policy with a weighted linear combination of features
+		$$ \hat{V}(s; \vec{w}) = \sum_{j=1}^n \vec{x}_j (s) \vec{w}_j = \vec{x}(s)^T\vec{w}$$
+		\item Objective function is 
+		$$ J(\vec{w}) = \mathbb{E}[(V^\pi(s) - \hat{V}^\pi(s; \vec{w}))^2]$$
+		\item Recall weight update:
+		$$ \Delta \vec{w} = - \frac{1}{2} \alpha \nabla_{\vec{w}} J (\vec{w})$$
+		\item Update (- step size $\times$ prediction error $\times$ feature value)
+		$$ \Delta \vec{w} = -\frac{1}{2} \alpha(2(V^\pi(s) - \vec{x}(s)^T \vec{w})) \vec{x}(s)$$
+		
+	\end{itemize}
+	
+\end{frame}
+%-----------------------------------------------------------------------
+%-----------------------------------------------------------------------
+\end{document}

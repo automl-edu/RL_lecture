@@ -1,0 +1,83 @@
+% !TeX spellcheck = en_US
+
+\input{../latex_main/main.tex}
+
+\title[Reinforcement Learning: Function Approximation]{Function Approximation}
+\subtitle{VFA: MC and TD}
+
+
+\begin{document}
+	
+	\maketitle
+
+%----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Overview}
+	
+	
+\begin{itemize}
+	\item Represent a (state-action/state) value function with a parameterized
+	function instead of a table
+\end{itemize}
+
+\begin{center}
+	\includegraphics[width=0.6\textwidth]{images/vfa.png}
+\end{center}
+
+\begin{itemize}
+	\item \alert{Which function approximator}
+\end{itemize}
+
+\end{frame}
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Monte Carlo Value Function Approximation}
+	
+	
+	\begin{itemize}
+		\item Return $G_t$ is an unbiased but noisy sample of the true expected return $V^\pi(s_t)$
+		\item Therefore, we can reduce MC VFA to doing supervised learning on a set of (state, return) pairs; $\langle s_1, G_1 \rangle, \langle s_2, G_2 \rangle,\ldots, \langle s_T, G_T \rangle$
+		\begin{itemize}
+			\item Substitute $G_t$ for the true $V^\pi(s)$ when fit function approximator
+		\end{itemize}
+		\item Concretely when using linear VFA for policy evaluation
+		
+		\begin{eqnarray}
+		 \Delta \vec{w} &=& \alpha (G_t - \hat{V} (s_t, \vec{w})) \nabla_\vec{w}\hat{V}(s_t; \vec{w}) \nonumber\\
+		 &=& \alpha (G_t - \hat{V} (s_t, \vec{w})) \vec{x}(s_t) \nonumber\\
+		 &=& \alpha (G_t - \vec{x}(s_t)^T \vec{w}) \vec{x}(s_t) \nonumber
+		\end{eqnarray}
+		
+		\item Note: $G_t$ may be a very noisy estimate of true return
+		
+	\end{itemize}
+	
+\end{frame}
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{MC Linear Value Function Approximation for Policy
+		Evaluation}
+	
+
+Initialize $\vec{w}= 0$, $k=1$\\
+Loop	
+	\begin{itemize}
+		\item Sample $k$-th episode $s_{k,1}, a_{k,1}, r_{k,1}, s_{k,2}, a_{k,2}, r_{k,2}, \ldots$
+		\item for $t=1, \ldots, L_k$ do
+		\begin{itemize}
+			\item If First visit to $s$ in episode $k$ then
+			\begin{itemize}
+					\item $G_t(s) = \sum_{j}^{L_k} r_{k,j}$
+					\item Update weights by $\alpha (G_t - \vec{x}(s_{k,t})^T \vec{w}) \vec{x}(s_{k,t})$
+			\end{itemize}
+		\end{itemize}
+	\item $k = k + 1$
+	\end{itemize}
+	
+\end{frame}
+%-----------------------------------------------------------------------
+
+
+
+%-----------------------------------------------------------------------
+\end{document}
