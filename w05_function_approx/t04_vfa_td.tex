@@ -1,0 +1,60 @@
+% !TeX spellcheck = en_US
+
+\input{../latex_main/main.tex}
+
+\title[Reinforcement Learning: Function Approximation]{Function Approximation}
+\subtitle{VFA: Temporal Difference}
+
+
+\begin{document}
+	
+	\maketitle
+
+%----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Recall: Temporal Difference Learning w/ Lookup Table}
+	
+	\begin{itemize}
+		\item Uses bootstrapping and sampling to approximate $V^\pi$
+		\item Updates $V^\pi(s)$ after each transition $(s,a,r,s')$
+		$$V^\pi(s) = V^\pi (s) + \alpha(r + \gamma V^\pi (s') - V\pi(s)) $$
+		\item Target is $r + \gamma V^\pi(s')$, a biased estimate of the true value $V^\pi(s)$
+		\item Represent value for each state with a seperate table entry
+	\end{itemize}
+
+\end{frame}
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Temporal Difference (TD(0)) Learning with Value
+		Function Approximation}
+	
+	\begin{itemize}
+		\item Uses bootstrapping and sampling to approximate $V^\pi$
+		\item Updates $V^\pi(s)$ after each transition $(s,a,r,s')$
+		$$V^\pi(s) = V^\pi (s) + \alpha(r + \gamma V^\pi (s') - V\pi(s)) $$
+		\item Target is $r + \gamma V^\pi(s')$, a biased estimate of the true value $V^\pi(s)$
+		\item In value function approxmation, target is $r + \gamma \hat{V}^\pi (s'; \vec{w})$, a biased and approximated estimate of the true value $V^\pi(s)$
+		\item 3 forms of approximation: 
+		\begin{itemize}
+			\item sampling
+			\item bootstrapping
+			\item VFA
+		\end{itemize}
+	\end{itemize}
+	
+\end{frame}
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Temporal Difference (TD(0)) Learning with Value
+		Function Approximation}
+	
+	\begin{itemize}
+		\item In value function approxmation, target is $r + \gamma \hat{V}^\pi (s'; \vec{w})$, a biased and approximated estimate of the true value $V^\pi(s)$
+		\item Can reduce doing TD(0) learning with value function approximation to supervised learning on a set of data pairs
+		$$\langle  s_1, r_1+ \gamma \hat{V}^\pi (s_2; \vec{w}) \rangle, \langle  s_2, r_2+ \gamma \hat{V}^\pi (s_3; \vec{w}) \rangle, \ldots $$
+	\end{itemize}
+	
+\end{frame}
+%-----------------------------------------------------------------------
+%-----------------------------------------------------------------------
+\end{document}

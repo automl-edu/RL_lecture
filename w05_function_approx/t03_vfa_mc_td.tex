@@ -3,7 +3,7 @@
 \input{../latex_main/main.tex}
 
 \title[Reinforcement Learning: Function Approximation]{Function Approximation}
-\subtitle{VFA: MC and TD}
+\subtitle{VFA: Monte Carlo}
 
 
 \begin{document}
@@ -31,7 +31,7 @@
 \end{frame}
 %-----------------------------------------------------------------------
 %----------------------------------------------------------------------
-\begin{frame}[c]{Monte Carlo Value Function Approximation}
+\begin{frame}[c]{Monte Carlo Value Function Approximation (VFA)}
 	
 	
 	\begin{itemize}
@@ -76,8 +76,36 @@ Loop
 	
 \end{frame}
 %-----------------------------------------------------------------------
-
-
-
+%----------------------------------------------------------------------
+\begin{frame}[c]{Convergence Guarantees for Linear Value Function	Approximation for Policy Evaluation: Preliminaries}
+	
+	\begin{itemize}
+		\item For infinite horizon, the Markov Chain defined by a MDP with a particular policy will eventually converge to a probability distribution over states $d(s)$
+		\item $d(s)$ is called the stationary distribution over states of $\pi$
+		\item $\sum_{s} d(s) = 1$
+		\item $d(s)$ statisfies the following balance equation:
+		$$ d(s') = \sum_{s} \sum_{a} \pi(a \mid s) p(s' \mid s,a) d(s) $$
+	\end{itemize}
+	
+\end{frame}
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Convergence Guarantees for Linear Value Function
+		Approximation for Policy Evaluation \litw{Tsitsiklis and Van Roy. 1997}}
+	
+	\begin{itemize}
+		\item Define the mean squarred error of a linear value function approximation for a partiicular policiy $\pi$  relative to the true value as 
+		$$\text{MSVE}(\vec{w}) = \sum_{s \in S} d(s) (V^\pi (s) - \hat{V}^\pi(s;\vec{w}))^2 $$
+		\item where
+		\begin{itemize}
+			\item $d(s)$: stationary distribution of $\pi$ in the true decision process
+			\item $\hat{V}^\pi(s;\vec{w}) = \vec{x}(s)^T\vec{w}$, a linear value function approximation
+		\end{itemize}
+		\item Monte Carlo policy evaluation with VFA converges to the weights $\vec{w}_{MC}$ which has the minimum mean squared error possible:
+		$$\text{MSVE}(\vec{w}_{MC}) = \min_{\vec{w}}\sum_{s \in S} d(s) (V^\pi (s) - \hat{V}^\pi(s;\vec{w}))^2 $$
+	\end{itemize}
+	
+\end{frame}
+%-----------------------------------------------------------------------
 %-----------------------------------------------------------------------
 \end{document}
