@@ -52,7 +52,63 @@
 		\item In value function approxmation, target is $r + \gamma \hat{V}^\pi (s'; \vec{w})$, a biased and approximated estimate of the true value $V^\pi(s)$
 		\item Can reduce doing TD(0) learning with value function approximation to supervised learning on a set of data pairs
 		$$\langle  s_1, r_1+ \gamma \hat{V}^\pi (s_2; \vec{w}) \rangle, \langle  s_2, r_2+ \gamma \hat{V}^\pi (s_3; \vec{w}) \rangle, \ldots $$
+		\item Find weights to minimize mean squared error
+		$$J(\vec{w}) = \mathbb{E}_\pi [(r_j + \gamma \hat{V}^\pi(s_{j+1}, \vec{w}) - \hat{V}(s_j;\vec{w}))^2]$$
 	\end{itemize}
+	
+\end{frame}
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Temporal Difference (TD(0)) Learning with Value
+		Function Approximation}
+	
+	\begin{itemize}
+		\item In value function approxmation, target is $r + \gamma \hat{V}^\pi (s'; \vec{w})$, a biased and approximated estimate of the true value $V^\pi(s)$
+		\item Can reduce doing TD(0) learning with value function approximation to supervised learning on a set of data pairs
+		$$\langle  s_1, r_1+ \gamma \hat{V}^\pi (s_2; \vec{w}) \rangle, \langle  s_2, r_2+ \gamma \hat{V}^\pi (s_3; \vec{w}) \rangle, \ldots $$
+		\item In linear TD(0):
+	\end{itemize}
+
+\begin{eqnarray}
+\Delta \vec{w} &=& \alpha( r + \gamma \hat{V}^\pi(s'; \vec{w}) - \hat{V}^\pi(s;\vec{w})) \nabla_\vec{w} \hat{V}^\pi (s;\vec{w})\nonumber\\
+&=& \alpha( r + \gamma \hat{V}^\pi(s'; \vec{w}) - \hat{V}^\pi(s;\vec{w})) \vec{x}(s)\nonumber\\
+&=& \alpha( r + \gamma \vec{x}(s')^T \vec{w} - \vec{x}(s)^T\vec{w}) \vec{x}(s)\nonumber
+\end{eqnarray}
+	
+\end{frame}
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Temporal Difference (TD(0)) Learning with Value
+		Function Approximation}
+
+Initialize $\vec{w}= 0$, $k=1$;\\
+Loop
+	\begin{itemize}
+		\item Sample tuple $(s_k, a_k, r_k, s_{k+1})$ given $\pi$
+		\item Update weights:
+		$$ \vec{w} = \vec{w} + \alpha( r + \gamma \vec{x}(s')^T \vec{w} - \vec{x}(s)^T\vec{w}) \vec{x}(s) $$
+		\item $k = k + 1$
+	\end{itemize}
+
+\end{frame}
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Convergence Guarantees for Linear Value Function
+		Approximation for Policy Evaluation}
+	
+\begin{itemize}
+	\item Define the mean squared error of a linear value function
+	approximation for a particular policy $\pi$ relative to the true value as
+	$$\text{MSVE}(\vec{w}) = \sum_{s\in S} d(s) (V^\pi(s) - \hat{V}^\pi (s;\vec{w}))^2$$
+	\item where
+	\begin{itemize}
+		\item $d(s):$ stationary distribution of $\pi$ in the true decision process
+		\item $\hat{V}(s;\vec{w}) = \vec{x}(s)^T \vec{w}$, a linear value function approximation
+	\end{itemize}
+	\item TD(0) policy evaluation with VFA converges to weights $\vec{w}_TD$ which is a constant factor of the minimum mean squarred error possible:
+	$$\text{MSVE}(\vec{w}_TD) \leq \frac{1}{1-\gamma} \min_\vec{w}\sum_{s\in S} d(s) (V^\pi(s) - \hat{V}(s;\vec{w}))^2$$
+\end{itemize}
+
 	
 \end{frame}
 %-----------------------------------------------------------------------
