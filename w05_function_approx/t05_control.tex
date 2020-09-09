@@ -1,0 +1,88 @@
+% !TeX spellcheck = en_US
+
+\input{../latex_main/main.tex}
+
+\title[Reinforcement Learning: Function Approximation]{Function Approximation}
+\subtitle{Control using VFA}
+
+
+\begin{document}
+	
+	\maketitle
+
+%----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Control using Value Function Approximation}
+	
+	\begin{itemize}
+		\item Use value function approximation to represent state-action values $\hat{Q}^\pi(s,a;\vec{w}) \approx Q^\pi$
+		\item Interleave
+		\begin{itemize}
+			\item Approximate policy evaluation using value function approximation
+			\item Perform $\epsilon$-greedy policy improvement
+		\end{itemize}
+		\item Can be unstable. Generally involves intersection of the following:
+		\begin{itemize}
+			\item Function approximation
+			\item Bootstrapping
+			\item \alert{Off-policy learning}
+		\end{itemize}
+	\end{itemize}
+
+\end{frame}
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Action-Value Function Approximation with an Oracle}
+	
+	\begin{itemize}
+		\item $\hat{Q}^\pi(s,a;\vec{w}) \approx Q^\pi$
+		\item Minimize the mean-squarred error between the true action-value function $Q^\pi(s,a)$ and the approximate action-value function:
+		$$J(\vec{w}) = \mathbb{E}_\pi [(Q^\pi(s,a) - \hat{Q}^\pi(s,a;\vec{w}))^2] $$
+		\item Use stochastic gradient descent to find a local minimum
+		\begin{eqnarray}
+			-\frac{1}{2}\nabla_\vec{w} J(\vec{w}) &=& \mathbb{E}\left[ (Q^\pi(s,a) - \hat{Q}^\pi(s,a;\vec{w})) \nabla_\vec{w} \hat{Q}^\pi(s,a;\vec{w}) \right]\nonumber\\
+			\Delta \vec{w} &=& -\frac{1}{2}\alpha\nabla_\vec{w} J(\vec{w})\nonumber
+		\end{eqnarray}
+		\item Stochastic gradient descent (SGD) samples the gradient
+	\end{itemize}
+	
+\end{frame}
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Linear State Action Value Function Approximation with an
+		Oracle}
+	
+	\begin{itemize}
+		\item Use features to represent both the state and action
+		$$\vec{x}(s,a) = \begin{pmatrix}
+		\vec{x}_1(s,a)\\
+		\vec{x}_2(s,a)\\
+		\ldots\\
+		\vec{x}_n(s,a)
+		\end{pmatrix} $$
+		\item Represent state-action value function with a weighted linear
+		combination of features
+		$$\hat{Q}(s,a;\vec{w}) = \vec{x}(s,a)^T \vec{w} = \sum_{j=1}^n x_j(s,a)w_j $$
+		\item Stochastic gradient descent update
+		$$\nabla_{\vec{w}} J(\vec{w}) = \nabla_{\vec{w}} \mathbb{E}_\pi [(Q^\pi(s,a) - \hat{Q}^\pi(s,a;\vec{w}))^2] $$
+	\end{itemize}
+	
+\end{frame}
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Incremental Model-Free Control Approaches}
+	
+	\begin{itemize}
+		\item Similar to policy evaluation, true state-action value function for a state is unknown and so substitute a target value
+		\item In Monte Carlo methods, use a return $G_t$ as a substitute target
+		$$\Delta \vec{w} = \alpha(G_t - \hat{Q}(s_t,a_t; \vec{w})) \nabla_{\vec{w}} \hat{Q}(s_t, a_t; \vec{w}) $$
+		\item For SARSA instead use a TD target $r+ \gamma \hat{Q}(s', a'; \vec{w})$ which leverages the current function approximations value
+		$$\Delta \vec{w} = \alpha (r + \gamma \hat{Q}(s',a';\vec{w}) - \hat{Q}(s,a;\vec{w})) \nabla_{\vec{w}}\hat{Q}(s,a;\vec{w}) $$
+		\item For Q-learning instead use a TD target $t + \gamma \max_{a'} \hat{Q}(s',a';\vec{w})$ which leverages the max of the current function approximations value
+		$$\Delta \vec{w} = \alpha (r + \gamma \max_{a'} \hat{Q}(s',a';\vec{w}) - \hat{Q}(s,a;\vec{w})) \nabla_{\vec{w}}\hat{Q}(s,a;\vec{w}) $$
+	\end{itemize}
+	
+\end{frame}
+%-----------------------------------------------------------------------
+%-----------------------------------------------------------------------
+\end{document}
