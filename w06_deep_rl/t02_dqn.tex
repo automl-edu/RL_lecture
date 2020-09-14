@@ -1,3 +1,4 @@
+% !TeX spellcheck = en_US
 
 \input{../latex_main/main.tex}
 
@@ -62,9 +63,107 @@
 	\item Reward is change in score for that step
 	\item Network architecture and hyperparameters fixed across all games
 \end{itemize}
+
+\centering
+\includegraphics[width=0.8\textwidth]{images/atari_dqn_arch.png}
+
+\begin{flushright}
+	\footnotesize
+	\vspace{-0.1cm}
+	DQN source code: \url{sites.google.com/a/deepmind.com/dqn/}
+\end{flushright}
 	
 \end{frame}
 %-----------------------------------------------------------------------
-
+%----------------------------------------------------------------------
+\begin{frame}[c]{Q-Learning with Value Function Approximation}
+	
+	\begin{itemize}
+		\item Minimize MSE loss by stochastic gradient descent
+		\item Converges to the optimal $Q^*(s,a)$ using \alert{table lookup} representation
+		\item But Q-learning with VFA can diverge
+		\item Two of the issues causing problems:
+		\begin{itemize}
+			\item Correlations between samples
+			\item Non-stationary targets
+		\end{itemize}
+		\item Deep Q-learning (DQN) addresses both of these challenges by
+		\begin{itemize}
+			\item Experience replay
+			\item Fixed Q-targets
+		\end{itemize}
+	\end{itemize}
+	
+\end{frame}
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Q-Learning with Value Function Approximation}
+	
+	\begin{itemize}
+		\item To help remove correlations, store dataset (called a \alert{replay buffer}) $\mathcal{D}$ from prior experience
+		\item To perform experience replay, repeat the following:
+		\begin{enumerate}
+			\item $(s,a,r,s')\sim \mathcal{D}$: sample experience tuple from the dataset
+			\item Compute the target value for the sampled $s$: $r+\gamma \max_{a'} \hat{Q}(s',a';\vec{w})$
+			\item Use stochastic gradient descent to update the network weights
+			$$\Delta \vec{w} = \alpha (r + \gamma \max_{a'} \hat{Q}(s',a';\vec{w}) - \hat{Q}(s,a;\vec{w})) \nabla_{\vec{w}}\hat{Q}(s,a;\vec{w})$$
+		\end{enumerate}
+		\pause
+		\item Remarks:
+		\begin{itemize}
+			\item Fixed sized buffer $\leadsto$ first-in - first-out scheme (as default implementation)
+			\item heuristic trade-off between performing new episodes and sampling from the replay buffer
+		\end{itemize}
+			
+		\medskip
+		\pause
+		\item[$\leadsto$] Can treat the target as a scalar, but the weights will get
+		updated on the next round, changing the target value
+	\end{itemize}
+	
+\end{frame}
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{DQNs: Fixed Q-Targets}
+	
+	\begin{itemize}
+		\item To help improve stability, fix the \alert{target weights} used in the target calculation for multiple updates
+		\item Target network uses a different set of weights than the weights being updated
+		\item Let parameters $\vec{w}^-$ be the set of weights used in the target and $\vec{w}$ be the weights that are being updated
+		\item Slight change to computation of target value:
+		\begin{itemize}
+			\item $(s,a,r,s')\sim \mathcal{D}$: sample experience tuple from the dataset
+			\item Compute the target value for the sampled $s$: $r+\gamma \max_{a'} \hat{Q}(s',a';\vec{w}^-)$
+			\item Use stochastic gradient descent to update the network weights
+			$$\Delta \vec{w} = \alpha (r + \gamma \max_{a'} \hat{Q}(s',a';\vec{w}^-) - \hat{Q}(s,a;\vec{w})) \nabla_{\vec{w}}\hat{Q}(s,a;\vec{w})$$
+		\end{itemize}
+		\smallskip 
+		\pause
+		\item Remark:
+		\begin{itemize}
+			\item Hyperparameter how often you update $\vec{w}^-$
+			\item Trade-off between updating too often ($\leadsto$ instability) and too rarely ($\leadsto$ too old state information)
+		\end{itemize}
+	\end{itemize}
+	
+\end{frame}
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{DQN Summary}
+	
+	\begin{itemize}
+		\item DQN uses experience replay and fixed Q-targets
+		\item Store transition $(s_t, a_t, r_{t+1}, s_{t+1})$ in reply memory $\mathcal{D}$
+		\item Sample random mini-batch of transitions $(s,a,r,s')$ from $\mathcal{D}$
+		\item Compute Q-learning targets wrt old, fixed parameters $\vec{w}^-$
+		\begin{itemize}
+			\item Update $\vec{w}^-$ from time to time
+		\end{itemize}
+		\item Optimizes MSE between Q-network and Q-learning targets
+		\item Uses stochastic gradient descent
+	\end{itemize}
+	
+\end{frame}
+%-----------------------------------------------------------------------
 %-----------------------------------------------------------------------
 \end{document}
