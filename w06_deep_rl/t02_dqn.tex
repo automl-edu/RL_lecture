@@ -1,0 +1,70 @@
+
+\input{../latex_main/main.tex}
+
+\title[Reinforcement Learning: Deep Reinforcement Learning]{RL: Deep}
+\subtitle{DQN}
+
+
+
+\begin{document}
+	
+	\maketitle
+
+%----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{RL with Function Approximation}
+	
+\begin{itemize}
+	\item Represent state-action value function by $Q$-network with weights $\vec{w}$
+	$$\hat{Q}(s,a;\vec{w}) \approx Q(s,a)$$
+\end{itemize}
+
+\centering
+\includegraphics[width=0.7\textwidth]{../w05_function_approx/images/vfa.png}
+
+
+\end{frame}
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Recall: Incremental Model-Free Control Approaches}
+	
+\begin{itemize}
+	\item Similar to policy evaluation, true state-action value function for a state is unknown and so substitute a target value
+	\item In Monte Carlo methods, use a return $G_t$ as a substitute target
+	$$\Delta \vec{w} = \alpha(G_t - \hat{Q}(s_t,a_t; \vec{w})) \nabla_{\vec{w}} \hat{Q}(s_t, a_t; \vec{w}) $$
+	\item For SARSA instead use a TD target $r+ \gamma \hat{Q}(s', a'; \vec{w})$ which leverages the current function approximations value
+	$$\Delta \vec{w} = \alpha (r + \gamma \hat{Q}(s',a';\vec{w}) - \hat{Q}(s,a;\vec{w})) \nabla_{\vec{w}}\hat{Q}(s,a;\vec{w}) $$
+	\item For Q-learning instead use a TD target $t + \gamma \max_{a'} \hat{Q}(s',a';\vec{w})$ which leverages the max of the current function approximations value
+	$$\Delta \vec{w} = \alpha (r + \gamma \max_{a'} \hat{Q}(s',a';\vec{w}) - \hat{Q}(s,a;\vec{w})) \nabla_{\vec{w}}\hat{Q}(s,a;\vec{w}) $$
+\end{itemize}
+	
+\end{frame}
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Using these ideas to do Deep RL in Atari}
+	
+\centering
+\includegraphics[width=0.7\textwidth]{images/atari_deep_rl.png}
+
+\begin{flushright}
+	Image by David Silver
+\end{flushright}
+	
+\end{frame}
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Using these ideas to do Deep RL in Atari}
+	
+\begin{itemize}
+	\item End-to-end learning of values $Q(s, a)$ from pixels $s$
+	\item Input state $s$ is stack of raw pixels from last $4$ frames
+	\item Output is $Q(s, a)$ for $18$ joystick/button positions
+	\item Reward is change in score for that step
+	\item Network architecture and hyperparameters fixed across all games
+\end{itemize}
+	
+\end{frame}
+%-----------------------------------------------------------------------
+
+%-----------------------------------------------------------------------
+\end{document}

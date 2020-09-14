@@ -1,0 +1,81 @@
+
+\input{../latex_main/main.tex}
+
+\title[Reinforcement Learning: Deep Reinforcement Learning]{RL: Deep}
+\subtitle{The Big Picture}
+
+
+
+\begin{document}
+	
+	\maketitle
+
+%----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{RL with Function Approximation}
+	
+	\begin{itemize}
+		\item Linear value function approximators (VFA) assume value function is a weighted combination of a set of features, where each feature a function of the state
+		\begin{itemize}
+		\item Linear VFA often work well given the \alert{right set of features}
+		\item But can require carefully hand designing that feature set
+		\begin{itemize}
+			\item Same argument as in traditional ML vs. deep ML
+		\end{itemize}
+		\end{itemize}
+		\item An alternative is to use a much richer function approximation class that is able to directly go from states without requiring an explicit specification of features
+		\begin{itemize}
+			\item E.g., the state is simply an image (or a sequence of images)
+		\end{itemize}
+		\item Local representations including Kernel based approaches have some	appealing properties (including convergence results under certain	cases) but can’t typically scale well to enormous spaces and datasets
+		\item[$\leadsto$] RL with deep neural networks is often state of the art these days!
+	\end{itemize}
+
+\end{frame}
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{The Benefit of Deep Neural Network Approximators}
+	
+	\begin{itemize}
+		\item Uses distributed representations instead of local representations
+		\item Universal function approximator
+		\item Can potentially need exponentially less nodes/parameters (compared to
+		a shallow net) to represent the same function
+		\item Can learn the parameters using stochastic gradient descent
+	\end{itemize}
+
+\end{frame}
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Learning from Images}
+	
+\centering
+\includegraphics[width=0.3\textwidth]{../w01_big_picture/images/nature_atari_rl.jpg}
+\includegraphics[width=0.3\textwidth]{images/breakout.png}
+\includegraphics[width=0.3\textwidth]{images/space_invaders.png}
+
+\begin{flushright}
+See \url{https://gym.openai.com/envs/\#atari}	
+\end{flushright}
+
+	
+\end{frame}
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Deep Reinforcement Learning}
+
+	\begin{itemize}
+		\item Use deep neural networks to represent
+		\begin{itemize}
+			\item Value, Q function
+			\item Policy
+			\item (Model of the environment)
+		\end{itemize}
+		\item Optimize loss function by stochastic gradient descent (SGD)
+	\end{itemize}
+	
+\end{frame}
+%-----------------------------------------------------------------------
+
+%-----------------------------------------------------------------------
+\end{document}
