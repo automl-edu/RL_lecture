@@ -1,0 +1,70 @@
+% !TeX spellcheck = en_US
+
+\input{../latex_main/main.tex}
+
+\title[Reinforcement Learning: Deep Reinforcement Learning]{RL: Deep}
+\subtitle{Dueling Networks}
+
+
+
+\begin{document}
+	
+	\maketitle
+
+%----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Value \& Advantage Function}
+	
+
+\begin{itemize}
+	\item Intuition: Features need to accurate represent value may be different
+	than those needed to specify difference in actions
+	\item E.g.
+	\begin{itemize}
+		\item Game score may help accurately predict $V(s)$
+		\item But not necessarily in indicating relative action values $Q(s,a_1)$ vs $Q(s,a_2)$
+	\end{itemize}
+	\item Advantage function \lit{Baird 1993}
+	$$A^\pi (s,a) = Q^\pi(s,a) - V^\pi(s) $$
+\end{itemize}
+	
+\end{frame}
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Dueling DQN \litw{\href{https://arxiv.org/abs/1511.06581}{Wang et al. 2016}}}
+
+\begin{center}
+Standard DQN
+
+\includegraphics[width=0.5\textwidth]{images/dueling_networks.png}
+
+Dueling DQN
+\end{center}
+
+\begin{itemize}
+	\item Above head predicts $V(s)$
+	\item Heads below predicts $A(s,a_1)$, $A(s,a_2)$, $\ldots$
+	\item Combination: $Q(s,a_1)$, $Q(s,a_2)$, $\ldots$
+\end{itemize}
+	
+\end{frame}
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Dueling DQN \litw{\href{https://arxiv.org/abs/1511.06581}{Wang et al. 2016}}}
+	
+	\begin{itemize}
+	\item Advantage function \lit{Baird 1993}
+	$$A^\pi (s,a) = Q^\pi(s,a) - V^\pi(s) $$
+	\item Consider a network that outputs $V(s; \vec{w}_1, \vec{w}_2)$ as well as advantage $A(s,a; \vec{w}_1, \vec{w}_3)$ where $\vec{w}_i$ are the weights of the different parts of the network
+	\item To construct $Q$ could use $$Q(s,a;\vec{w}_1, \vec{w}_2, \vec{w}_3) = V(s;\vec{w}_1, \vec{w}_2) + A(s,a;\vec{w}_1, \vec{w}_3)$$
+	%\item Do we expect that this architecture will result in us learning a good estimate of true $V$ or $A$?
+	\bigskip
+	\pause
+	\item Challenge: There hasn't have to be a unique advantage function
+
+	\end{itemize}
+	
+\end{frame}
+%-----------------------------------------------------------------------
+%-----------------------------------------------------------------------
+\end{document}

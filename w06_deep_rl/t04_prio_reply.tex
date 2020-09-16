@@ -1,0 +1,62 @@
+% !TeX spellcheck = en_US
+
+\input{../latex_main/main.tex}
+
+\title[Reinforcement Learning: Deep Reinforcement Learning]{RL: Deep}
+\subtitle{Prioritized Reply}
+
+
+
+\begin{document}
+	
+	\maketitle
+
+%----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Impact of Replay?}
+	
+
+\begin{itemize}
+	\item In tabular TD-learning, \alert{order} of replaying updates could help speed
+	learning
+	\item Repeating some updates seem to better propagate info than others
+	\item Systematic ways to prioritize updates?
+\end{itemize}
+	
+\end{frame}
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Potential Impact of Ordering Episodic Replay Updates \litw{\href{https://arxiv.org/abs/1511.05952}{Schaul et al. 16}}}
+	
+	\includegraphics[width=1.0\textwidth]{images/oracle_reply.png}
+	
+	\begin{itemize}
+		\item Oracle: picks $(s, a, r , s' )$ tuple to replay that will minimize global loss
+		\item Exponential improvement in convergence
+		\begin{itemize}
+			\item 		Number of updates needed to converge
+		\end{itemize}
+		\item Oracle is not a practical method but illustrates impact of ordering
+	\end{itemize}
+	
+\end{frame}
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Prioritized Experience Replay \litw{\href{https://arxiv.org/abs/1511.05952}{Schaul et al. 16}}}
+	
+	
+	\begin{itemize}
+		\item Let $i$ be the index of the $i$-th tuple of experience $(s_i,a_i,r_i,s_{i+1})$
+		\item Sample tuples for update using priority function
+		\item Priority of a tuple $i$ is proportional to DQN error
+		$$ p_i = | r + \gamma \max_{a' \in A} Q(s_{i+1}, a'; \vec{w}^-) - Q(s_i,a;\vec{w}) |$$
+		\item Update $p_i$ every update. $p_i$ for new tuples is set to maximum value
+		\item One method: proportional (stochastic priorization)
+		$$ P(i) = \frac{p_i^\beta}{\sum_k p_k^\beta}$$
+		\item $\beta = 0$ yields random selections 
+	\end{itemize}
+	
+\end{frame}
+%-----------------------------------------------------------------------
+%-----------------------------------------------------------------------
+\end{document}

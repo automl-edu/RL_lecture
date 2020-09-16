@@ -1,0 +1,63 @@
+% !TeX spellcheck = en_US
+
+\input{../latex_main/main.tex}
+
+\title[Reinforcement Learning: Deep Reinforcement Learning]{RL: Deep}
+\subtitle{Double DQN}
+
+
+
+\begin{document}
+	
+	\maketitle
+
+%----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Recall: Double Q-Learning}
+	
+	\begin{itemize}
+		\item Initialization:
+		\begin{itemize}
+			\item $Q_1(s,a)$ and $Q_2(s,a)$ for $\forall s \in S, a\in A$
+			\item $t= 0$
+			\item initial state $s_t = s_0$
+		\end{itemize}
+		\item Loop
+		\begin{itemize}
+			\item Select $a_t$ using $\epsilon$-greedy $\pi(s) = \argmax_{a \in A} Q_1(s_t, a) + Q_2(s_t , a)$
+			\item Observe $(r_t, s_{t+1})$
+			\item With 50-50 probability either
+			\begin{enumerate}
+				\item $Q_1(s_t, a_t) \gets Q_1(s_t, a_t) + \alpha (r_t +\gamma \max_{a\in A} Q_2(s_{t+1}, a) - Q_1(s_t, a_t))$\\
+				or
+				\item $Q_2(s_t, a_t) \gets Q_2(s_t, a_t) + \alpha (r_t +\gamma \max_{a\in A} Q_1(s_{t+1}, a) - Q_2(s_t, a_t))$
+			\end{enumerate}
+			\item $t = t + 1 $
+		\end{itemize}
+	
+		\bigskip
+		\pause
+		\item[$\leadsto$] reduces maximization bias
+	\end{itemize}
+	
+\end{frame}
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Double DQN}
+	
+	\begin{itemize}
+		\item Extend this idea to DQN
+		\item Current Q-network $\vec{w}$ is used to select actions 
+		\item Older Q-network $\vec{w}^-$ is used to evaluate actions
+		$$\Delta \vec{w} = \alpha (r + \gamma \overbrace{\hat{Q}(\underbrace{\argmax_{a' \in A} \hat{Q}(s',a';\vec{w})}_{\text{Action selection: }\vec{w}};\vec{w}^-)}^{\text{Action evaluation: }\vec{w}^-} - Q(s,a;\vec{w}))$$
+		
+		\bigskip
+		\pause
+		\item[$\leadsto$] Allows to flip between both weight sets frequently
+		\item[$\leadsto$] Faster propagation of information compared to DQN
+	\end{itemize}
+	
+\end{frame}
+%-----------------------------------------------------------------------
+%-----------------------------------------------------------------------
+\end{document}
