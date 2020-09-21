@@ -35,7 +35,7 @@
 	$$\Delta \vec{w} = \alpha(G_t - \hat{Q}(s_t,a_t; \vec{w})) \nabla_{\vec{w}} \hat{Q}(s_t, a_t; \vec{w}) $$
 	\item For SARSA instead use a TD target $r+ \gamma \hat{Q}(s', a'; \vec{w})$ which leverages the current function approximations value
 	$$\Delta \vec{w} = \alpha (r + \gamma \hat{Q}(s',a';\vec{w}) - \hat{Q}(s,a;\vec{w})) \nabla_{\vec{w}}\hat{Q}(s,a;\vec{w}) $$
-	\item For Q-learning instead use a TD target $t + \gamma \max_{a'} \hat{Q}(s',a';\vec{w})$ which leverages the max of the current function approximations value
+	\item For Q-learning instead use a TD target $r + \gamma \max_{a'} \hat{Q}(s',a';\vec{w})$ which leverages the max of the current function approximations value
 	$$\Delta \vec{w} = \alpha (r + \gamma \max_{a'} \hat{Q}(s',a';\vec{w}) - \hat{Q}(s,a;\vec{w})) \nabla_{\vec{w}}\hat{Q}(s,a;\vec{w}) $$
 \end{itemize}
 	

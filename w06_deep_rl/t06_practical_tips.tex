@@ -1,0 +1,59 @@
+% !TeX spellcheck = en_US
+
+\input{../latex_main/main.tex}
+
+\title[Reinforcement Learning: Deep Reinforcement Learning]{RL: Deep}
+\subtitle{Practical Tips for DQN on Atari (from J. Schulman)}
+
+
+
+\begin{document}
+	
+	\maketitle
+
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Practical Tips I}
+	
+	\begin{itemize}
+		\item DQN is more reliable on some Atari tasks than others. Pong is a
+		reliable task: if it doesn’t achieve good scores, something is wrong
+		\item Large replay buffers improve robustness of DQN, and memory
+		efficiency is key
+		\begin{itemize}
+			\item Use uint8 images, don’t duplicate data
+		\end{itemize}
+		\item Be patient. DQN converges slowly—for ATARI it’s often necessary to
+		wait for 10-40M frames (couple of hours to a day of training on GPU)
+		to see results significantly better than random policy
+	\end{itemize}
+	
+\end{frame}
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Practical Tips II}
+	
+	\begin{itemize}
+		\item Try Huberloss on Bellman error
+		$$L(x) =  \begin{cases}
+		\frac{x^2}{2} & \text{if } |x| \leq \delta\\
+		\delta |x| - \frac{\delta^2}{2} & \text{otherwise}
+		\end{cases}
+		$$
+		\item Consider trying Double DQN—significant improvement from small
+		code change 
+		\item To test out your data pre-processing, try your own skills at navigating
+		the environment based on processed frames
+		\item Always run at least two different seeds when experimenting
+		\begin{itemize}
+			\item [ML] I would rather recommend $4$ --- for final evaluation, even more!
+		\end{itemize}
+		\item Learning rate scheduling is beneficial. Try high learning rates in initial
+		exploration period
+		\item Try non-standard exploration schedules [later more]
+	\end{itemize}
+	
+\end{frame}
+%-----------------------------------------------------------------------
+%-----------------------------------------------------------------------
+\end{document}

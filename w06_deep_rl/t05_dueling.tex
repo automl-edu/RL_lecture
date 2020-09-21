@@ -66,5 +66,28 @@ Dueling DQN
 	
 \end{frame}
 %-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Uniqueness}
+	
+	\begin{itemize}
+		\item Consider a network that outputs $V(s;\vec{w}_1, \vec{w}2)$ as well as advantage $A(s,a; \vec{w}_1, \vec{w}_3)$
+		\item To construct $Q$ could use $$Q(s,a;\vec{w}_1, \vec{w}_2, \vec{w}_3) = V(s;\vec{w}_1, \vec{w}_2) + A(s,a;\vec{w}_1, \vec{w}_3)$$
+		\item Option 1: Force $Q(s,a) = V(s)$ for the best action suggested by the advantage:
+		$$\hat{Q}(s,a;\vec{w}) = \hat{V}(s;\vec{w}) + \left( \hat{A}(s,a;\vec{w} - \max_{a' \in \mathcal{A}} \hat{A}(s,a';\vec{w})) \right) $$
+		\vspace{-1em}
+		\begin{itemize}
+			\item This helps forcing the $V$ network to approximate $V$
+		\end{itemize}
+		\item Option 2: Use mean as baseline (more stable)
+		$$\hat{Q}(s,a;\vec{w}) = \hat{V}(s;\vec{w}) + \left( \hat{A}(s,a;\vec{w} - \frac{1}{|\mathcal{A}|} \sum{a' \in \mathcal{A}} \hat{A}(s,a';\vec{w})) \right) $$
+		\vspace{-1em}
+		\begin{itemize}
+			\item More stable often because averaging over all advantages instead of
+			the advantage of the current max action.
+		\end{itemize}
+	\end{itemize}
+	
+\end{frame}
+%-----------------------------------------------------------------------
 %-----------------------------------------------------------------------
 \end{document}
