@@ -1,7 +1,8 @@
+% !TeX spellcheck = en_US
 
 \input{../latex_main/main.tex}
 
-\title[Reinforcement Learning: Big Picture]{RL: Introduction}
+\title[Reinforcement Learning: Big Picture]{RL: Policy Gradient}
 \subtitle{The Big Picture}
 
 
@@ -12,49 +13,126 @@
 
 %----------------------------------------------------------------------
 %----------------------------------------------------------------------
-\begin{frame}[c]{Machine Learning}
+\begin{frame}[c]{Policy-Based Reinforcement Learning}
 
-\centering
-\textit{``Machine learning is the science of getting computers to act\\
- without being explicitly programmed.''}
-
-\hfill by Andrew Ng
+\begin{itemize}
+	\item In the last lecture we approximated the value or action-value function
+	using parameters $\vec{w}$,
+	$$V_{\vec{w}}(s) \approx V^\pi(s)$$
+	$$Q_{\vec{w}}(s,a) \approx Q^\pi (s,a) $$
+	\item A policy was generated directly from the value function
+	\begin{itemize}
+		\item e.g., using $\epsilon$-greedy
+	\end{itemize}	
+	\item Now, we will directly parametrize the policy, and will typically
+	use $\theta$ to show parameterization:
+	$$\pi_\theta (s,a) = \mathbb{P}[ a\mid s; \theta] $$
+	\item Goal is to find a policy $\pi$ with the highest value function $V^\pi$
+	\item We will focus again on model-free reinforcement learning
+\end{itemize}
 
 \end{frame}
 %-----------------------------------------------------------------------
 %----------------------------------------------------------------------
-\begin{frame}[c]{Classical Fields in ML}
+\begin{frame}[c]{Value-Based and Policy-Based RL}
 
-	TODO	
+	\begin{itemize}
+		\item Value-based
+		\begin{itemize}
+			\item Learn Value function
+			\item implicit policy (e.g., $\epsilon$-greedy)
+		\end{itemize}
+		\item Policy-based
+		\begin{itemize}
+			\item No explicit value function
+			\item learnt policy
+		\end{itemize}
+		\item Actor-Critic
+		\begin{itemize}
+			\item Learn Value Function
+			\item Learn Policy
+		\end{itemize}
+		
+	\end{itemize}		
 	
 \end{frame}
 %-----------------------------------------------------------------------
 %----------------------------------------------------------------------
-\begin{frame}[c]{Unsupervised Learning}
+\begin{frame}[c]{Types of Policies to Search Over}
 	
-	TODO	--- only observations
-	
-\end{frame}
-%-----------------------------------------------------------------------
-%----------------------------------------------------------------------
-\begin{frame}[c]{Supervised Learning}
-	
-	TODO	--- observations + labels
-	
-\end{frame}
-%-----------------------------------------------------------------------
-%----------------------------------------------------------------------
-\begin{frame}[c]{Reinforcement Learning}
-	
-	TODO	--- self-acquired observations + rewards
-	
-\end{frame}
-%-----------------------------------------------------------------------
-%----------------------------------------------------------------------
-\begin{frame}[c]{The Future of AI?}
-	
-	Combination of all three aspects?
+\begin{itemize}
+	\item So far have focused on deterministic policies
+	\item Now we are thinking about direct policy search in RL, will focus
+	heavily on stochastic policies
+\end{itemize}
 
+\end{frame}
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Example: Rock-Paper-Scissors}
+	
+	\begin{itemize}
+		\item Two-player game of rock-paper-scissors
+		\begin{itemize}
+			\item Scissors beats paper
+			\item Rock beats scissors
+			\item Paper beats rock
+		\end{itemize}
+		\item Let state be history of prior actions (rock, paper and scissors) and if
+		won or lost
+		\item Is deterministic policy optimal? Why or why not?
+		\item[$\leadsto$] stochastic (random) policy is the Nash equilibrium
+	\end{itemize}
+
+	
+\end{frame}
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Example: Aliased Gridword (1)}
+	
+	\begin{itemize}
+		\item The agent \alert{cannot} differentiate the gray states
+		\item Consider features of the following form (for all N, E, S, W)
+		$$\phi(s,a) = 1\text{(s="wall to N", a = "move E")}$$
+		\vspace{-1em}
+		\begin{itemize}
+			\item State representation is not Markov
+		\end{itemize}
+		\item Compare value-based RL, using an approximate value function
+		$$Q_\theta (s,a) = f(\phi(s,a); \theta)$$
+		\item To policy-based RL, using a parametrized policy
+		$$\pi_\theta(s,a) = g(\phi(s,a); \theta) $$ 
+	\end{itemize}
+	
+\end{frame}
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Example: Aliased Gridworld (2)}
+	
+	\begin{itemize}
+		\item Under aliasing, an optimal \alert{deterministic} policy will either
+		\begin{itemize}
+			\item Move W in both gray states 
+			\item move E in both gray states
+		\end{itemize}
+		\item Either way, it can get stuck and never reach the money
+		\item Value-based RL learns a near-deterministic policy
+		\item So it will traverse the corridor for a long time
+	\end{itemize}
+
+\end{frame}
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Example: Aliased Gridworld (3)}
+	
+	\begin{itemize}
+		\item An optimal \alert{stochastic} policy will randomly move E or W in grey states
+		$$\pi_\theta\text{(wall to N and S, move E)} = 0.5 $$
+		$$\pi_\theta\text{(wall to N and S, move W)} = 0.5 $$
+		\item It will reach the goal state in a few steps with high probability
+		\item Policy-based RL can learn the optimal stochastic policy
+	\end{itemize}
+	
 \end{frame}
 %-----------------------------------------------------------------------
 %-----------------------------------------------------------------------
