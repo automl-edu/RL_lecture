@@ -90,6 +90,10 @@
 %----------------------------------------------------------------------
 \begin{frame}[c]{Example: Aliased Gridword (1)}
 	
+	\begin{center}
+		\includegraphics[width=0.5\textwidth]{images/gridworld1.png}
+	\end{center}
+	
 	\begin{itemize}
 		\item The agent \alert{cannot} differentiate the gray states
 		\item Consider features of the following form (for all N, E, S, W)
@@ -109,6 +113,10 @@
 %----------------------------------------------------------------------
 \begin{frame}[c]{Example: Aliased Gridworld (2)}
 	
+	\begin{center}
+		\includegraphics[width=0.5\textwidth]{images/gridworld2.png}
+	\end{center}
+	
 	\begin{itemize}
 		\item Under aliasing, an optimal \alert{deterministic} policy will either
 		\begin{itemize}
@@ -125,6 +133,10 @@
 %----------------------------------------------------------------------
 \begin{frame}[c]{Example: Aliased Gridworld (3)}
 	
+	\begin{center}
+		\includegraphics[width=0.5\textwidth]{images/gridworld3.png}
+	\end{center}
+	
 	\begin{itemize}
 		\item An optimal \alert{stochastic} policy will randomly move E or W in grey states
 		$$\pi_\theta\text{(wall to N and S, move E)} = 0.5 $$
@@ -135,5 +147,30 @@
 	
 \end{frame}
 %-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Policy Objective Functions}
+	
+	\begin{itemize}
+		\item Goal: given a policy $\pi_\theta(s,a)$ with parameters $\theta$, find best $\theta^*$
+		\item But how do we measure the quality for a policy $\pi_\theta$
+		\item n episodic environments, we can use policy value at start state $V(s_0, \theta)$
+		\item For simplicity, we will mostly discuss the episodic case
+	\end{itemize}
+	
+\end{frame}
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Policy Objective Functions}
+	
+	\begin{itemize}
+		\item Goal: given a policy $\pi_\theta(s,a)$ with parameters $\theta$, find best $\theta^*$
+		\item But how do we measure the quality for a policy $\pi_\theta$
+		\item n episodic environments, we can use policy value at start state $V(s_0, \theta)$
+		\item For simplicity, we will mostly discuss the episodic case
+	\end{itemize}
+	
+\end{frame}
+%-----------------------------------------------------------------------
+
 %-----------------------------------------------------------------------
 \end{document}

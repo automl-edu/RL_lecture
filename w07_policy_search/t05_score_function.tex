@@ -1,0 +1,44 @@
+% !TeX spellcheck = en_US
+
+\input{../latex_main/main.tex}
+
+\title[Reinforcement Learning: Big Picture]{RL: Policy Gradient}
+\subtitle{Score Function}
+
+
+
+\begin{document}
+	
+	\maketitle
+
+%----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Score Function}
+
+
+Define score function as:
+$$\nabla_\theta \log \pi_\theta (s,a) $$
+
+
+\end{frame}
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Likelihood Ratio + Score Function Policy Gradient}
+	
+	\begin{itemize}
+		\item Putting this together
+		\item Our goal is to find the policy parameters $\theta^*$
+		$$\theta^* \in \argmax_{\theta} V(\theta) = \argmax_{\theta}\sum_{\tau} P(\tau; \theta) R(\tau) $$
+		\item Approximate with empirical estimate for $m$ sample trajectories under
+		policy $\pi_\theta$:
+		\begin{eqnarray}
+		\nabla_\theta V(\theta) &\approx& \frac{1}{m} \sum_{i=1}^{m} R(\tau^{(i)}) \nabla_\theta \log P(\tau^{(i)}; \theta) \nonumber\\
+		&=& \frac{1}{m} \sum_{i=1}^{m} R(\tau^{(i)}) \sum_{t=0}^{T-1} \nabla_\theta \log \pi_\theta (a_t^{(i)} \mid s_t^{(i)})
+		\end{eqnarray}
+		\item[$\leadsto$] Do not need to know dynamics model!
+		
+	\end{itemize}
+	
+\end{frame}
+%-----------------------------------------------------------------------
+\end{document}

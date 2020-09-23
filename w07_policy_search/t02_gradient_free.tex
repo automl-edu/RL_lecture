@@ -1,0 +1,102 @@
+% !TeX spellcheck = en_US
+
+\input{../latex_main/main.tex}
+
+\title[Reinforcement Learning: Big Picture]{RL: Policy Gradient}
+\subtitle{Gradient-free Optimization}
+
+
+
+\begin{document}
+	
+	\maketitle
+
+%----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Policy optimization}
+
+\begin{itemize}
+	\item Policy based reinforcement learning is an \alert{optimization} problem over $\theta$
+	\item[$\leadsto$] Find policy parameters $\theta^*$ that maximize $V(s_0, \theta^*)$
+	\item We can use gradient-free approaches (a.k.a. black-box optimization)
+	\begin{itemize}
+		\item Hill climbing
+		\item Simplex / amoeba / Nelder Mead
+		\item Genetic algorithms
+		\item Cross-Entropy method
+		\item Covariance Matrix Adaptation (CMA)
+	\end{itemize}
+	\pause
+	\smallskip
+	\item gradient-free optimizers are (often) designed for
+	\begin{itemize}
+		\item many function evaluations $\to$ possible in RL
+		\item parallel computation $\to$ possible in RL
+		\item a few to hundreds of dimensions $\to$ RL?
+	\end{itemize}
+	\pause
+	\item if we encode the policy $\pi_\theta$ as a DNN, we might have \alert{millions} of dimensions (i.e., parameters in $\theta$)
+
+\end{itemize}
+
+\end{frame}
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Policy Optimization with Evolutionary Strategies}
+	
+\begin{itemize}
+	\item Evolutionary Strategies can perform surprisingly well nevertheless \lit{\href{https://arxiv.org/abs/1703.03864}{Salimans et al. 2017}; \href{https://arxiv.org/abs/1802.08842}{Chrabaszcz et al. 2018}; \href{https://ml.informatik.uni-freiburg.de/papers/19-IJCAI_PEL.pdf}{Fuks et al. 2019}}
+	
+\end{itemize}
+
+\bigskip
+
+\centering
+\includegraphics[width=1.0\textwidth]{images/ES_DNN_Playing.png}
+\begin{flushright}
+	Sources: \lit{\href{https://arxiv.org/abs/1802.08842}{Chrabaszcz et al. 2018}; \href{https://ml.informatik.uni-freiburg.de/papers/19-IJCAI_PEL.pdf}{Fuks et al. 2019}}
+\end{flushright}
+		
+\end{frame}
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c,fragile]{Policy Optimization with Evolutionary Strategies\newline \litw{\href{https://arxiv.org/abs/1802.08842}{Chrabaszcz et al. 2018}}}
+	
+\begin{algorithm}[H]
+	\scriptsize
+	\DontPrintSemicolon
+	\KwIn{{}\\{$\theta_0$ - Initial policy vector parameters}\\
+		{$T$ - time budget}\\
+		{$E$ - max length for each episode}\\
+		{$\lambda$ - Population size}\\
+		{$\mu$ - Parent population size}\\
+		{$\sigma$ - Mutation step-size}\\
+		{$F(\theta)$ - Fitness function for policy evaluation}\\
+	}
+	\For{$j \in \{1 \ldots \mu\}$}{
+		$ w_j = \frac{log(\mu+0.5)-log(j)}{\sum\nolimits_{k=1}^\mu log(\mu+0.5)-log(k)} $ \\
+	}
+	\For{$t=0,1, \ldots, T$}{
+		\For{$i=1,2, \ldots, \lambda$}{ 
+			{$\epsilon_i\sim\mathcal{N}(0,I)$}\;
+			$s_i\leftarrow F_E(\theta_t+\sigma\cdot\epsilon_i)$
+		}
+		Sort $(\epsilon_1,\ldots,\epsilon_\lambda)$ according to $s$ in ascending order\\
+		{Update policy: $\theta_{t+1}\leftarrow \theta_t + \sigma\cdot\sum\nolimits_{j=1}^\mu w_j\cdot\epsilon_j$}
+	}
+	\KwOut{{} Return best found policy $\theta_t$}
+	\caption{Canonical Evolution Strategy}\label{alg:canonical}
+\end{algorithm}
+	
+\end{frame}
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c,fragile]{Progressive Episode Length \litw{\href{https://ml.informatik.uni-freiburg.de/papers/19-IJCAI_PEL.pdf}{Fuks et al. 2019}}}
+	
+\centering
+\includegraphics[width=.9\textwidth]{images/FinalPEL.pdf}
+	
+\end{frame}
+%-----------------------------------------------------------------------
+%-----------------------------------------------------------------------
+\end{document}
