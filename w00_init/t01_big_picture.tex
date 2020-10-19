@@ -1,0 +1,370 @@
+
+\input{../latex_main/main.tex}
+
+\title[ML-RL: Big Picture]{Welcome}
+\subtitle{Brief Motivation and Orga}
+
+
+
+\begin{document}
+	
+	\maketitle
+
+%----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Question}
+	
+	\centering
+	{
+	\huge
+	Why are you interested to learn more about reinforcement learning (RL)?
+	}
+
+	\bigskip	\bigskip
+	$\to$ use the chat to answer!
+	
+\end{frame}
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Machine Learning}
+
+\centering
+\textit{``Machine learning is the science of getting computers to act\\
+ without being explicitly programmed.''}
+
+\hfill by Andrew Ng
+
+\end{frame}
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Reinforcement Learning}
+	
+	\centering
+	\includegraphics[width=0.6\textwidth]{../w01_big_picture/images/rl_comic.png}\footnote{Image source: Morning Brew and Marius Haakestad on Unsplash}
+	
+	\bigskip
+	
+	\begin{itemize}
+		\item Data: Self-acquired observations + rewards
+		\item Task: Learn how to behave s.t. reward is maximized
+		\item[$\leadsto$] Not a single decision, but a sequence of good decisions
+	\end{itemize}	
+	
+	
+\end{frame}
+%-----------------------------------------------------------------------
+
+%----------------------------------------------------------------------
+\begin{frame}[c]{Goals of the Lecture}
+	
+	You will be able to \ldots
+	\begin{enumerate}
+		\item understand the basic algorithms in RL
+		\smallskip
+		\item discuss the assumptions and limitations of RL and its algorithms
+		\smallskip
+		\item decide which RL algorithm to use on a given environments
+		\smallskip
+		\item do research on RL yourself
+		\begin{itemize}
+			\item perfect opportunity to do a master project or thesis with us afterwards
+		\end{itemize}
+	\end{enumerate}
+	
+\end{frame}
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Course Overview (tentative)}
+	
+	\begin{enumerate}
+		\item Big Picture (Introduction)
+		\item MDP, Policy, Value Iteration
+		\item Policy Evaluation
+		\item Model Free Control
+		\item Linear Function Approximation
+		\item Deep RL
+		\item Policy Gradient
+		\item Exploration
+		\item Meta-RL
+		\item Reproducibility in RL
+		\item Project
+	\end{enumerate}
+	
+	
+\end{frame}
+%----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Course Format}
+	
+	\begin{itemize}
+		\item Concepts over details
+		\begin{itemize}
+			\item we provide references and links to papers\\ s.t. you can read up details!
+		\end{itemize}
+		\smallskip
+		\item Interactive lecture and exercise sessions
+		\begin{itemize}
+			\item short inputs ($\sim$10min) followed by Q\&A
+			\item interactive quizzes in exercise sessions to reinforce your knowledge
+			\item[$\leadsto$] The success of it depends on whether you are willing to talk to us! 
+		\end{itemize}
+		\smallskip
+		\item (Mostly) Practical exercises
+		\begin{itemize}
+			\item implement it, use it and play with it!
+		\end{itemize}
+	\end{itemize}
+	
+\end{frame}
+%----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Team}
+	
+	\begin{columns}[T]
+		
+		\column{0.3\textwidth}
+		\centering
+		\includegraphics[height=10em]{images/marius}
+		
+		Prof. Dr.\\ Marius Lindauer
+		
+		\column{0.3\textwidth}
+		\centering
+		\includegraphics[height=10em]{images/theresa.png}
+		
+		Theresa Eimer\\
+		
+		\column{0.3\textwidth}
+		\centering
+		\includegraphics[height=10em]{images/frederik.jpg}
+		
+		Frederik Schubert \\
+		
+		
+	\end{columns}
+	
+	
+\end{frame}
+%----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Organization (Lectures)}
+	
+	\begin{itemize}
+		\item Meeting each week Thursday at 2pm (s.t).
+		\pause
+		\item I will try to limit the lecture to 90min, but since I would like to have an interactive lecture, let's be a bit flexible.
+		\pause
+		\item Each week, the lecture is divided into small parts.
+		\pause
+		\item We will record the lecture and might be put the lecture parts online at the end of semester
+		\pause
+		\begin{itemize}
+			\item Bad experience from last semester: Students were thinking that it's fine to watch the recorded videos later and are able to catch up again. That failed horribly: $72\%$ of the students decided to not take the exam last minute!
+			\pause
+			\item Even more important for RL: Attend all lectures and learn the concepts on time!\newline
+			$\leadsto$ RL concepts build upon each other and sometime look very similar
+		\end{itemize}
+		\pause
+		\item Meeting via Zoom -- as you already figured out ;-)
+	\end{itemize}
+	
+\end{frame}
+%-----------------------------------------------------------------------
+
+%----------------------------------------------------------------------
+\begin{frame}[c]{Organization (Exercises)}
+	
+	\begin{itemize}
+		\item Every Wednesday at 3pm via Zoom??? BBB???
+		\begin{itemize}
+			\item Attending mandatory! (You can be absent at most twice!)
+			\item No recording
+		\end{itemize}
+		\pause
+		\item Discussion of mini examples (e.g., Mars Robot)
+		\pause
+		\item Interactive Kahoot quiz
+		\pause
+		\item Feedback to exercise sheet
+		\begin{itemize}
+			\item You don't need to achieve any point threshold
+			\item But you need to submit something every week
+		\end{itemize}
+	
+	\end{itemize}
+	
+\end{frame}
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Organization (Exercise Assignments)}
+	
+	\begin{itemize}
+	\item Every week, a new exercise sheet
+	\begin{itemize}
+		\item exercise focus is one week behind the lecture topics
+		\item Most exercises will be practical, i.e., you have to implement something
+		\item Team work highly recommended, team size at most 3! 
+		\pause
+		\item Build upon GitHub classroom $\leadsto$ enables auto-grading
+		\begin{itemize}
+			\item There will be an invitation link each week on each exercise sheet.
+			\item You will have to click on the link on exercise sheet one to be able to form groups.
+			\item Submit solutions via git
+		\end{itemize}
+		\pause
+		\item If we catch anyone from obvious cheating (incl. plagiarism), we will kick them out.
+	\end{itemize}
+	\pause
+	\item \alert{If you need help or have questions, use the chat!}
+	\end{itemize}
+	
+\end{frame}
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{You need help?}
+	
+Priority list:
+	\begin{enumerate}
+		\item Ask you friends and peers
+		\item Use our chat system via Mattermost (see Stud.IP for invitation link) and post to the town square
+		\begin{itemize}
+			\item You can also answer the questions of your peers! 
+			\item We will only reply if we have the feeling that it is necessary.
+		\end{itemize}
+		\item If there are organizational questions, contact Theresa or Frederik directly (via Mattermost???)
+		\item Only as the very last option, contact me ;-)
+	\end{enumerate}
+	
+\end{frame}
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Requirements for Attending}
+	
+	\begin{itemize}
+		\item Basics of \alert{AI} (mandatory)
+		\begin{itemize}
+			\item Search, planning, optimization \ldots, expectations, \ldots
+		\end{itemize}
+		\item Basics of \alert{Machine Learning} (mandatory)
+		\begin{itemize}
+			\item Classification, regression, clustering, decision tree, training-test split, cross validation, pre-processing \ldots
+			\item to catch up (if nec.): \url{https://www.coursera.org/learn/machine-learning} 
+		\end{itemize}
+		\pause
+		\item Knowledge and hands-on exp. in \alert{Deep Learning} (PyTorch)\\ (mandatory)
+		\begin{itemize}
+			\item feed-forward network, recurrent network, convolutions, learning rates, regularization, \ldots 
+			\item to catch up (if nec.): \url{https://course.fast.ai/}
+		\end{itemize}
+		\pause
+		\item Experience in \alert{Python and git}\\ (strongly recommended)
+		\begin{itemize}
+			\item nearly all exercises will require 
+			that you implement something in~Python and submit the solution to a git repo
+		\end{itemize}
+	\end{itemize}
+	
+\end{frame}
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Final Oral Exam}
+	
+	\begin{itemize}
+		\item Implement a larger project (worth $1-2$ weeks full time)
+		\begin{itemize}
+			\item Teamwork again possible
+		\end{itemize}
+		\item Exam
+		\begin{itemize}
+			\item Present the project in the first $15$ minutes\\ (including some questions from us)
+			\begin{itemize}
+				\item Of course, everyone will present the project on their own
+			\end{itemize}
+			\item Answer questions about further course material\\ in the second $15$ minutes
+		\end{itemize}	
+		\item You will have the choice between a virtual and on-site oral exam.
+	\end{itemize}
+	
+\end{frame}
+%----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Bonus Points?}
+	
+	\begin{itemize}
+		\item You can earn bonus points for the exam by finding bugs in our slides and exercises:
+		\begin{itemize}
+			\item You can get at most 10\% as a bonus of the overall points in the exam
+			\item $0.1\%$ for each typo in the slides or exercise sheet
+			\item $0.5\%$ for each non-trivial bug in equations or algorithm outlines
+			\item $1.0\%$ for each non-trivial bug in the exercise assignments
+		\end{itemize}
+		\pause
+		\item How get to it?
+		\begin{enumerate}
+			\item Submit a PR with the fix to our GitHub repo: \url{https://github.com/automl-edu/RL_lecture}
+			\item Send us a message with link to your PR in the corresponding Mattermost channel
+		\end{enumerate}
+		
+	\end{itemize}
+	
+\end{frame}
+%----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Additional Resources}
+	
+	\begin{itemize}
+		\item To get a deep understanding of RL,\\ you should also read some papers 
+		\item RL book by Sutton and Barto: 
+		\url{https://www.andrew.cmu.edu/course/10-703/textbook/BartoSutton.pdf}
+		\item Video lectures -- click on it!
+		\begin{itemize}
+			\item \lit{\href{https://www.youtube.com/watch?v=FgzM3zpZ55o&list=PLRQmQC3wIq9yxKVK1qc0r2nPuInn92LmK&index=1}{Emma Brunskill (2019-20)}}
+			\item \lit{\href{https://www.youtube.com/playlist?list=PL_iWQOsE6TfURIIhCrlt-wj9ByIVpbfGc}{Sergey Levine (2020)}}
+			\item \lit{\href{https://www.youtube.com/playlist?list=PLbWDNovNB5mqFBgq7i3MY6Ui4zudcvNFJ}{David Silver (2015)}}
+		\end{itemize}
+	\end{itemize}
+	
+\end{frame}
+%----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Opportunities and Risks}
+	
+	RL is an advanced lecture and we present it for the first time
+	
+	\medskip
+	\pause
+	
+	Opportunities:
+	\begin{itemize}
+		\item RL is a very hot topic these days
+		\item We will start with the basics and go step by step to the more advanced (research) topics
+		\item The course will provide a solid background\\ for doing a master project/thesis in our group 
+	\end{itemize}
+	
+	\pause
+	
+	Challenges:
+	\begin{itemize}
+		\item The research on RL is very active and there is so much progress $\leadsto$ impossible to catch up with state of the art with one course
+		\item The origins of RL go back to robotics, control, theory on bandits and computer science $\leadsto$ different notations
+		\item You will find some typos and issues in the slides $\leadsto$ please tell us if you find something
+	\end{itemize}
+	
+	\pause
+	$\to$ Give us some feedback and we will improve the course!
+	
+	
+\end{frame}
+%-----------------------------------------------------------------------
+
+\begin{frame}[c]{}
+	
+	\centering
+	\huge
+	Questions?
+	
+\end{frame}
+
+
+%-----------------------------------------------------------------------
+\end{document}
