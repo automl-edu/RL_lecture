@@ -41,4 +41,43 @@ $$\nabla_\theta \log \pi_\theta (s,a) $$
 	
 \end{frame}
 %-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Score Function Gradient Estimator: Intuition}
+	
+	\begin{itemize}
+		\item Consider generic form of $R(\tau^{(i)}) \nabla_\theta \log P(\tau^{(i)}; \theta)$:\\
+		$\hat{g}_i = f(x_i) \nabla_\theta \log p(x_i \mid \theta)$
+		\item $f(x)$ measures how good the sample $x$ is
+		\item Moving in the direction $\hat{g}_i$ pushes up to the logprob of the sample, in proportion ot how good it is
+		\item Valid even if $f(x)$ is discountinuous; and unknown; or sample space (containing $x$) is a discrete set
+	\end{itemize}
+	
+\end{frame}
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Score Function Gradient Estimator: Intuition}
+	
+
+\centering
+$\hat{g}_i = f(x_i) \nabla_\theta \log p(x_i \mid \theta)$
+\bigskip
+
+\includegraphics[width=0.4\textwidth]{images/scoring_function_1.png}
+\pause
+\includegraphics[width=0.4\textwidth]{images/scoring_function_2.png}
+	
+\end{frame}
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Policy Gradient Theorem}
+	
+The policy gradient theorem generalizes the likelihood ratio approach:
+\begin{block}{Theorem}
+For any differentiable policy $\pi_\theta$, the policy gradient is
+$$\nabla_\theta= \mathbb{E}_{\pi_\theta} [\nabla_\theta \log \pi_\theta(s,a) Q^{\pi_\theta}(s,a)] $$
+
+\end{block}
+	
+\end{frame}
+%-----------------------------------------------------------------------
 \end{document}
