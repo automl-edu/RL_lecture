@@ -4,7 +4,7 @@
 
 ## Credits
 
-The slides for this lecture were created by [Marius Lindauer](https://www.tnt.uni-hannover.de/en/staff/lindauer/). Part of the material is strongly inspired by Emma Brunskill (CS234 at Stanford; 2019-2020). Many thanks to Emma for agreeing that we could her material. In a previous iteration of this lecture was also inspired by the material from David Silver (at UCL 2015) -- thanks also to him for giving permissions.
+The slides for this lecture were created by [Marius Lindauer](https://www.tnt.uni-hannover.de/en/staff/lindauer/). Part of the material is strongly inspired by Emma Brunskill (CS234 at Stanford; 2019-2020). Many thanks to Emma for agreeing that we can use her material. A previous iteration of this lecture was also inspired by the material from David Silver (at UCL 2015) -- thanks also to him for giving permissions.
 
 ## License
 
