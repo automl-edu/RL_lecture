@@ -1,0 +1,85 @@
+% !TeX spellcheck = en_US
+
+\input{../latex_main/main.tex}
+
+\title[Reinforcement Learning: Big Picture]{Exploration in RL}
+\subtitle{Traditional Exploration Strategies for Bandits}
+
+
+
+\begin{document}
+	
+	\maketitle
+
+%----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Recap: The Bandit Problem}
+
+\begin{itemize}
+	\item Simplified RL setting with no states
+	\item Simply try to identify which action $a^* \in \mathcal{A}$ is the best one
+	\begin{itemize}
+		\item of course, we want to be efficient in doing that!
+	\end{itemize}
+	\item Reward is drawn from some unknown distribution
+	\bigskip
+	\pause
+	\item[$\leadsto$] That's exactly the problem you face in every state $s$ again.\\ Let's assume that we fix $s$ for the moment
+\end{itemize}
+
+\end{frame}
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{$\epsilon$-greedy}
+	
+	\begin{itemize}
+		\item play best known action $\hat{a}$ with probability $1-\epsilon$
+		\item play a random action $a \in \mathcal{A}$ with probability $\epsilon$ 
+		\smallskip
+		\item Question: Is this a zero-regret strategy?
+		\pause
+		\begin{itemize}
+			\item No, since with probability $\epsilon$ we will obtain a non-zero regret and therefore, even in the limit the regret will not go to zero, but obtain a linear regret.
+		\end{itemize}
+		\smallskip\pause
+		\item Solution: Anneal $\epsilon$ over time
+		\item If we linearly anneal $\epsilon$ over time to $0$, do we have a zero-regret strategy?
+		\pause
+		\begin{itemize}
+			\item No, because of the linear annealing, we have only a finite amount of observations which might not suffice to identify the best action
+		\end{itemize}
+		\smallskip
+		\item[$\leadsto$] Anneal $\epsilon$ proportional $\sqrt{t}$ or $1/t$
+	\end{itemize}
+	
+\end{frame}
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Upper Confidence Bounds}
+	
+	\begin{itemize}
+		\item Track all rewards you obtained by playing each action $a_k$ and compute mean $\mu(a_k)$ and standard deviation $\sigma(a_k)$ to estimate the underlying distribution
+		\item Optimistic in face of uncertainty by upper confidence bound:
+		$$\mu(a_k) + \kappa \cdot \sigma(a_k)$$
+		\item Idea: Over time, we get more and more evidence for the best actions until we are sure that the best known is really the best
+		\medskip
+		\pause
+		\item To prevent premature convergence: Use optimistic initialization of each action s.t. all actions are played in the beginning
+	\end{itemize}
+	
+\end{frame}
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Thompson Sampling}
+	
+	\begin{itemize}
+		\item Track all rewards you obtained by playing each action $a_k$ and compute mean $\mu(a_k)$ and standard deviation $\sigma(a_k)$ to estimate the underlying distribution
+		\item Draw from each estimated distribution a single realization and simply play the action with the best one
+		$$ s_k \sim \mathcal{N}(\mu(a_k), \sigma(a_k))$$
+		\item In the limit, only the best performing action will be played with high probability
+	\end{itemize}
+	
+\end{frame}
+%-----------------------------------------------------------------------
+%-----------------------------------------------------------------------
+\end{document}

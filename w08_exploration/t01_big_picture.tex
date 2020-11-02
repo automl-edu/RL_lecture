@@ -1,8 +1,8 @@
 
 \input{../latex_main/main.tex}
 
-\title[Reinforcement Learning: Big Picture]{RL: Introduction}
-\subtitle{The Big Picture}
+\title[Reinforcement Learning: Big Picture]{Exploration in RL}
+\subtitle{Motivation}
 
 
 
@@ -12,49 +12,77 @@
 
 %----------------------------------------------------------------------
 %----------------------------------------------------------------------
-\begin{frame}[c]{Machine Learning}
+\begin{frame}[c]{Why do we need exploration?}
 
-\centering
-\textit{``Machine learning is the science of getting computers to act\\
- without being explicitly programmed.''}
-
-\hfill by Andrew Ng
+\begin{itemize}
+	\item Avoid to get trapped in local optima 
+	\begin{itemize}
+		\item If we have no convergence guarantees
+	\end{itemize}
+	\item In sparse reward scenarios:
+	\begin{itemize}
+		\item rare observations of rewards
+		\item following the Q-function or gradients might be very slow, or can lead to plateaus 
+	\end{itemize}
+	\item Faster convergence by discovering short cuts
+	\bigskip
+	\pause
+	\item \alert{Risk:} too much exploration could be a waste of resources
+	\begin{itemize}
+		\item[$\leadsto$] Exploration-exploitation dilemma
+	\end{itemize}
+\end{itemize}
 
 \end{frame}
 %-----------------------------------------------------------------------
 %----------------------------------------------------------------------
-\begin{frame}[c]{Classical Fields in ML}
+\begin{frame}[c]{The Bandit Problem}
 
-	TODO	
-	
-\end{frame}
-%-----------------------------------------------------------------------
-%----------------------------------------------------------------------
-\begin{frame}[c]{Unsupervised Learning}
-	
-	TODO	--- only observations
-	
-\end{frame}
-%-----------------------------------------------------------------------
-%----------------------------------------------------------------------
-\begin{frame}[c]{Supervised Learning}
-	
-	TODO	--- observations + labels
-	
-\end{frame}
-%-----------------------------------------------------------------------
-%----------------------------------------------------------------------
-\begin{frame}[c]{Reinforcement Learning}
-	
-	TODO	--- self-acquired observations + rewards
-	
-\end{frame}
-%-----------------------------------------------------------------------
-%----------------------------------------------------------------------
-\begin{frame}[c]{The Future of AI?}
-	
-	Combination of all three aspects?
+\begin{itemize}
+	\item Simplified RL setting with no states
+	\item Simply try to identify which action $a^* \in \mathcal{A}$ is the best one
+	\begin{itemize}
+		\item of course, we want to be efficient in doing that!
+	\end{itemize}
+	\item Reward is drawn from some unknown distribution
+	\bigskip
+	\pause
+	\item[$\leadsto$] That's exactly the problem you face in every state $s$ again.\\ Let's assume that we fix $s$ for the moment
+\end{itemize}
 
+\end{frame}
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{The Bandit Problem (cont'd)}
+	
+	\begin{itemize}
+		\item Assume that $\mu^*$ is the expected reward from playing the best action $a^*$
+		\item Regret
+		$$\rho_T = T \cdot \mu^* - \sum^T_{t=1} r_t $$
+		\begin{itemize}
+			\item where $r_t$ is the reward, we obtained at time point $t$
+		\end{itemize}
+	\medskip
+		\item Goal is to achieve zero regret in the limit:
+		$$\lim_{T \to \infty} \rho_T / T = 0$$	
+		\item[$\leadsto$] There is no offline training phase;\\ but we have to learn to identify $a^*$ on the fly!
+	\end{itemize}
+	
+\end{frame}
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Exploration vs. Exploitation}
+	
+	\begin{itemize}
+		\item \alert{Exploitation}: Play the action $\hat{a}$ you believe is the best based on your previous experience
+		\medskip
+		\item \alert{Exploration}: Play an action to improve your knowledge, e.g., wrt the reward distribution of one action or the entropy of being the best
+		\medskip
+		\pause
+		\item Do enough exploitation to ensure that we achieve zero regret
+		\item Do enough exploration to ensure that we really identified $a^* = \hat{a}$
+	\end{itemize}
+	
 \end{frame}
 %-----------------------------------------------------------------------
 %-----------------------------------------------------------------------
