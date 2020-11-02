@@ -19,7 +19,7 @@
 	\item Policy iteration computes optimal value and policy
 	\item Value iteration is another technique
 	\begin{itemize}
-		\item Idea: Maintain optimal value of starting in a state s if have a finite 	number of steps k left in the episode
+		\item Idea: Maintain optimal value of starting in a state $s$ if we have a finite 	number of steps k left in the episode
 		\item Iterate to consider longer and longer episode
 	\end{itemize}
 
@@ -33,7 +33,7 @@
 \begin{itemize}
 	\item Value function of a policy must satisfy the Bellman equation
 	$$V^\pi (s) = R^\pi (s) + \gamma \sum_{s' \in S}  P^\pi(s' \mid s ) V^\pi (s') $$
-	\item Bellman backup operator
+	\item Bellman backup operator $B$
 	\begin{itemize}
 		\item Applied to a value function
 		 \item 	Returns a new value function
@@ -104,7 +104,7 @@
 		$$V_{k+1}(s) = \max_{a\in A } R(s,a) + \gamma \sum_{s' \in S } P(s' \mid s,a) V_k(s') $$
 		\item Equivalent in Bellman backup notation
 				$$ V_{k+1} = BV_k$$
-		\item To extract optimal policy if can act for $k+1$ more steps
+		\item To extract optimal policy if we can act for $k+1$ more steps
 		$$\pi_{k+1}(s) \in \argmax_{a \in A} R(s,a) + \gamma \sum_{s' \in S} P(s' \mid s,a) V_{k+1}(s') $$
 	\end{itemize}
 	
@@ -112,19 +112,19 @@
 
 \end{frame}
 %-----------------------------------------------------------------------
-%----------------------------------------------------------------------
-\begin{frame}[c]{Going back to Value Iteration (VI)}
-
-\begin{itemize}
-	\item  Yes, if discount factor $\gamma < 1$, or end up in a terminal state with
-	probability $1$
-	\item 	Bellman backup is a contraction if discount factor, $\gamma <  1$
-	\item If apply it to two different value functions, distance between value functions shrinks after applying Bellman equation to each
-	\item (Skip proof)
-\end{itemize}
-
-\end{frame}
-%-----------------------------------------------------------------------
+%%----------------------------------------------------------------------
+%\begin{frame}[c]{Going back to Value Iteration (VI)}
+%
+%\begin{itemize}
+%	\item  Yes, if discount factor $\gamma < 1$, or end up in a terminal state with
+%	probability $1$
+%	\item 	Bellman backup is a contraction if discount factor, $\gamma <  1$
+%	\item If apply it to two different value functions, distance between value functions shrinks after applying Bellman equation to each
+%	\item (Skip proof)
+%\end{itemize}
+%
+%\end{frame}
+%%-----------------------------------------------------------------------
 %----------------------------------------------------------------------
 \begin{frame}[c]{What you should know}
 

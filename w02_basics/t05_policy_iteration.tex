@@ -29,9 +29,9 @@
 \begin{itemize}
 	\item Set $i=0$
 	\item Initialize $\pi_0(s)$ randomly for all states $s$
-	\item While $i == 0$ or $||\pi_i - \pi_{i-1}||_1 > 0$ (L1-norm, measures if the policy changed for any state)
+	\item While $i == 0$ or\\ $||\pi_i - \pi_{i-1}||_1 > 0$ (L1-norm, measures if the policy changed for any state)
 	\begin{itemize}
-		\item $V^{\pi_i} \gets$ MDP V function policy evaluation of $\pi$
+		\item $V^{\pi_i} \gets$ MDP V-function policy evaluation of $\pi$
 		\item $\pi_{i+1} \gets$ Policy improvement
 		\item $i \gets i+1$
 	\end{itemize}
@@ -90,7 +90,7 @@
 
 \begin{eqnarray}
 Q^\pi(s,a) = R(s,a) + \gamma \sum_{s' \in S} P(s' \mid s,a) V^\pi(s')\nonumber\\
-\max_a Q^\pi(s,a) \geq R(s,a) + \gamma \sum_{s' \in S} P(s' \mid s,a) V^\pi(s') = V^\pi (s)\nonumber \\
+\max_a Q^\pi(s,a) \geq R(s,a) + \gamma \sum_{s' \in S} P(s' \mid s,a) V^\pi(s') \nonumber\\
 \pi_{i+1}(s) \in \argmax_{a\in A} Q^{\pi_i} (s,a)\nonumber
 \end{eqnarray}
 
@@ -111,8 +111,11 @@ Q^\pi(s,a) = R(s,a) + \gamma \sum_{s' \in S} P(s' \mid s,a) V^\pi(s')\nonumber\\
 \begin{itemize}
 	\item  Definition
 	$$ V^{\pi_2} \geq V^{\pi_1}: V^{\pi_2}(s) \geq V^{\pi_1}. \forall s \in S $$
-	\item Proposition: $V^{\pi_{i+1}} \geq V^{\pi_{i}}$ with strict inequality if $\pi_i$ is suboptimal,
-	where $\pi_{i+1}$ is the new policy we get from policy improvement on $\pi_i$
+	\item Proposition: $V^{\pi_{i+1}} \geq V^{\pi_{i}}$
+	\begin{itemize}
+		\item where $\pi_{i+1}$ is the new policy we get from policy improvement on $\pi_i$
+		\item with strict inequality if $\pi_i$ is suboptima
+	\end{itemize} 
 \end{itemize}
 
 \end{frame}
@@ -123,7 +126,7 @@ Q^\pi(s,a) = R(s,a) + \gamma \sum_{s' \in S} P(s' \mid s,a) V^\pi(s')\nonumber\\
 \begin{itemize}
 	\item Set $i=0$
 	\item Initialize $\pi_0(s)$ randomly for all states $s$
-	\item While $i == 0$ or $||\pi_i - \pi_{i-1}||_1 > 0$ (L1-norm, measures if the policy changed for any state)
+	\item While $i == 0$ or\\ $||\pi_i - \pi_{i-1}||_1 > 0$ (L1-norm, measures if the policy changed for any state)
 	\begin{itemize}
 		\item $V^{\pi_i} \gets$ MDP V function policy \alert{evaluation} of $\pi$ \hspace{1em} $\leadsto$ use $Q$
 		\item $\pi_{i+1} \gets$ Policy \alert{improvement}

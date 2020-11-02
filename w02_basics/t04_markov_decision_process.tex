@@ -72,7 +72,7 @@
 
 \begin{itemize}
 	\item MDP + Policy $\pi(a \mid s)$ = Markov Reward Process
-	\item Precisely, it is the MRP $(S,R^pi, P^\pi, \gamma)$ where
+	\item Precisely, it is the MRP $(S,R^\pi, P^\pi, \gamma)$ where
 	$$R^\pi (s) = \sum_{a\in A} \pi(a\mid s ) R(s,a) $$
    $$P^\pi (s'\mid s) = \sum_{a\in A} \pi(a \mid s) P(s' \mid s,a)$$
    \item Implies we can use same techniques to evaluate the value of a policy  for a MDP as we could to compute the value of a MRP, by defining a
@@ -131,11 +131,11 @@ V^\pi_{k+1} (s_6) &=& 0  + \gamma [ p(s_6 \mid s_6, a_1) \cdot V^\pi_k(s_6) + p(
 	\item Compute the optimal policy
 	$$ \pi^*(s)  \in \argmax_\pi V^\pi(s)$$
 	\item There \alert{exists a unique optimal value function}
-	\item Optimal policy for an MDP in an infinite horizon problem is \newline (i.e. .agents acts forever is)
+	\item Optimal policy for an MDP in an infinite horizon problem is \newline (i.e. agents acts forever is)
 	\begin{itemize}
 		\item  deterministic
 		\item stationary (does not depend on time step)
-		\item Unique? Not necessarily, may have state-actions with identical optimal values
+		\item Unique? $\leadsto$ Not necessarily, may have state-actions with identical optimal values
 	\end{itemize}
 \end{itemize}
 

@@ -190,7 +190,7 @@ $$
 V &=& R + \gamma P V\\
 V  - \gamma P V &=& R\\
 (1- \gamma P) V  &=& R\\
-V &=& (1- \gamma P)^{-1} R\\
+V &=& (1- \gamma P)^{-1} R
 \end{eqnarray}
 
 \pause
@@ -208,7 +208,7 @@ $\leadsto$ Solving directly requires taking a matrix inverse $O(n^3)$
 	\item For $k=1$ until convergence
 	\begin{itemize}
 		\item For all $s$ in $S$
-		$$V_k(s) = R(s) + \gamma \sum_{s' \in S} P(s' \mid s) V{k-1}(s')$$
+		$$V_k(s) = R(s) + \gamma \sum_{s' \in S} P(s' \mid s) V_{k-1}(s')$$
 	\end{itemize}
 	\end{itemize}
 
