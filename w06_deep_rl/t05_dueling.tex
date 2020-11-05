@@ -60,7 +60,7 @@ Dueling DQN
 	%\item Do we expect that this architecture will result in us learning a good estimate of true $V$ or $A$?
 	\bigskip
 	\pause
-	\item Challenge: There hasn't have to be a unique advantage function
+	\item Challenge: There hasn't had to be a unique advantage function
 
 	\end{itemize}
 	
@@ -76,7 +76,7 @@ Dueling DQN
 		$$\hat{Q}(s,a;\vec{w}) = \hat{V}(s;\vec{w}) + \left( \hat{A}(s,a;\vec{w} - \max_{a' \in \mathcal{A}} \hat{A}(s,a';\vec{w})) \right) $$
 		\vspace{-1em}
 		\begin{itemize}
-			\item This helps forcing the $V$ network to approximate $V$
+			\item This helps to force the $V$ network to approximate $V$
 		\end{itemize}
 		\item Option 2: Use mean as baseline (more stable)
 		$$\hat{Q}(s,a;\vec{w}) = \hat{V}(s;\vec{w}) + \left( \hat{A}(s,a;\vec{w} - \frac{1}{|\mathcal{A}|} \sum{a' \in \mathcal{A}} \hat{A}(s,a';\vec{w})) \right) $$
@@ -119,7 +119,7 @@ Dueling DQN
 		$$
 		\item Consider trying Double DQN—significant improvement from small
 		code change 
-		\item To test out your data pre-processing, try your own skills at navigating
+		\item To test out your data preprocessing, try your own skills at navigating
 		the environment based on processed frames
 		\item Always run at least two different seeds when experimenting
 		\begin{itemize}

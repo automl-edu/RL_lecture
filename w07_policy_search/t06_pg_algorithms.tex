@@ -94,11 +94,11 @@ REINFORCE:
 	
 	$$\nabla_\theta \mathbb{E}_\tau [R] = \mathbb{E}_\tau \left[ \sum_{t=0}^{T-1} \nabla_\theta \log \pi(a_t \mid s_t; \theta) \left( \sum_{t'=t}^{T-1} r_{t'} - b(s_t) \right) \right] $$
 	
-	\item For any choise of $b$, gradient estimator is unbiased
+	\item For any choice of $b$, gradient estimator is unbiased
 	\item Near optimal choice is the expected return
 	$$b(s_t) \approx \mathbb{E} [r_t + r_{t+1} +\ldots + t_{T-1}] $$
 	
-	\item Interpretation: increase logprob of action $a_t$ proportionally to how much returns $\sum_{t'=t}^{T-1} r_{t'}$ are better than expected
+	\item Interpretation: increase logprob of action $a_t$ proportionally to how many returns $\sum_{t'=t}^{T-1} r_{t'}$ are better than expected
 	
 \end{itemize}
 	

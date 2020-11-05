@@ -39,7 +39,7 @@
 	\item Recall Bellman operator (if known MDP models)
 	$$B^\pi V(s) = r(s,\pi(s)) + \gamma \sum_{s'\in S} p(s'\mid s, \pi(s)) V(s')$$
 	\pause
-	\item Insight: have an estimate of $V^\pi$, use to estimate expected return
+	\item Insight: have an estimate of $V^\pi$, used to estimate expected return
 	$$ V^\pi(s) = V^\pi(s) + \alpha ([r_t + \gamma V^\pi (s_{t+1})] - V^\pi(s))$$
 \end{itemize}
 

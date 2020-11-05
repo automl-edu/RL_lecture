@@ -90,7 +90,7 @@
 		\item Goal: Find the parameter vector $\vec{w}$ that minimizes the loss between a
 		true value function $V^\pi(s)$ and its approximation $\hat{V}^\pi(s; \vec{w})$ as
 		represented with a particular function class parameterized by $\vec{w}$.
-		\item Generaly use mean squared error and define the loss as 
+		\item Generally use mean squared error and define the loss as 
 		$$ J(\vec{w}) = \mathbb{E}_\pi [(V^\pi(s) - \hat{V}^\pi(s;\vec{w}))^2]$$
 		\item Use gradient descent to find a local minimum 
 		$$ \Delta \vec{w} = - \frac{1}{2} \alpha \nabla_\vec{w} J(\vec{w})$$

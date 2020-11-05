@@ -16,7 +16,7 @@
 \begin{frame}[c]{Policy Search (PS)}
 
 \begin{itemize}
-	\item One option is searching to compute best policy
+	\item One option is searching to compute the best policy
 	\item Number of deterministic policies is $|A|^{|S|}$
 	\item Policy iteration is generally more efficient than enumeration
 \end{itemize}
@@ -114,7 +114,7 @@ Q^\pi(s,a) = R(s,a) + \gamma \sum_{s' \in S} P(s' \mid s,a) V^\pi(s')\nonumber\\
 	\item Proposition: $V^{\pi_{i+1}} \geq V^{\pi_{i}}$
 	\begin{itemize}
 		\item where $\pi_{i+1}$ is the new policy we get from policy improvement on $\pi_i$
-		\item with strict inequality if $\pi_i$ is suboptima
+		\item with strict inequality if $\pi_i$ is suboptimal
 	\end{itemize} 
 \end{itemize}
 
