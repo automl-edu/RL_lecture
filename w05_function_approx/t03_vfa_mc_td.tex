@@ -80,10 +80,10 @@ Loop
 \begin{frame}[c]{Convergence Guarantees for Linear Value Function	Approximation for Policy Evaluation: Preliminaries}
 	
 	\begin{itemize}
-		\item For infinite horizon, the Markov Chain defined by a MDP with a particular policy will eventually converge to a probability distribution over states $d(s)$
+		\item For infinite horizon, the Markov Chain defined by an MDP with a particular policy will eventually converge to a probability distribution over states $d(s)$
 		\item $d(s)$ is called the stationary distribution over states of $\pi$
 		\item $\sum_{s} d(s) = 1$
-		\item $d(s)$ statisfies the following balance equation:
+		\item $d(s)$ satisfies the following balance equation:
 		$$ d(s') = \sum_{s} \sum_{a} \pi(a \mid s) p(s' \mid s,a) d(s) $$
 	\end{itemize}
 	
@@ -94,7 +94,7 @@ Loop
 		Approximation for Policy Evaluation \litw{Tsitsiklis and Van Roy. 1997}}
 	
 	\begin{itemize}
-		\item Define the mean squarred error of a linear value function approximation for a partiicular policiy $\pi$  relative to the true value as 
+		\item Define the mean squared error of a linear value function approximation for a particular policy $\pi$  relative to the true value as 
 		$$\text{MSVE}(\vec{w}) = \sum_{s \in S} d(s) (V^\pi (s) - \hat{V}^\pi(s;\vec{w}))^2 $$
 		\item where
 		\begin{itemize}
