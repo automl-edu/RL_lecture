@@ -78,13 +78,14 @@ $$ G_t = r_t + \gamma r_{t+1} + \gamma^2 r_{t+2} + \gamma^3 r_{t+3} + \ldots$$
 \begin{frame}[c]{Goal for this week}
 
 \begin{itemize}
-	\item Assumption: We don't have the exact model of the environment (i.e., model-free), but we can query the environment ("playing roll-outs")
+	\item Assumption: We don't have the exact model of the environment\\ (i.e., model-free), but we can query the environment\\ ("playing roll-outs")
 	\begin{itemize}
 		\item state space and action space are in principle known
 		\item we don't know the transition probabilities beforehand
 		\item we don't know the reward distribution beforehand
 	\end{itemize}
 	\medskip
+	\pause
 	\item Remarks:
 	\begin{itemize}
 		\item If we would know the MDP, we only have to do "planning" to find the optimal policy
