@@ -97,7 +97,7 @@ $$ V^\pi(s) = V^\pi(s) + \alpha (\underbrace{[r_t + \gamma V^\pi (s_{t+1})]}_{\t
 	
 	\begin{itemize}
 		\item Data efficiency \& Computational efficiency
-		\item In simplest TD, use $(s,a,r,s_0)$ once to update $V(s)$
+		\item In simplest TD, use $(s,a,r,s')$ once to update $V(s)$
 		\begin{itemize}
 			\item $O(1)$ operation per update
 			\item In an episode of length $L$, $O(L)$
