@@ -110,7 +110,7 @@ Q^\pi(s,a) = R(s,a) + \gamma \sum_{s' \in S} P(s' \mid s,a) V^\pi(s')\nonumber\\
 
 \begin{itemize}
 	\item  Definition
-	$$ V^{\pi_2} \geq V^{\pi_1}: V^{\pi_2}(s) \geq V^{\pi_1}. \forall s \in S $$
+	$$ V^{\pi_2} \geq V^{\pi_1}: V^{\pi_2}(s) \geq V^{\pi_1}(s). \forall s \in S $$
 	\item Proposition: $V^{\pi_{i+1}} \geq V^{\pi_{i}}$
 	\begin{itemize}
 		\item where $\pi_{i+1}$ is the new policy we get from policy improvement on $\pi_i$
