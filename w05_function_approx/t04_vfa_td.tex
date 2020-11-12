@@ -17,7 +17,7 @@
 	\begin{itemize}
 		\item Uses bootstrapping and sampling to approximate $V^\pi$
 		\item Updates $V^\pi(s)$ after each transition $(s,a,r,s')$
-		$$V^\pi(s) = V^\pi (s) + \alpha(r + \gamma V^\pi (s') - V\pi(s)) $$
+		$$V^\pi(s) = V^\pi (s) + \alpha(r + \gamma V^\pi (s') - V^\pi(s)) $$
 		\item Target is $r + \gamma V^\pi(s')$, a biased estimate of the true value $V^\pi(s)$
 		\item Represent value for each state with a separate table entry
 	\end{itemize}
@@ -31,7 +31,7 @@
 	\begin{itemize}
 		\item Uses bootstrapping and sampling to approximate $V^\pi$
 		\item Updates $V^\pi(s)$ after each transition $(s,a,r,s')$
-		$$V^\pi(s) = V^\pi (s) + \alpha(r + \gamma V^\pi (s') - V\pi(s)) $$
+		$$V^\pi(s) = V^\pi (s) + \alpha(r + \gamma V^\pi (s') - V^\pi(s)) $$
 		\item Target is $r + \gamma V^\pi(s')$, a biased estimate of the true value $V^\pi(s)$
 		\item In value function approximation, target is $r + \gamma \hat{V}^\pi (s'; \vec{w})$, a biased and approximated estimate of the true value $V^\pi(s)$
 		\item 3 forms of approximation: 
