@@ -35,6 +35,38 @@
 \end{frame}
 %-----------------------------------------------------------------------
 %----------------------------------------------------------------------
+\begin{frame}[c]{MDP (cont'd)}
+	
+	\begin{itemize}
+		\item MDP is tuple $(S,A,P, R, \gamma)$
+		\item Optional components:
+		\begin{itemize}
+			\item $\rho_0: S \to \mathbb{R}^+$: a distribution of start states
+			\begin{itemize}
+				\item uniform distribution: the agent can start in any state -- implicit assumption of MDP definition above
+				\item non-uniform distribution: the agent starts its episodes in only some of the states; e.g., it's unlikely that a game will start in a terminal state
+			\end{itemize}
+		\pause
+			\item $T \subset S$: set of terminal states
+			\begin{itemize}
+				\item important for episodic MDPs 
+				\item or if there is not fixed horizon, but the episodes should be finite
+			\end{itemize}
+		\pause
+			\item $\gamma$: discount factor
+			\begin{itemize}
+				\item important to quantify the importance of future 
+				\smallskip
+				\item some treat $\gamma$ as a hyperparameter and not part of the definition
+				\item[$\leadsto$] different optimal policies can be found
+				\item[$\leadsto$] depends on how the optimal policy is defined
+			\end{itemize}
+		\end{itemize}
+	\end{itemize}
+	
+\end{frame}
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
 \begin{frame}[c]{Mars Rover as MRP}
 
 \begin{center}
