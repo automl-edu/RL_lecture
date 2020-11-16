@@ -89,7 +89,7 @@
 Initialize $N(s) = 0$, $G(s) = 0$ $\forall s \in S$\\
 Loop 
 \begin{itemize}
-	\item Sample episode $i = s_{i,1}, a_{i,1}, r_{i,1}, s_{i,2}, a_{i,2}, r_{i,2}, \ldots$
+	\item Sample episode $i = s_{i,1}, a_{i,1}, r_{i,1}, s_{i,2}, a_{i,2}, r_{i,2}, \ldots,s_{i,n}$
 	\item Define $G_{i,t} = r_{i,t} + \gamma r_{i,t+1} + \gamma^2 r_{i,t+2} + \ldots$
 	\item For each state $s$ visited in episode $i$
 	\begin{itemize}
