@@ -1,7 +1,8 @@
+% !TeX spellcheck = en_US
 
 \input{../latex_main/main.tex}
 
-\title[Reinforcement Learning: Big Picture]{Exploration in RL}
+\title[RL: Exploration]{Exploration in RL}
 \subtitle{Motivation}
 
 
@@ -39,10 +40,11 @@
 \begin{frame}[c]{The Bandit Problem}
 
 \begin{itemize}
-	\item Simplified RL setting with no states
+	\item Simplified RL setting with \alert{no states}
 	\item Simply try to identify which action $a^* \in \mathcal{A}$ is the best one
 	\begin{itemize}
 		\item of course, we want to be efficient in doing that!
+		\item Practical application examples:\\ clinical trials or financial portfolio design
 	\end{itemize}
 	\item Reward is drawn from some unknown distribution
 	\bigskip
@@ -56,9 +58,9 @@
 \begin{frame}[c]{The Bandit Problem (cont'd)}
 	
 	\begin{itemize}
-		\item Assume that $\mu^*$ is the expected reward from playing the best action $a^*$
-		\item Regret
-		$$\rho_T = T \cdot \mu^* - \sum^T_{t=1} r_t $$
+		\item Assume that $V^*$ is the expected reward from playing the best action $a^*$
+		\item Total regret
+		$$\rho_T = T \cdot V^* - \sum^T_{t=1} r_t $$
 		\begin{itemize}
 			\item where $r_t$ is the reward, we obtained at time point $t$
 		\end{itemize}

@@ -1,0 +1,102 @@
+% !TeX spellcheck = en_US
+
+\input{../latex_main/main.tex}
+
+\title[RL: Exploration]{Exploration in RL}
+\subtitle{Traditional Exploration Strategies for MDPs}
+
+
+
+\begin{document}
+	
+	\maketitle
+
+%----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Recap: Bandit Exploration}
+
+\begin{itemize}
+	\item Optimistic initialization
+	\item Optimism in the face of uncertainty (Upper Confidence bounds)
+	\item Probability matching (Thompson Sampling)
+\end{itemize}
+
+\end{frame}
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Optimistic Initialization: Model-free RL}
+	
+	\begin{itemize}
+		\item Initialize action-value function $Q(s,a)$ to $\frac{r_{max}}{1-\gamma}$
+		\item Run favorite model-free RL algorithm
+		\begin{itemize}
+			\item Monte-carlo method
+			\item Sarsa
+			\item Q-Learning
+		\end{itemize}
+		\item Encourages systematic exploration of states and actions
+	\end{itemize}
+	
+\end{frame}
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Upper Confidence Bounds: Model-free RL}
+	
+	\begin{itemize}
+		\item Maximize UCB on action-value function $Q^\pi(s,a)$
+		$$a_t \in \argmax_{a \in A} Q(s_t, a) + U(s_t, a) $$
+		
+		\begin{itemize}
+			\item Estimate uncertainty in policy evaluation (easy)
+			\item Ignores uncertainty from policy improvement
+		\end{itemize}
+		\item Maximize UCB on optimal action-value function $Q^*(s,a)$
+		$$a_t \in \argmax_{a \in A} Q(s_t, a) + U_1(s_t, a) + U_2(s_t, a)$$
+		\begin{itemize}
+			\item Estimate uncertainty in policy evaluation (easy)
+			\item plus uncertainty from policy improvement (hard)
+		\end{itemize}
+		
+	\end{itemize}
+	
+\end{frame}
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Bayesian Model-based RL}
+	
+	\begin{itemize}
+		\item Maintain posterior distribution over MDP models
+		\item Estimate both transitions and rewards $ \mathbb{P}[P, R \mid h_t]$
+		\begin{itemize}
+			\item where $h_t = s_1, a_1, r_2, \ldots, s_t$ is the history
+		\end{itemize}
+		\item Use posterior to guide exploration
+		\begin{itemize}
+			\item Upper confidence bounds (Bayesian UCB)
+			\item Probability matching (Thompson sampling)
+		\end{itemize}
+		
+	\end{itemize}
+	
+\end{frame}
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Thompson Sampling: Model-based RL}
+	
+	\begin{itemize}
+		\item Thompson sampling implements probability matching
+	\begin{eqnarray}
+	\pi(s, a \mid h_t) &=& \mathbb{P} [Q^*(s,a) > Q^*(s,a'), \forall a' \neq a \mid h_t]\nonumber \\
+	&=& \mathbb{E}_{P, R \mid h_t} \left[\mathbf{1}(a \in \argmax_{a \in A} Q^*(s,a))\right]		\nonumber
+	\end{eqnarray}		
+	\item Use Bayes law to compute posterior $ \mathbb{P}[P, R \mid h_t]$
+	\item Sample an MDP $P, R$ from posterior
+	\item Solve MDP using favorite planning algorithm to get $Q^*(s,a)$
+	\item Select optimal action for sample MDP: $a_t \in \argmax_{a \in A}Q^*(s_t,a)$
+	\end{itemize}
+	
+\end{frame}
+%-----------------------------------------------------------------------
+
+%-----------------------------------------------------------------------
+\end{document}

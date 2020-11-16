@@ -1,0 +1,62 @@
+% !TeX spellcheck = en_US
+
+\input{../latex_main/main.tex}
+
+\title[RL: Exploration]{Exploration in RL}
+\subtitle{Intrinsic Exploration -- based on \href{https://lilianweng.github.io/lil-log/2020/06/07/exploration-strategies-in-deep-reinforcement-learning.html}{Blog by Lilian Wengweng}}
+
+
+
+\begin{document}
+	
+	\maketitle
+
+%----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{The Hard Exploration Problem}
+	
+	\begin{itemize}
+		\item hard-exploration problems:
+		\begin{itemize}
+			\item very sparse rewards 
+			\item or even deceptive rewards
+		\end{itemize}
+		\medskip
+		\pause
+		\item Examples
+		\begin{itemize}
+			\item Montezuma's Revenge (Atari): long sequence of steps needed to figure out that ``key'' is needed to open ``door''
+			\item Noisy-TV problem: 
+			\begin{itemize}
+				\item Assumption: Agent gets explicit reward for seeking novel experience
+				\item Agent discovers TV that only shows random images
+				\item Agent will watch TV forever (without solving the real task)!
+			\end{itemize}
+		\end{itemize}
+	\end{itemize}
+
+\end{frame}
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Intrinsic Rewards as Exploration Bonus}
+	
+	\begin{itemize}
+		\item Augment reward by reward external reward $r^e$ and intrinsic reward $r^i$
+		$$r_t = r^e_t + \beta r_t^i $$
+		\item inspired by intrinsic motivation in psychology
+		\begin{itemize}
+			\item children are driven by curiosity which helps to learn
+			\item intrinsic rewards could be correlated with curiosity, surprise, familiarity of the state and more
+		\end{itemize}
+		\item two main ideas for RL
+		\begin{itemize}
+			\item Discovery of novel states
+			\item Improvement of the agent's knowledge about the environment
+		\end{itemize}
+	\end{itemize}
+	
+\end{frame}
+%-----------------------------------------------------------------------
+
+%-----------------------------------------------------------------------
+\end{document}

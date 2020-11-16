@@ -2,7 +2,7 @@
 
 \input{../latex_main/main.tex}
 
-\title[Reinforcement Learning: Big Picture]{Exploration in RL}
+\title[RL: Exploration]{Exploration in RL}
 \subtitle{Traditional Exploration Strategies for Bandits}
 
 
@@ -27,6 +27,20 @@
 	\item[$\leadsto$] That's exactly the problem you face in every state $s$ again.\\ Let's assume that we fix $s$ for the moment
 \end{itemize}
 
+\end{frame}
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Optimistic Initialization}
+	
+	\begin{itemize}
+		\item Simple idea: initialize $\hat{Q}_0(a)$ to high values
+		\item Update action value by incremental Monte Carlo evaluations
+		\item Starting with $N(a) > 0$
+		$$\hat{Q}_t(a_t) = \hat{Q}_{t-1} + \frac{1}{N_t(a_t)} (r_t - \hat{Q}_{t-1})$$
+		\item Encourages systematic exploration early on
+		\item But can still lock onto suboptimal action
+	\end{itemize}
+	
 \end{frame}
 %-----------------------------------------------------------------------
 %----------------------------------------------------------------------
@@ -58,13 +72,32 @@
 \begin{frame}[c]{Upper Confidence Bounds}
 	
 	\begin{itemize}
-		\item Track all rewards you obtained by playing each action $a_k$ and compute mean $\mu(a_k)$ and standard deviation $\sigma(a_k)$ to estimate the underlying distribution
+		\item Track all rewards you obtained by playing each action $a_k$ and compute mean $\mu(a_k)$ and standard deviation $\sigma(a_k)$ to estimate the underlying reward distribution
 		\item Optimistic in face of uncertainty by upper confidence bound:
-		$$\mu(a_k) + \kappa \cdot \sigma(a_k)$$
+		$$\mu(a_k) + \kappa \cdot \sigma(a_k) / \sqrt{N(a)}$$
 		\item Idea: Over time, we get more and more evidence for the best actions until we are sure that the best known is really the best
 		\medskip
 		\pause
 		\item To prevent premature convergence: Use optimistic initialization of each action s.t. all actions are played in the beginning
+	\end{itemize}
+	
+\end{frame}
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{UCB~1}
+	
+			$$a_t \in \argmax_{a \in A} Q(a) + \sqrt{\frac{2\log t }{N_t(a)}} $$
+	
+	\begin{itemize}
+
+		\item Condition: Rewards have to be i.i.d random variables in $[0,1]$.
+		\pause
+		\item Theorem: The UCB~1 algorithm achieves logarithmic asymptotic total regret
+		$$\lim_{t\to \infty} L_t \leq 8 \log t \sum_{a|\Delta_a>0} \Delta_a $$
+		\begin{itemize}
+			\item where $L_t$ is the regret after $t$ trials and $\Delta_a = V^* - Q(a)$
+			\item Using Hoeffding's Inequality
+		\end{itemize}
 	\end{itemize}
 	
 \end{frame}
@@ -76,6 +109,7 @@
 		\item Track all rewards you obtained by playing each action $a_k$ and compute mean $\mu(a_k)$ and standard deviation $\sigma(a_k)$ to estimate the underlying distribution
 		\item Draw from each estimated distribution a single realization and simply play the action with the best one
 		$$ s_k \sim \mathcal{N}(\mu(a_k), \sigma(a_k))$$
+		$$ a \in \argmax_{a_k} s_k$$
 		\item In the limit, only the best performing action will be played with high probability
 	\end{itemize}
 	
