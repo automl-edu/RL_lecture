@@ -1,0 +1,161 @@
+% !TeX spellcheck = en_US
+
+\input{../latex_main/main.tex}
+
+\title[Reinforcement Learning: Policy Evaluation]{Policy Evaluation}
+\subtitle{TD($\lambda$)}
+
+
+
+\begin{document}
+	
+	\maketitle
+
+%----------------------------------------------------------------------
+
+%----------------------------------------------------------------------
+\begin{frame}[c]{TD vs. MC}
+
+	\centering
+	\includegraphics[width=0.5\textwidth]{images/td_vs_mc}
+	
+	
+\end{frame}
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{n-Step Return}
+	
+\begin{itemize}
+	\item Defining $n$-step returns for different $n$
+\end{itemize}
+
+\begin{eqnarray}
+n=1 & (TD) & G_t^{(1)} = R_{t+1} + \gamma V(s_{t+1})\nonumber\\
+n=2 &  & G_t^{(2)} = R_{t+1} + \gamma R_{t+2} + \gamma^2 V(s_{t+2})\nonumber\\
+\vdots & & \vdots\nonumber\\
+n = \infty & (MC) & G_t^{(2)} = R_{t+1} + \gamma R_{t+2} + \ldots + \gamma^{T-1} R_T\nonumber
+\end{eqnarray}
+
+\begin{itemize}
+	\item General $n$-step return
+\end{itemize}
+
+$$ G_t^{(n)} =  R_{t+1} + \gamma R_{t+2} + \ldots + \gamma^{n-1} R_{t+n} + \gamma^n V(s_{t+n})$$
+	
+\begin{itemize}
+	\item $n$-step temporal-difference learning
+	$$V(s_t) \gets V(s_t) + \alpha \left(G_t^{(n)} - V(s_t)\right) $$
+\end{itemize}
+	
+\end{frame}
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Averaging n-Step Return}
+	
+	\begin{itemize}
+		\item Hard to say what best $n$ is
+		\item The agent plays the episode anyway and therefore, all updates are possible in principle
+		\item One solution could be to average different $n$-step updates, e.g.,
+		$$ \frac{1}{2}G^{(2)} + \frac{1}{2}G^{(4)}$$
+		\item Combines information from two different time steps
+		\item Could we combine information from all time steps?
+	\end{itemize}
+	
+\end{frame}
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{$\lambda$-Return}
+	
+\begin{columns}
+	
+	\column{0.5\textwidth}
+	
+	\begin{itemize}
+		\item The $\lambda$-return $G_t^ {(n)}$ combines all $n$-steps returns $G_t^{(n)}$
+		\item Using weigh $(1-\lambda) \lambda^{n-1}$
+		$$G_t^\lambda = (1-\lambda) \sum_{n=1}^{\infty} \lambda^{n-1} G_t^{(n)} $$
+		$$ \sum_{n=1}^{T-t-2} (1-\lambda) \lambda^{n-1} + \lambda^{T-t-1} = 1 $$
+		\item Forward-view TD($\lambda$)
+		$$V(s_t) \gets V(s_t) + \alpha \left(G_t^\lambda - V(s_t)\right) $$
+	\end{itemize}
+
+\column{0.5\textwidth}
+
+\includegraphics[width=0.8\textwidth]{images/td_lambda.png}
+	
+\end{columns}
+
+\begin{itemize}
+	\item[$\leadsto$] Like MC, can only be computed from complete episodes
+\end{itemize}
+	
+
+	
+\end{frame}
+%-----------------------------------------------------------------------
+
+%----------------------------------------------------------------------
+\begin{frame}[c]{Backward View TD($\lambda$)}
+	
+	\begin{itemize}
+		\item Forward view provides theory
+		\item Backward view provides mechanism
+		\item Update online, every step, from incomplete sequences
+	\end{itemize}	
+	
+\end{frame}
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Eligibility Traces}
+	
+	\begin{itemize}
+		\item Episode: Bell, Bell, Bell, Light, Shock
+		\item Credit assignment problem: Was the bell or the light responsible for the shock at the end?
+		\pause
+		\item Frequency heuristic: assign credit to most frequence states
+		\item Recency heuristic: assign credit to most recent states
+		\item Eligibility traces combine both heuristics:
+	\end{itemize}	
+
+\begin{eqnarray}
+E_0(s) &=& 0 \nonumber\\
+E_t(s) &=& \gamma \lambda E_{t-1}(s) + \mathbf{1}(S_t=s) \nonumber
+\end{eqnarray}
+
+\begin{itemize}
+	\item[$\leadsto$] decrease of importance exponentially proportional to time in the past
+	\item[$\leadsto$] boost of importance for each time the state was visited
+\end{itemize}
+	
+\end{frame}
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Backward View TD($\lambda$)}
+	
+
+\begin{itemize}
+	\item Keep an eligibility trace for every state $s$
+	\item Update value $V(s)$ for every state $s$
+	\item In proportion to TD-error $\delta_t$ and eligibility trace $E_t(s)$
+	\begin{eqnarray}
+	\delta_t &=& R_{t+1} + \gamma V(s_{t+1}) - V(s_t)\nonumber\\
+	V(s) &\gets& V(s) + \alpha \delta_t E_t(s)\nonumber
+	\end{eqnarray}
+\end{itemize}
+
+\end{frame}
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{MC, TD(0) and TD($\lambda$)}
+	
+	
+	\begin{itemize}
+		\item When $\lambda = 0$, only the current state is updated
+		\item When $\lambda = 1$, the same as the total update of MC
+	\end{itemize}
+	
+\end{frame}
+%-----------------------------------------------------------------------
+
+%-----------------------------------------------------------------------
+\end{document}
