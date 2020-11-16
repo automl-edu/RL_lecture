@@ -2,7 +2,7 @@
 
 \input{../latex_main/main.tex}
 
-\title[Reinforcement Learning: Model Free Control]{Model Free Control}
+\title[RL: Model Free Control]{Model Free Control}
 \subtitle{Bias Maximization and Double Q-Learning}
 
 
@@ -22,17 +22,20 @@
 		\end{itemize}
 		\item Then $Q(s,a_1) = Q(s,a_2) = 0 = V(s)$
 		\item Assume there are prior samples of taking action $a_1$ and $a_2$
-		\item Let $\hat{Q}(s,a_1)$, $Q(s,a_2)$ be the \alert{finite} sample estimate of Q
-		\item Use an unbiased estimator for $Q$, e.g., $Q(s,a_1) = \frac{1}{N(s,a_1)} \sum_{i=1}^{N(s,a_1)} r_i(s,a_1)$
-		\item Let $\hat{\pi}\in \argmax\hat{Q}(s,a)$ be the greedy policy wrt the estimated $\hat{Q}$
-		\item Even though each estimate of the state-action values is unbiased, the estimate of $\hat{\pi}$'s value $\hat{V}^{\hat{\hat{\pi}}}$ can be biased:
+		\pause
+		\item Let $\hat{Q}(s,a_1)$, $\hat{Q}(s,a_2)$ be the \alert{finite} sample estimate of Q
+		\item Use an unbiased estimator for $Q$, e.g., $\hat{Q}(s,a_1) = \frac{1}{N(s,a_1)} \sum_{i=1}^{N(s,a_1)} r_i(s,a_1)$
+		\pause
+		\item Let $\hat{\pi}\in \argmax_{a}\hat{Q}(s,a)$ be the greedy policy wrt the estimated $\hat{Q}$
+		\pause
+		\item Even though each estimate of the state-action values is unbiased, the estimate of $\hat{\pi}$'s value $\hat{V}^{\hat{\pi}}$ can be biased:
 	\end{itemize}
 
 \vspace{-1em}
 \begin{eqnarray}
 \hat{V}^{\hat{\pi}}(s) &=& \mathbb{E} [\max \hat{Q}(s,a_1), \hat{Q}(s,a_2)]\nonumber\\
-&\geq& \max [\mathbb{E}[\hat{Q}(s,a_1)],[\hat{Q}(s,a_2)]]\nonumber\\
-&=& max[0,0] = V^\pi\nonumber
+&\geq& \max [\mathbb{E}[\hat{Q}(s,a_1)],\mathbb{E}[\hat{Q}(s,a_2)]]\nonumber\\
+&=& \max[0,0] = V^\pi\nonumber
 \end{eqnarray}
 (where the inequality comes from Jensens' inequality.)
 	
@@ -70,7 +73,7 @@
 		\end{itemize}
 		\item Loop
 		\begin{itemize}
-			\item Select $a_t$ using $\epsilon$-greedy $\pi(s) = \argmax_{a \in A} Q_1(s_t, a) + Q_2(s_t , a)$
+			\item Select $a_t$ using $\epsilon$-greedy $\pi(s) \in \argmax_{a \in A} Q_1(s_t, a) + Q_2(s_t , a)$
 			\item Observe $(r_t, s_{t+1})$
 			\item With 50-50 probability either
 			\begin{enumerate}
