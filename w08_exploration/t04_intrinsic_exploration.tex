@@ -3,7 +3,7 @@
 \input{../latex_main/main.tex}
 
 \title[RL: Exploration]{Exploration in RL}
-\subtitle{Intrinsic Exploration -- based on \href{https://lilianweng.github.io/lil-log/2020/06/07/exploration-strategies-in-deep-reinforcement-learning.html}{Blog by Lilian Wengweng}}
+\subtitle{Intrinsic Exploration\footnote{based on \href{https://lilianweng.github.io/lil-log/2020/06/07/exploration-strategies-in-deep-reinforcement-learning.html}{Blog by Lilian Wengweng}}}
 
 
 
@@ -43,12 +43,12 @@
 	\begin{itemize}
 		\item Augment reward by reward external reward $r^e$ and intrinsic reward $r^i$
 		$$r_t = r^e_t + \beta r_t^i $$
-		\item inspired by intrinsic motivation in psychology
+		\item Inspired by intrinsic motivation in psychology
 		\begin{itemize}
-			\item children are driven by curiosity which helps to learn
-			\item intrinsic rewards could be correlated with curiosity, surprise, familiarity of the state and more
+			\item Children are driven by curiosity which helps to learn
+			\item Intrinsic rewards could be correlated with curiosity, surprise, familiarity of the state and more
 		\end{itemize}
-		\item two main ideas for RL
+		\item Two main ideas for RL
 		\begin{itemize}
 			\item Discovery of novel states
 			\item Improvement of the agent's knowledge about the environment
@@ -57,6 +57,52 @@
 	
 \end{frame}
 %-----------------------------------------------------------------------
-
+%----------------------------------------------------------------------
+\begin{frame}[c]{Count-based Exploration}
+	
+	\begin{itemize}
+		\item What does it mean that the agent is surprised that it discovered something new?
+		\item[$\leadsto$] Measure whether the state is novel or appeared often
+		\item Count how many times a state was encountered and assign bonus to rarely encountered states
+		\begin{itemize}
+			\item Count-based exploration
+			\item $N_n(s)$: number of visits of state $s$ in the sequence $s_{1:n}$
+			\item Problem: Most $N(s)$ will be zero for non-trivial environments
+		\end{itemize}
+	\end{itemize}
+	
+\end{frame}
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Counting by Density Model \litw{\href{https://arxiv.org/abs/1606.01868}{Bellemare et al. 2016}}}
+	
+	\begin{itemize}
+		\item Use a density model to approximate the frequency of state visits
+		\item $p_n(s) = p(s \mid s_{1:n})$ is the probability of the $(n+1)$-th state being $s$
+		\begin{itemize}
+			\item empirically: $p_n(s) = N_n(s) / n$
+		\end{itemize}
+		\item $p'_n(s) = p(s \mid s_{1:n} s)$: probability assigned by the density model to $s$ after observing a new occurence of $s$
+		$$p_n(s) =  \frac{\hat{N}_n(s)}{\hat{n}} \leq \frac{\hat{N}_n(s) + 1}{\hat{n} + 1} = p'_n(s)$$
+		\begin{itemize}
+			\item where $\hat{N}_n(s)$ is a pseudo-count function and $\hat{n}$ a pseudo-count total which regulates the density function.
+			\item learning-positive of density function is required since visiting $s$ again ($p'_n(s)$) should increase probability
+		\end{itemize}
+	\end{itemize}
+	
+\end{frame}
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Count-based Intrinsic Bonus}
+	
+	\begin{itemize}
+		\item Common choice \lit{Strehl and Littmann. 2008}:
+		$$r_t^i = N(s_t, a_t)^{-1/2}$$
+		\item For pseudo-count based exploration, very similar:
+		$$r_t^i = (\hat{N}_n (s_t, a_t) + 0.01)^{-1/2} $$
+	\end{itemize}
+	
+\end{frame}
+%-----------------------------------------------------------------------
 %-----------------------------------------------------------------------
 \end{document}

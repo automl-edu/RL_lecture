@@ -1,0 +1,147 @@
+% !TeX spellcheck = en_US
+
+\input{../latex_main/main.tex}
+
+\title[RL: Exploration]{Exploration in RL}
+\subtitle{Prediction-based Intrinsic Exploration\footnote{based on \href{https://lilianweng.github.io/lil-log/2020/06/07/exploration-strategies-in-deep-reinforcement-learning.html}{Blog by Lilian Wengweng}}}
+
+
+\begin{document}
+	
+	\maketitle
+
+%----------------------------------------------------------------------
+
+%----------------------------------------------------------------------
+\begin{frame}[c]{Prediction-based Exploration~\litw{\href{http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.45.957}{Schmidhuber. 1991}}}
+	
+	\begin{itemize}
+		\item Idea: If the agent is able to predict what will happen in the future, it is already well informed
+		\item In contrast, if the agent is not able to predict the future, it is surprised.
+		\begin{eqnarray}
+		f: (s_t, a_t) \mapsto s_{t+1} \nonumber \\
+		e(s_t, a_t) = || f(s_t, a_t) - s_{t+1}||_2^2\nonumber
+		\end{eqnarray}
+		\begin{itemize}
+			\item the higher the error $e$, the less familiar the agent is with that state / more surprised
+		\end{itemize}
+
+	\end{itemize}
+
+	
+\end{frame}
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Intelligent Adaptive Curiosity~\litw{\href{http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.177.7661&rep=rep1&type=pdf}{Oudeyer et al. 2007}}}
+	
+	\begin{itemize}
+		\item Memory of all observed state transitions $M = (s_t, a_t, s_{t+1})$
+		\item Split the state space $S$ similar as in decision node:
+		\begin{itemize}
+			\item Split only if enough states were observed
+			\item Variance of states in each leaf should be minimal
+			\item For each leaf, learn a forward dynamic predictor $f$
+		\end{itemize}
+		\item Reward regions where we can make fast progress via decreasing error
+		$$r_t^i = \frac{1}{k} \sum_{i=0}^{k-1} (e_{t-i-\tau} - e_{t-i})$$
+		\begin{itemize}
+			\item moving window with offset $\tau$ and moving window size $k$
+		\end{itemize}
+		
+	\end{itemize}
+	
+	
+\end{frame}
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Decay~\litw{\href{https://arxiv.org/abs/1507.00814}{Stadie et al. 2015}}}
+	
+	\begin{itemize}
+		\item Normalize error to [0,1] by the maximal error observed so far
+		$$\bar{e}_t = \frac{e_t}{\max_{i \leq t} e_i} $$
+		\item decay intrinsic reward over time
+		$$r_t^i = \frac{e_t(s_t, a_t)}{t \cdot C}$$ 
+		\begin{itemize}
+			\item $C$ being a constant
+		\end{itemize}
+	\end{itemize}
+
+	
+\end{frame}
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{State Encoding}
+	
+
+	State should be encoded reduce the state space
+	\begin{itemize}
+		\item hash-function~\lit{\href{https://arxiv.org/abs/1611.04717}{Tang et al. 2016}}
+		\item Autoencoder~\lit{\href{https://arxiv.org/abs/1507.00814}{Stadie et al. 2015}}
+		\item Self-supervised inverse dynamic models~\lit{\href{https://arxiv.org/abs/1705.05363}{Pathak et al. 2017}}
+		$$g: (\phi(s_t), \phi(s_{t+1})) \mapsto a_t $$
+		\begin{itemize}
+			\item The encoding will focus on the parts of state features that influenced the agent behavior
+			\item Use $\phi$ to learn an forward model $f: (\phi(s_t), a_t) \mapsto s_{t+1}$
+			$$ r_t^i = || f(\phi(s_{t+1})) - \phi(s_{t+1})||^2_2$$
+		\end{itemize}
+	\end{itemize}
+	
+	
+\end{frame}
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Pure Curiosity-drive Learning~\litw{\href{https://arxiv.org/abs/1808.04355}{Burda et al. 2018}}}
+	
+	
+	\begin{itemize}
+		\item Pure exploration and ignoring the extrinsic reward signal
+		$$r_t  = r_t^i = ||f(s_t, a_t) - \phi(s_{t+1}) ||_2^2 $$
+		\item Study on different state encodings: compact, sufficient and stable
+		\begin{enumerate}
+			\item Raw image pixels; no encoding
+			\item Neural network with fixed random weights
+			\item VAE
+			\item Inverse dynamics features (IDF)
+		\end{enumerate}
+		\item Insights:
+		\begin{itemize}
+			\item No clear winner overall
+			\item Random network quite competitive
+			\item IDF can generalize better (e.g., learn IDF on one Super Mario Bros level and then test it on another)
+			\item On the noisy TV env, IDF performed best, followed by random network, but overall very hard to learn anything reasonable (wrt extrinsic reward)
+		\end{itemize}
+	\end{itemize}
+	
+	
+\end{frame}
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Variational Information maximizing Exploration~\litw{\href{https://arxiv.org/abs/1605.09674}{Houthooft et al. 2016}}}
+	
+	\begin{itemize}
+		\item Idea: maximize information gain about the agent's belief of env dynamics.
+		\item Information gain often measured by reduction in entropy
+		
+		\begin{eqnarray}
+		&&\sum_t H(\Theta \mid e_t, a_t) - H(\Theta | s_{t+1}, e_t, a_t)\nonumber\\
+		&=& \mathbb{E}_{s_{t+1}\sim P(\cdot\mid e_t, a_t))} \left[ D_{KL} (p(\theta \mid e_t, a_t, s_{t+1}) || p(\theta|e_t))  \right]\nonumber
+		\end{eqnarray}
+		
+		\begin{itemize}
+			\item $\theta \in \Theta$ parameterized forward dynamic model
+			\item $e_t$ episode t
+			\item $H$ entropy
+			\item $D_{KL}$ Kullback-Leibler divergence
+		\end{itemize}
+	
+		\item[$\leadsto$] Use Bayesian Neural Network (BNN) for dynamics model which maintains a distribution over its weights $\theta$
+		
+	\end{itemize}
+
+
+	
+	
+\end{frame}
+%-----------------------------------------------------------------------
+%-----------------------------------------------------------------------
+\end{document}
