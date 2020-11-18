@@ -1,0 +1,105 @@
+% !TeX spellcheck = en_US
+
+\input{../latex_main/main.tex}
+
+\title[Meta-RL]{Meta Reinforcement Learning}
+\subtitle{Curriculum Learning\footnote{Based on a \href{https://lilianweng.github.io/lil-log/2020/01/29/curriculum-for-reinforcement-learning.html}{blog} by Lilian Weng}}
+
+
+\begin{document}
+	
+	\maketitle
+
+%----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{From Easy to Hard}
+
+
+\begin{itemize}
+	\item We, humans, also learn step by step
+	\begin{itemize}
+		\item E.g., in math, we learn first basic arithmetics before we later learn complex derivatives and integrals
+		\item E.g., in this lecture, we first talked about simple planning on MDPs, before we talked about complex meta-RL ideas
+	\end{itemize}
+	\smallskip
+	\item \alert{Idea:} break down complex concepts into simpler concepts s.t. we can start from the easy ones and build up the complex one
+	\item \alert{Challenge}: How can we design a curriculum starting from simple to hard tasks?
+	\begin{itemize}
+		\item A poorly designed curriculum might even harm learning.
+	\end{itemize}
+	\item \alert{Challenge}: How do we avoid catastrophic forgetting by training on another instance?
+\end{itemize}
+
+
+\end{frame}
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Task-Specific Curriculum Learning~\litw{\href{https://dl.acm.org/doi/10.1145/1553374.1553380}{Bengio et al. 2009}}}
+	
+	
+	\begin{enumerate}
+		\item Cleaner Examples may yield better generalization faster.
+		\item Introducing gradually more difficult examples speeds up online training.
+	\end{enumerate}
+
+	\begin{itemize}
+		\item Results by \lit{\href{https://arxiv.org/abs/1410.4615}{Zaremba and Sutskever. 2014}} indicated that one should mix in easy tasks to not forget how to solve these.
+	\end{itemize}
+
+	
+\end{frame}
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{How to Quantify Complexity/Difficulty of an Env?}
+	
+	\begin{itemize}
+		\item Human specification
+		\begin{itemize}
+			\item parameterized generator for environments that allow to control the complexity 
+			\item or we can measure meta-features of the env, e.g.
+			\begin{itemize}
+				\item Size of maze
+				\item distance between start state and end state
+				\item number of actions
+				\item estimated state space
+				\item ...
+			\end{itemize}
+			\item Note: We cannot quantify the complexity of the optimal policy for a given MDP, because we have to measure these before actually solving the MDP
+		\end{itemize}
+	\end{itemize}
+	
+
+\end{frame}
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{External Model}
+	
+	\begin{enumerate}
+		\item Minimal loss wrt another policy being pretrained on other tasks
+		\item Sort the instances s.t. they go from easy to hard wrt this pretrained agent~\lit{\href{https://arxiv.org/abs/1802.03796}{Weinshall et al. 2018}}
+	\end{enumerate}
+	
+\end{frame}
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Self-Paced Learning}
+	
+	\begin{itemize}
+		\item In contrast to a hand-designed curriculum, the curriculum is constructed on the fly based on the needs of the policy learner.
+	\end{itemize}
+
+	
+\end{frame}
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{SPaCE~\litw{https://www.tnt.uni-hannover.de/papers/data/1454/space.pdf}{Eimer et al. 2020}}
+	
+	\begin{enumerate}
+		\item Most agents estimate the state-value function $V$ in some way
+		\item While training the policy, 
+	\end{enumerate}
+	
+\end{frame}
+%-----------------------------------------------------------------------
+%-----------------------------------------------------------------------
+\end{document}

@@ -1,9 +1,9 @@
+% !TeX spellcheck = en_US
 
 \input{../latex_main/main.tex}
 
-\title[Reinforcement Learning: Big Picture]{RL: Introduction}
+\title[Meta-RL]{Meta Reinforcement Learning}
 \subtitle{The Big Picture}
-
 
 
 \begin{document}
@@ -12,49 +12,71 @@
 
 %----------------------------------------------------------------------
 %----------------------------------------------------------------------
-\begin{frame}[c]{Machine Learning}
+\begin{frame}[c]{RL Problem Setting}
 
-\centering
-\textit{``Machine learning is the science of getting computers to act\\
- without being explicitly programmed.''}
+\begin{itemize}
+	\item Definition of MDP $(S,A,P, R, \gamma)$
+	\begin{itemize}
+		\item $S$ is a (finite) set of Markov states $s \in S$
+		\item $A$ is a (finite) set of actions $a \in A$
+		\item $P$ is dynamics/transition model for each action, that specifies $P(s_{t+1} = s' \mid s_t=s, a_t=a)$
+		\item $R$ is a reward function 
+		$R(s_t=s, a_t=a) = \mathbb{E}[r_r \mid s_t=s, a_t=a] $
+		\begin{itemize}
+			\item Sometimes R is also defined based on $(s)$ or on $(s,a,s')$
+		\end{itemize}
+		\item Discount factor $\gamma \in [0, 1]$
+	\end{itemize}
+	\bigskip
+	\item Task: Compute the optimal policy
+		$$ \pi^*(s)  \in \argmax_\pi V^\pi(s)$$
+\end{itemize}
 
-\hfill by Andrew Ng
 
 \end{frame}
 %-----------------------------------------------------------------------
 %----------------------------------------------------------------------
-\begin{frame}[c]{Classical Fields in ML}
+\begin{frame}[c]{Can We Generalize beyond a given MDP?}
+	
+	\begin{itemize}
+		\item What happens if the environment changes? (non-stationary environments)
+		\begin{itemize}
+			\item Can we efficiently adapt our policy to changed transitions or reward functions?
+		\end{itemize}
+		\smallskip
+		\item After a human player learned how to play Super Mario Bros in the first levels, they will also play fairly well the upcoming levels.
+		\item However, an RL agent potentially will fail.
+		\item[$\leadsto$] Strong limitations regarding the applications of a trained agent
+	\end{itemize}
+	
+\end{frame}
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Three Main Ideas}
+	
+	\begin{enumerate}
+		\item Can we use easy environments to learn how to behave in hard environments?
+		\begin{itemize}
+			\item Strong connections to curriculum learning and self-paced learning
+		\end{itemize}
+		\pause
+		\item Can we train a policy that is easily adaptable to new environments?
+		\begin{itemize}
+			\item We need only little training to adapt to new environments.
+		\end{itemize}
+		\pause
+		\item Can we train a policy that generalizes to new environments without any new training?
+	\end{enumerate}
 
-	TODO	
-	
-\end{frame}
-%-----------------------------------------------------------------------
-%----------------------------------------------------------------------
-\begin{frame}[c]{Unsupervised Learning}
-	
-	TODO	--- only observations
-	
-\end{frame}
-%-----------------------------------------------------------------------
-%----------------------------------------------------------------------
-\begin{frame}[c]{Supervised Learning}
-	
-	TODO	--- observations + labels
-	
-\end{frame}
-%-----------------------------------------------------------------------
-%----------------------------------------------------------------------
-\begin{frame}[c]{Reinforcement Learning}
-	
-	TODO	--- self-acquired observations + rewards
-	
-\end{frame}
-%-----------------------------------------------------------------------
-%----------------------------------------------------------------------
-\begin{frame}[c]{The Future of AI?}
-	
-	Combination of all three aspects?
-
+	\begin{itemize}
+		\item Assumption: We sample our environments i.i.d. from a fixed distribution
+		\begin{itemize}
+			\item Similar to the assumption in supervised learning, but on a meta-level
+			\item Training environments to train our agent on and test environments to check how well it performs.
+			\item We might have control how we sample from this distribution;\\ we might don't.
+		\end{itemize}
+	\end{itemize}
+			
 \end{frame}
 %-----------------------------------------------------------------------
 %-----------------------------------------------------------------------
