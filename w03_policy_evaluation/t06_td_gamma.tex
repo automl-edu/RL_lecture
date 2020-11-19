@@ -72,7 +72,7 @@ $$ G_t^{(n)} =  R_{t+1} + \gamma R_{t+2} + \ldots + \gamma^{n-1} R_{t+n} + \gamm
 	
 	\begin{itemize}
 		\item The $\lambda$-return $G_t^ {}$ combines all $n$-steps returns $G_t^{(n)}$
-		\item Using weigh $(1-\lambda) \lambda^{n-1}$
+		\item Using weight $(1-\lambda) \lambda^{n-1}$
 		$$G_t^\lambda = (1-\lambda) \sum_{n=1}^{\infty} \lambda^{n-1} G_t^{(n)} $$
 		$$ \sum_{n=1}^{T-t-2} (1-\lambda) \lambda^{n-1} + \lambda^{T-t-1} = 1 $$
 		\item Forward-view TD($\lambda$)
