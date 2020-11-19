@@ -41,8 +41,8 @@
 		\end{itemize} 
 		\item Loop
 		\begin{itemize}
-			\item Take action $a_{t+1} \sim \pi(s_{t+1})$
-			\item Observe $(r_{t+1}, s_{t+2})$
+			\item Take action $a_t \sim \pi(s_t)$
+			\item Observe $(r_t, s_{t+1})$, $a_{t+1} \sim \pi(s_{t+1})$
 			\item Update Q given $(s_t, a_t, r_t, s_{t+1}, a_{t+1})$:
 			$$Q(s_t,a_t) \gets Q(s_t, a_t) + \alpha (r_t + \gamma Q(s_{t+1}, a_{t+1}) - Q(s_t, a_t))$$
 			\item $\pi(s_t) \in \argmax_{a\in A} Q(s_t, a)$ with probability $1-\epsilon$, else random
