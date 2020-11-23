@@ -2,7 +2,7 @@
 
 \input{../latex_main/main.tex}
 
-\title[Reinforcement Learning: Function Approximation]{Function Approximation}
+\title[RL: Function Approximation]{Function Approximation}
 \subtitle{Gradient Descent and Linear Models}
 
 
@@ -74,7 +74,7 @@
 	
 	
 	\begin{itemize}
-		\item First assume we could query any state s and an \alert{oracle} would return
+		\item First assume we could query any state $s$ and an \alert{oracle} would return
 		the true value for $V^\pi (s)$
 		\item The objective was to find the best approximate representation of $V^\pi$
 		given a particular parameterized function
@@ -96,7 +96,7 @@
 		$$ \Delta \vec{w} = - \frac{1}{2} \alpha \nabla_\vec{w} J(\vec{w})$$
 		\item Stochastic gradient descent (SGD) uses a finite number of samples to compute an approximate gradient:
 		$$ \nabla_\vec{w} J(\vec{w}) = \nabla_{\vec{w}} \mathbb{E}_\pi[V^\pi (s) - \hat{V}^\pi (s; \vec{w})]^2$$
-		$$= \mathbb{E}_\pi [2 (V^\pi(s) - \hat{V}^\pi (s;\vec{w})) \nabla_\vec{w} \hat{V}(s,\vec{w})]$$
+		$$= \mathbb{E}_\pi [2 (V^\pi(s) - \hat{V}^\pi (s;\vec{w})) \nabla_\vec{w} \hat{V}(s;\vec{w})]$$
 	\end{itemize}
 	
 \end{frame}

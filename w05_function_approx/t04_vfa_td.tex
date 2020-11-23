@@ -2,7 +2,7 @@
 
 \input{../latex_main/main.tex}
 
-\title[Reinforcement Learning: Function Approximation]{Function Approximation}
+\title[RL: Function Approximation]{Function Approximation}
 \subtitle{VFA: Temporal Difference}
 
 
@@ -19,7 +19,7 @@
 		\item Updates $V^\pi(s)$ after each transition $(s,a,r,s')$
 		$$V^\pi(s) = V^\pi (s) + \alpha(r + \gamma V^\pi (s') - V^\pi(s)) $$
 		\item Target is $r + \gamma V^\pi(s')$, a biased estimate of the true value $V^\pi(s)$
-		\item Represent value for each state with a separate table entry
+		\item Represent value for each state with a separate \alert{table entry}
 	\end{itemize}
 
 \end{frame}
@@ -33,7 +33,7 @@
 		\item Updates $V^\pi(s)$ after each transition $(s,a,r,s')$
 		$$V^\pi(s) = V^\pi (s) + \alpha(r + \gamma V^\pi (s') - V^\pi(s)) $$
 		\item Target is $r + \gamma V^\pi(s')$, a biased estimate of the true value $V^\pi(s)$
-		\item In value function approximation, target is $r + \gamma \hat{V}^\pi (s'; \vec{w})$, a biased and approximated estimate of the true value $V^\pi(s)$
+		\item In value \alert{function approximation}, target is $r + \gamma \hat{V}^\pi (s'; \vec{w})$, a biased and approximated estimate of the true value $V^\pi(s)$
 		\item 3 forms of approximation: 
 		\begin{itemize}
 			\item sampling

@@ -2,7 +2,7 @@
 
 \input{../latex_main/main.tex}
 
-\title[Reinforcement Learning: Function Approximation]{Function Approximation}
+\title[RL: Function Approximation]{Function Approximation}
 \subtitle{VFA: Monte Carlo}
 
 
@@ -49,6 +49,7 @@
 		\end{eqnarray}
 		
 		\item Note: $G_t$ may be a very noisy estimate of true return
+		\item Note(2): We dropped the factor $2$ and see it as part of $\alpha$
 		
 	\end{itemize}
 	
@@ -59,13 +60,13 @@
 		Evaluation}
 	
 
-Initialize $\vec{w}= 0$, $k=1$\\
+Initialize $\vec{w}= \mathbf{0}$, $k=1$\\
 Loop	
 	\begin{itemize}
 		\item Sample $k$-th episode $s_{k,1}, a_{k,1}, r_{k,1}, s_{k,2}, a_{k,2}, r_{k,2}, \ldots$
 		\item for $t=1, \ldots, L_k$ do
 		\begin{itemize}
-			\item If First visit to $s$ in episode $k$ then
+			\item If First visit to $s_{k,t}$ in episode $k$ then
 			\begin{itemize}
 					\item $G_t(s) = \sum_{j}^{L_k} r_{k,j}$
 					\item Update weights by $\alpha (G_t - \vec{x}(s_{k,t})^T \vec{w}) \vec{x}(s_{k,t})$
