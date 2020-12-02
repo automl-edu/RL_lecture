@@ -2,7 +2,7 @@
 
 \input{../latex_main/main.tex}
 
-\title[Reinforcement Learning: Deep Reinforcement Learning]{RL: Deep}
+\title[RL: Deep Reinforcement Learning]{RL: Deep}
 \subtitle{DQN}
 
 
@@ -42,19 +42,20 @@
 \end{frame}
 %-----------------------------------------------------------------------
 %----------------------------------------------------------------------
-\begin{frame}[c]{Using these ideas to do Deep RL in Atari}
+\begin{frame}[c]{Using these Ideas to do Deep RL in Atari}
 	
 \centering
 \includegraphics[width=0.7\textwidth]{images/atari_deep_rl.png}
 
 \begin{flushright}
+	\small
 	Image by David Silver
 \end{flushright}
 	
 \end{frame}
 %-----------------------------------------------------------------------
 %----------------------------------------------------------------------
-\begin{frame}[c]{Using these ideas to do Deep RL in Atari}
+\begin{frame}[c]{Using these Ideas to do Deep RL in Atari}
 	
 \begin{itemize}
 	\item End-to-end learning of values $Q(s, a)$ from pixels $s$
@@ -84,7 +85,7 @@
 		\item But Q-learning with VFA can diverge
 		\item Two of the issues causing problems:
 		\begin{itemize}
-			\item Correlations between samples
+			\item Correlations between samples violates i.i.d assumption of DNNs
 			\item Non-stationary targets
 		\end{itemize}
 		\item Deep Q-learning (DQN) addresses both of these challenges by
@@ -97,7 +98,7 @@
 \end{frame}
 %-----------------------------------------------------------------------
 %----------------------------------------------------------------------
-\begin{frame}[c]{Q-Learning with Value Function Approximation}
+\begin{frame}[c]{DQNs: Replay Buffer}
 	
 	\begin{itemize}
 		\item To help remove correlations, store dataset (called a \alert{replay buffer}) $\mathcal{D}$ from prior experience
@@ -111,7 +112,7 @@
 		\pause
 		\item Remarks:
 		\begin{itemize}
-			\item Fixed sized buffer $\leadsto$ first-in - first-out scheme (as default implementation)
+			\item Fixed sized buffer $\leadsto$ first-in--first-out scheme (as default implementation)
 			\item heuristic trade-off between performing new episodes and sampling from the replay buffer
 		\end{itemize}
 			
@@ -142,7 +143,7 @@
 		\item Remark:
 		\begin{itemize}
 			\item Hyperparameter how often you update $\vec{w}^-$
-			\item Trade-off between updating too often ($\leadsto$ instability) and too rarely ($\leadsto$ too old state information)
+			\item Trade-off between updating too often ($\leadsto$ instability) and\\ too rarely ($\leadsto$ too old state information)
 		\end{itemize}
 	\end{itemize}
 	
