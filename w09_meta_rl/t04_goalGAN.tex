@@ -1,0 +1,43 @@
+% !TeX spellcheck = en_US
+
+\input{../latex_main/main.tex}
+
+\title[Meta-RL]{Meta Reinforcement Learning}
+\subtitle{GoalGAN\footnote{Based on a \href{https://lilianweng.github.io/lil-log/2020/01/29/curriculum-for-reinforcement-learning.html}{blog} by Lilian Weng}}
+
+
+\begin{document}
+	
+	\maketitle
+
+%----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Automatic Goal Generation \litw{\href{https://arxiv.org/abs/1705.06366}{Florensa et al. 2017}}}
+	
+	\begin{itemize}
+		\item Let's assume that the task itself is fixed but the goal condition is flexible
+		\begin{itemize}
+			\item For example, the goal position can change
+			\item That is, we define a set of states $S^g$ that represent the goal
+		\end{itemize}
+		\pause
+		\smallskip
+		\item \alert{Idea:} Generate the set of goals adaptively based on the learning needs of the agent
+		\begin{itemize}
+			\item Use GANs to generate these goals
+			\item so-called Goal-GAN
+		\end{itemize}
+	\end{itemize}
+	
+\end{frame}
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Automatic Goal Generation \litw{\href{https://arxiv.org/abs/1705.06366}{Florensa et al. 2017}}}
+	
+	TBC
+	
+\end{frame}
+%-----------------------------------------------------------------------
+
+%-----------------------------------------------------------------------
+\end{document}
