@@ -2,7 +2,7 @@
 
 \input{../latex_main/main.tex}
 
-\title[Reinforcement Learning: Big Picture]{RL: Policy Gradient}
+\title[RL: Big Picture]{RL: Policy Search}
 \subtitle{The Big Picture}
 
 
@@ -81,6 +81,7 @@
 		\item Let state be history of prior actions (rock, paper and scissors) and if
 		won or lost
 		\item Is deterministic policy optimal? Why or why not?
+		\pause
 		\item[$\leadsto$] stochastic (random) policy is the Nash equilibrium
 	\end{itemize}
 
@@ -95,12 +96,12 @@
 	\end{center}
 	
 	\begin{itemize}
-		\item The agent \alert{cannot} differentiate the gray states
 		\item Consider features of the following form (for all N, E, S, W)
 		$$\phi(s,a) = 1\text{(s="wall to N", a = "move E")}$$
 		\vspace{-1em}
 		\begin{itemize}
 			\item State representation is not Markov
+			\item The agent \alert{cannot} differentiate the gray states
 		\end{itemize}
 		\item Compare value-based RL, using an approximate value function
 		$$Q_\theta (s,a) = f(\phi(s,a); \theta)$$
@@ -121,7 +122,7 @@
 		\item Under aliasing, an optimal \alert{deterministic} policy will either
 		\begin{itemize}
 			\item Move W in both gray states 
-			\item move E in both gray states
+			\item Move E in both gray states
 		\end{itemize}
 		\item Either way, it can get stuck and never reach the money
 		\item Value-based RL learns a near-deterministic policy
@@ -153,24 +154,11 @@
 	\begin{itemize}
 		\item Goal: given a policy $\pi_\theta(s,a)$ with parameters $\theta$, find best $\theta^*$
 		\item But how do we measure the quality for a policy $\pi_\theta$
-		\item n episodic environments, we can use policy value at start state $V(s_0, \theta)$
+		\item In episodic environments, we can use policy value at start state $V(s_0, \theta)$
 		\item For simplicity, we will mostly discuss the episodic case
 	\end{itemize}
 	
 \end{frame}
 %-----------------------------------------------------------------------
-%----------------------------------------------------------------------
-\begin{frame}[c]{Policy Objective Functions}
-	
-	\begin{itemize}
-		\item Goal: given a policy $\pi_\theta(s,a)$ with parameters $\theta$, find best $\theta^*$
-		\item But how do we measure the quality for a policy $\pi_\theta$
-		\item n episodic environments, we can use policy value at start state $V(s_0, \theta)$
-		\item For simplicity, we will mostly discuss the episodic case
-	\end{itemize}
-	
-\end{frame}
-%-----------------------------------------------------------------------
-
 %-----------------------------------------------------------------------
 \end{document}

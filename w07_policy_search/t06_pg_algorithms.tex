@@ -2,7 +2,7 @@
 
 \input{../latex_main/main.tex}
 
-\title[Reinforcement Learning: Big Picture]{RL: Policy Gradient}
+\title[RL: Policy Gradient]{RL: Policy Search}
 \subtitle{Policy Gradient Algorithms}
 
 
@@ -16,7 +16,7 @@
 \begin{frame}[c]{Likelihood Ratio / Score Function Policy Gradient}
 	
 	
-	$$\nabla_\theta V(\theta) = \frac{1}{m} \sum_{i=1}^{m} R(\tau^{(i)} \sum_{t=0}) $$
+	$$\nabla_\theta V(\theta) = \frac{1}{m} \sum_{i=1}^{m} R(\tau^{(i)}) \sum_{t=0}^{T-1} \nabla_\theta \log \pi_\theta (a_t^{(i)} \mid s_t^{(i)}) $$
 	
 	\begin{itemize}
 		\item Unbiased but very noise
@@ -73,7 +73,7 @@ $$ \Delta \theta_t = \alpha \nabla_\theta \log \pi_\theta (s_t, a_t) G_t $$
 REINFORCE:
 \begin{enumerate}
 	\item Initialize policy parameters $\theta$ arbitrarily
-	\item for each episode $\{s_1, a_1, r_2, \ldots, s_{T-1}, a_{T-1}, r_t \} \sim \pi_\theta $ do
+	\item for each episode $\{s_1, a_1, r_2, \ldots, s_{T-1}, a_{T-1}, r_T \} \sim \pi_\theta $ do
 	\begin{itemize}
 		\item for $t=1$ to $T - 1$ do
 		\begin{itemize}

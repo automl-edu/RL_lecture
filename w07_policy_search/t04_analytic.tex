@@ -2,7 +2,7 @@
 
 \input{../latex_main/main.tex}
 
-\title[Reinforcement Learning: Big Picture]{RL: Policy Gradient}
+\title[RL: Analytic Gradient]{RL: Policy Search}
 \subtitle{Analytic Gradient}
 
 
@@ -17,8 +17,8 @@
 
 \begin{itemize}
 	\item We now compute the policy gradient analytically
-	\item Assume policy $\pi_\theta$ is differentiable whenever it is non-zero
-	\item and we know the gradient $\nabla_\theta \pi_\theta (s,a)$
+	\item Assume policy $\pi_\theta$ is differentiable whenever it is non-zero\\
+	 and we know the gradient $\nabla_\theta \pi_\theta (s,a)$
 	\item Denote a state-action trajectory as 
 	$$ \tau = (s_0, a_0, r_0, \ldots, s_{T-1}, a_{T-1}, r_{T-1}, s_T) $$
 	\item Use $R(\tau) = \sum_{t=0}^{T} R(s_t, a_t)$ to be the sum of rewards for a trajectory~$\tau$

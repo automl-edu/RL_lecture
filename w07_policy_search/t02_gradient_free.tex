@@ -2,7 +2,7 @@
 
 \input{../latex_main/main.tex}
 
-\title[Reinforcement Learning: Big Picture]{RL: Policy Gradient}
+\title[RL: Gradient-free]{RL: Policy Search}
 \subtitle{Gradient-free Optimization}
 
 
@@ -67,7 +67,6 @@
 	\DontPrintSemicolon
 	\KwIn{{}\\{$\theta_0$ - Initial policy vector parameters}\\
 		{$T$ - time budget}\\
-		{$E$ - max length for each episode}\\
 		{$\lambda$ - Population size}\\
 		{$\mu$ - Parent population size}\\
 		{$\sigma$ - Mutation step-size}\\
@@ -79,7 +78,7 @@
 	\For{$t=0,1, \ldots, T$}{
 		\For{$i=1,2, \ldots, \lambda$}{ 
 			{$\epsilon_i\sim\mathcal{N}(0,I)$}\;
-			$s_i\leftarrow F_E(\theta_t+\sigma\cdot\epsilon_i)$
+			$s_i\leftarrow F(\theta_t+\sigma\cdot\epsilon_i)$
 		}
 		Sort $(\epsilon_1,\ldots,\epsilon_\lambda)$ according to $s$ in ascending order\\
 		{Update policy: $\theta_{t+1}\leftarrow \theta_t + \sigma\cdot\sum\nolimits_{j=1}^\mu w_j\cdot\epsilon_j$}

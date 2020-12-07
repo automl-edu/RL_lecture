@@ -2,7 +2,7 @@
 
 \input{../latex_main/main.tex}
 
-\title[Reinforcement Learning: Big Picture]{RL: Policy Gradient}
+\title[RL: Finite Difference]{RL: Policy Search}
 \subtitle{Finite Difference}
 
 
@@ -16,7 +16,7 @@
 \begin{frame}[c]{Policy Gradient}
 
 \begin{itemize}
-	\item Define $V(\theta) = V(s_0, \theta)$ to make explicit the dependence of the value on the policy parameters [but don't confuse with value function approximation, where parameterized value function]
+%	\item Define $V(\theta) = V(s_0, \theta)$ to make explicit the dependence of the value on the policy parameters [but don't confuse with value function approximation, where parameterized value function]
 	\item Assume episodic MDPs 
 	\item Policy gradient algorithms search for a \alert{local} maximum in $V(s_0,\theta)$ by ascending the gradient of the policy, w.r.t parameters $\theta$
 	$$\Delta \theta = \alpha \nabla_\theta V(s_0, \theta) $$
@@ -50,7 +50,7 @@
 			\item small enough to have a good gradient approximation
 		\end{itemize}
 		\pause
-		\item Uses $n$ evaluations to compute policy gradient in $n$ dimensions
+		\item Uses $\geq n$ evaluations to compute policy gradient in $n$ dimensions
 		\begin{itemize}
 			\item[$\leadsto$] fairly inefficient for doing a single update!
 			\item[$\leadsto$] weight space should be small --- no computer vision
