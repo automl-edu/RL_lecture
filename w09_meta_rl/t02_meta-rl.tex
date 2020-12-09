@@ -3,7 +3,7 @@
 \input{../latex_main/main.tex}
 
 \title[Meta-RL]{Meta Reinforcement Learning}
-\subtitle{The Big Picture}
+\subtitle{Definition of Meta-RL\footnote{Based on a \href{https://lilianweng.github.io/lil-log/2019/06/23/meta-reinforcement-learning.html}{blog} by Lilian Weng}}
 
 
 \begin{document}
@@ -36,43 +36,52 @@
 \end{frame}
 %-----------------------------------------------------------------------
 %----------------------------------------------------------------------
-\begin{frame}[c]{Can We Generalize beyond a given MDP?}
+\begin{frame}[c]{Meta-RL Problem Setting}
 	
-	\begin{itemize}
-		\item What happens if the environment changes? (non-stationary environments)
-		\begin{itemize}
-			\item Can we efficiently adapt our policy to changed transitions or reward functions?
-		\end{itemize}
-		\smallskip
-		\item After a human player learned how to play Super Mario Bros in the first levels, they will also play fairly well the upcoming levels.
-		\item However, an RL agent potentially will fail.
-		\item[$\leadsto$] Strong limitations regarding the applications of a trained agent
-	\end{itemize}
+\begin{itemize}
+	\item No single formal problem setting
+	\item Usually based on a set of different MDPs $\mathcal{M}$ 
+	\item Commonalities in $\mathcal{M}$ vary
+	\item Often: shared state \& action space
+	\item Task: Compute optimal policy over all of $\mathcal{M}$
+\end{itemize}
 	
 \end{frame}
 %-----------------------------------------------------------------------
 %----------------------------------------------------------------------
-\begin{frame}[c]{Three Main Ideas}
+\begin{frame}[c]{Key Components in Meta-RL}
 	
-	\begin{enumerate}
-		\item Can we use easy environments to learn how to behave in hard environments?
-		\pause
-		\item Can we train a policy that is easily adaptable to new environments?
-		\pause
-		\item Can we find better training dynamics across a set of environments?
-		\pause
-		\item Can we train a policy that generalizes to new environments without any new training?
-	\end{enumerate}
-
+\begin{description}
+	\item[Model with Memory] 
+	\item[Meta-Learning Algorithm] 
+	\item[A Distribution of MDPs] 
+\end{description}
+	
+	
+\end{frame}
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Key Approaches in Meta-RL}
+	
 	\begin{itemize}
-		\item Assumption: We sample our environments i.i.d. from a fixed distribution
+		\item Meta-Learning Hyperparameters
 		\begin{itemize}
-			\item Similar to the assumption in supervised learning, but on a meta-level
-			\item Training environments to train our agent on and test environments to check how well it performs.
-			\item We might have control how we sample from this distribution;\\ we might don't.
+			\item Hyperparameter values for good performance
+			\item Alternative optimization methods
+		\end{itemize}
+		\item Meta-Learning the Training Dynamics
+		\begin{itemize}
+			\item Credit Assignment for state-action pairs
+			\item Problem-specific Exploration Strategies
+		\end{itemize}
+		\item Task Generation
+		\begin{itemize}
+			\item Task diversification for generalization
+			\item Curriculum Learning
 		\end{itemize}
 	\end{itemize}
-			
+	
+	
 \end{frame}
 %-----------------------------------------------------------------------
 %-----------------------------------------------------------------------

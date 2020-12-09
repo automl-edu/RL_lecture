@@ -1,0 +1,94 @@
+% !TeX spellcheck = en_US
+
+\input{../latex_main/main.tex}
+
+\title[Meta-RL]{Meta Reinforcement Learning}
+\subtitle{Self-paced and Teacher Guided Curriculum Learning\footnote{Based on a \href{https://lilianweng.github.io/lil-log/2020/01/29/curriculum-for-reinforcement-learning.html}{blog} by Lilian Weng}}
+
+
+\begin{document}
+	
+	\maketitle
+
+%----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Automatic Curriculum Generation = Self-Paced Learning}
+	
+	\begin{itemize}
+		\item[$\leadsto$] In contrast to a hand-designed curriculum, the curriculum is constructed on the fly based on the needs of the policy learner.
+	\end{itemize}
+	
+\end{frame}
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Teacher-Guided Curriculum \litw{\href{https://arxiv.org/abs/1704.03003}{Graves et al. 2017}}}
+	
+	\begin{itemize}
+		\item Model curriculum learning as an N-armed bandit problem
+		\begin{itemize}
+			\item Each arm is an env 
+			\item Choose the arm that gives the most (meta-)reward
+			\item non-stationary problem since policy changes over time and thus the reward distribution
+		\end{itemize}
+		\smallskip
+		\item Two types of possible meta-reward signals
+		\begin{itemize}
+			\item Loss-driven progress tracks the learning progress
+			\item Complex-driven progress tracks the model complexity in proportion to the models generalization performance\footnote{KL Divergence between posterior and prior distribution over network weights}
+		\end{itemize}
+	\end{itemize}
+	
+\end{frame}
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Teacher-Guided Curriculum \litw{\href{https://arxiv.org/abs/1704.03003}{Graves et al. 2017}}}
+	
+	\begin{itemize}
+		\item Model curriculum learning as an N-armed bandit problem
+		\begin{itemize}
+			\item Each arm is an env 
+			\item Choose the arm that gives the most (meta-)reward
+			\item non-stationary problem since policy changes over time and thus the reward distribution
+		\end{itemize}
+		\smallskip
+		\pause
+		\item Two types of possible meta-reward signals
+		\begin{itemize}
+			\item Loss-driven progress tracks the learning progress
+			\item Complex-driven progress tracks the model complexity in proportion to the models generalization performance\footnote{KL Divergence between posterior and prior distribution over network weights}
+		\end{itemize}
+	\end{itemize}
+	
+\end{frame}
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Teacher-Guided Curriculum \litw{\href{https://arxiv.org/abs/1704.03003}{Graves et al. 2017}}}
+	
+	\begin{itemize}
+		\item Two types of learners:
+		\begin{description}
+			\item[Student] the target RL agent that returns its scores on a given task
+			\begin{itemize}
+				\item should learn fast
+				\item should not forget solutions to previous tasks
+			\end{itemize}
+			\item[Teacher] the meta-agent that selects a task based on the student's scores
+			\begin{itemize}
+				\item State observations: list of scores on $N$ tasks
+				\item Action: select a task
+				\item Reward: Average score improvement across all tasks
+			\end{itemize}
+		\end{description}
+	\end{itemize}
+
+	$$r_t = \sum_{i=1}^N r_t^{(i)} - r_{t-1}^{(i)}$$	
+	
+	\pause
+	\begin{itemize}
+		\item Use $\epsilon$-greedy or Thompson sampling for solving the non-stationary teacher-problem
+	\end{itemize}
+	
+\end{frame}
+%-----------------------------------------------------------------------
+%-----------------------------------------------------------------------
+\end{document}
