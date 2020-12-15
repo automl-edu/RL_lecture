@@ -3,7 +3,7 @@
 \input{../latex_main/main.tex}
 
 \title[Meta-RL]{Meta Reinforcement Learning}
-\subtitle{GoalGAN\footnote{Based on a \href{https://lilianweng.github.io/lil-log/2020/01/29/curriculum-for-reinforcement-learning.html}{blog} by Lilian Weng}}
+\subtitle{Goal Generation\footnote{Based on a \href{https://lilianweng.github.io/lil-log/2020/01/29/curriculum-for-reinforcement-learning.html}{blog} by Lilian Weng}}
 
 
 \begin{document}
@@ -12,7 +12,7 @@
 
 %----------------------------------------------------------------------
 %----------------------------------------------------------------------
-\begin{frame}[c]{Automatic Goal Generation \litw{\href{https://arxiv.org/abs/1705.06366}{Florensa et al. 2017}}}
+\begin{frame}[c]{Automatic Goal Generation}
 	
 	\begin{itemize}
 		\item Let's assume that the task itself is fixed but the goal condition is flexible
@@ -23,21 +23,43 @@
 		\pause
 		\smallskip
 		\item \alert{Idea:} Generate the set of goals adaptively based on the learning needs of the agent
-		\begin{itemize}
-			\item Use GANs to generate these goals
-			\item so-called Goal-GAN
-		\end{itemize}
 	\end{itemize}
 	
 \end{frame}
 %-----------------------------------------------------------------------
 %----------------------------------------------------------------------
-\begin{frame}[c]{Automatic Goal Generation \litw{\href{https://arxiv.org/abs/1705.06366}{Florensa et al. 2017}}}
+\begin{frame}[c]{Example: GoalGAN \litw{\href{https://arxiv.org/abs/1705.06366}{Florensa et al. 2017}}}
 	
-	TBC
+	\begin{itemize}
+		\item Select which goals are a currently appropriate difficulty
+		\item Train a GAN to generate instances with that difficulty
+		\item Train agent on those instances to improve
+		\item You can see the results \& generated images \href{https://sites.google.com/view/goalgeneration4rl}{here}
+	\end{itemize}
 	
 \end{frame}
 %-----------------------------------------------------------------------
-
+%----------------------------------------------------------------------
+\begin{frame}[c]{Example: GoalGAN \litw{\href{https://arxiv.org/abs/1705.06366}{Florensa et al. 2017}}}
+	
+	\begin{figure}
+		\centering
+		\includegraphics[scale=0.37]{images/goalgan.png}
+		\caption{Example training progress}
+	\end{figure}
+	
+\end{frame}
+%-----------------------------------------------------------------------
+%-----------------------------------------------------------------------
+\begin{frame}[c]{Related Approaches}
+	
+	\begin{itemize}
+		\item The generator can be refined by including more criteria for goal generation like goal validity, feasibility and coverage \lit{\href{https://arxiv.org/pdf/1909.12892.pdf}{Racanière et al., 2020}}
+		\item The brute force variation: POET \lit{\href{https://arxiv.org/pdf/1901.01753.pdf}{Wang et al., 2019}} \& enhanced POET \lit{\href{https://arxiv.org/pdf/2003.08536.pdf}{Wang et al., 2019}}
+		\item Hindsight Experience Replay \lit{\href{https://arxiv.org/pdf/1707.01495.pdf}{Andrychowicz et al., 2017}} variations generate intermediate goals to reach to final state
+	\end{itemize}
+	
+\end{frame}
+%-----------------------------------------------------------------------
 %-----------------------------------------------------------------------
 \end{document}
