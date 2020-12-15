@@ -2,8 +2,8 @@
 
 \input{../latex_main/main.tex}
 
-\title[Meta-RL]{Meta Reinforcement Learning}
-\subtitle{Skill-Based Curriculum\footnote{Based on a \href{https://lilianweng.github.io/lil-log/2020/01/29/curriculum-for-reinforcement-learning.html}{blog} by Lilian Weng}}
+\title[Curriculum RL]{Curriculum Learning}
+\subtitle{Teacher-Guided Curriculum\footnote{Based on a \href{https://lilianweng.github.io/lil-log/2020/01/29/curriculum-for-reinforcement-learning.html}{blog} by Lilian Weng}}
 
 
 \begin{document}
@@ -12,15 +12,64 @@
 
 %----------------------------------------------------------------------
 %----------------------------------------------------------------------
-\begin{frame}[c]{Skill-Based Curriculum}
+\begin{frame}[c]{Teacher-Guided Curriculum}
 	
 	\begin{itemize}
-		\item TBC
+		\item Idea: Expert teacher can use its own knowledge to create a curriculum
+		\item Question: who or what is an expert teacher?
+		\pause
+		\item "Common sense" methods, real-life expert decisions, a learner learning how to construct a curriculum
 	\end{itemize}
 	
 \end{frame}
 %-----------------------------------------------------------------------
+%-----------------------------------------------------------------------
 
+\begin{frame}[c]{The Teacher-Student Setup \lit{\href{https://arxiv.org/pdf/1707.00183.pdf}{Matiisen et al., 2017}}}
+	
+	\begin{figure}
+	\centering
+	\includegraphics[scale= 0.5]{images/teacher_student.png}
+	\caption{Teacher-Student interaction}
+	\end{figure}
+	
+\end{frame}
+%-----------------------------------------------------------------------
+%-----------------------------------------------------------------------
+
+\begin{frame}[c]{The Teacher}
+	\begin{itemize}
+		\item The teacher observes the student's reward $x_t$
+		\item The action space consists of all instances $i$
+		\item The teacher's reward is the change in the agent's reward:
+			$$ r_t = x_t - x_{t-1}$$
+	\end{itemize}
+	
+\end{frame}
+%-----------------------------------------------------------------------
+%-----------------------------------------------------------------------
+
+\begin{frame}[c]{The Ideal Result \lit{\href{https://arxiv.org/pdf/1707.00183.pdf}{Matiisen et al., 2017}}}
+	
+	\begin{figure}
+	\centering
+	\includegraphics[scale= 0.5]{images/ideal_teacher.png}
+	\caption{Teacher-Student interaction}
+	\end{figure}
+
+\end{frame}
 
 %-----------------------------------------------------------------------
+%-----------------------------------------------------------------------
+
+\begin{frame}[c]{Variations on the idea}
+
+	\begin{itemize}
+		\item The same method can be applied to continuously parametrized environments \lit{\href{https://arxiv.org/pdf/1910.07224.pdf}{Portelas et al., 2019}}
+		\item The teacher can be a failsafe in safety-critcal applications \lit{\href{https://papers.nips.cc/paper/2020/file/8df6a65941e4c9da40a4fb899de65c55-Paper.pdf}{Turchetta et al., 2020}}
+		\item Guided Policy Search \lit{\href{https://graphics.stanford.edu/projects/gpspaper/gps_full.pdf}{Levine \& Koltun, 2013}} uses an expert policy to sample trajectories (not necessarily across instances)	
+	\end{itemize}
+
+\end{frame}
+
 \end{document}
