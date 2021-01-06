@@ -14,12 +14,65 @@
 %----------------------------------------------------------------------
 \begin{frame}[c]{SPaCE~\litw{\href{https://www.tnt.uni-hannover.de/papers/data/1454/space.pdf}{Eimer et al. 2020}}}
 	
-	\begin{enumerate}
+	\begin{itemize}
 		\item Most agents estimate the state-value function $V$ in some way
-		\item While training the policy, TBC
-	\end{enumerate}
+		\item Common definition of $V$: 
+			$$ V(s) = \exp_{\pi} \sum_t^T \gamma^t \cdot r_t $$
+		\item Therefore $V(s_0)$ estimates the total discounted reward for the whole episode
+		\item Idea: use this information for curriculum generation
+	\end{itemize}
 	
 \end{frame}
+
 %-----------------------------------------------------------------------
 %-----------------------------------------------------------------------
+
+\begin{frame}[c]{Setting - what makes SPaCE special?}
+	
+	\begin{itemize}
+		\item Designed for deep contextual RL
+		\item No prior knowledge about instance space required, e.g.:
+		\begin{itemize}
+			\item size
+			\item difficulty
+			\item difficulty regions
+		\end{itemize}
+	\end{itemize}
+	
+\end{frame}
+
+\begin{frame}[c]{Algorithm Outline}
+	
+	\begin{itemize}
+		\item Hyperparameters: threshold $\eta$, increment size $\kappa$
+		\item Until desired number of steps is reached:
+		\begin{itemize}
+			\item Choose the instances on which the evaluation has changed most (according to current instance set size)
+			\item Train on those instances
+			\item Evaluate if performance on the training set has changed by at least $\eta$. If not, increase instance set size by $\kappa$
+		\end{itemize}
+	\end{itemize}
+	
+\end{frame}
+
+\begin{frame}[c]{Results - AntGoal}
+	
+\begin{figure}
+\centering
+\includegraphics[scale=0.25]{images/antgoal}
+\caption{Comparing SPaCE and round robin on AntGoal with broken limbs.}
+\end{figure}
+	
+\end{frame}
+
+\begin{frame}[c]{Results - PointMass}
+	
+\begin{figure}
+\centering
+\includegraphics[scale=0.25]{images/pointmass}
+\caption{Comparing SPaCE and round robin on contextual PointMass.}
+\end{figure}
+	
+\end{frame}
+
 \end{document}

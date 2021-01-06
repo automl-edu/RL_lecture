@@ -29,4 +29,28 @@
 \end{frame}
 %-----------------------------------------------------------------------
 %----------------------------------------------------------------------
+
+\begin{frame}[c]{Self-Paced Deep Reinforcement Learning~\litw{https://arxiv.org/pdf/2004.11812.pdf}{Klink et al. 2020}}
+	
+	\begin{itemize}
+		\item Goal: enable agent to solve specific very hard instances (common in robotics)
+		\item Idea: define (easy) start distribution and (hard) goal distribution of instances, then slowly shift towards the goal
+		\item Speed of the shifting depends on the agents state evaluations $V(s)$ as a progress measure
+	\end{itemize}
+	
+\end{frame}
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+
+\begin{frame}[c]{Curriculum Generation through Value Disagreement Sampling~\litw{\href{https://arxiv.org/pdf/2006.09641.pdf}{Zhang et al. 2020}}}
+	
+	\begin{itemize}
+		\item Idea: train an ensemble of agents and use the differences in their Q-values as a measure of uncertainty
+		\item Goals are proposed at a point where the ensemble starts to disagree, assuming that agreement means all agents have learned a good policy on this instance already
+		\item Note: currently this method is an extension of HER and thus only works if the transition function stays the same between instances. 
+	\end{itemize}
+	
+\end{frame}
+%-----------------------------------------------------------------------
+%-----------------------------------------------------------------------
 \end{document}

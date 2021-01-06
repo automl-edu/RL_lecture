@@ -10,30 +10,6 @@
 	
 	\maketitle
 
-%----------------------------------------------------------------------
-%----------------------------------------------------------------------
-\begin{frame}[c]{RL Problem Setting}
-
-\begin{itemize}
-	\item Definition of MDP $(S,A,P, R, \gamma)$
-	\begin{itemize}
-		\item $S$ is a (finite) set of Markov states $s \in S$
-		\item $A$ is a (finite) set of actions $a \in A$
-		\item $P$ is dynamics/transition model for each action, that specifies $P(s_{t+1} = s' \mid s_t=s, a_t=a)$
-		\item $R$ is a reward function 
-		$R(s_t=s, a_t=a) = \mathbb{E}[r_r \mid s_t=s, a_t=a] $
-		\begin{itemize}
-			\item Sometimes R is also defined based on $(s)$ or on $(s,a,s')$
-		\end{itemize}
-		\item Discount factor $\gamma \in [0, 1]$
-	\end{itemize}
-	\bigskip
-	\item Task: Compute the optimal policy
-		$$ \pi^*(s)  \in \argmax_\pi V^\pi(s)$$
-\end{itemize}
-
-
-\end{frame}
 %-----------------------------------------------------------------------
 %----------------------------------------------------------------------
 \begin{frame}[c]{Can We Generalize beyond a given MDP?}
@@ -52,7 +28,7 @@
 \end{frame}
 %-----------------------------------------------------------------------
 %----------------------------------------------------------------------
-\begin{frame}[c]{Three Main Ideas}
+\begin{frame}[c]{Main Ideas}
 	
 	\begin{enumerate}
 		\item Can we use easy environments to learn how to behave in hard environments?

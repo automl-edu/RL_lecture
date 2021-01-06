@@ -2,8 +2,7 @@
 
 \input{../latex_main/main.tex}
 
-\title[Meta-RL]{Meta Reinforcement Learning}
-\subtitle{Curriculum Learning\footnote{Based on a \href{https://lilianweng.github.io/lil-log/2020/01/29/curriculum-for-reinforcement-learning.html}{blog} by Lilian Weng}}
+\title[Curriculum RL]{Curriculum Reinforcement Learning\footnote{Based on a \href{https://lilianweng.github.io/lil-log/2020/01/29/curriculum-for-reinforcement-learning.html}{blog} by Lilian Weng}}
 
 
 \begin{document}
@@ -55,7 +54,7 @@
 	\begin{itemize}
 		\item Human specification
 		\begin{itemize}
-			\item parameterized generator for environments that allow to control the complexity 
+			\item parameterized generator for environments that allow to control the complexity by hand
 			\item or we can measure meta-features of the different envs, e.g.
 			\begin{itemize}
 				\item Size of maze
@@ -74,18 +73,20 @@
 \begin{frame}[c]{Automatic Curriculum Generation}
 	
 	\begin{itemize}
-		\item[$\leadsto$] In contrast to a hand-designed curriculum, the curriculum is generated on the fly for any instances in the domain
+		\item In contrast to a hand-designed curriculum before training starts, the curriculum is generated on the fly for any instances in the domain
+		\item Criteria for the ordering have to be provided or computed during runtime
+		\item While criteria need to be computed during runtime, they do not need to be hand-designed
 	\end{itemize}
 	
 \end{frame}
 
 %-----------------------------------------------------------------------
 %----------------------------------------------------------------------
-\begin{frame}[c]{Manual Difficulty Ratings}
+\begin{frame}[c]{Example Criterion 1: Manual Difficulty Ratings}
 	
 	\begin{enumerate}
 		\item Idea: define a function to rate env difficulty
-		\item Example: POET~\lit{\href{https://arxiv.org/pdf/1901.01753.pdf}{Wang et al. 2019}}\footnote{Picture source: \href{https://eng.uber.com/poet-open-ended-deep-learning/}{Uber AI}}
+		\item Example: POET~\lit{\href{https://arxiv.org/pdf/1901.01753.pdf}{Wang et al. 2019}}\footnote{Image source: \href{https://eng.uber.com/poet-open-ended-deep-learning/}{Uber AI}}
 	\end{enumerate}
 	\centering
 	
@@ -94,123 +95,15 @@
 
 %-----------------------------------------------------------------------
 %----------------------------------------------------------------------
-\begin{frame}[c]{External Model}
+\begin{frame}[c]{Example Criterion 2: External Model}
 	
 	\begin{enumerate}
-		\item Minimal loss wrt another policy being pretrained on other tasks
+		\item Minimal loss wrt another policy being pretrained on other tasks as criterion
 		\item Sort the instances s.t. they go from easy to hard wrt this pretrained agent~\lit{\href{https://arxiv.org/abs/1802.03796}{Weinshall et al. 2018}}
 	\end{enumerate}
 	
 \end{frame}
 
-%-----------------------------------------------------------------------
-%----------------------------------------------------------------------
-\begin{frame}[c]{Teacher-Guided Curriculum \litw{\href{https://arxiv.org/abs/1704.03003}{Graves et al. 2017}}}
-	
-	\begin{itemize}
-		\item Model curriculum learning as an N-armed bandit problem
-		\begin{itemize}
-			\item Each arm is an env 
-			\item Choose the arm that gives the most (meta-)reward
-			\item non-stationary problem since policy changes over time and thus the reward distribution
-		\end{itemize}
-		\smallskip
-		\item Two types of possible meta-reward signals
-		\begin{itemize}
-			\item Loss-driven progress tracks the learning progress
-			\item Complex-driven progress tracks the model complexity in proportion to the models generalization performance\footnote{KL Divergence between posterior and prior distribution over network weights}
-		\end{itemize}
-	\end{itemize}
-	
-\end{frame}
-%-----------------------------------------------------------------------
-%----------------------------------------------------------------------
-\begin{frame}[c]{Teacher-Guided Curriculum \litw{\href{https://arxiv.org/abs/1704.03003}{Graves et al. 2017}}}
-	
-	\begin{itemize}
-		\item Model curriculum learning as an N-armed bandit problem
-		\begin{itemize}
-			\item Each arm is an env 
-			\item Choose the arm that gives the most (meta-)reward
-			\item non-stationary problem since policy changes over time and thus the reward distribution
-		\end{itemize}
-		\smallskip
-		\pause
-		\item Two types of possible meta-reward signals
-		\begin{itemize}
-			\item Loss-driven progress tracks the learning progress
-			\item Complex-driven progress tracks the model complexity in proportion to the models generalization performance\footnote{KL Divergence between posterior and prior distribution over network weights}
-		\end{itemize}
-	\end{itemize}
-	
-\end{frame}
-%-----------------------------------------------------------------------
-%----------------------------------------------------------------------
-\begin{frame}[c]{Teacher-Guided Curriculum \litw{\href{https://arxiv.org/abs/1704.03003}{Graves et al. 2017}}}
-	
-	\begin{itemize}
-		\item Two types of learners:
-		\begin{description}
-			\item[Student] the target RL agent that returns its scores on a given task
-			\begin{itemize}
-				\item should learn fast
-				\item should not forget solutions to previous tasks
-			\end{itemize}
-			\item[Teacher] the meta-agent that selects a task based on the student's scores
-			\begin{itemize}
-				\item State observations: list of scores on $N$ tasks
-				\item Action: select a task
-				\item Reward: Average score improvement across all tasks
-			\end{itemize}
-		\end{description}
-	\end{itemize}
-
-	$$r_t = \sum_{i=1}^N r_t^{(i)} - r_{t-1}^{(i)}$$	
-	
-	\pause
-	\begin{itemize}
-		\item Use $\epsilon$-greedy or Thompson sampling for solving the non-stationary teacher-problem
-	\end{itemize}
-	
-\end{frame}
-%-----------------------------------------------------------------------
-%----------------------------------------------------------------------
-\begin{frame}[c]{Automatic Goal Generation \litw{\href{https://arxiv.org/abs/1705.06366}{Florensa et al. 2017}}}
-	
-	\begin{itemize}
-		\item Let's assume that the task itself is fixed but the goal condition is flexible
-		\begin{itemize}
-			\item For example, the goal position can change
-			\item That is, we define a set of states $S^g$ that represent the goal
-		\end{itemize}
-		\pause
-		\smallskip
-		\item \alert{Idea:} Generate the set of goals adaptively based on the learning needs of the agent
-		\begin{itemize}
-			\item GAN based (e.g. GoalGAN)
-			\item Sampling based with shifting distributions 
-		\end{itemize}
-	\end{itemize}
-	
-\end{frame}
-%-----------------------------------------------------------------------
-
-%----------------------------------------------------------------------
-\begin{frame}[c]{Self-Paced Learning}
-	
-	\begin{enumerate}
-		\item Agents have performance markers
-		\item We can use these to order envs
-		\item Examples of performance markers:
-		\begin{itemize}
-			\item Training or eval performance
-			\item Value function $V$
-			\item Ensemble disagreement
-			\item ...
-		\end{itemize}
-	\end{enumerate}
-	
-\end{frame}
 %-----------------------------------------------------------------------
 %-----------------------------------------------------------------------
 \end{document}
