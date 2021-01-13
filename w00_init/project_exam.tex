@@ -1,0 +1,159 @@
+
+\input{../latex_main/main.tex}
+
+\title[RL: Exam]{Final Project for Exam}
+%\subtitle{Final Project for Exam}
+
+
+
+\begin{document}
+	
+	\maketitle
+
+%----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Reminder: Final Grading}
+	
+	\begin{itemize}
+		\item Implement a larger project (worth $1-2$ weeks full time)
+		\begin{itemize}
+			\item You can propose your own project idea!
+			\begin{itemize}
+				\item Hand-in a short summary of the idea and we will provide feedback regarding feasibility
+			\end{itemize}
+			\item Teamwork (at most 3) again possible
+			\begin{itemize}
+				\item Larger team $\to$ larger scope of the project
+			\end{itemize}
+		\end{itemize}
+		\item ``Exam''
+		\begin{itemize}
+			\item First $15$ minutes: Present your project idea and results in the 
+			\begin{itemize}
+				\item Of course, everyone will present the project on their own
+			\end{itemize}
+			\item Second 15min: We will ask further questions about your project and how it relates to stuff you learned in the lecture.
+		\end{itemize}	
+		\item You will have the choice between a virtual and on-site exam.
+	\end{itemize}
+	
+\end{frame}
+%----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Requirements}
+	
+	\begin{itemize}
+		\item 2 different options for the scope of the project 
+		\begin{itemize}
+			\item see next slides
+		\end{itemize}
+		\pause
+		\item Proposal should include:
+			\begin{itemize}
+				\item Scope and main objective
+				\item Which open-source frameworks you plan to use
+				\begin{itemize}
+					\item both for RL agents and for benchmark envs
+				\end{itemize}
+				\item Amount for compute resources you will use
+				\begin{itemize}
+					\item unfortunately, we cannot provide compute resources to you
+					\item if required, use free services such as Google Colab 
+				\end{itemize}
+				\item Rough time frame / milestones
+				\item[$\leadsto$] At most 1 page
+			\end{itemize}
+		\pause
+		\item Sound scientific  workflow
+		\begin{itemize}
+			\item Fill out \lit{\href{https://www.cs.mcgill.ca/~jpineau/ReproducibilityChecklist-v2.0.pdf}{ML reproducibility check list}}, in particular the last 3 blocks
+		\end{itemize}
+		\pause
+		\item Hand in: source code, ML reproducibility check list and PDF presentation with at most 5 slides (excl. title slide)
+		\begin{itemize}
+			\item Proper code documentation; PEP8
+			\item Send us an invitation to a GitHub Repo
+			\item Us: eimer@tnt.uni-hannover.de, schubert@tnt.uni-hannover.de
+		\end{itemize}
+	\end{itemize}
+	
+\end{frame}
+%----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Option I: New Env}
+	
+	\begin{itemize}
+		\item Propose a new \& interesting benchmark environment / application for RL (incl. state, action, reward, transition, $\ldots$)
+		\begin{itemize}
+			\item Use OpenAI-Gym env API
+		\end{itemize}
+		\item Minimal requirement: An RL agent (of your choice) can learn something reasonable
+		\begin{itemize}
+			\item That is, it performs better than a static or random policy
+			\item You can use already implemented RL algorithms
+		\end{itemize}
+		\item Further goals could include:
+		\begin{itemize}
+			\item Impact of state or action space (e.g., size or encoding)
+			\item Reward signal or reward shaping
+			\item Does the Markov assumption hold true?
+		\end{itemize}
+		\item[$\leadsto$] Environment should not be too trivial (e.g., a small maze)
+	\end{itemize}
+	
+\end{frame}
+%----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Option II: RL Agent}
+	
+	\begin{itemize}
+		\item Implement an RL agent from scratch
+		\begin{itemize}
+			\item Don't use existing implementations!
+		\end{itemize}
+		\item Minimal requirement: Your RL agent can learn a reasonable policy on a RL benchmark (of your choice)
+		\begin{itemize}
+			\item That is, it performs better than a static or random policy
+			\item You can use already implemented RL benchmark envs
+		\end{itemize}
+		\item Further goals could include:
+		\begin{itemize}
+			\item Variants of different algorithm components (e.g., experience replay)
+			\item Hyperparameter sensitivity study
+			\item Comparison against other baselines
+		\end{itemize}
+	\end{itemize}
+	
+\end{frame}
+%----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Deadlines}
+	
+	\begin{itemize}
+		\item Proposal Deadline: Jan 28th (AoE) 
+		\begin{itemize}
+			\item Submit earlier to get feedback sooner!
+		\end{itemize}
+		\item Feedback for proposal: latest Feb 3rd
+		\item Results Deadline: Feb 17th (AoE) 
+		\item Exam: Feb 22nd - Feb 26th (in the mornings)
+		\begin{itemize}
+			\item We will send you a link for registration to one of the possible slots
+		\end{itemize}
+	\end{itemize}
+	
+\end{frame}
+%----------------------------------------------------------------------
+
+
+\begin{frame}[c]{}
+	
+	\centering
+	\huge
+	Questions?
+	
+\end{frame}
+
+
+%-----------------------------------------------------------------------
+\end{document}
