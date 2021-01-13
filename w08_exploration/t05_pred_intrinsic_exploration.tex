@@ -16,8 +16,8 @@
 \begin{frame}[c]{Prediction-based Exploration~\litw{\href{http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.45.957}{Schmidhuber. 1991}}}
 	
 	\begin{itemize}
-		\item Idea: If the agent is able to predict what will happen in the future, it is already well informed
-		\item In contrast, if the agent is not able to predict the future, it is surprised.
+		\item Idea: If the agent is able to predict what will happen in the future,\\ it is already well informed
+		\item In contrast, if the agent is not able to predict the future,\\ it is surprised.
 		\begin{eqnarray}
 		f: (s_t, a_t) \mapsto s_{t+1} \nonumber \\
 		e(s_t, a_t) = || f(s_t, a_t) - s_{t+1}||_2^2\nonumber
@@ -36,7 +36,7 @@
 	
 	\begin{itemize}
 		\item Memory of all observed state transitions $M = (s_t, a_t, s_{t+1})$
-		\item Split the state space $S$ similar as in decision node:
+		\item Split the state space $S$ similarly as in decision node:
 		\begin{itemize}
 			\item Split only if enough states were observed
 			\item Variance of states in each leaf should be minimal
@@ -73,7 +73,7 @@
 \begin{frame}[c]{State Encoding}
 	
 
-	State should be encoded reduce the state space
+	State should be encoded to reduce the state space
 	\begin{itemize}
 		\item hash-function~\lit{\href{https://arxiv.org/abs/1611.04717}{Tang et al. 2016}}
 		\item Autoencoder~\lit{\href{https://arxiv.org/abs/1507.00814}{Stadie et al. 2015}}
@@ -116,7 +116,7 @@
 \end{frame}
 %-----------------------------------------------------------------------
 %----------------------------------------------------------------------
-\begin{frame}[c]{Variational Information maximizing Exploration~\litw{\href{https://arxiv.org/abs/1605.09674}{Houthooft et al. 2016}}}
+\begin{frame}[c]{Variational Information maximizing Exploration\newline \litw{\href{https://arxiv.org/abs/1605.09674}{Houthooft et al. 2016}}}
 	
 	\begin{itemize}
 		\item Idea: maximize information gain about the agent's belief of env dynamics.

@@ -88,12 +88,15 @@
 	\begin{eqnarray}
 	\pi(s, a \mid h_t) &=& \mathbb{P} [Q^*(s,a) > Q^*(s,a'), \forall a' \neq a \mid h_t]\nonumber \\
 	&=& \mathbb{E}_{P, R \mid h_t} \left[\mathbf{1}(a \in \argmax_{a \in A} Q^*(s,a))\right]		\nonumber
-	\end{eqnarray}		
-	\item Use Bayes law to compute posterior $ \mathbb{P}[P, R \mid h_t]$
-	\item Sample an MDP $P, R$ from posterior
-	\item Solve MDP using favorite planning algorithm to get $Q^*(s,a)$
-	\item Select optimal action for sample MDP: $a_t \in \argmax_{a \in A}Q^*(s_t,a)$
+	\end{eqnarray}
 	\end{itemize}
+	
+	\begin{enumerate}		
+		\item Use Bayes law to compute posterior $ \mathbb{P}[P, R \mid h_t]$
+		\item Sample an MDP $P, R$ from posterior
+		\item Solve MDP using favorite planning algorithm to get $Q^*(s,a)$
+		\item Select optimal action for sample MDP: $a_t \in \argmax_{a \in A}Q^*(s_t,a)$
+	\end{enumerate}
 	
 \end{frame}
 %-----------------------------------------------------------------------
