@@ -96,7 +96,7 @@ REINFORCE:
 	
 	\item For any choice of $b$, gradient estimator is unbiased
 	\item Near optimal choice is the expected return
-	$$b(s_t) \approx \mathbb{E} [r_t + r_{t+1} +\ldots + t_{T-1}] $$
+	$$b(s_t) \approx \mathbb{E} [r_t + r_{t+1} +\ldots + r_{T-1}] $$
 	
 	\item Interpretation: increase logprob of action $a_t$ proportionally to how much returns $\sum_{t'=t}^{T-1} r_{t'}$ are better than expected
 	
@@ -113,7 +113,7 @@ REINFORCE:
 		\item for iteration$=1,2,\ldots$ do
 		\begin{itemize}
 			\item Collect a set of trajectories by executing the current policy
-			\item At each timestep $t$ in each trajectory $\tau^i$, compute
+			\item At each time step $t$ in each trajectory $\tau^i$, compute
 			\begin{itemize}
 				\item Return $G_t^i= \sum_{t'=t}^{T-1} r_{t'}^i$ and
 				\item Advantage estimate $\hat{A}^i_t = G^i_t - b(s_t)$
