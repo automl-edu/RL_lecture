@@ -3,6 +3,12 @@ import sys
 from pathlib import Path
 import subprocess
 
+try:
+    subprocess.run("pdftk", capture_output=True)
+    PDFTK_INSTALLED = True
+except FileNotFoundError:
+    PDFTK_INSTALLED = False
+
 GIT_REPO = Path("./")  # Overwritten in main
 DST_FOLDER = Path("dst/")  # Overwritten in main
 
@@ -44,6 +50,7 @@ def pdftk(source, out_file):
 
 
 def weekly_slides():
+    assert_pdftk()
     DST_FOLDER.mkdir(parents=True, exist_ok=True)
 
     folder_pattern = re.compile("w\d\d_")
@@ -54,6 +61,7 @@ def weekly_slides():
 
 
 def full_slides():
+    assert_pdftk()
     DST_FOLDER.mkdir(parents=True, exist_ok=True)
 
     sources = []
@@ -67,6 +75,11 @@ def full_slides():
                 continue
             sources.append(file)
     pdftk(sources, DST_FOLDER / f"ReinforcementLearning.pdf")
+
+
+def assert_pdftk():
+    if not PDFTK_INSTALLED:
+        raise ImportError("Requires pdftk for merging slides (https://www.pdflabs.com/tools/pdftk-the-pdf-toolkit/)")
 
 
 def main():
