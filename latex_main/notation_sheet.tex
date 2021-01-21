@@ -1,0 +1,150 @@
+\PassOptionsToPackage{unicode=true}{hyperref} % options for packages loaded elsewhere
+\PassOptionsToPackage{hyphens}{url}
+%
+
+\documentclass[]{article}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\usepackage{fixltx2e} % provides \textsubscript
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provides euro and other symbols
+\else % if luatex or xelatex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Ligatures=TeX,Scale=MatchLowercase}
+\fi
+
+% use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+% use microtype if available
+\IfFileExists{microtype.sty}{%
+\usepackage[]{microtype}
+\UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\IfFileExists{parskip.sty}{%
+\usepackage{parskip}
+}{% else
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt plus 2pt minus 1pt}
+}
+\usepackage{hyperref}
+\hypersetup{
+            pdftitle={latex-math Macros},
+            pdfborder={0 0 0},
+            breaklinks=true}
+\urlstyle{same}  % don't use monospace font for urls
+\usepackage[margin=1in]{geometry}
+\usepackage{graphicx,grffile}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+\setlength{\emergencystretch}{3em}  % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{0}
+% Redefines (sub)paragraphs to behave more like sections
+\ifx\paragraph\undefined\else
+\let\oldparagraph\paragraph
+\renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+\let\oldsubparagraph\subparagraph
+\renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
+
+% set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+
+\usepackage{mathtools}
+\usepackage{bm}
+\usepackage{siunitx}
+\usepackage{dsfont}
+\usepackage{xspace}
+\usepackage{longtable}
+\usepackage{xcolor}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{dsfont}
+\usepackage{bm}
+\usepackage[english]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage{algorithm}
+\usepackage[ruled,vlined,algo2e,linesnumbered]{algorithm2e}
+\usepackage{booktabs}
+\usepackage{mathtools}
+%\documentclass[]{report}
+
+
+\input{../latex_main/macros.tex}
+
+% Title Page
+\title{RL Lecture: Notation Cheat Sheet}
+\author{M. Lindauer -- Leibniz University Hannover}
+\date{}
+
+
+\begin{document}
+
+\maketitle
+
+\begin{table}[h]
+	\centering
+	\begin{tabular}{ll}
+		\toprule
+		\textbf{Symbol} & \textbf{Meaning} \\
+		\midrule
+		$S$	   & space of states\\
+		$s \in S$	   & one specific state\\
+		$A$    & space of Actions (\textbf{Warning:} overloaded notation with advantage function)\\
+		$a \in A$    & one specific action\\
+		$P: S \times A \to S$	   & dynamics of environment \\
+		$R: S \times A \to \mathbb{R}$	   & reward function\\
+		$r \in \mathbb{R}$ & concrete reward value\\
+		$\gamma \in [0,1]$  & discount factor\\
+		$T$	   & maximal time horizon (\textbf{Warning:} overloaded notation with terminal states)\\
+		$t$	   & concrete time step $t \leq T$\\
+		$\rho_0: S \to \mathbb{R}^+$ & a distribution of start states\\
+		$\pi: S \to A$ & policy (Note: could also be defined as $S \times A \to \mathbb{R}$ to highlight non-deterministic behavior)\\
+		$\pi^*: S \to A$ & optimal policy\\
+		$G_t: S \to \mathbb{R} $ & discounted sum of rewards from time step $t$ to horizon (also with $S \times A$ possible)\\
+		$G_t^{(n)}: S \to \mathbb{R} $ & general $n$-step return\\
+		$V^\pi: S \to \mathbb{R}$ & state-value function: Expected return starting from a given state following policy $\pi$\\
+		$V^* : S \to \mathbb{R}$ & expected return starting from a given state following the optimal policy\\
+		$N: S \to \mathbb{R}$ & number of times $s$ was visited (also with $S \times A$ possible)\\
+		$\delta_t$ & TD (temporal difference) error \\
+		$\lambda$ & weight for TD($\lambda$)\\
+		$Q^\pi: S \times A \to \mathbb{R}$ & state-action value function; follow $\pi$ after taking the given action\\
+		$Q^*: S \times A \to \mathbb{R}$ & state-action value function; follow the optimal $\pi$ after taking the given action\\
+		$\epsilon$ & probability to do a random exploration step\\
+		$\alpha$ & step size for updating (e.g.) the $Q$-function\\
+		$\mathbb{E}$ & expectation\\
+		$\nabla$ & gradient\\
+		$\Delta$ & difference (e.g., update)\\
+		$\partial$ & partial derivative\\
+		$\hat{\cdot}$ & approximation of $\cdot$ (e.g., $\hat{V}$ or $\hat{Q}$)\\
+		$\vec{x}$ & feature vector\\
+		$\vec{w}$ or $\vec{\theta}$ & weight vector or tensor of function approximator\\
+		$\pi_\theta$ & policy with policy network parameterized by $\theta$\\
+		$d: S \to \mathbb{R}$ & stationary distribution over states\\
+		$\tau$ or $h$ & Trajectory or history (state, action, reward, state, action, \ldots)\\
+		$b: S \to \mathbb{R}$ & baseline (estimator) for a given state\\
+		$\mu$ & mean\\
+		$\sigma$ & standard deviation\\
+    	$H$ & entropy\\
+		\bottomrule
+\end{tabular}
+\end{table}
+
+
+
+\end{document}

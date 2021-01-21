@@ -17,7 +17,7 @@
 	\begin{itemize}
 		\item Most agents estimate the state-value function $V$ in some way
 		\item Common definition of $V$: 
-			$$ V(s) = \exp_{\pi} \sum_t^T \gamma^t \cdot r_t $$
+			$$ V(s) = \mathbb{E}_{\pi} \sum_t^T \gamma^t \cdot r_t $$
 		\item Therefore $V(s_0)$ estimates the total discounted reward for the whole episode
 		\item Idea: use this information for curriculum generation
 	\end{itemize}
