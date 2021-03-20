@@ -43,8 +43,8 @@
 		\item Concretely when using linear VFA for policy evaluation
 		
 		\begin{eqnarray}
-		 \Delta \vec{w} &=& \alpha (G_t - \hat{V} (s_t, \vec{w})) \nabla_\vec{w}\hat{V}(s_t; \vec{w}) \nonumber\\
-		 &=& \alpha (G_t - \hat{V} (s_t, \vec{w})) \vec{x}(s_t) \nonumber\\
+		 \Delta \vec{w} &=& \alpha (G_t - \hat{V} (s_t; \vec{w})) \nabla_\vec{w}\hat{V}(s_t; \vec{w}) \nonumber\\
+		 &=& \alpha (G_t - \hat{V} (s_t; \vec{w})) \vec{x}(s_t) \nonumber\\
 		 &=& \alpha (G_t - \vec{x}(s_t)^T \vec{w}) \vec{x}(s_t) \nonumber
 		\end{eqnarray}
 		
