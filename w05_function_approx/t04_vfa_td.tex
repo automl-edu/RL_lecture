@@ -105,8 +105,8 @@ Loop
 		\item $d(s):$ stationary distribution of $\pi$ in the true decision process
 		\item $\hat{V}(s;\vec{w}) = \vec{x}(s)^T \vec{w}$, a linear value function approximation
 	\end{itemize}
-	\item TD(0) policy evaluation with VFA converges to weights $\vec{w}_TD$ which is a constant factor of the minimum mean squared error possible:
-	$$\text{MSVE}(\vec{w}_TD) \leq \frac{1}{1-\gamma} \min_\vec{w}\sum_{s\in S} d(s) (V^\pi(s) - \hat{V}(s;\vec{w}))^2$$
+	\item TD(0) policy evaluation with VFA converges to weights $\vec{w}_{TD}$ which is a constant factor of the minimum mean squared error possible:
+	$$\text{MSVE}(\vec{w}_{TD}) \leq \frac{1}{1-\gamma} \min_\vec{w}\sum_{s\in S} d(s) (V^\pi(s) - \hat{V}(s;\vec{w}))^2$$
 \end{itemize}
 
 	

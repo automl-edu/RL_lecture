@@ -56,8 +56,8 @@
 \begin{frame}[c]{Convergence Properties of SARSA}
 	
 	\begin{itemize}
-		\item Theorem:
-		\item SARSA for finite-state and finite-action MDPs converges to the optimal
+		\item Theorem:\\
+		SARSA for finite-state and finite-action MDPs converges to the optimal
 		action-value, $Q(s, a) \to  Q^*(s, a)$, under the following conditions:
 		\begin{enumerate}
 			\item The policy sequence $\pi_t(a \mid s)$ satisfies the condition of GLIE
@@ -89,7 +89,7 @@
 		\item Yes! Q-learning, an off-policy RL algorithm
 		\item Key idea: Maintain state-action Q estimates and use to bootstrap–
 		use the value of the best future action
-		\item Recall SARSA
+		\item Recall SARSA:
 		$$ Q(s_t, a_t) \gets Q(s_t, a_t) + \alpha((r_t + \gamma Q(s_{t+1}, a_{t+1})) - Q(s_t, a_t))$$
 		\item Q-Learning:
 		$$Q(s_t, a_t) \gets Q(s_t, a_t) + \alpha((r_t + \gamma \max_{a' \in A}Q(s_{t+1},a')) - Q(s_t, a_t)) $$
@@ -103,7 +103,8 @@
 	\begin{itemize}
 		\item Initialization:
 		\begin{itemize}
-			\item $Q(s,a). \forall s \in S, a \in A$ 
+			\item $Q(s,a). \forall s \in S, a \in A$
+			\item $t=0$
 			\item initial state $s_t = s_0$
 		\end{itemize} 
 		\item Loop

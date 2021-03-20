@@ -26,13 +26,13 @@
 		\pause
 		\item May need to policy evaluation 
 		\begin{itemize}
-			\item If $\pi$ is deterministic, we may not observe all possible actions $A$ in a state $s$
+			\item If $\pi$ is deterministic, we may not observe all possible actions $a\in A$ in a state $s$
 			\item So, we cannot compute $Q(s,a)$ for any $a \neq \pi(s)$
 		\end{itemize}
 		\pause
 		\item[$\leadsto$] How to interleave policy evaluation and improvement?
 	\end{itemize}
-	
+
 \end{frame}
 %--------------------------------------------------------------
 %----------------------------------------------------------------------
@@ -80,7 +80,7 @@ Q^{\pi_i} (s,\pi_{i+1} (s)) &=& \sum_{a \in A} \pi_{i+1}(a \mid s) Q^{\pi_{i}}(s
 	&=& (\epsilon / |A|) \left[\sum_{a\in A} Q^{\pi_{i}}(s,a) \right] + (1- \epsilon) \max_{a\in A} Q^{\pi_{i}}(s,a)\nonumber\\
 	&=& (\epsilon / |A|) \left[\sum_{a\in A} Q^{\pi_{i}}(s,a) \right] + (1- \epsilon) \max_{a\in A} Q^{\pi_{i}}(s,a)\frac{1-\epsilon}{1-\epsilon}\nonumber\\
 	&=& (\epsilon / |A|) \left[\sum_{a\in A} Q^{\pi_{i}}(s,a) \right] + (1- \epsilon) \max_{a\in A} Q^{\pi_{i}}(s,a)\sum_{a\in A}\frac{\pi_i(a\mid s) - \frac{\epsilon}{|A|}}{1-\epsilon}\nonumber\\
-	&\geq& (\epsilon / |A|) \left[\sum_{a\in A} Q^{\pi_{i}}(s,a) \right] + (1- \epsilon) \sum_{a\in A}\frac{\pi_i(a\mid s) - \frac{\epsilon}{|A|}}{1-\epsilon} Q^{\pi_{i}}(s,a)\nonumber\\
+	&\geq& (\epsilon / |A|) \left[\sum_{a\in A} Q^{\pi_{i}}(s,a) \right] + (1- \epsilon) \qquad~ Q^{\pi_{i}}(s,a)\sum_{a\in A}\frac{\pi_i(a\mid s) - \frac{\epsilon}{|A|}}{1-\epsilon} \nonumber\\
 	&=& \sum_{a\in A} \pi_i (a \mid s) Q^{\pi_i}(s,a) = V^{\pi_i}(s)\nonumber
 \end{eqnarray}
 	
