@@ -162,7 +162,7 @@ $$\vec{x}(s) = \begin{pmatrix}
 	\begin{itemize}
 		\item Represent a value function (or state-action value function) for a
 		particular policy with a weighted linear combination of features
-		$$ \hat{V}(s; \vec{w}) = \sum_{j=1}^n \vec{x}_j (s) \vec{w}_j = \vec{x}(s)^T\vec{w}$$
+		$$ \hat{V}^\pi(s; \vec{w}) = \sum_{j=1}^n \vec{x}_j (s) \vec{w}_j = \vec{x}(s)^T\vec{w}$$
 		\item Objective function is 
 		$$ J(\vec{w}) = \mathbb{E}[(V^\pi(s) - \hat{V}^\pi(s; \vec{w}))^2]$$
 		\item Recall weight update:
