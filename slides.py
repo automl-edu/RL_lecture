@@ -71,6 +71,20 @@ def compile_git():
         pool.map(pdflatex, files)
 
 
+def compile_single(week_id, slide_id):
+    week_id = int(week_id)
+    slide_id = None if slide_id == "*" else int(slide_id)
+
+    def fits_identifier(week, slide):
+        if slide_id is None:
+            return week == week_id
+        return week == week_id and slide == slide_id
+
+    files = (file.with_suffix(".tex") for file, week, slide in iter_all() if fits_identifier(week, slide))
+    with multiprocessing.Pool(multiprocessing.cpu_count()) as pool:
+        pool.map(pdflatex, files)
+
+
 def cleanup():
     for file, week_number, slide_number in iter_all():
         for ext in LATEX_TMP_FILES:
@@ -165,7 +179,10 @@ def main():
     parser.add_argument("-W", "--weekly", help="Create a pdf for each week", action='store_true')
     parser.add_argument("-A", "--all", help="Create a pdf with all slides", action='store_true')
     parser.add_argument("-C", "--copy", help="Copy all slides into a single folder", action='store_true')
-    parser.add_argument("--compile-git", help="Compile slides that have unchanges according to git",
+    parser.add_argument("--compile",
+                        help="Compile a single file or a single week based on identifiers. Possible values include (1 2, 4 *)",
+                        type=str, metavar="<week> <slide>", nargs=2, required=False)
+    parser.add_argument("--compile-git", help="Compile slides that have changes according to git",
                         action='store_true')
     parser.add_argument("--compile-all", help="Compile all slides", action='store_true')
     parser.add_argument("--cleanup", help="Cleanup all temporary latex files (aux, log, ...)", action='store_true')
@@ -182,6 +199,9 @@ def main():
         _did_smth = True
     if args.compile_git and not args.compile_all:
         compile_git()
+        _did_smth = True
+    if args.compile and not (args.compile_all or args.compile_git):
+        compile_single(*args.compile)
         _did_smth = True
     if args.cleanup:
         cleanup()
