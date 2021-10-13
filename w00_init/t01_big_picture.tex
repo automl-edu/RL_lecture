@@ -1,5 +1,5 @@
 
-\input{../latex_main/main.tex}
+\input{latex_main/main.tex}
 
 \title[ML-RL: Big Picture]{Welcome to the RL Lecture}
 \subtitle{Brief Motivation and Orga}
@@ -20,8 +20,8 @@
 	Why are you interested to learn more about reinforcement learning (RL)?
 	}
 
-	\bigskip	\bigskip
-	$\to$ use the chat to answer!
+	%\bigskip	\bigskip
+	%$\to$ use the chat to answer!
 	
 \end{frame}
 %-----------------------------------------------------------------------
@@ -59,7 +59,7 @@
 	
 	You will be able to \ldots
 	\begin{enumerate}
-		\item understand the basic algorithms in RL
+		\item understand and explain the basic algorithms in RL
 		\smallskip
 		\item discuss the assumptions and limitations of RL and its algorithms
 		\smallskip
@@ -90,6 +90,8 @@
 		\item Project
 	\end{enumerate}
 	
+	\pause
+	$\leadsto$ More an introduction into RL!
 	
 \end{frame}
 %----------------------------------------------------------------------
@@ -104,7 +106,7 @@
 		\smallskip
 		\item Interactive lecture and exercise sessions
 		\begin{itemize}
-			\item short inputs ($\sim$10min) followed by Q\&A
+			\item short inputs ($\sim$10-20min) followed by Q\&A
 			\item interactive quizzes in exercise sessions to reinforce your knowledge
 			\item[$\leadsto$] The success of it depends on whether you are willing to talk to us! 
 		\end{itemize}
@@ -124,19 +126,19 @@
 		
 		\column{0.3\textwidth}
 		\centering
-		\includegraphics[height=10em]{images/marius}
+		\includegraphics[height=10em]{images/lindauer}
 		
 		Prof. Dr.\\ Marius Lindauer
 		
 		\column{0.3\textwidth}
 		\centering
-		\includegraphics[height=10em]{images/theresa.png}
+		\includegraphics[height=10em]{images/eimer}
 		
 		Theresa Eimer\\
 		
 		\column{0.3\textwidth}
 		\centering
-		\includegraphics[height=10em]{images/frederik.jpg}
+		\includegraphics[height=10em]{images/schubert}
 		
 		Frederik Schubert \\
 		
@@ -152,20 +154,11 @@
 	\begin{itemize}
 		\item Meeting each week Thursday at 2pm (s.t).
 		\pause
-		\item I will try to limit the lecture to 90min, but since I would like to have an interactive lecture, let's be a bit flexible.
-		\pause
+		%\item I will try to limit the lecture to 90min, but since I would like to have an interactive lecture, let's be a bit flexible.
+		%\pause
 		\item Each week, the lecture is divided into small parts.
 		\pause
-		\item We will record the lecture and might put the lecture parts online at the end of semester
-		\pause
-		\begin{itemize}
-			\item Bad experience from last semester: Students were thinking that it's fine to watch the recorded videos later and are able to catch up again. That failed horribly: $72\%$ of the students decided to not take the exam last minute!
-			\pause
-			\item Even more important for RL: Attend all lectures and learn the concepts on time!\newline
-			$\leadsto$ RL concepts build upon each other and sometime look very similar
-		\end{itemize}
-		\pause
-		\item Meeting via Zoom -- as you already figured out ;-)
+		\item We will not record or stream the lecture
 	\end{itemize}
 	
 \end{frame}
@@ -175,9 +168,9 @@
 \begin{frame}[c]{Organization (Exercises)}
 	
 	\begin{itemize}
-		\item Every Wednesday at 3pm via BBB/Zoom?
+		\item Every Wednesday at 3pm
 		\begin{itemize}
-			\item Attending mandatory! (You can be absent at most twice!)
+			\item Regular attendance highly recommended!
 			\item No recording
 		\end{itemize}
 		\pause
@@ -212,6 +205,11 @@
 			\item Submit solutions via git
 		\end{itemize}
 		\pause
+		\item Up to \alert{$9$ bonus points} for final grade, i.e., 3 grading boosts.
+		\begin{itemize}
+		    \item To get a bonus point, your solution has to be at least correct by $80\%$
+		\end{itemize}
+		\pause
 		\item If we catch anyone at obvious cheating (incl. plagiarism),\newline we will kick them out.
 	\end{itemize}
 	\pause
@@ -226,8 +224,9 @@
 Priority list:
 	\begin{enumerate}
 		\item Ask your friends and peers
-		\item Use our chat system via Mattermost (see Stud.IP for invitation link) and post to the ``town square'' channel
+		\item Use our chat system via Mattermost (see Stud.IP for invitation link)
 		\begin{itemize}
+		    \item[$\leadsto$] Channel ``2021 RL Lecture''
 			\item You can also answer the questions of your peers! 
 			\item We will only reply if we have the feeling that it is necessary.
 		\end{itemize}
@@ -237,6 +236,12 @@ Priority list:
 	
 \end{frame}
 %-----------------------------------------------------------------------
+\begin{frame}{AI Courses at LUH}
+    
+    \centering
+    \includegraphics[width=0.9\textwidth]{w00_init/images/ai_luh.PNG}
+    
+\end{frame}
 %----------------------------------------------------------------------
 \begin{frame}[c]{Requirements for Attending}
 	
@@ -248,12 +253,15 @@ Priority list:
 		\item Basics of \alert{Machine Learning} (mandatory)
 		\begin{itemize}
 			\item Classification, regression, clustering, decision tree, training-test split, cross validation, pre-processing \ldots
-			\item to catch up (if nec.): \url{https://www.coursera.org/learn/machine-learning} 
+			\item For example, ML lecture by Prof. Rosenhahn
+			\item to catch up (if nec.):
+			\url{https://www.coursera.org/learn/machine-learning} 
 		\end{itemize}
 		\pause
 		\item Knowledge and hands-on exp. in \alert{Deep Learning} (PyTorch)\\ (mandatory)
 		\begin{itemize}
 			\item feed-forward network, recurrent network, convolutions, learning rates, regularization, \ldots 
+			\item For example, DL lecture by Prof. Anand
 			\item to catch up (if nec.): \url{https://course.fast.ai/}
 		\end{itemize}
 		\pause
@@ -289,46 +297,29 @@ Priority list:
 			\end{itemize}
 			\item Second 15min: We will ask further questions about your project and how it relates to stuff you learned in the lecture.
 		\end{itemize}	
-		\item You will have the choice between a virtual and on-site exam.
+	%	\item You will have the choice between a virtual and on-site exam.
 	\end{itemize}
 	
 \end{frame}
 %----------------------------------------------------------------------
 %----------------------------------------------------------------------
-\begin{frame}[c]{Bonus Points?}
+\begin{frame}[c]{Material}
 	
 	\begin{itemize}
-		\item You can earn bonus points for the exam by finding bugs in our slides and exercises:
+		\item Slides: \url{https://github.com/automl-edu/RL_lecture}
+		\item Additional Material:
 		\begin{itemize}
-			\item You can get at most 10\% as a bonus of the overall points in the exam
-			\item $0.1\%$ for each typo in the slides or exercise sheet
-			\item $0.5\%$ for each non-trivial bug in equations or algorithm outlines
-			\item $1.0\%$ for each non-trivial bug in the exercise assignments
+    		\item To get a deep understanding of RL,\\ you should also read some papers 
+    		\item RL book by Sutton and Barto: 
+    		\url{https://www.andrew.cmu.edu/course/10-703/textbook/BartoSutton.pdf}
+    		\item Video lectures -- click on it!
+    		\begin{itemize}
+    			\item \lit{\href{https://www.youtube.com/watch?v=FgzM3zpZ55o&list=PLRQmQC3wIq9yxKVK1qc0r2nPuInn92LmK&index=1}{Emma Brunskill (2019-20)}}
+    			\item \lit{\href{https://www.youtube.com/playlist?list=PL_iWQOsE6TfURIIhCrlt-wj9ByIVpbfGc}{Sergey Levine (2020)}}
+    			\item \lit{\href{https://www.youtube.com/playlist?list=PLbWDNovNB5mqFBgq7i3MY6Ui4zudcvNFJ}{David Silver (2015)}}
+    			\item \lit{\href{https://learn.ki-campus.org/courses/moocrobot-tud2021}{Robot Learning by Jan Peters (2021)}}
 		\end{itemize}
-		\pause
-		\item How get to it?
-		\begin{enumerate}
-			\item Submit a PR with the fix to our GitHub repo: \url{https://github.com/automl-edu/RL_lecture}
-			\item Send us a message with link to your PR in the corresponding Mattermost channel
-		\end{enumerate}
-		
 	\end{itemize}
-	
-\end{frame}
-%----------------------------------------------------------------------
-%----------------------------------------------------------------------
-\begin{frame}[c]{Additional Resources}
-	
-	\begin{itemize}
-		\item To get a deep understanding of RL,\\ you should also read some papers 
-		\item RL book by Sutton and Barto: 
-		\url{https://www.andrew.cmu.edu/course/10-703/textbook/BartoSutton.pdf}
-		\item Video lectures -- click on it!
-		\begin{itemize}
-			\item \lit{\href{https://www.youtube.com/watch?v=FgzM3zpZ55o&list=PLRQmQC3wIq9yxKVK1qc0r2nPuInn92LmK&index=1}{Emma Brunskill (2019-20)}}
-			\item \lit{\href{https://www.youtube.com/playlist?list=PL_iWQOsE6TfURIIhCrlt-wj9ByIVpbfGc}{Sergey Levine (2020)}}
-			\item \lit{\href{https://www.youtube.com/playlist?list=PLbWDNovNB5mqFBgq7i3MY6Ui4zudcvNFJ}{David Silver (2015)}}
-		\end{itemize}
 	\end{itemize}
 	
 \end{frame}
@@ -336,7 +327,7 @@ Priority list:
 %----------------------------------------------------------------------
 \begin{frame}[c]{Opportunities and Risks}
 	
-	RL is an advanced lecture and we present it for the first time
+	RL is an advanced lecture and we present it for the second time
 	
 	\medskip
 	\pause
