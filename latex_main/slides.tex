@@ -1,0 +1,64 @@
+\rendertitlepage
+
+\rendertocframe[Outline]
+
+\section{Introduction}
+\begin{frame}{Blocks}
+\begin{block}{Remark}
+Sample text
+\end{block}
+
+\begin{alertblock}{Important theorem}
+Sample text in green box.
+\end{alertblock}
+
+\begin{examples}
+Sample text in blue box. The title of the block is ``Examples".
+\end{examples}
+    
+\end{frame}
+
+\subsection{More Introduction}
+\begin{frame}{Figures and Columns}
+Figures lie in the \texttt{figures}-folder.
+
+\vspace{0.5cm}
+\begin{columns}
+    % Left column
+    \begin{column}{0.3\textwidth}
+        \begin{figure}
+            \centering
+            \includegraphics[width=1\textwidth, height=1\textheight, keepaspectratio]{figures/TNT_darkv4.pdf}
+            \caption{The TNT Logo}
+            \label{fig:tnt_logo}
+        \end{figure}
+    \end{column}
+    
+    % Right column
+    \begin{column}{0.7\textwidth}
+    See the TNT Logo on the left (figure~\ref{fig:tnt_logo}).
+    \blindtext
+    \end{column}
+\end{columns}
+\end{frame}
+
+\section{Another Section}
+\begin{frame}{Some Lists}
+\begin{itemize}
+    \item<+-> First item
+    \item<+-> Second item
+    \item<+- | alert@3> Hello
+\end{itemize}
+    
+\end{frame}
+
+\begin{frame}{Pretty Empty Slide}
+Except for \textbf{one} \textit{citation}~\cite{anonymous2021}.\\
+And one equation without the parameter $\alpha$:
+\begin{equation}
+    y = \sum_{i=0}^{N}x_i + \int_0^\infty \mathrm{e}^{-z}\,\mathrm{d}z
+\end{equation}
+Some more text.
+\end{frame}
+
+

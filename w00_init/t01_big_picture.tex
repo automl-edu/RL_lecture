@@ -1,8 +1,12 @@
-
-\input{latex_main/main.tex}
+\documentclass[aspectratio=169]{../latex_main/tntbeamer}  % you can pass all options of the beamer class, e.g., 'handout' or 'aspectratio=43'
+\input{../latex_main/preamble}
 
 \title[ML-RL: Big Picture]{Welcome to the RL Lecture}
 \subtitle{Brief Motivation and Orga}
+
+
+%\input{latex_main/main.tex}
+
 
 
 
@@ -40,7 +44,7 @@
 \begin{frame}[c]{Reinforcement Learning}
 	
 	\centering
-	\includegraphics[width=0.6\textwidth]{../w01_big_picture/images/rl_comic.png}\footnote{Image source: Morning Brew and Marius Haakestad on Unsplash}
+	\includegraphics[width=0.55\textwidth]{../w01_big_picture/images/rl_comic.png}\footnote{Image source: Morning Brew and Marius Haakestad on Unsplash}
 	
 	\bigskip
 	
@@ -239,7 +243,7 @@ Priority list:
 \begin{frame}{AI Courses at LUH}
     
     \centering
-    \includegraphics[width=0.9\textwidth]{w00_init/images/ai_luh.PNG}
+    \includegraphics[width=0.6\textwidth]{w00_init/images/ai_luh.PNG}
     
 \end{frame}
 %----------------------------------------------------------------------
@@ -250,6 +254,7 @@ Priority list:
 		\begin{itemize}
 			\item Search, planning, optimization \ldots, expectations, \ldots
 		\end{itemize}
+		\pause
 		\item Basics of \alert{Machine Learning} (mandatory)
 		\begin{itemize}
 			\item Classification, regression, clustering, decision tree, training-test split, cross validation, pre-processing \ldots
@@ -265,12 +270,14 @@ Priority list:
 			\item to catch up (if nec.): \url{https://course.fast.ai/}
 		\end{itemize}
 		\pause
-		\item Experience in \alert{Python and git}\\ (strongly recommended)
+		\item Experience in \alert{Python and git} (mandatory)
 		\begin{itemize}
 			\item nearly all exercises will require 
 			that you implement something in~Python and submit the solution to a git repo
 		\end{itemize}
 	\end{itemize}
+	\pause
+	$\leadsto$ If you solved the self-assessment test, you should be ready.
 	
 \end{frame}
 %-----------------------------------------------------------------------
