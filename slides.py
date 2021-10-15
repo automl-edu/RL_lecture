@@ -94,7 +94,7 @@ def cleanup():
 # Helper functions
 def iter_all():
     folder_pattern = re.compile("w(\d\d)_")
-    slide_pattern = re.compile("t(\d\d)_[\w_]+\.pdf")
+    slide_pattern = re.compile("t(\d\d)_[\w_]+\.tex")
     for week_folder in GIT_REPO.iterdir():
         week_number = folder_pattern.match(week_folder.name)
         if week_number is None:  # folder does not match mattern
@@ -108,7 +108,7 @@ def iter_all():
                 continue
             slide_number = int(slide_number.group(1))
 
-            yield file.absolute(), week_number, slide_number
+            yield file.absolute().with_suffix(".pdf"), week_number, slide_number
 
 
 def assert_pdftk():
@@ -152,11 +152,17 @@ def pdftk(source, out_file, **meta_data) -> int:
 
 
 def pdflatex(source) -> int:
-    args = ["pdflatex", "-interaction=nonstopmode", "-output-format=pdf", source]
+    args = [
+        "xelatex",
+        "-interaction=nonstopmode",
+        "-synctex=0",
+        source
+    ]
     print(args, file=sys.stderr)
     proc = subprocess.run(args, cwd=str(source.parent), stdout=subprocess.PIPE)
     if proc.returncode != 0:
         print(proc, file=sys.stderr)
+        print(proc.stdout.decode("utf-8"))
     return proc.returncode
 
 
