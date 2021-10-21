@@ -67,7 +67,7 @@ Rewards:
 	\item Definition of State Value Function: $V(s)$ for a MRP
 	\begin{itemize}
 		\item Expected return from starting in state s
-		$$ V(s)  = \mathbb{E}[G_t \mid s_t=s] == \mathbb{E}[r_t + \gamma r_{t+1} + \gamma^2 r_{t+2} + \gamma^3 r_{t+3} + \ldots \mid s_t = s]$$
+		$$ V(s)  = \mathbb{E}[G_t \mid s_t=s] = \mathbb{E}[r_t + \gamma r_{t+1} + \gamma^2 r_{t+2} + \gamma^3 r_{t+3} + \ldots \mid s_t = s]$$
 	\end{itemize}
 	\end{itemize}
 	
@@ -76,7 +76,7 @@ Rewards:
 %----------------------------------------------------------------------
 \begin{frame}[c]{Discount Factor}
 	
-$$ V(s)  = \mathbb{E}[G_t \mid s_t=s] == \mathbb{E}[r_t + \gamma r_{t+1} + \gamma^2 r_{t+2} + \gamma^3 r_{t+3} + \ldots \mid s_t = s]$$
+$$ V(s)  = \mathbb{E}[G_t \mid s_t=s] = \mathbb{E}[r_t + \gamma r_{t+1} + \gamma^2 r_{t+2} + \gamma^3 r_{t+3} + \ldots \mid s_t = s]$$
 	
 	\begin{itemize}
 		\item Mathematically convenient (avoid infinite returns and values)
@@ -122,7 +122,7 @@ $$ V(s)  = \mathbb{E}[G_t \mid s_t=s] == \mathbb{E}[r_t + \gamma r_{t+1} + \gamm
 		\item $+1$ in $s_1$, $+10$ in $s_7$, $0$ in all other states
 	\end{itemize}
 
-$$ V(s)  = \mathbb{E}[G_t \mid s_t=s] == \mathbb{E}[r_t + \gamma r_{t+1} + \gamma^2 r_{t+2} + \gamma^3 r_{t+3} + \ldots \mid s_t = s]$$
+$$ V(s)  = \mathbb{E}[G_t \mid s_t=s] = \mathbb{E}[r_t + \gamma r_{t+1} + \gamma^2 r_{t+2} + \gamma^3 r_{t+3} + \ldots \mid s_t = s]$$
 
 	\begin{itemize}
 		\item[$\leadsto$] $V(s_1) = 1.53, V(s_2) = 0.37, \ldots, V(s_7) = 15.31$
@@ -148,7 +148,6 @@ $$ V(s)  = \mathbb{E}[G_t \mid s_t=s] == \mathbb{E}[r_t + \gamma r_{t+1} + \gamm
 \begin{frame}[c]{Computing the Value of a Markov Reward Process}
 	
 	\begin{itemize}
-		\item Could estimate by simulation:
 		\item Markov property yields additional structure
 		\item MRP value function satisfies
 	\end{itemize}
