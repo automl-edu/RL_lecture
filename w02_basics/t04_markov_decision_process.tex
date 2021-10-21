@@ -123,7 +123,7 @@
 		\item For $k=1$ until convergence
 		\begin{itemize}
 			\item For all $s$ in $S$:
-			$$V^\pi_k  = r(s, ¸\pi(s)) + \gamma \sum_{s'\in S} p(s'\mid s, \pi(s)) V_{k-1}^\pi (s')$$
+			$$V^\pi_k  = r(s, \pi(s)) + \gamma \sum_{s'\in S} p(s'\mid s, \pi(s)) V_{k-1}^\pi (s')$$
 		\end{itemize}
 	\end{itemize}
 	\item This is a Bellmann backup for a particular policy
@@ -138,7 +138,7 @@
 	\item Dynamics: $p(s_6 |s_6 , a_1 ) = 0.5, p(s_7 |s_6 , a_1 ) = 0.5, \ldots$
 	\item Reward: for all actions, $+1$ in state $s_1$ , $+10$ in state $s_7$ , $0$ otherwise
 	\item Let $\pi(s) = a_1.\forall s$, assume $V^\pi_k =[1,0,0,0,0,0,10]$ and $k = 1$, $\gamma = 0.5$
-			$$V^\pi_k  = r(s, ¸\pi(s)) + \gamma \sum_{s'\in S} p(s'\mid s, \pi(s)) V_{k-1}^\pi (s')$$
+			$$V^\pi_k  = r(s, \pi(s)) + \gamma \sum_{s'\in S} p(s'\mid s, \pi(s)) V_{k-1}^\pi (s')$$
 \end{itemize}
 
 \pause
