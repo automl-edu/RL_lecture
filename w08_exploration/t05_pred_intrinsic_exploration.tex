@@ -12,7 +12,7 @@
 %----------------------------------------------------------------------
 
 %----------------------------------------------------------------------
-\begin{frame}[c]{Prediction-based Exploration~\litw{\href{http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.45.957}{Schmidhuber. 1991}}}
+\begin{frame}[c]{Prediction-based Exploration~\lit{Schmidhuber. 1991}{http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.45.957}}
 	
 	\begin{itemize}
 		\item Idea: If the agent is able to predict what will happen in the future,\\ it is already well informed
@@ -31,7 +31,7 @@
 \end{frame}
 %-----------------------------------------------------------------------
 %----------------------------------------------------------------------
-\begin{frame}[c]{Intelligent Adaptive Curiosity~\litw{\href{http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.177.7661&rep=rep1&type=pdf}{Oudeyer et al. 2007}}}
+\begin{frame}[c]{Intelligent Adaptive Curiosity~\lit{Oudeyer et al. 2007}{http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.177.7661&rep=rep1&type=pdf}}
 	
 	\begin{itemize}
 		\item Memory of all observed state transitions $M = (s_t, a_t, s_{t+1})$
@@ -53,7 +53,7 @@
 \end{frame}
 %-----------------------------------------------------------------------
 %----------------------------------------------------------------------
-\begin{frame}[c]{Decay~\litw{\href{https://arxiv.org/abs/1507.00814}{Stadie et al. 2015}}}
+\begin{frame}[c]{Decay~\lit{Stadie et al. 2015}{https://arxiv.org/abs/1507.00814}}
 	
 	\begin{itemize}
 		\item Normalize error to [0,1] by the maximal error observed so far
@@ -74,9 +74,9 @@
 
 	State should be encoded to reduce the state space
 	\begin{itemize}
-		\item hash-function~\lit{\href{https://arxiv.org/abs/1611.04717}{Tang et al. 2016}}
-		\item Autoencoder~\lit{\href{https://arxiv.org/abs/1507.00814}{Stadie et al. 2015}}
-		\item Self-supervised inverse dynamic models~\lit{\href{https://arxiv.org/abs/1705.05363}{Pathak et al. 2017}}
+		\item hash-function~\lit{Tang et al. 2016}{https://arxiv.org/abs/1611.04717}
+		\item Autoencoder~\lit{Stadie et al. 2015}{https://arxiv.org/abs/1507.00814}
+		\item Self-supervised inverse dynamic models~\lit{Pathak et al. 2017}{https://arxiv.org/abs/1705.05363}
 		$$g: (\phi(s_t), \phi(s_{t+1})) \mapsto a_t $$
 		\begin{itemize}
 			\item The encoding will focus on the parts of state features that influenced the agent behavior
@@ -89,8 +89,7 @@
 \end{frame}
 %-----------------------------------------------------------------------
 %----------------------------------------------------------------------
-\begin{frame}[c]{Pure Curiosity-drive Learning~\litw{\href{https://arxiv.org/abs/1808.04355}{Burda et al. 2018}}}
-	
+\begin{frame}[c]{Pure Curiosity-drive Learning~\lit{Burda et al. 2018}{https://arxiv.org/abs/1808.04355}}
 	
 	\begin{itemize}
 		\item Pure exploration and ignoring the extrinsic reward signal
@@ -115,7 +114,7 @@
 \end{frame}
 %-----------------------------------------------------------------------
 %----------------------------------------------------------------------
-\begin{frame}[c]{Variational Information maximizing Exploration\newline \litw{\href{https://arxiv.org/abs/1605.09674}{Houthooft et al. 2016}}}
+\begin{frame}[c]{Variational Information maximizing Exploration\newline \lit{Houthooft et al. 2016}{https://arxiv.org/abs/1605.09674}}
 	
 	\begin{itemize}
 		\item Idea: maximize information gain about the agent's belief of env dynamics.

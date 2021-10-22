@@ -1026,9 +1026,9 @@
 
 %% Style
 %...........................................
-\usepackage{url}
-%\usepackage{dsfont}
-\usepackage{algorithmic}
+\RequirePackage{url}
+%\RequirePackage{dsfont}
+\RequirePackage{algorithmic}
 
 \mode<presentation>
 
