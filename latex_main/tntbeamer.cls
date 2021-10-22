@@ -18,7 +18,11 @@
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{beamer}}
 \ProcessOptions\relax
 
-\LoadClass[t,xcolor={usenames,dvipsnames}]{beamer}
+\ifdefined\ishandout
+  \LoadClass[t,handout,xcolor={usenames,dvipsnames}]{beamer}
+\else
+  \LoadClass[t,xcolor={usenames,dvipsnames}]{beamer}
+\fi
 
 
 %%% Class Body
