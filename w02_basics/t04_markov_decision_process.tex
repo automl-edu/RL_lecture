@@ -43,7 +43,7 @@
 			\item $\rho_0: S \to \mathbb{R}^+$: a distribution of start states
 			\begin{itemize}
 				\item uniform distribution: the agent can start in any state -- implicit assumption of MDP definition above
-				\item non-uniform distribution: the agent starts its episodes in only some of the states; e.g., it's unlikely that a game will start in a terminal state
+				\item non-uniform distribution: the agent starts its episodes in only some of the states;\\ e.g., it's unlikely that a game will start in a terminal state
 			\end{itemize}
 		\pause
 			\item $T \subset S$: set of terminal states
@@ -73,7 +73,7 @@
 \end{center}
 
 \begin{itemize}
-	\item $2$ deterministic Actions: TryLeft and TryRight
+	\item $2$ deterministic actions: TryLeft and TryRight
 \end{itemize}
 
 
@@ -162,9 +162,9 @@ V^\pi_{k+1} (s_6) &=& 0  + \gamma [ p(s_6 \mid s_6, a_1) \cdot V^\pi_k(s_6) + p(
 	\item Compute the optimal policy
 	$$ \pi^*(s)  \in \argmax_\pi V^\pi(s)$$
 	\item There \alert{exists a unique optimal value function}
-	\item Optimal policy for an MDP in an infinite horizon problem is \newline (i.e. agents acts forever is)
+	\item In an infinite horizon problem (i.e. agents acts forever is), there exists an optimal policy for an MDP,\newline that is 
 	\begin{itemize}
-		\item  deterministic
+		\item deterministic
 		\item stationary (does not depend on time step)
 		\item Unique? $\leadsto$ Not necessarily, may have state-actions with identical optimal values
 	\end{itemize}
