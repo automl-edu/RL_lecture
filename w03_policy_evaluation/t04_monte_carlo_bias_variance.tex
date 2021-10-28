@@ -117,7 +117,7 @@ Properties:
 		\begin{itemize}
 			\item $s_{i,1}, a_{i,1}, r_{i,1}, s_{i,2}, a_{i,2}, r_{i,2}, \ldots$ where the actions are sampled from $\pi$
 			\item $G_{i,t} = r_{i,t} + \gamma r_{i,t+1} + \gamma^2 r_{i,t+2} + \ldots$ under policy $\pi$
-			\item $V^\pi (s) = \mathbb{E}[G_t¸ \mid s_t = s]$
+			\item $V^\pi (s) = \mathbb{E}[G_t \mid s_t = s]$
 		\end{itemize}
 		\item Simple: Estimates expectation by empirical average (given episodes sampled from policy of interest)
 		\item Updates $V$ estimate using sample of return to approximate the expectation
