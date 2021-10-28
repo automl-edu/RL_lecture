@@ -44,8 +44,8 @@
 %----------------------------------------------------------------------
 \begin{frame}[c]{AB Example~\lit{Sutton \& Barto, 2018}{http://incompleteideas.net/book/RLbook2020.pdf}}
 	
-	\centering
-	\includegraphics[width=0.4\textwidth]{images/ab_example.png}
+	\centering\vspace{-1em}
+	\includegraphics[width=0.3\textwidth]{images/ab_example.png}
 	
 	\begin{itemize}
 		\item Two states $A$, $B$ with $\gamma = 1$
@@ -63,7 +63,7 @@
 %-----------------------------------------------------------------------
 %----------------------------------------------------------------------
 \begin{frame}[c]{AB Example~\lit{Sutton \& Barto, 2018}{http://incompleteideas.net/book/RLbook2020.pdf}}
-	
+
 \begin{itemize}
 	\item Given $8$ episodes of experience:
 	\begin{itemize}
@@ -84,8 +84,8 @@
 $$ V^\pi(s) = V^\pi(s) + \alpha (\underbrace{[r_t + \gamma V^\pi (s_{t+1})]}_{\text{TD target}} - V^\pi(s))$$
 	\end{itemize}	
 	\medskip
-	\item[$\leadsto$] Monte Carlo in batch setting converges to minimal\\ \alert{MSE} (mean squared error)
-	\item[$\leadsto$] TD(0) converges to DP policy $V^\pi$for the MDP with\\ the \alert{maximum likelihood model estimates}
+	\item[$\leadsto$] Monte Carlo in batch setting converges to minimal \alert{MSE} (mean squared error)
+	\item[$\leadsto$] TD(0) converges to DP policy $V^\pi$for the MDP with the \alert{maximum likelihood model estimates}
 	
 \end{itemize}
 	
