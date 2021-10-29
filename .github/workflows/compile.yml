@@ -1,6 +1,6 @@
 name: Compile all
 
-on: workflow_call
+on: push
 
 jobs:
   compile:
