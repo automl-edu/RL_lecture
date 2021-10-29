@@ -8,8 +8,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - run: cd w00_init
       - name: compile with xelatex
         uses: marcomicera/xelatex-action@v0.6
         with:
-          input-file: "t01_big_picture.tex"
+          input-file: "w00_init/t01_big_picture.tex"

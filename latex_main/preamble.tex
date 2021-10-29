@@ -38,7 +38,7 @@
 \pgfdeclarelayer{foreground}
 \pgfsetlayers{background,main,foreground}
 
-\input{../latex_main_old/macros}
+\input{./latex_main_old/macros}
 
 % Requires XeLaTeX or LuaLaTeX
 \usepackage{unicode-math}
@@ -46,7 +46,7 @@
 \usepackage{fontspec}
 %\setsansfont{Arial}
 \setsansfont{RotisSansSerifStd}[ 
-Path=../latex_main/fonts/,
+Path=./latex_main/fonts/,
 Extension = .otf,
 UprightFont = *-Regular,  % or *-Light
 BoldFont = *-ExtraBold,  % or *-Bold
@@ -84,14 +84,14 @@ Scale=0.8
 % Add header logo for normal frames
 \setheaderimage{
 	% \includegraphics[height=\logoheight]{figures/TNT_darkv4.pdf}
-	\includegraphics[height=\logoheight]{../latex_main/figures/luh_logo_rgb_0_80_155.pdf}
+	\includegraphics[height=\logoheight]{./latex_main/figures/luh_logo_rgb_0_80_155.pdf}
 	% \includegraphics[height=\logoheight]{figures/logo_tntluh.pdf}
 }
 
 % Header logo for title page
 \settitleheaderimage{
 	% \includegraphics[height=\logoheight]{figures/TNT_darkv4.pdf}
-	\includegraphics[height=\logoheight]{../latex_main/figures/luh_logo_rgb_0_80_155.pdf}
+	\includegraphics[height=\logoheight]{./latex_main/figures/luh_logo_rgb_0_80_155.pdf}
 	% \includegraphics[height=\logoheight]{figures/logo_tntluh.pdf}
 }
 
@@ -106,9 +106,9 @@ Scale=0.8
 % \addtitlepageimage{\includegraphics[width=0.75\textwidth]{figures/luh_default_presentation_title_image.jpg}}
 
 \author[Lindauer]{Marius Lindauer\\[1em]
-	\includegraphics[height=\logoheight]{../latex_main/figures/luh_logo_rgb_0_80_155.pdf}\qquad
-\includegraphics[height=\logoheight]{../latex_main/figures/TNT_darkv4}\qquad
-\includegraphics[height=\logoheight]{../latex_main/figures/L3S.jpg}	}
+	\includegraphics[height=\logoheight]{./latex_main/figures/luh_logo_rgb_0_80_155.pdf}\qquad
+\includegraphics[height=\logoheight]{./latex_main/figures/TNT_darkv4}\qquad
+\includegraphics[height=\logoheight]{./latex_main/figures/L3S.jpg}	}
 \date{Winter Term 2021
 }
 
