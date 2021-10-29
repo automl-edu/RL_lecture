@@ -1,0 +1,13 @@
+name: Compile all
+
+on: workflow_call
+
+jobs:
+  compile:
+    name: Compile
+    runs-on: ubuntu-latest
+    steps:
+     - name: compile with xelatex
+       uses: marcomicera/xelatex-action@v0.6
+       with:
+         input-file: "w00_init/t01_big_picture.tex"
