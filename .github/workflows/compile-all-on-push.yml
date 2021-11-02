@@ -50,16 +50,16 @@ jobs:
 #            "w09_meta_rl"
         ]
     steps:
-      - name: Install pdftk
-        run: |
-          - apt update && apt install pdftk
-          - mkdir slides/
       - uses: actions/download-artifact@v2
         with:
           name: Slides ${{ matrix.week }}
-      - name: Merge slides for week ${{ matrix.week }} with xelatex
-        run: |
-          - pdftk ${{ matrix.week }}/t*.pdf cat output slides/${{ matrix.week }}.pdf
+      - name: Prepare output folder
+        run: sh -c "[[ -d slides ]] || mkdir slides"
+      - name: Merge slides for week ${{ matrix.week }} with pdftk
+        uses: ./.github/actions/merge-pdftk
+        with:
+          input-pattern: ${{ matrix.week }}/t*.pdf
+          output-name: slides/${{ matrix.week }}.pdf
       - uses: actions/upload-artifact@v2
         with:
           name: Merged slides
