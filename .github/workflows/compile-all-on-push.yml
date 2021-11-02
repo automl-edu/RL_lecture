@@ -50,6 +50,7 @@ jobs:
 #            "w09_meta_rl"
         ]
     steps:
+      - uses: actions/checkout@v2
       - uses: actions/download-artifact@v2
         with:
           name: Slides ${{ matrix.week }}
