@@ -1,0 +1,95 @@
+% !TeX spellcheck = en_US
+\documentclass[aspectratio=169]{../latex_main/tntbeamer}  % you can pass all options of the beamer class, e.g., 'handout' or 'aspectratio=43'
+\input{../latex_main/preamble}
+\title[RL: Model Free Control]{Model Free Control}
+\subtitle{Introduction}
+
+
+
+\begin{document}
+	
+	\maketitle
+
+%----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Overview}
+
+\begin{itemize}
+	\item Last time: Policy evaluation with no knowledge of how the world works 
+		\begin{itemize}
+			\item Aim: We wanted to know how well a given policy would perform
+			\item MDP model (e.g., transition function and reward function) not given
+		\end{itemize}
+	\medskip
+	\pause
+	\item This time: Control (making decisions) without a model of how the world works
+	\begin{itemize}
+		\item We have to search for a well-performing policy
+		\item We still don't know the MDP model
+		\item We assume that we can model everything by table look-ups 
+	\end{itemize}
+	
+\end{itemize}
+
+\end{frame}
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Recall: Reinforcement Learning involves}
+	
+	\begin{itemize}
+		\item Optimization
+		\item Delayed consequences
+		\item Exploration
+		\item Generalization
+	\end{itemize}
+	
+\end{frame}
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Learning to Control Involves}
+	
+	\begin{itemize}
+		\item Optimization: Goal is to identify a policy with high expected rewards (similar to before on computing an optimal policy \alert{given} an MDP)
+		\item Delayed consequences: May take many time steps to evaluate whether an earlier decision was good or not
+		\item Exploration: Necessary to try different actions to learn what actions can lead to high rewards
+		\item (Generalization -- deferred to later)
+	\end{itemize}
+	
+\end{frame}
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Model-free Control Examples}
+	
+	\begin{itemize}
+		\item Many applications can be modeled as an MDP: Backgammon, Go, Robot locomotion, Helicopter flight, Robocup soccer, Autonomous driving, Customer ad selection, Invasive species management, Patient
+		treatment
+		\item For many of these and other problems either:
+		\begin{itemize}
+			\item MDP model is unknown but can be sampled
+			\item MDP model is known but it is computationally infeasible to use directly, except through sampling
+		\end{itemize}
+	\end{itemize}
+	
+\end{frame}
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{On and Off-Policy Learning}
+	
+	\begin{itemize}
+		\item On-policy learning
+		\begin{itemize}
+			\item Direct experience
+			\item Learn to estimate and evaluate a policy from experience obtained from following \alert{that} policy
+		\end{itemize}
+		\pause
+		\medskip
+		\item Off-policy learning
+		\begin{itemize}
+			\item Learn to estimate and evaluate a policy using experience gathered from following a \alert{different} policy
+		\end{itemize}
+	\end{itemize}
+	
+\end{frame}
+%-----------------------------------------------------------------------
+%-----------------------------------------------------------------------
+\end{document}
