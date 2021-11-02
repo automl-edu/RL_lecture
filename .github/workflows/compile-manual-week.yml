@@ -1,0 +1,23 @@
+name: Compile week
+
+on:
+  workflow_call:
+    inputs:
+        week:
+          description: 'Name of week folder that should be compiled'
+          required: true
+          type: string
+jobs:
+  compile:
+    name: Compile
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: compile week ${{ matrix.week }} with xelatex
+        uses: ./.github/actions/xelatex-week
+        with:
+          folder: ${{ matrix.week }}
+      - uses: actions/upload-artifact@v2
+        with:
+          name: Slides ${{ matrix.week }}
+          path: ${{ matrix.week }}/*.pdf
