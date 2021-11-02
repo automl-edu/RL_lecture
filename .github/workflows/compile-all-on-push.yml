@@ -50,19 +50,19 @@ jobs:
             "w08_exploration",
             "w09_meta_rl"
         ]
-        steps:
-          - name: Install pdftk
-            run: |
-              - apt update && apt install pdftk
-              - mkdir slides/
-          - uses: actions/download-artifact@v2
-            with:
-              name: Slides ${{ matrix.week }}
-          - name: Merge slides for week ${{ matrix.week }} with xelatex
-            run: |
-              - pdftk ${{ matrix.week }}/t*.pdf cat output slides/${{ matrix.week }}.pdf
-          - uses: actions/upload-artifact@v2
-            with:
-              name: Merged slides
-              path: slides/*.pdf
+    steps:
+      - name: Install pdftk
+        run: |
+          - apt update && apt install pdftk
+          - mkdir slides/
+      - uses: actions/download-artifact@v2
+        with:
+          name: Slides ${{ matrix.week }}
+      - name: Merge slides for week ${{ matrix.week }} with xelatex
+        run: |
+          - pdftk ${{ matrix.week }}/t*.pdf cat output slides/${{ matrix.week }}.pdf
+      - uses: actions/upload-artifact@v2
+        with:
+          name: Merged slides
+          path: slides/*.pdf
 
