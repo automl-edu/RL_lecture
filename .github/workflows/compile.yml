@@ -17,7 +17,7 @@ jobs:
             "w05_function_approx",
             "w06_deep_rl",
             "w07_policy_search",
-            "w08_exploration"
+            "w08_exploration",
             "w09_meta_rl"
         ]
     steps:
