@@ -10,5 +10,11 @@ jobs:
       - uses: actions/checkout@v2
       - name: compile with xelatex
         uses: marcomicera/xelatex-action@v0.6
+        env:
+          TEX_INPUTS: w00_init
         with:
           input-file: "w00_init/t01_big_picture.tex"
+      - uses: actions/upload-artifact@v2
+        with:
+          name: Slide
+          path: w00_init/t01_big_picture.pdf
