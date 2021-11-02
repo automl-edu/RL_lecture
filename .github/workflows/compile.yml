@@ -8,7 +8,18 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        week: ["w00_init"]
+        week: [
+            "w00_init",
+            "w01_big_picture",
+            "w02_basics",
+            "w03_policy_evaluation",
+            "w04_model_free_control",
+            "w05_function_approx",
+            "w06_deep_rl",
+            "w07_policy_search",
+            "w08_exploration"
+            "w09_meta_rl"
+        ]
     steps:
       - uses: actions/checkout@v2
       - name: compile week ${{ matrix.week }} with xelatex
