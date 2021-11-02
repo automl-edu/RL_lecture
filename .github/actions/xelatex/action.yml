@@ -5,11 +5,11 @@ name: 'xelatex GitHub Action'
 description: 'Runs xelatex on a .tex file'
 inputs:
   input-folder:
-    description: 'Folder in which'
+    description: 'Current working directory'
     required: false
     default: ''
   input-file:
-    description: 'Additional arguments for xelatex'
+    description: 'Tex file'
     required: false
     default: ''
 
