@@ -52,14 +52,15 @@ jobs:
         ]
         steps:
           - name: Install pdftk
-            runs:
+            run: |
               - apt update && apt install pdftk
               - mkdir slides/
           - uses: actions/download-artifact@v2
             with:
               name: Slides ${{ matrix.week }}
           - name: Merge slides for week ${{ matrix.week }} with xelatex
-            runs: pdftk ${{ matrix.week }}/t*.pdf cat output slides/${{ matrix.week }}.pdf
+            run: |
+              - pdftk ${{ matrix.week }}/t*.pdf cat output slides/${{ matrix.week }}.pdf
           - uses: actions/upload-artifact@v2
             with:
               name: Merged slides
