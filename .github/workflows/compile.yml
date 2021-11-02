@@ -6,14 +6,16 @@ jobs:
   compile:
     name: Compile
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        week: ["w00_init"]
     steps:
       - uses: actions/checkout@v2
-      - name: compile with xelatex
-        uses: ./.github/actions/xelatex
+      - name: compile week ${{ matrix.week }} with xelatex
+        uses: ./.github/actions/xelatex-week
         with:
-          input-folder: w00_init
-          input-file: t01_big_picture.tex
+          folder: ${{ matrix.week }}
       - uses: actions/upload-artifact@v2
         with:
-          name: Slide w00t01
-          path: w00_init/t01_big_picture.pdf
+          name: Slides ${{ matrix.week }}
+          path: ${{ matrix.week }}/*.pdf

@@ -1,0 +1,15 @@
+# Action metadata file:
+# https://docs.github.com/en/actions/creating-actions/creating-a-docker-container-action#creating-an-action-metadata-file
+
+name: 'xelatex Lecture week'
+description: 'Runs xelatex on each .tex in a given folder'
+inputs:
+  folder:
+    description: 'Used folder'
+    required: true
+
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
+  args:
+    - ${{ inputs.input-folder }}
