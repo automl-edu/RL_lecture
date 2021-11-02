@@ -32,32 +32,31 @@
 %-----------------------------------------------------------------------
 %----------------------------------------------------------------------
 \begin{frame}[c]{Action-Value Function Approximation with an Oracle}
-	
+
 	\begin{itemize}
 		\item $\hat{Q}^\pi(s,a;\vec{w}) \approx Q^\pi$
 		\item Minimize the mean-squared error between the true action-value function $Q^\pi(s,a)$ and the approximate action-value function:
 		$$J(\vec{w}) = \mathbb{E}_\pi [(Q^\pi(s,a) - \hat{Q}^\pi(s,a;\vec{w}))^2] $$
 		\item Use stochastic gradient descent to find a local minimum
-		\begin{eqnarray}
-			-\frac{1}{2}\nabla_\vec{w} J(\vec{w}) &=& \mathbb{E}\left[ (Q^\pi(s,a) - \hat{Q}^\pi(s,a;\vec{w})) \nabla_\vec{w} \hat{Q}^\pi(s,a;\vec{w}) \right]\nonumber\\
-			\Delta \vec{w} &=& -\frac{1}{2}\alpha\nabla_\vec{w} J(\vec{w})\nonumber
-		\end{eqnarray}
+		\begin{align*}
+			-\frac{1}{2}\nabla_{\vec{w}} J(\vec{w}) &= \mathbb{E}\left[ (Q^\pi(s,a) - \hat{Q}^\pi(s,a;\vec{w})) \nabla_{\vec{w}} \hat{Q}^\pi(s,a;\vec{w}) \right] \\
+			\Delta \vec{w} &= -\frac{1}{2}\alpha\nabla_{\vec{w}} J(\vec{w})
+		\end{align*}
 		\item Stochastic gradient descent (SGD) samples the gradient
 	\end{itemize}
-	
+
 \end{frame}
 %-----------------------------------------------------------------------
 %----------------------------------------------------------------------
-\begin{frame}[c]{Linear State Action Value Function Approximation with an
-		Oracle}
-	
+\begin{frame}[c]{Linear State Action Value Function Approximation with an Oracle}
+
 	\begin{itemize}
 		\item Use features to represent both the state and action
 		$$\vec{x}(s,a) = \begin{pmatrix}
-		\vec{x}_1(s,a)\\
-		\vec{x}_2(s,a)\\
-		\ldots\\
-		\vec{x}_n(s,a)
+			\vec{x}_1(s,a)\\
+			\vec{x}_2(s,a)\\
+			\ldots\\
+			\vec{x}_n(s,a)
 		\end{pmatrix} $$
 		\item Represent state-action value function with a weighted linear
 		combination of features
@@ -65,12 +64,12 @@
 		\item Stochastic gradient descent update
 		$$\nabla_{\vec{w}} J(\vec{w}) = \nabla_{\vec{w}} \mathbb{E}_\pi [(Q^\pi(s,a) - \hat{Q}^\pi(s,a;\vec{w}))^2] $$
 	\end{itemize}
-	
+
 \end{frame}
 %-----------------------------------------------------------------------
 %----------------------------------------------------------------------
 \begin{frame}[c]{Incremental Model-Free Control Approaches}
-	
+
 	\begin{itemize}
 		\item Similar to policy evaluation, true state-action value function for a state is unknown and so substitute a target value
 		\item In Monte Carlo methods, use a return $G_t$ as a substitute target
@@ -80,7 +79,7 @@
 		\item For Q-learning instead use a TD target $r + \gamma \max_{a'} \hat{Q}(s',a';\vec{w})$ which leverages the max of the current function approximations value
 		$$\Delta \vec{w} = \alpha (r + \gamma \max_{a'} \hat{Q}(s',a';\vec{w}) - \hat{Q}(s,a;\vec{w})) \nabla_{\vec{w}}\hat{Q}(s,a;\vec{w}) $$
 	\end{itemize}
-	
+
 \end{frame}
 %-----------------------------------------------------------------------
 %-----------------------------------------------------------------------

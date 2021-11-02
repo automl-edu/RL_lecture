@@ -7,6 +7,7 @@ jobs:
     name: Compile
     runs-on: ubuntu-latest
     strategy:
+      fail-fast: false
       matrix:
         week: [
             "w00_init",
@@ -19,7 +20,7 @@ jobs:
             "w07_policy_search",
             "w08_exploration",
             "w09_meta_rl"
-        ]
+          ]
     steps:
       - uses: actions/checkout@v2
       - name: compile week ${{ matrix.week }} with xelatex
