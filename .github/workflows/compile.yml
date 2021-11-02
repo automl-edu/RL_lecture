@@ -9,12 +9,11 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: compile with xelatex
-        uses: marcomicera/xelatex-action@v0.6
-        env:
-          TEX_INPUTS: w00_init
+        uses: ./.github/actions/xelatex
         with:
-          input-file: "w00_init/t01_big_picture.tex"
+          input-folder: w00_init
+          input-file: t01_big_picture.tex
       - uses: actions/upload-artifact@v2
         with:
-          name: Slide
+          name: Slide w00t01
           path: w00_init/t01_big_picture.pdf
