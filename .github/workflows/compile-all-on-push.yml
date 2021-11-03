@@ -54,6 +54,7 @@ jobs:
       - uses: actions/download-artifact@v2
         with:
           name: Slides ${{ matrix.week }}
+          path: ${{ matrix.week }}/
       - name: Prepare output folder
         run: sh -c "[[ -d slides ]] || mkdir slides"
       - name: Merge slides for week ${{ matrix.week }} with pdftk
