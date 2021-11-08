@@ -21,16 +21,21 @@ jobs:
             "w08_exploration",
             "w09_meta_rl"
           ]
+        mode: [
+                "animation",
+                "handout",
+        ]
     steps:
       - uses: actions/checkout@v2
       - name: compile week ${{ matrix.week }} with xelatex
         uses: ./.github/actions/xelatex-week
         with:
           folder: ${{ matrix.week }}
+          mode: ${{ matrix.mode }}
       - uses: actions/upload-artifact@v2
         with:
-          name: Slides ${{ matrix.week }}
-          path: ${{ matrix.week }}/*.pdf
+          name: Slides ${{ matrix.week }} (${{ matrix.mode }})
+          path: ${{ matrix.week }}/${{ matrix.mode }}/*.pdf
   merge:
     name: Merge slides
     needs: compile
@@ -53,7 +58,7 @@ jobs:
       - uses: actions/checkout@v2
       - uses: actions/download-artifact@v2
         with:
-          name: Slides ${{ matrix.week }}
+          name: Slides ${{ matrix.week }} (handout)
           path: ${{ matrix.week }}/
       - name: Prepare output folder
         run: sh -c "[[ -d slides ]] || mkdir slides"

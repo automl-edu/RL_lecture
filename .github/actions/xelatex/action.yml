@@ -12,6 +12,10 @@ inputs:
     description: 'Tex file'
     required: false
     default: ''
+  mode:
+    description: 'Compiling mode. Can be "handout" or non handout'
+    required: false
+    default: 'animation'
 
 runs:
   using: 'docker'
@@ -19,3 +23,4 @@ runs:
   args:
     - ${{ inputs.input-folder }}
     - ${{ inputs.input-file }}
+    - ${{ inputs.mode }}
