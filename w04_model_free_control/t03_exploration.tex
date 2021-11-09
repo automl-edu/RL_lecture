@@ -56,6 +56,9 @@
 	
 	\begin{itemize}
 	\item Simple idea to balance exploration and exploitation
+	\begin{itemize}
+	    \item In the upcoming weeks, we will learn more exploration strategies
+	\end{itemize}
 	\item Let $|A|$ be the number of actions
 	\item Then a $\epsilon$-greedy policy wrt a state-action value $Q(s,a)$ is $\pi(a\mid s) \in $
 	\begin{itemize}
@@ -68,18 +71,19 @@
 %--------------------------------------------------------------
 %----------------------------------------------------------------------
 \begin{frame}[c]{Monotonic $\epsilon$-greedy Policy Improvement}
-	
+	\vspace{-1em}
 	\begin{itemize}
 		\item Theorem: For any $\epsilon$-greedy policy $\pi_i$, the $\epsilon$-greedy policy wrt $Q^{\pi}_i$ is a monotonic improvement $V^{\pi_{i+1}} \geq V^{\pi_i}$
 	\end{itemize}
 
 \footnotesize
+	\vspace{-1em}
 \begin{eqnarray}
 Q^{\pi_i} (s,\pi_{i+1} (s)) &=& \sum_{a \in A} \pi_{i+1}(a \mid s) Q^{\pi_{i}}(s,a)\nonumber\\
-	&=& (\epsilon / |A|) \left[\sum_{a\in A} Q^{\pi_{i}}(s,a) \right] + (1- \epsilon) \max_{a\in A} Q^{\pi_{i}}(s,a)\nonumber\\
-	&=& (\epsilon / |A|) \left[\sum_{a\in A} Q^{\pi_{i}}(s,a) \right] + (1- \epsilon) \max_{a\in A} Q^{\pi_{i}}(s,a)\frac{1-\epsilon}{1-\epsilon}\nonumber\\
-	&=& (\epsilon / |A|) \left[\sum_{a\in A} Q^{\pi_{i}}(s,a) \right] + (1- \epsilon) \max_{a\in A} Q^{\pi_{i}}(s,a)\sum_{a\in A}\frac{\pi_i(a\mid s) - \frac{\epsilon}{|A|}}{1-\epsilon}\nonumber\\
-	&\geq& (\epsilon / |A|) \left[\sum_{a\in A} Q^{\pi_{i}}(s,a) \right] + (1- \epsilon) \qquad~ Q^{\pi_{i}}(s,a)\sum_{a\in A}\frac{\pi_i(a\mid s) - \frac{\epsilon}{|A|}}{1-\epsilon} \nonumber\\
+	&=& (\epsilon / |A|) \left[\sum_{a\in A} Q^{\pi_{i}}(s,a) \right] + (1- \epsilon) \max_{a\in A} Q^{\pi_{i}}(s,a)\nonumber\\ \pause
+	&=& (\epsilon / |A|) \left[\sum_{a\in A} Q^{\pi_{i}}(s,a) \right] + (1- \epsilon) \max_{a\in A} Q^{\pi_{i}}(s,a)\frac{1-\epsilon}{1-\epsilon}\nonumber\\ \pause
+	&=& (\epsilon / |A|) \left[\sum_{a\in A} Q^{\pi_{i}}(s,a) \right] + (1- \epsilon) \max_{a\in A} Q^{\pi_{i}}(s,a)\sum_{a\in A}\frac{\pi_i(a\mid s) - \frac{\epsilon}{|A|}}{1-\epsilon}\nonumber\\ \pause
+	&\geq& (\epsilon / |A|) \left[\sum_{a\in A} Q^{\pi_{i}}(s,a) \right] + (1- \epsilon) \qquad~ Q^{\pi_{i}}(s,a)\sum_{a\in A}\frac{\pi_i(a\mid s) - \frac{\epsilon}{|A|}}{1-\epsilon} \nonumber\\ \pause
 	&=& \sum_{a\in A} \pi_i (a \mid s) Q^{\pi_i}(s,a) = V^{\pi_i}(s)\nonumber
 \end{eqnarray}
 	
@@ -101,7 +105,7 @@ Q^{\pi_i} (s,\pi_{i+1} (s)) &=& \sum_{a \in A} \pi_{i+1}(a \mid s) Q^{\pi_{i}}(s
 		\pause
 		\item Simple Strategy:
 		\begin{itemize}
-			\item $\epsilon$-greedy where $\epsilon$ is annealed to $0$ with $\epsilon_i = 1 / i$
+			\item $\epsilon$-greedy where $\epsilon$ is annealed close to $0$ with $\epsilon_i = 1 / i$
 		\end{itemize}
 		\medskip
 		\pause
