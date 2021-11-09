@@ -13,7 +13,7 @@
 %----------------------------------------------------------------------
 %----------------------------------------------------------------------
 \begin{frame}[c]{Maximization Bias}
-	
+	\vspace{-1.3em}
 	\begin{itemize}
 		\item Consider single-state MDP $(|S| = 1)$ with $2$ actions, and both actions have 0-mean random rewards: $(r \mid a = a_1 ) = (r \mid a = a_2) = 0$
 		\begin{itemize}
@@ -27,7 +27,7 @@
 		\pause
 		\item Let $\hat{\pi}\in \argmax_{a}\hat{Q}(s,a)$ be the greedy policy wrt the estimated $\hat{Q}$
 		\pause
-		\item Even though each estimate of the state-action values is unbiased, the estimate of $\hat{\pi}$'s value $\hat{V}^{\hat{\pi}}$ can be biased:
+		\item Even though each estimate of the state-action values is unbiased,\\ the estimate of $\hat{\pi}$'s value $\hat{V}^{\hat{\pi}}$ can be biased:
 	\end{itemize}
 
 \vspace{-1em}
@@ -44,11 +44,10 @@
 \begin{frame}[c]{Double Q-Learning}	
 	
 	\begin{itemize}
-		\item The greedy policy w.r.t. estimated Q values can yield a maximization
-		bias during finite-sample learning
+		\item The greedy policy w.r.t. estimated Q values can yield\\ a maximization bias during finite-sample learning
 		\item Avoid using max of estimates as estimate of max of true values
 		\item Instead split samples and use to create two independent unbiased
-		estimates of $Q_1(s_1, a_i)$ and $Q_2(s_1, a_i). \forall a\in A$
+		estimates of\\ $Q_1(s_1, a_i)$ and $Q_2(s_1, a_i). \forall a\in A$
 		\begin{itemize}
 			\item Use one estimate to select max action: $a^* \in \argmax_{a \in A} Q_1(s_1, a)$
 			\item Use other estimate to estimate value of $a^*$: $Q_2(s,a^*)$
@@ -84,7 +83,7 @@
 		\end{itemize}
 		\bigskip
 		\pause
-		\item[$\leadsto$] Doubles the memory, same computation requirements, data requirements are subtle -- might reduce amount of exploration needed due to lower bias
+		\item[$\leadsto$] Doubles the memory, same computation requirements, data requirements are subtle\\ -- might reduce amount of exploration needed due to lower bias
 	\end{itemize}
 	
 	
