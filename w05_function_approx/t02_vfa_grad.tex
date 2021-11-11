@@ -60,7 +60,7 @@
 	$$
 	\nabla J(\vec{w}) = \left[ \frac{\partial J}{\vec{w}_1} \ldots \frac{\partial J}{\vec{w}_n} \right]
 	$$
-	$$\vec{w}_t = \vec{w}_{t-1} - \alpha \nabla_{\vec{w}} J(\vec{w})$$
+	$$\vec{w}_t = \vec{w}_{t-1} - \alpha \nabla_{\vec{w}} J(\vec{w}_{t-1})$$
 	
 	where $\alpha$ is the learning rate.
 
