@@ -83,7 +83,7 @@ Q^{\pi_i} (s,\pi_{i+1} (s)) &=& \sum_{a \in A} \pi_{i+1}(a \mid s) Q^{\pi_{i}}(s
 	&=& (\epsilon / |A|) \left[\sum_{a\in A} Q^{\pi_{i}}(s,a) \right] + (1- \epsilon) \max_{a\in A} Q^{\pi_{i}}(s,a)\nonumber\\ \pause
 	&=& (\epsilon / |A|) \left[\sum_{a\in A} Q^{\pi_{i}}(s,a) \right] + (1- \epsilon) \max_{a\in A} Q^{\pi_{i}}(s,a)\frac{1-\epsilon}{1-\epsilon}\nonumber\\ \pause
 	&=& (\epsilon / |A|) \left[\sum_{a\in A} Q^{\pi_{i}}(s,a) \right] + (1- \epsilon) \max_{a\in A} Q^{\pi_{i}}(s,a)\sum_{a\in A}\frac{\pi_i(a\mid s) - \frac{\epsilon}{|A|}}{1-\epsilon}\nonumber\\ \pause
-	&\geq& (\epsilon / |A|) \left[\sum_{a\in A} Q^{\pi_{i}}(s,a) \right] + (1- \epsilon) \qquad~ Q^{\pi_{i}}(s,a)\sum_{a\in A}\frac{\pi_i(a\mid s) - \frac{\epsilon}{|A|}}{1-\epsilon} \nonumber\\ \pause
+	&\geq& (\epsilon / |A|) \left[\sum_{a\in A} Q^{\pi_{i}}(s,a) \right] + (1- \epsilon) \qquad~ \sum_{a\in A}\frac{\pi_i(a\mid s) - \frac{\epsilon}{|A|}}{1-\epsilon} Q^{\pi_{i}}(s,a) \nonumber\\ \pause
 	&=& \sum_{a\in A} \pi_i (a \mid s) Q^{\pi_i}(s,a) = V^{\pi_i}(s)\nonumber
 \end{eqnarray}
 	
