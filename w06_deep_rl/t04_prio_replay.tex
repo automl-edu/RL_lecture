@@ -47,7 +47,7 @@
 		\item Let $i$ be the index of the $i$-th tuple of experience $(s_i,a_i,r_i,s_{i+1})$
 		\item Sample tuples for update using priority function
 		\item Priority of a tuple $i$ is proportional to DQN error
-		$$ p_i = | r + \gamma \max_{a' \in A} Q(s_{i+1}, a'; \vec{w}^-) - Q(s_i,a;\vec{w}) |$$
+		$$ p_i = | r + \gamma \max_{a' \in A} Q(s_{i+1}, a'; \vect{w}^-) - Q(s_i,a;\vect{w}) |$$
 		\item Update $p_i$ every update. $p_i$ for new tuples is set to maximum value
 		\item One method: proportional (stochastic prioritization)
 		$$ P(i) = \frac{p_i^\beta}{\sum_k p_k^\beta}$$

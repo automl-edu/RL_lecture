@@ -5,6 +5,7 @@
 \subtitle{Gradient Descent and Linear Models}
 
 
+
 \begin{document}
 	
 	\maketitle
@@ -53,14 +54,14 @@
 	
 	
 	\begin{itemize}
-		\item Consider a function $J(\vec{w})$ that is differentiable function of a parameter vector $\vec{w}$
-		\item Goal is to find parameter $\vec{w}$ that minimizes $J$
-		\item The gradient of $J(\vec{w})$ is 
+		\item Consider a function $J(\vect{w})$ that is differentiable function of a parameter vector $\vect{w}$
+		\item Goal is to find parameter $\vect{w}$ that minimizes $J$
+		\item The gradient of $J(\vect{w})$ is 
 	\end{itemize}
 	$$
-	\nabla J(\vec{w}) = \left[ \frac{\partial J}{\vec{w}_1} \ldots \frac{\partial J}{\vec{w}_n} \right]
+	\nabla J(\vect{w}) = \left[ \frac{\partial J}{\vect{w}_1} \ldots \frac{\partial J}{\vect{w}_n} \right]
 	$$
-	$$\vec{w}_t = \vec{w}_{t-1} - \alpha \nabla_{\vec{w}} J(\vec{w})$$
+	$$\vect{w}_t = \vect{w}_{t-1} - \alpha \nabla_{\vect{w}} J(\vect{w})$$
 	
 	where $\alpha$ is the learning rate.
 
@@ -86,16 +87,16 @@
 	
 	
 	\begin{itemize}
-		\item Goal: Find the parameter vector $\vec{w}$ that minimizes the loss between a
-		true value function $V^\pi(s)$ and its approximation $\hat{V}^\pi(s; \vec{w})$ as
-		represented with a particular function class parameterized by $\vec{w}$.
+		\item Goal: Find the parameter vector $\vect{w}$ that minimizes the loss between a
+		true value function $V^{\pi}(s)$ and its approximation $\hat{V}^\pi(s; \vect{w})$ as
+		represented with a particular function class parameterized by $\vect{w}$.
 		\item Generally use mean squared error and define the loss as 
-		$$ J(\vec{w}) = \mathbb{E}_\pi [(V^\pi(s) - \hat{V}^\pi(s;\vec{w}))^2]$$
+		$$ J(\vect{w}) = \mathbb{E}_{\pi} [(V^\pi(s) - \hat{V}^\pi(s;\vect{w}))^2]$$
 		\item Use gradient descent to find a local minimum 
-		$$ \Delta \vec{w} = - \frac{1}{2} \alpha \nabla_\vec{w} J(\vec{w})$$
+		$$ \Delta \vect{w} = - \frac{1}{2} \alpha \nabla_{\vect{w}} J(\vect{w})$$
 		\item Stochastic gradient descent (SGD) uses a finite number of samples to compute an approximate gradient:
-		$$ \nabla_\vec{w} J(\vec{w}) = \nabla_{\vec{w}} \mathbb{E}_\pi[V^\pi (s) - \hat{V}^\pi (s; \vec{w})]^2$$
-		$$= \mathbb{E}_\pi [2 (V^\pi(s) - \hat{V}^\pi (s;\vec{w})) \nabla_\vec{w} \hat{V}(s;\vec{w})]$$
+		$$ \nabla_{\vect{w}} J(\vect{w}) = \nabla_{\vect{w}} \mathbb{E}_{\pi}[V^\pi (s) - \hat{V}^\pi (s; \vect{w})]^2$$
+		$$= \mathbb{E}_\pi [2 (V^\pi(s) - \hat{V}^\pi (s;\vect{w})) \nabla_{\vect{w}} \hat{V}(s;\vect{w})]$$
 	\end{itemize}
 	
 \end{frame}
@@ -140,11 +141,11 @@
 		\item Use a feature vector to represent a state $s$
 	\end{itemize}
 
-$$\vec{x}(s) = \begin{pmatrix}
-\vec{x}_1(s)\\
-\vec{x}_2(s)\\
+$$\vect{x}(s) = \begin{pmatrix}
+\vect{x}_1(s)\\
+\vect{x}_2(s)\\
 \ldots\\
-\vec{x}_n(s)
+\vect{x}_n(s)
 \end{pmatrix} $$
 
 \begin{itemize}
@@ -161,13 +162,13 @@ $$\vec{x}(s) = \begin{pmatrix}
 	\begin{itemize}
 		\item Represent a value function (or state-action value function) for a
 		particular policy with a weighted linear combination of features
-		$$ \hat{V}^\pi(s; \vec{w}) = \sum_{j=1}^n \vec{x}_j (s) \vec{w}_j = \vec{x}(s)^T\vec{w}$$
+		$$ \hat{V}^\pi(s; \vect{w}) = \sum_{j=1}^n \vect{x}_j (s) \vect{w}_j = \vect{x}(s)^T\vect{w}$$
 		\item Objective function is 
-		$$ J(\vec{w}) = \mathbb{E}[(V^\pi(s) - \hat{V}^\pi(s; \vec{w}))^2]$$
+		$$ J(\vect{w}) = \mathbb{E}[(V^\pi(s) - \hat{V}^\pi(s; \vect{w}))^2]$$
 		\item Recall weight update:
-		$$ \Delta \vec{w} = - \frac{1}{2} \alpha \nabla_{\vec{w}} J (\vec{w})$$
+		$$ \Delta \vect{w} = - \frac{1}{2} \alpha \nabla_{\vect{w}} J (\vect{w})$$
 		\item Update (- step size $\times$ prediction error $\times$ feature value)
-		$$ \Delta \vec{w} = -\frac{1}{2} \alpha(2(V^\pi(s) - \vec{x}(s)^T \vec{w})) \vec{x}(s)$$
+		$$ \Delta \vect{w} = -\frac{1}{2} \alpha(2(V^\pi(s) - \vect{x}(s)^T \vect{w})) \vect{x}(s)$$
 		
 	\end{itemize}
 	

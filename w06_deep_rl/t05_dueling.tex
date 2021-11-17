@@ -16,14 +16,14 @@
 	
 
 \begin{itemize}
-	\item Intuition: Features need to accurate represent value may be different
-	than those needed to specify difference in actions
-	\item E.g.
+	\item Intuition: Different Features might be needed either (a) to accurately represent value or (b)
+	to specify difference in actions
+	\item For example
 	\begin{itemize}
 		\item Game score may help accurately predict $V(s)$
 		\item But not necessarily in indicating relative action values $Q(s,a_1)$ vs $Q(s,a_2)$
 	\end{itemize}
-	\item Advantage function \lit{Baird 1993}
+	\item Advantage function \lit{Baird 1993}\\
 	$$A^\pi (s,a) = Q^\pi(s,a) - V^\pi(s) $$
 \end{itemize}
 	
@@ -35,9 +35,10 @@
 \begin{center}
 Standard DQN
 
-\includegraphics[width=0.5\textwidth]{images/dueling_networks.png}
+\vspace{-2em}
+\includegraphics[width=0.4\textwidth]{images/dueling_networks.png}
 
-Dueling DQN
+Plain DQN (above) vs Dueling DQN (below)
 \end{center}
 
 \begin{itemize}
@@ -52,10 +53,10 @@ Dueling DQN
 \begin{frame}[c]{Dueling DQN~\lit{Wang et al. 2016}{https://arxiv.org/abs/1511.06581}}
 	
 	\begin{itemize}
-	\item Advantage function \lit{Baird 1993}
+	\item Advantage function \lit{Baird 1993}\\
 	$$A^\pi (s,a) = Q^\pi(s,a) - V^\pi(s) $$
-	\item Consider a network that outputs $V(s; \vec{w}_1, \vec{w}_2)$ as well as advantage $A(s,a; \vec{w}_1, \vec{w}_3)$ where $\vec{w}_i$ are the weights of the different parts of the network
-	\item To construct $Q$ could use $$Q(s,a;\vec{w}_1, \vec{w}_2, \vec{w}_3) = V(s;\vec{w}_1, \vec{w}_2) + A(s,a;\vec{w}_1, \vec{w}_3)$$
+	\item Consider a network that outputs $V(s; \vect{w}_1, \vect{w}_2)$ as well as advantage $A(s,a; \vect{w}_1, \vect{w}_3)$ where $\vect{w}_i$ are the weights of the different parts of the network
+	\item To construct $Q$ could use\\ $$Q(s,a;\vect{w}_1, \vect{w}_2, \vect{w}_3) = V(s;\vect{w}_1, \vect{w}_2) + A(s,a;\vect{w}_1, \vect{w}_3)$$
 	%\item Do we expect that this architecture will result in us learning a good estimate of true $V$ or $A$?
 	\bigskip
 	\pause
@@ -69,16 +70,16 @@ Dueling DQN
 \begin{frame}[c]{Uniqueness}
 	
 	\begin{itemize}
-		\item Consider a network that outputs $V(s;\vec{w}_1, \vec{w}_2)$ as well as advantage $A(s,a; \vec{w}_1, \vec{w}_3)$
-		\item To construct $Q$ could use $$Q(s,a;\vec{w}_1, \vec{w}_2, \vec{w}_3) = V(s;\vec{w}_1, \vec{w}_2) + A(s,a;\vec{w}_1, \vec{w}_3)$$
-		\item Option 1: Force $Q(s,a) = V(s)$ for the best action suggested by the advantage:
-		$$\hat{Q}(s,a;\vec{w}) = \hat{V}(s;\vec{w}) + \left( \hat{A}(s,a;\vec{w}) - \max_{a' \in \mathcal{A}} \hat{A}(s,a';\vec{w}) \right) $$
+		\item Consider a network that outputs $V(s;\vect{w}_1, \vect{w}_2)$ as well as advantage $A(s,a; \vect{w}_1, \vect{w}_3)$
+		\item To construct $Q$, could use $$Q(s,a;\vect{w}_1, \vect{w}_2, \vect{w}_3) = V(s;\vect{w}_1, \vect{w}_2) + A(s,a;\vect{w}_1, \vect{w}_3)$$
+		\item Option 1: Force $Q(s,a) = V(s)$ for the best action suggested by the advantage:\\
+		$$\hat{Q}(s,a;\vect{w}) = \hat{V}(s;\vect{w}) + \left( \hat{A}(s,a;\vect{w}) - \max_{a' \in \mathcal{A}} \hat{A}(s,a';\vect{w}) \right) $$
 		\vspace{-1em}
 		\begin{itemize}
 			\item This helps to force the $V$ network to approximate $V$
 		\end{itemize}
-		\item Option 2: Use mean as baseline (more stable)
-		$$\hat{Q}(s,a;\vec{w}) = \hat{V}(s;\vec{w}) + \left( \hat{A}(s,a;\vec{w}) - \frac{1}{|\mathcal{A}|} \sum_{a' \in \mathcal{A}} \hat{A}(s,a';\vec{w}) \right) $$
+		\item Option 2: Use mean as baseline ($\leadsto$ more stable)\\
+		$$\hat{Q}(s,a;\vect{w}) = \hat{V}(s;\vect{w}) + \left( \hat{A}(s,a;\vect{w}) - \frac{1}{|\mathcal{A}|} \sum_{a' \in \mathcal{A}} \hat{A}(s,a';\vect{w}) \right) $$
 		\vspace{-1em}
 		\begin{itemize}
 			\item More stable often because averaging over all advantages instead of
