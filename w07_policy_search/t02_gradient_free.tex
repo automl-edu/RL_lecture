@@ -12,11 +12,11 @@
 
 %----------------------------------------------------------------------
 %----------------------------------------------------------------------
-\begin{frame}[c]{Policy optimization}
+\begin{frame}[c]{Policy Optimization}
 
 \begin{itemize}
 	\item Policy based reinforcement learning is an \alert{optimization} problem over $\theta$
-	\item[$\leadsto$] Find policy parameters $\theta^*$ that maximize $V(s_0, \theta^*)$
+	\item[$\leadsto$] Find policy parameters $\theta^*$ that maximize $V^{\pi_{\theta^*}}(s_0)$
 	\item We can use gradient-free approaches (a.k.a. black-box optimization)
 	\begin{itemize}
 		\item Hill climbing
@@ -34,7 +34,7 @@
 		\item a few to hundreds of dimensions $\to$ RL?
 	\end{itemize}
 	\pause
-	\item if we encode the policy $\pi_\theta$ as a DNN, we might have \alert{millions} of dimensions (i.e., parameters in $\theta$)
+	\item if we encode the policy $\pi_\theta$ as a DNN, we might have \alert{millions} of dimensions\\ (i.e., parameters in $\theta$)
 
 \end{itemize}
 
@@ -59,8 +59,9 @@
 \end{frame}
 %-----------------------------------------------------------------------
 %----------------------------------------------------------------------
-\begin{frame}[c,fragile]{Policy Optimization with Evolutionary Strategies\newline \lit{Chrabaszcz et al. 2018}{https://arxiv.org/abs/1802.08842}}
+\begin{frame}[c,fragile]{Policy Optimization with Evolutionary Strategies \lit{Chrabaszcz et al. 2018}{https://arxiv.org/abs/1802.08842}}
 	
+\vspace{-1em}
 \begin{algorithm}[H]
 	\scriptsize
 	\DontPrintSemicolon
@@ -76,7 +77,7 @@
 	}
 	\For{$t=0,1, \ldots, T$}{
 		\For{$i=1,2, \ldots, \lambda$}{ 
-			{$\epsilon_i\sim\mathcal{N}(0,I)$}\;
+			{$\epsilon_i\sim\mathcal{N}(0,I)$}\;\\
 			$s_i\leftarrow F(\theta_t+\sigma\cdot\epsilon_i)$
 		}
 		Sort $(\epsilon_1,\ldots,\epsilon_\lambda)$ according to $s$ in ascending order\\
@@ -92,7 +93,7 @@
 \begin{frame}[c,fragile]{Progressive Episode Length \lit{Fuks et al. 2019}{https://ml.informatik.uni-freiburg.de/papers/19-IJCAI_PEL.pdf}}
 	
 \centering
-\includegraphics[width=.9\textwidth]{images/FinalPEL.pdf}
+\includegraphics[width=.70\textwidth]{images/FinalPEL.pdf}
 	
 \end{frame}
 %-----------------------------------------------------------------------

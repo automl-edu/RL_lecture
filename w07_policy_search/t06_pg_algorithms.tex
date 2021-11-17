@@ -32,7 +32,7 @@
 %-----------------------------------------------------------------------
 %----------------------------------------------------------------------
 \begin{frame}[c]{Policy Gradient: Use Temporal Structure}
-	
+\vspace{-1.5em}
 $$ \nabla_\theta \mathbb{E}_\tau [R] = \mathbb{E}_\tau \left[ \left(\sum_{t=0}^{T-1} r_t\right) \left( \sum_{t=0}^{T-1} \nabla_\theta \log \pi_\theta(a_t \mid s_t) \right) \right]$$
 	
 We can repeat the same argument to derive the gradient estimator for a single reward term $r_{t'}$
@@ -82,6 +82,10 @@ REINFORCE:
 	\item return $\theta$
 \end{enumerate}
 
+\begin{itemize}
+    \item Somehow Monte-Carlo but for policy gradient
+    \item[$\leadsto$] high variance
+\end{itemize}
 	
 \end{frame}
 %-----------------------------------------------------------------------

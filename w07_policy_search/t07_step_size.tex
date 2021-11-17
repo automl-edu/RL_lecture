@@ -1,0 +1,111 @@
+% !TeX spellcheck = en_US
+\documentclass[aspectratio=169]{../latex_main/tntbeamer}  % you can pass all options of the beamer class, e.g., 'handout' or 'aspectratio=43'
+\input{../latex_main/preamble}
+\title[RL: Policy Gradient]{RL: Policy Search}
+\subtitle{Step Size and Trust Region}
+
+
+\begin{document}
+	
+	\maketitle
+
+%----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Policy Gradient and Step Size}
+	
+    \begin{itemize}
+        \item Goal: Each step of policy gradient yields an updated policy $\pi'$ whose value is greater than (or equal) to the prior policy $\pi$: $V^{\pi'} \geq V^\pi$
+        \begin{itemize}
+            \item Monotonic improvement
+            \item Important in some applications
+            \item PG often more stable than DQN
+        \end{itemize} 
+        \item Gradient descent approaches update the weights a small step in direction of gradient
+        \item First order / linear approximation of the value function's dependence on the policy parameterization
+        \item Locally a good approximation; further aways less good
+    \end{itemize}
+
+\end{frame}
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Why are step sizes a big deal in RL?}
+	
+    \begin{itemize}
+        \item Step size is important in any problem involving the optima of a function
+        \item Supervised learning: Step too far $\leadsto$ next updates might fix it
+        \item Reinforcement learning:
+        \begin{itemize}
+            \item Step too far $\leadsto$ bad policy
+            \item Next batch: collected under bad policy
+            \item \alert{Policy is determining data collection!} 
+            \begin{itemize}
+                \item Essentially controlling exploration and exploitation trade-off due to particular policy parameters and the stochasticity of the policy
+            \end{itemize}
+            \item May not be able to recover from a bad choice $\leadsto$ collapse in performance
+        \end{itemize}
+    \end{itemize}
+
+\end{frame}
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Policy Gradient Methods with Auto-Step-Size Selection}
+	
+    \begin{itemize}
+        \item Can we automatically ensure the updated policy $\pi'$ has value greater than (or equal to) the prior policy $V^{\pi'} \geq V^\pi$?
+        \item Consider this for the policy gradient setting, and hope to address this by modifying step size
+    \end{itemize}
+
+\end{frame}
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Objetive Function}
+	
+    \begin{itemize}
+        \item Goal: find policy parameters that maximize value function
+        $$ V(\theta) = \mathbb{E}_{\pi_\theta} \left[ \sum_{t=0}^{\infty} \gamma^t r(s_t, a_t); \pi_\theta \right]$$
+        \item have access to samples from the current policy $\pi_\theta$ 
+        \otem Want to predict the value of a different policy ($\leadsto$ off-policy learning)
+    \end{itemize}
+
+\end{frame}
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Objective Function}
+	
+    \begin{itemize}
+        \item Goal: find policy parameters that maximize value function
+        $$ V(\theta) = \mathbb{E}_{\pi_\theta} \left[ \sum_{t=0}^{\infty} \gamma^t r(s_t, a_t); \pi_\theta \right]$$
+        \item Express value of $\Tilde{\pi}$ in terms of advantage of $\pi$
+        \begin{eqnarray}
+        V(\Tilde{\theta}) &=& V(\theta) + \mathbb{E}_{\pi{\Tilde{\theta}}} \left[ \sum_{t=0}^{\infty} \gamma^t A_\pi(s_t, a_t) \right]\\
+        &=& V(\theta) + \sum_{s} \mu_{\Tilde{\pi}}(s) \sum_{a} \Tilde{\pi}(a \mid s) A_\pi(s_t, a_t) 
+        \end{eqnarray}
+        \item $ \mu_{\Tilde{\pi}}(s)$ is the discounted weighted frequency of state $s$ under policy $\Tilde{\pi}$
+    \end{itemize}
+
+\end{frame}
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{TODO}
+	
+    TODO	
+
+\end{frame}
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{TODO}
+	
+    TODO	
+
+\end{frame}
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{TODO}
+	
+    TODO	
+
+\end{frame}
+%-----------------------------------------------------------------------
+
+%-----------------------------------------------------------------------
+\end{document}

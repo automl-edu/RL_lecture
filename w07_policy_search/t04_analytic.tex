@@ -12,17 +12,40 @@
 
 %----------------------------------------------------------------------
 %----------------------------------------------------------------------
-\begin{frame}[c]{Computing the gradient analytically}
+\begin{frame}[c]{Computing the Gradient Analytically}
 
 \begin{itemize}
 	\item We now compute the policy gradient analytically
 	\item Assume policy $\pi_\theta$ is differentiable whenever it is non-zero\\
-	 and we know the gradient $\nabla_\theta \pi_\theta (s,a)$
+	 and we know the gradient $\nabla_\theta \pi_\theta (s,a)$, for example:
+	 \begin{itemize}
+	     \item softmax: $\pi_\theta (s,a) = \exp(\phi(s,a)^\intercal\theta) / \sum_{a} \exp(\phi(s,a)^\intercal\theta)$
+	     \item Gaussian: $\pi(s,a) \sim \mathcal{N}(\mu(s), \sigma^2)$ with $\mu(s) = \phi(s)^\intercal \theta$
+	     \item or a DNN
+	 \end{itemize}
 	\item Denote a state-action trajectory as 
 	$$ \tau = (s_0, a_0, r_0, \ldots, s_{T-1}, a_{T-1}, r_{T-1}, s_T) $$
 	\item Use $R(\tau) = \sum_{t=0}^{T} R(s_t, a_t)$ to be the sum of rewards for a trajectory~$\tau$
 	\item[$\leadsto$] Focusing for now on $V(s_0, \theta) = \sum_\tau P(\tau; \theta) R(\tau)$ 
 	
+\end{itemize}
+
+\end{frame}
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Value of a Parameterized Policy}
+
+\begin{itemize}
+	\item Assume policy $\pi_\theta$ is differentiable whenever it is non-zero\\
+	 and we know the gradient $\nabla_\theta \pi_\theta (s,a)$
+	\item Recall policy value is $V(s_0, \theta) = \mathrm{E}_{\pi_\theta}\left[ \sum_{t} r(s_t, a_t); \pi_\theta, s_0 \right]$
+	\item where the expectation is taken over the states and actions visited by $\pi_\theta$
+	\item We can re-express this in multiple ways
+	\begin{itemize}
+	    \item $V(s_0,\theta) = \sum_a \pi_\theta (a \mid s_0) Q(s_0, a; \theta)$
+	    \item $V(s_0, \theta) = \sum_\tau P(\tau; \theta) R(\tau)$ with $\tau$ being an trajectory
+	\end{itemize}
+	\item[$\leadsto$] We will focus on the latter definition.
 \end{itemize}
 
 \end{frame}
@@ -37,7 +60,7 @@
 		\item Policy value is 
 		$$V(\theta) = \mathbb{E}\left[\sum_{t=0}^T R(s_t, a_t); \pi_\theta \right] = \sum_{\tau} P(\tau; \theta)R(\tau) $$
 		where $P(\tau; \theta)$ is used to denote the probability over trajectories when executing policy $\pi_\theta$
-		\item In this new notation, our goal is to find the policy parameters $\theta^*$
+		\item In this notation, our goal is to find the policy parameters $\theta^*$
 		$$\theta^* \in \argmax_{\theta} V(\theta) = \argmax_{\theta}\sum_{\tau} P(\tau; \theta) R(\tau) $$
 		
 	\end{itemize}
@@ -46,11 +69,12 @@
 %-----------------------------------------------------------------------
 %----------------------------------------------------------------------
 \begin{frame}[c]{Likelihood Ratio Policy Gradient II}
-	
+	\vspace{-1.5em}
 	\begin{itemize}
 		\item Our goal is to find the policy parameters $\theta^*$
 		$$\theta^* \in \argmax_{\theta} V(\theta) = \argmax_{\theta}\sum_{\tau} P(\tau; \theta) R(\tau) $$
 		\item Take the gradient with respect to $\theta$:
+		\small
 		\begin{eqnarray*}
 		\nabla_\theta V(\theta) &=& \nabla_\theta \sum_{\tau} P(\tau; \theta)R(\tau)\\
 		&=& \sum_{\tau} \nabla_\theta P(\tau; \theta)R(\tau)\\
@@ -88,14 +112,14 @@
 		$$\nabla_\theta V(\theta) \approx \frac{1}{m} \sum_{i=1}^{m} R(\tau^{(i)}) \nabla_\theta \log P(\tau^{(i)}; \theta) $$
 	\end{itemize}
 
-\footnotesize
+{\footnotesize
 \begin{eqnarray*}
-\nabla_\theta \log P(\tau^{(i)}; \theta) &=& \nabla_\theta \log \left[ \mu(s_0) \prod_{t=0}^{T-1} \pi_\theta(a_t \mid s_t) P(s_{t+1} \mid s_t, a_t) \right]\\
-&=& \nabla_\theta \left[ \log \mu(s_0) + \sum_{t=0}^{T-1} \log \pi_\theta(a_t \mid s_t) + \log P(s_{t+1}\mid s_t, a_t) \right]\\
+\nabla_\theta \log P(\tau^{(i)}; \theta) &=& \nabla_\theta \log \left[ \rho(s_0) \prod_{t=0}^{T-1} \pi_\theta(a_t \mid s_t) P(s_{t+1} \mid s_t, a_t) \right]\\
+&=& \nabla_\theta \left[ \log \rho(s_0) + \sum_{t=0}^{T-1} \log \pi_\theta(a_t \mid s_t) + \log P(s_{t+1}\mid s_t, a_t) \right]\\
 &=& \sum_{t=0}^{T-1} \nabla_\theta \log \pi_\theta (a_t \mid s_t)
-\end{eqnarray*}
+\end{eqnarray*}}
 	
-$\leadsto$ No dynamics model required!
+$\leadsto$ \alert{No dynamics model required!}
 	
 \end{frame}
 %-----------------------------------------------------------------------

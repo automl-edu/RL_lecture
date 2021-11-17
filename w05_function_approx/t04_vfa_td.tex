@@ -67,13 +67,14 @@
 		$$\langle  s_1, r_1+ \gamma \hat{V}^\pi (s_2; \vect{w}) \rangle, \langle  s_2, r_2+ \gamma \hat{V}^\pi (s_3; \vect{w}) \rangle, \ldots $$
 		\item In linear TD(0):
 	\end{itemize}
-
+\vspace{-1em}
 \begin{eqnarray}
 \Delta \vect{w} &=& \alpha( r + \gamma \hat{V}^\pi(s'; \vect{w}) - \hat{V}^\pi(s;\vect{w})) \nabla_\vect{w} \hat{V}^\pi (s;\vect{w})\nonumber\\
 &=& \alpha( r + \gamma \hat{V}^\pi(s'; \vect{w}) - \hat{V}^\pi(s;\vect{w})) \vect{x}(s)\nonumber\\
 &=& \alpha( r + \gamma \vect{x}(s')^T \vect{w} - \vect{x}(s)^T\vect{w}) \vect{x}(s)\nonumber
 \end{eqnarray}
-	
+
+\alert{Remark:} $\hat{V}^\pi(s'; \vect{w})$ is the "old" approximation of the future state value and $\hat{V}(s'; \vect{w})$ is the objective for the update. Therefore, $\hat{V}^\pi(s'; \vect{w})$ is treated as a constant in the derivative.
 \end{frame}
 %-----------------------------------------------------------------------
 %----------------------------------------------------------------------

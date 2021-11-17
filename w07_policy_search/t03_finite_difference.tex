@@ -20,12 +20,13 @@
 	\item Policy gradient algorithms search for a \alert{local} maximum in $V(s_0,\theta)$ by ascending the gradient of the policy, w.r.t parameters $\theta$
 	$$\Delta \theta = \alpha \nabla_\theta V(s_0, \theta) $$
 	where $\alpha$ is the learning rate (step-size) and\\ $\nabla_\theta V(s_0, \theta)$ is the policy gradient
-	$$\nabla_\theta V(s_0, \theta) = \begin{pmatrix}
+		$$\nabla_\theta V(s_0, \theta) = \begin{pmatrix}
 	\frac{\partial V(s_0, \theta)}{\partial \theta_1}\\
 	\vdots\\
 	\frac{\partial V(s_0, \theta)}{\partial \theta_n}
 	\end{pmatrix} $$
-	
+	\medskip
+	\item Remark: $V(s,\theta)$ is a short form for $V^{\pi_{\theta}}(s)$ 
 \end{itemize}
 
 \end{frame}
