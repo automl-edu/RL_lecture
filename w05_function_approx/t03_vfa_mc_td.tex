@@ -42,9 +42,9 @@
 		\item Concretely when using linear VFA for policy evaluation
 		
 		\begin{eqnarray}
-		 \Delta \vec{w} &=& \alpha (G_t - \hat{V} (s_t; \vec{w})) \nabla_{\vec{w}}\hat{V}(s_t; \vec{w}) \nonumber\\
-		 &=& \alpha (G_t - \hat{V} (s_t; \vec{w})) \vec{x}(s_t) \nonumber\\
-		 &=& \alpha (G_t - \vec{x}(s_t)^T \vec{w}) \vec{x}(s_t) \nonumber
+		 \Delta \vect{w} &=& \alpha (G_t - \hat{V} (s_t; \vect{w})) \nabla_{\vect{w}}\hat{V}(s_t; \vect{w}) \nonumber\\
+		 &=& \alpha (G_t - \hat{V} (s_t; \vect{w})) \vect{x}(s_t) \nonumber\\
+		 &=& \alpha (G_t - \vect{x}(s_t)^T \vect{w}) \vect{x}(s_t) \nonumber
 		\end{eqnarray}
 		
 		\item Note: $G_t$ may be a very noisy estimate of true return
@@ -59,7 +59,7 @@
 		Evaluation}
 	
 
-Initialize $\vec{w}= \mathbf{0}$, $k=1$\\
+Initialize $\vect{w}= \mathbf{0}$, $k=1$\\
 Loop	
 	\begin{itemize}
 		\item Sample $k$-th episode $s_{k,1}, a_{k,1}, r_{k,1}, s_{k,2}, a_{k,2}, r_{k,2}, \ldots$
@@ -68,7 +68,7 @@ Loop
 			\item If First visit to $s_{k,t}$ in episode $k$ then
 			\begin{itemize}
 					\item $G_t(s) = \sum_{j}^{L_k} r_{k,j}$
-					\item Update weights by $\alpha (G_t - \vec{x}(s_{k,t})^T \vec{w}) \vec{x}(s_{k,t})$
+					\item Update weights by $\alpha (G_t - \vect{x}(s_{k,t})^T \vect{w}) \vect{x}(s_{k,t})$
 			\end{itemize}
 		\end{itemize}
 	\item $k = k + 1$
@@ -77,7 +77,7 @@ Loop
 \end{frame}
 %-----------------------------------------------------------------------
 %----------------------------------------------------------------------
-\begin{frame}[c]{Convergence Guarantees for Linear Value Function	Approximation for Policy Evaluation: Preliminaries}
+\begin{frame}[c]{Convergence Guarantees for LVF Approx. for Policy Evaluation}
 	
 	\begin{itemize}
 		\item For infinite horizon, the Markov Chain defined by an MDP with a particular policy will eventually converge to a probability distribution over states $d(s)$
@@ -90,19 +90,20 @@ Loop
 \end{frame}
 %-----------------------------------------------------------------------
 %----------------------------------------------------------------------
-\begin{frame}[c]{Convergence Guarantees for Linear Value Function
-		Approximation for Policy Evaluation \lit{Tsitsiklis and Van Roy. 1997}{https://ieeexplore.ieee.org/document/580874}}
-	
+\begin{frame}[c]{Convergence Guarantees for LVF
+		Approx. for Policy Evaluation}
+
+	\lit{Tsitsiklis and Van Roy. 1997}{https://ieeexplore.ieee.org/document/580874}
 	\begin{itemize}
 		\item Define the mean squared error of a linear value function approximation for a particular policy $\pi$  relative to the true value as 
-		$$\text{MSVE}(\vec{w}) = \sum_{s \in S} d(s) (V^\pi (s) - \hat{V}^\pi(s;\vec{w}))^2 $$
+		$$\text{MSVE}(\vect{w}) = \sum_{s \in S} d(s) (V^\pi (s) - \hat{V}^\pi(s;\vect{w}))^2 $$
 		\item where
 		\begin{itemize}
 			\item $d(s)$: stationary distribution of $\pi$ in the true decision process
-			\item $\hat{V}^\pi(s;\vec{w}) = \vec{x}(s)^T\vec{w}$, a linear value function approximation
+			\item $\hat{V}^\pi(s;\vect{w}) = \vect{x}(s)^T\vect{w}$, a linear value function approximation
 		\end{itemize}
-		\item Monte Carlo policy evaluation with VFA converges to the weights $\vec{w}_{MC}$ which has the minimum mean squared error possible:
-		$$\text{MSVE}(\vec{w}_{MC}) = \min_{\vec{w}}\sum_{s \in S} d(s) (V^\pi (s) - \hat{V}^\pi(s;\vec{w}))^2 $$
+		\item Monte Carlo policy evaluation with VFA converges to the weights $\vect{w}_{MC}$ which has the minimum mean squared error possible:
+		$$\text{MSVE}(\vect{w}_{MC}) = \min_{\vect{w}}\sum_{s \in S} d(s) (V^\pi (s) - \hat{V}^\pi(s;\vect{w}))^2 $$
 	\end{itemize}
 	
 \end{frame}

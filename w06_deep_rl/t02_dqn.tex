@@ -15,8 +15,8 @@
 \begin{frame}[c]{RL with Function Approximation}
 	
 \begin{itemize}
-	\item Represent state-action value function by $Q$-network with weights $\vec{w}$
-	$$\hat{Q}(s,a;\vec{w}) \approx Q(s,a)$$
+	\item Represent state-action value function by $Q$-network with weights $\vect{w}$
+	$$\hat{Q}(s,a;\vect{w}) \approx Q(s,a)$$
 \end{itemize}
 
 \centering
@@ -31,11 +31,11 @@
 \begin{itemize}
 	\item Similar to policy evaluation, true state-action value function for a state is unknown and so substitute a target value
 	\item In Monte Carlo methods, use a return $G_t$ as a substitute target
-	$$\Delta \vec{w} = \alpha(G_t - \hat{Q}(s_t,a_t; \vec{w})) \nabla_{\vec{w}} \hat{Q}(s_t, a_t; \vec{w}) $$
-	\item For SARSA instead use a TD target $r+ \gamma \hat{Q}(s', a'; \vec{w})$ which leverages the current function approximations value
-	$$\Delta \vec{w} = \alpha (r + \gamma \hat{Q}(s',a';\vec{w}) - \hat{Q}(s,a;\vec{w})) \nabla_{\vec{w}}\hat{Q}(s,a;\vec{w}) $$
-	\item For Q-learning instead use a TD target $r + \gamma \max_{a'} \hat{Q}(s',a';\vec{w})$ which leverages the max of the current function approximations value
-	$$\Delta \vec{w} = \alpha (r + \gamma \max_{a'} \hat{Q}(s',a';\vec{w}) - \hat{Q}(s,a;\vec{w})) \nabla_{\vec{w}}\hat{Q}(s,a;\vec{w}) $$
+	$$\Delta \vect{w} = \alpha(G_t - \hat{Q}(s_t,a_t; \vect{w})) \nabla_{\vect{w}} \hat{Q}(s_t, a_t; \vect{w}) $$
+	\item For SARSA instead use a TD target $r+ \gamma \hat{Q}(s', a'; \vect{w})$ which leverages the current function approximations value
+	$$\Delta \vect{w} = \alpha (r + \gamma \hat{Q}(s',a';\vect{w}) - \hat{Q}(s,a;\vect{w})) \nabla_{\vect{w}}\hat{Q}(s,a;\vect{w}) $$
+	\item For Q-learning instead use a TD target $r + \gamma \max_{a'} \hat{Q}(s',a';\vect{w})$ which leverages the max of the current function approximations value
+	$$\Delta \vect{w} = \alpha (r + \gamma \max_{a'} \hat{Q}(s',a';\vect{w}) - \hat{Q}(s,a;\vect{w})) \nabla_{\vect{w}}\hat{Q}(s,a;\vect{w}) $$
 \end{itemize}
 	
 \end{frame}
@@ -44,7 +44,7 @@
 \begin{frame}[c]{Using these Ideas to do Deep RL in Atari}
 	
 \centering
-\includegraphics[width=0.7\textwidth]{images/atari_deep_rl.png}
+\includegraphics[width=0.5\textwidth]{images/atari_deep_rl.png}
 
 \begin{flushright}
 	\small
@@ -65,7 +65,7 @@
 \end{itemize}
 
 \centering
-\includegraphics[width=0.8\textwidth]{images/atari_dqn_arch.png}
+\includegraphics[width=0.6\textwidth]{images/atari_dqn_arch.png}
 
 \begin{flushright}
 	\footnotesize
@@ -104,9 +104,9 @@
 		\item To perform experience replay, repeat the following:
 		\begin{enumerate}
 			\item $(s,a,r,s')\sim \mathcal{D}$: sample experience tuple from the dataset
-			\item Compute the target value for the sampled $s$: $r+\gamma \max_{a'} \hat{Q}(s',a';\vec{w})$
+			\item Compute the target value for the sampled $s$: $r+\gamma \max_{a'} \hat{Q}(s',a';\vect{w})$
 			\item Use stochastic gradient descent to update the network weights
-			$$\Delta \vec{w} = \alpha (r + \gamma \max_{a'} \hat{Q}(s',a';\vec{w}) - \hat{Q}(s,a;\vec{w})) \nabla_{\vec{w}}\hat{Q}(s,a;\vec{w})$$
+			$$\Delta \vect{w} = \alpha (r + \gamma \max_{a'} \hat{Q}(s',a';\vect{w}) - \hat{Q}(s,a;\vect{w})) \nabla_{\vect{w}}\hat{Q}(s,a;\vect{w})$$
 		\end{enumerate}
 		\pause
 		\item Remarks:
@@ -129,19 +129,19 @@
 	\begin{itemize}
 		\item To help improve stability, fix the \alert{target weights} used in the target calculation for multiple updates
 		\item Target network uses a different set of weights than the weights being updated
-		\item Let parameters $\vec{w}^-$ be the set of weights used in the target and $\vec{w}$ be the weights that are being updated
+		\item Let parameters $\vect{w}^-$ be the set of weights used in the target and $\vect{w}$ be the weights that are being updated
 		\item Slight change to computation of target value:
 		\begin{itemize}
 			\item $(s,a,r,s')\sim \mathcal{D}$: sample experience tuple from the dataset
-			\item Compute the target value for the sampled $s$: $r+\gamma \max_{a'} \hat{Q}(s',a';\vec{w}^-)$
+			\item Compute the target value for the sampled $s$: $r+\gamma \max_{a'} \hat{Q}(s',a';\vect{w}^-)$
 			\item Use stochastic gradient descent to update the network weights
-			$$\Delta \vec{w} = \alpha (r + \gamma \max_{a'} \hat{Q}(s',a';\vec{w}^-) - \hat{Q}(s,a;\vec{w})) \nabla_{\vec{w}}\hat{Q}(s,a;\vec{w})$$
+			$$\Delta \vect{w} = \alpha (r + \gamma \max_{a'} \hat{Q}(s',a';\vect{w}^-) - \hat{Q}(s,a;\vect{w})) \nabla_{\vect{w}}\hat{Q}(s,a;\vect{w})$$
 		\end{itemize}
 		\smallskip 
 		\pause
 		\item Remark:
 		\begin{itemize}
-			\item Hyperparameter how often you update $\vec{w}^-$
+			\item Hyperparameter how often you update $\vect{w}^-$
 			\item Trade-off between updating too often ($\leadsto$ instability) and\\ too rarely ($\leadsto$ too old state information)
 		\end{itemize}
 	\end{itemize}
@@ -155,9 +155,9 @@
 		\item DQN uses experience replay and fixed Q-targets
 		\item Store transition $(s_t, a_t, r_{t+1}, s_{t+1})$ in replay memory $\mathcal{D}$
 		\item Sample random mini-batch of transitions $(s,a,r,s')$ from $\mathcal{D}$
-		\item Compute Q-learning targets wrt old, fixed parameters $\vec{w}^-$
+		\item Compute Q-learning targets wrt old, fixed parameters $\vect{w}^-$
 		\begin{itemize}
-			\item Update $\vec{w}^-$ from time to time
+			\item Update $\vect{w}^-$ from time to time
 		\end{itemize}
 		\item Optimizes MSE between Q-network and Q-learning targets
 		\item Uses stochastic gradient descent

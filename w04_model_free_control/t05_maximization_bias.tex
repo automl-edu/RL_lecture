@@ -75,9 +75,9 @@
 			\item Observe $(r_t, s_{t+1})$
 			\item With 50-50 probability either
 			\begin{enumerate}
-				\item $Q_1(s_t, a_t) \gets Q_1(s_t, a_t) + \alpha (r_t +\gamma \max_{a\in A} Q_2(s_{t+1}, a) - Q_1(s_t, a_t))$\\
+				\item $Q_1(s_t, a_t) \gets Q_1(s_t, a_t) + \alpha (r_t +\gamma Q_2(s_{t+1}, \argmax_{a \in A} Q_1(s_{t+1},a) ) - Q_1(s_t, a_t))$\\
 				or
-				\item $Q_2(s_t, a_t) \gets Q_2(s_t, a_t) + \alpha (r_t +\gamma \max_{a\in A} Q_1(s_{t+1}, a) - Q_2(s_t, a_t))$
+				\item $Q_2(s_t, a_t) \gets Q_2(s_t, a_t) + \alpha (r_t +\gamma Q_1(s_{t+1}, \argmax_{a \in A} Q_2(s_{t+1},a) ) - Q_2(s_t, a_t))$
 			\end{enumerate}
 			\item $t = t + 1 $
 		\end{itemize}

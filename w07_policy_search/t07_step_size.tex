@@ -1,0 +1,190 @@
+% !TeX spellcheck = en_US
+\documentclass[aspectratio=169]{../latex_main/tntbeamer}  % you can pass all options of the beamer class, e.g., 'handout' or 'aspectratio=43'
+\input{../latex_main/preamble}
+\title[RL: Policy Gradient]{RL: Policy Search}
+\subtitle{Step Size and Trust Region}
+
+
+\begin{document}
+	
+	\maketitle
+
+%----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Policy Gradient and Step Size}
+	
+    \begin{itemize}
+        \item Goal: Each step of policy gradient yields an updated policy $\pi'$ whose value is greater than (or equal) to the prior policy $\pi$: $V^{\pi'} \geq V^\pi$
+        \begin{itemize}
+            \item Monotonic improvement
+            \item Important in some applications
+            \item PG often more stable than DQN
+        \end{itemize} 
+        \item Gradient descent approaches update the weights a small step in direction of gradient
+        \item First order / linear approximation of the value function's dependence on the policy parameterization
+        \item Locally a good approximation; further aways less good
+    \end{itemize}
+
+\end{frame}
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Why are step sizes a big deal in RL?}
+	
+    \begin{itemize}
+        \item Step size is important in any problem involving the optima of a function
+        \item Supervised learning: Step too far $\leadsto$ next updates might fix it
+        \item Reinforcement learning:
+        \begin{itemize}
+            \item Step too far $\leadsto$ bad policy
+            \item Next batch: collected under bad policy
+            \item \alert{Policy is determining data collection!} 
+            \begin{itemize}
+                \item Essentially controlling exploration and exploitation trade-off due to particular policy parameters and the stochasticity of the policy
+            \end{itemize}
+            \item May not be able to recover from a bad choice $\leadsto$ collapse in performance
+        \end{itemize}
+    \end{itemize}
+
+\end{frame}
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Policy Gradient Methods with Auto-Step-Size Selection}
+	
+    \begin{itemize}
+        \item Can we automatically ensure the updated policy $\pi'$ has value greater than (or equal to) the prior policy $V^{\pi'} \geq V^\pi$?
+        \item Consider this for the policy gradient setting, and hope to address this by modifying step size
+    \end{itemize}
+
+\end{frame}
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Objetive Function}
+	
+    \begin{itemize}
+        \item Goal: find policy parameters that maximize value function
+        $$ V(\theta) = \mathbb{E}_{\pi_\theta} \left[ \sum_{t=0}^{\infty} \gamma^t r(s_t, a_t); \pi_\theta \right]$$
+        \item have access to samples from the current policy $\pi_\theta$ 
+        \otem Want to predict the value of a different policy ($\leadsto$ off-policy learning)
+    \end{itemize}
+
+\end{frame}
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Objective Function}
+	\vspace{-1em}
+    \begin{itemize}
+        \item Goal: find policy parameters that maximize value function
+        $$ V(\theta) = \mathbb{E}_{\pi_\theta} \left[ \sum_{t=0}^{\infty} \gamma^t r(s_t, a_t); \pi_\theta \right]$$
+        \item Express value of $\Tilde{\pi}$ in terms of advantage of $\pi$
+        \begin{eqnarray}
+        V(\Tilde{\theta}) &=& V(\theta) + \mathbb{E}_{\pi{\Tilde{\theta}}} \left[ \sum_{t=0}^{\infty} \gamma^t A_\pi(s_t, a_t) \right]\\
+        &=& V(\theta) + \sum_{s} \mu_{\Tilde{\pi}}(s) \sum_{a} \Tilde{\pi}(a \mid s) A_\pi(s_t, a_t) 
+        \end{eqnarray}
+        \item $ \mu_{\Tilde{\pi}}(s)$ is the discounted weighted frequency of state $s$ under policy $\Tilde{\pi}$
+        \item We know the advantage $A_\pi$ and $\Tilde{pi}$
+        \item But we cannot compute the above we don't know $\mu(\Tilde{\pi})$, the state distribution under the newly proposed policy
+    \end{itemize}
+
+\end{frame}
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Local Approximation}
+	
+    \begin{itemize}
+        \item Can we remove the dependency on the discounted visitation frequencies under the new policy?
+        \item Substitute in the discounted visitation frequency under the current policy to define a new objective function:
+        $$ L_\pi(\Tilde{\pi}) = V(\theta) + \sum_{s} \alert{\mu_\pi (s)} + \sum_{a} \Tilde{\pi}(a \mid s) A_\pi(s,a)$$
+        \item Note that $L_{\pi_{\theta_0}}(\pi_{\theta_0}) = V(\theta_0)$
+        \item Gradient of $L$ is identical to gradient of value function at policy parameterized evaluated at $\theta_0$: 
+        $$\nabla_{\theta} L_{\pi_{\theta_0}}(\pi_{\theta_0})\mid_{\theta = \theta_0} = \nabla_\theta V(\theta)\mid_{\theta = \theta_0}$$
+    \end{itemize}
+
+\end{frame}
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Conservative Policy Iteration}
+	
+    \begin{itemize}
+        \item Is there a bound on the performance of a new policy obtained by optimizing the surrogate objective?
+        \item Consider mixture policies that blend an old policy and a different policy
+        $$\pi_{new}(a \mid s) = (1 - \alpha) \pi_{old} (a \mid s) + \alpha \pi'(a \mid s) $$
+        \item In this case, we can guarantee a lower bound on value of the new $\pi_{new}$:
+        $$V^{\pi_{new}} \geq L_{\pi_{old}} (\pi_{new}) - \frac{2\epsilon\gamma}{(1- \gamma)^2} \alpha^2 $$
+        where $\epsilon = \max_{s} \mathbb{E}_{a \sim \pi'(a \mid s) [A_\pi(s,a)]}$
+    \end{itemize}
+
+\end{frame}
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Find the Lower-Bound in General Stochastic Policies}
+	
+	 \vspace{-1.5em}
+    \begin{itemize}
+        \item Would like to similarly obtain a lower bound on the potential performance for general stochastic policies (not just mixture policies)
+        \item Recall $ L_\pi(\Tilde{\pi}) = V(\theta) + \sum_{s} \alert{\mu_\pi (s)} + \sum_{a} \Tilde{\pi}(a \mid s) A_\pi(s,a)$ 
+    \end{itemize}
+    
+    \begin{block}{Theorem}
+    Let $D_{TV}^{\max} (\pi_1, \pi_2) = \max_{s} D_{TV}(\pi_1(\cdot \mid s), \pi_2(\cdot\mid s))$. Then
+    $$V^{\pi_{new}} \geq L_{\pi_{old}} (\pi_{new}) - \frac{4\epsilon\gamma}{(1-\gamma)^2} (D_{TV}^{\max}(\pi_{old}, \pi_{new}))^2$$
+    where $\epsilon = \max_{s,a}|A_\pi(s,a)|$
+    \end{block}
+    
+    \begin{itemize}
+        \item Note that $D_{TV}(p,q)^2 \leq D_{KL}(p,q)$ for prob. distribution $p$ and $q$
+        \item Then the above theorem immediately implies that
+        $$ V^{\pi_{new}} \geq  L_{\pi_{old}} (\pi_{new}) -  \frac{4\epsilon\gamma}{(1-\gamma)^2} D_{KL}^{\max}(\pi_{old}, \pi_{new}) $$
+    \end{itemize}
+
+\end{frame}
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Optimization of Parameterized Policies}
+	
+    \begin{itemize}
+        \item Goal is to optimize
+        $$\max_{\theta}  L_{\pi_{old}} (\pi_{new}) -  \frac{4\epsilon\gamma}{(1-\gamma)^2} D_{KL}^{\max}(\pi_{old}, \pi_{new}) = L_{\pi_{old}} (\pi_{new}) -  C \cdot D_{KL}^{\max}(\pi_{old}, \pi_{new}) $$
+        where $C$ is the penalty coefficient
+        \item The penalty (from theory) would be fairly small in practice
+        \medskip
+        \item New Idea: Use a trust region constraint on step sizes. Do this by imposing a constraint on the KL divergence between the new and old policy:
+        \begin{eqnarray}
+        \max_{\theta} L_{\theta_{old}} (\theta)\\
+        \text{subject to } D_{KL}^{s \sim \mu_{\theta_{old}} (\theta_{old}, \theta) \leq \delta}
+        \end{eqnarray}
+        \item This uses the average KL instead of max (the max requires the KL is bounded at all states and yields an impractical number of constraints)
+    \end{itemize}
+    
+\end{frame}
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{TODO}
+	
+    TODO	
+
+\end{frame}
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{TODO}
+	
+    TODO	
+
+\end{frame}
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{TODO}
+	
+    TODO	
+
+\end{frame}
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{TODO}
+	
+    TODO	
+
+\end{frame}
+%-----------------------------------------------------------------------
+
+%-----------------------------------------------------------------------
+\end{document}
