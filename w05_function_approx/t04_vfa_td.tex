@@ -52,7 +52,11 @@
 		\item Can reduce doing TD(0) learning with value function approximation to supervised learning on a set of data pairs
 		$$\langle  s_1, r_1+ \gamma \hat{V}^\pi (s_2; \vect{w}) \rangle, \langle  s_2, r_2+ \gamma \hat{V}^\pi (s_3; \vect{w}) \rangle, \ldots $$
 		\item Find weights to minimize mean squared error
-		$$J(\vect{w}) = \mathbb{E}_\pi [(r_j + \gamma \hat{V}^\pi(s_{j+1}, \vect{w}) - \hat{V}(s_j;\vect{w}))^2]$$
+		\begin{eqnarray*}
+		J(\vect{w}) &=& \mathbb{E}_\pi [(V(s_{j+1}, \vect{w}) - \hat{V}^\pi(s_j;\vect{w}))^2]\\ 
+		&\approx& \mathbb{E}_\pi [(\underbrace{r_j + \gamma \hat{V}^\pi(s_{j+1}, \vect{w})}_{\text{target approximation}} - \hat{V}^\pi(s_j;\vect{w}))^2]
+		\end{eqnarray*}
+		
 	\end{itemize}
 	
 \end{frame}
@@ -74,7 +78,7 @@
 &=& \alpha( r + \gamma \vect{x}(s')^T \vect{w} - \vect{x}(s)^T\vect{w}) \vect{x}(s)\nonumber
 \end{eqnarray}
 
-\alert{Remark:} $\hat{V}^\pi(s'; \vect{w})$ is the "old" approximation of the future state value and $\hat{V}(s'; \vect{w})$ is the objective for the update. Therefore, $\hat{V}^\pi(s'; \vect{w})$ is treated as a constant in the derivative.
+\alert{Remark:} $r_j + \gamma \hat{V}^\pi(s_{j+1}, \vect{w})$ is the target; the target won't be updated.\\  Therefore, $\hat{V}^\pi(s'; \vect{w})$ is treated as a constant in the derivative.
 \end{frame}
 %-----------------------------------------------------------------------
 %----------------------------------------------------------------------
