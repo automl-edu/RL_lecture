@@ -77,7 +77,7 @@
 	}
 	\For{$t=0,1, \ldots, T$}{
 		\For{$i=1,2, \ldots, \lambda$}{ 
-			{$\epsilon_i\sim\mathcal{N}(0,1)$}\;\\
+			{$\epsilon_i\sim\mathcal{N}(0,I)$}\;\\
 			$s_i\leftarrow F(\theta_t+\sigma\cdot\epsilon_i)$
 		}
 		Sort $(\epsilon_1,\ldots,\epsilon_\lambda)$ according to $s$ in descending order\\
