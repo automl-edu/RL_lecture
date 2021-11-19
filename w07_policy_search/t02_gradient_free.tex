@@ -80,7 +80,7 @@
 			{$\epsilon_i\sim\mathcal{N}(0,I)$}\;\\
 			$s_i\leftarrow F(\theta_t+\sigma\cdot\epsilon_i)$
 		}
-		Sort $(\epsilon_1,\ldots,\epsilon_\lambda)$ according to $s$ in ascending order\\
+		Sort $(\epsilon_1,\ldots,\epsilon_\lambda)$ according to $s$ in descending order\\
 		{Update policy: $\theta_{t+1}\leftarrow \theta_t + \sigma\cdot\sum\nolimits_{j=1}^\mu w_j\cdot\epsilon_j$}
 	}
 	\KwOut{{} Return best found policy $\theta_t$}
