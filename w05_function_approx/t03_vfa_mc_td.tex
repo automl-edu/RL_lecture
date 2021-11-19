@@ -42,7 +42,7 @@
 		\item Concretely when using linear VFA for policy evaluation
 		
 		\begin{eqnarray}
-		 \Delta \vect{w} &=& \alpha (G_t - \hat{V} (s_t; \vect{w})) \nabla_\vect{w}\hat{V}(s_t; \vect{w}) \nonumber\\
+		 \Delta \vect{w} &=& \alpha (G_t - \hat{V} (s_t; \vect{w})) \nabla_{\vect{w}}\hat{V}(s_t; \vect{w}) \nonumber\\
 		 &=& \alpha (G_t - \hat{V} (s_t; \vect{w})) \vect{x}(s_t) \nonumber\\
 		 &=& \alpha (G_t - \vect{x}(s_t)^T \vect{w}) \vect{x}(s_t) \nonumber
 		\end{eqnarray}
@@ -92,7 +92,7 @@ Loop
 %----------------------------------------------------------------------
 \begin{frame}[c]{Convergence Guarantees for LVF
 		Approx. for Policy Evaluation}
-		
+
 	\lit{Tsitsiklis and Van Roy. 1997}{https://ieeexplore.ieee.org/document/580874}
 	\begin{itemize}
 		\item Define the mean squared error of a linear value function approximation for a particular policy $\pi$  relative to the true value as 

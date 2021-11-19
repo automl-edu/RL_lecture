@@ -1,0 +1,26 @@
+# Action metadata file:
+# https://docs.github.com/en/actions/creating-actions/creating-a-docker-container-action#creating-an-action-metadata-file
+
+name: 'xelatex GitHub Action'
+description: 'Runs xelatex on a .tex file'
+inputs:
+  input-folder:
+    description: 'Current working directory'
+    required: false
+    default: ''
+  input-file:
+    description: 'Tex file'
+    required: false
+    default: ''
+  mode:
+    description: 'Compiling mode. Can be "handout" or non handout'
+    required: false
+    default: 'animation'
+
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
+  args:
+    - ${{ inputs.input-folder }}
+    - ${{ inputs.input-file }}
+    - ${{ inputs.mode }}

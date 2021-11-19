@@ -53,10 +53,10 @@
 		$$\langle  s_1, r_1+ \gamma \hat{V}^\pi (s_2; \vect{w}) \rangle, \langle  s_2, r_2+ \gamma \hat{V}^\pi (s_3; \vect{w}) \rangle, \ldots $$
 		\item Find weights to minimize mean squared error
 		\begin{eqnarray*}
-		J(\vect{w}) &=& \mathbb{E}_\pi [(V(s_{j+1}, \vect{w}) - \hat{V}^\pi(s_j;\vect{w}))^2]\\ 
+		J(\vect{w}) &=& \mathbb{E}_\pi [(V(s_{j+1}, \vect{w}) - \hat{V}^\pi(s_j;\vect{w}))^2]\\
 		&\approx& \mathbb{E}_\pi [(\underbrace{r_j + \gamma \hat{V}^\pi(s_{j+1}, \vect{w})}_{\text{target approximation}} - \hat{V}^\pi(s_j;\vect{w}))^2]
 		\end{eqnarray*}
-		
+
 	\end{itemize}
 	
 \end{frame}
@@ -73,7 +73,7 @@
 	\end{itemize}
 \vspace{-1em}
 \begin{eqnarray}
-\Delta \vect{w} &=& \alpha( r + \gamma \hat{V}^\pi(s'; \vect{w}) - \hat{V}^\pi(s;\vect{w})) \nabla_\vect{w} \hat{V}^\pi (s;\vect{w})\nonumber\\
+\Delta \vect{w} &=& \alpha( r + \gamma \hat{V}^\pi(s'; \vect{w}) - \hat{V}^\pi(s;\vect{w})) \nabla_{\vect{w}} \hat{V}^\pi (s;\vect{w})\nonumber\\
 &=& \alpha( r + \gamma \hat{V}^\pi(s'; \vect{w}) - \hat{V}^\pi(s;\vect{w})) \vect{x}(s)\nonumber\\
 &=& \alpha( r + \gamma \vect{x}(s')^T \vect{w} - \vect{x}(s)^T\vect{w}) \vect{x}(s)\nonumber
 \end{eqnarray}
