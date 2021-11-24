@@ -58,13 +58,13 @@
 \end{frame}
 %-----------------------------------------------------------------------
 %----------------------------------------------------------------------
-\begin{frame}[c]{Objetive Function}
+\begin{frame}[c]{Objective Function}
 	
     \begin{itemize}
         \item Goal: find policy parameters that maximize value function
         $$ V(\theta) = \mathbb{E}_{\pi_\theta} \left[ \sum_{t=0}^{\infty} \gamma^t r(s_t, a_t); \pi_\theta \right]$$
         \item have access to samples from the current policy $\pi_\theta$ 
-        \otem Want to predict the value of a different policy ($\leadsto$ off-policy learning)
+        \item Want to predict the value of a different policy ($\leadsto$ off-policy learning)
     \end{itemize}
 
 \end{frame}
@@ -81,7 +81,7 @@
         &=& V(\theta) + \sum_{s} \mu_{\Tilde{\pi}}(s) \sum_{a} \Tilde{\pi}(a \mid s) A_\pi(s_t, a_t) 
         \end{eqnarray}
         \item $ \mu_{\Tilde{\pi}}(s)$ is the discounted weighted frequency of state $s$ under policy $\Tilde{\pi}$
-        \item We know the advantage $A_\pi$ and $\Tilde{pi}$
+        \item We know the advantage $A_\pi$ and $\Tilde{\pi}$
         \item But we cannot compute the above we don't know $\mu(\Tilde{\pi})$, the state distribution under the newly proposed policy
     \end{itemize}
 
@@ -125,7 +125,7 @@
     \end{itemize}
     
     \begin{block}{Theorem}
-    Let $D_{TV}^{\max} (\pi_1, \pi_2) = \max_{s} D_{TV}(\pi_1(\cdot \mid s), \pi_2(\cdot\mid s))$. Then
+    Let $D_{TV}^{\max} (\pi_1, \pi_2) = \max_{s} D_{TV}(\pi_1(\cdot \mid s), \pi_2(\cdot\mid s)) = \max_{s} \max_{a} (\pi_1(a\mid s) -\pi_2 (a\mid s))$. Then
     $$V^{\pi_{new}} \geq L_{\pi_{old}} (\pi_{new}) - \frac{4\epsilon\gamma}{(1-\gamma)^2} (D_{TV}^{\max}(\pi_{old}, \pi_{new}))^2$$
     where $\epsilon = \max_{s,a}|A_\pi(s,a)|$
     \end{block}
@@ -144,13 +144,13 @@
     \begin{itemize}
         \item Goal is to optimize
         $$\max_{\theta}  L_{\pi_{old}} (\pi_{new}) -  \frac{4\epsilon\gamma}{(1-\gamma)^2} D_{KL}^{\max}(\pi_{old}, \pi_{new}) = L_{\pi_{old}} (\pi_{new}) -  C \cdot D_{KL}^{\max}(\pi_{old}, \pi_{new}) $$
-        where $C$ is the penalty coefficient
+        where $C$ is the penalty coefficient (i.e. hyperparameter)
         \item The penalty (from theory) would be fairly small in practice
         \medskip
         \item New Idea: Use a trust region constraint on step sizes. Do this by imposing a constraint on the KL divergence between the new and old policy:
         \begin{eqnarray}
         \max_{\theta} L_{\theta_{old}} (\theta)\\
-        \text{subject to } D_{KL}^{s \sim \mu_{\theta_{old}} (\theta_{old}, \theta) \leq \delta}
+        \text{subject to } D_{KL}^{s \sim \mu_{\theta_{old}}} (\theta_{old}, \theta) \leq \delta
         \end{eqnarray}
         \item This uses the average KL instead of max (the max requires the KL is bounded at all states and yields an impractical number of constraints)
     \end{itemize}
@@ -158,33 +158,102 @@
 \end{frame}
 %-----------------------------------------------------------------------
 %----------------------------------------------------------------------
-\begin{frame}[c]{TODO}
+\begin{frame}[c]{From Theory to Practice}
 	
-    TODO	
+    \begin{itemize}
+        \item Prior objective:
+        $$ \max_{\theta} L_{\theta_{old}} (\theta)$$
+        {\centering subject to $ D_{KL}^{s \sim \alert{\mu_{\theta_{old}}}} (\theta_{old}, \theta) \leq \delta$\\}
+        where $ L_\pi(\Tilde{\pi}) = V(\theta) + \sum_{s} \alert{\mu_\pi (s)} + \sum_{a} \Tilde{\pi}(a \mid s) \alert{A_\pi(s,a)}$ 
+        \item Don't know the visitation weights nor true advantage function
+        \pause
+        \item Instead do the following substitutions:
+        $$ \sum_{s} \mu_\pi (s) \to \frac{1}{1- \gamma} \mathbb{E}_{s\sim \mu_{\theta_{old}}} [\ldots]$$
+        \item[$\leadsto$] estimate $\mu_\pi (s)$ wrt the sampled trajectories we have already
+    \end{itemize}
 
 \end{frame}
 %-----------------------------------------------------------------------
 %----------------------------------------------------------------------
-\begin{frame}[c]{TODO}
+\begin{frame}[c]{From Theory to Practice II}
 	
-    TODO	
+    \begin{itemize}
+        \item Next substitution:
+        $$\sum_{a} \pi_\theta (a\mid s_n) A_{\theta_{old}} (s_n, a) \to \mathbb{E}\left[ \frac{\pi_\theta(a \mid s_n)}{q(a\mid s_n)} A_{\theta_{old}} (s_n, a) \right] $$
+        \item where $q$ is some sampling distribution over actions and $s_n$ is a particular sampled state
+        \item This second substitution is to use importance sampling to estimate the desired sum, enabling the use of an alternate sampling distribution $q$ (other than the new policy $\pi_\theta$)
+        \pause
+        \item Third substitution:
+        $$ A_{\theta_{old}} \to Q_{\theta_{old}}$$
+        \item Note that the above substitutions do not change the solution to the above optimization problem
+    \end{itemize}
 
 \end{frame}
 %-----------------------------------------------------------------------
 %----------------------------------------------------------------------
-\begin{frame}[c]{TODO}
+\begin{frame}[c]{Selecting the Sampling Policy}
 	
-    TODO	
+    \begin{itemize}
+        \item Optimize
+        $$ \max_\theta \mathbb{E}_{s\sim \mu_{\theta_{old}}, a \sim q} \left[ \frac{\pi_\theta(a \mid s_n)}{q(a\mid s_n)} A_{\theta_{old}} (s_n, a) \right]$$
+        {\centering subject to $\mathbb{E}_{s\sim \mu_{\theta_{old}}} D_{KL}(\pi_{old}(\cdot \mid s), \pi_\theta (\cdot \mid s)) \leq \delta$ \\}
+        \item Standard approach: sampling distribution is $q(a\mid s)$ is simply $\pi_{old}(a \mid s)$
+        \item For the vine procedure see the paper
+    \end{itemize}
+    
+    \centering
+    \includegraphics[width=0.5\textwidth]{w07_policy_search/images/trpo.PNG}\\
+    \lit{Schulman et al. 2015}{https://arxiv.org/abs/1502.05477}
 
 \end{frame}
 %-----------------------------------------------------------------------
 %----------------------------------------------------------------------
-\begin{frame}[c]{TODO}
-	
-    TODO	
+\begin{frame}[c]{TRPO Algorithm~\lit{Schulman et al. 2015}{https://arxiv.org/abs/1502.05477}}
+
+	\begin{itemize}
+	    \item For $i= 1,2,\ldots$ do
+	    \begin{enumerate}
+	        \item Run policy for $T$ timesteps or $N$ trajectories
+	        \item Estimate advantage function at all timesteps
+	        \item Compute estimated policy gradient $\hat{g}$
+	        \item Use CG to compute $F^{-1}g$ where F is the fisher information matrix
+	        \item Do line search on surrogate loss $L$ and KL constraint
+	    \end{enumerate}
+	\end{itemize}
+
+
 
 \end{frame}
 %-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Common Template of Policy Gradient Algorithms}
 
+	\begin{itemize}
+	    \item For $i= 1,2,\ldots$ do
+	    \begin{enumerate}
+	        \item Run policy for $T$ timesteps or $N$ trajectories
+	        \item At each timestep in each trajectory, compute target $Q^\pi(s_t, a_t)$ and baseline $b(s_t)$
+	        \item Compute estimated policy gradient $\hat{g}$
+	        \item Update the policy using $\hat{g}$, potentially constrained to a local region (i.e., try to ensure monotonic improviement)
+	    \end{enumerate}
+	\end{itemize}
+
+
+
+\end{frame}
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Policy Gradient Summary}
+
+\begin{itemize}
+    \item Extremely popular and useful set of approaches
+    \item Can input prior knowledge in the form of specifying policy parameterization
+    \item You should be familiar with REINFORCE and the policy gradient template on the previous slide
+    \item Understand the where different estimators can be slotted in 
+    \item Don't have to be able to derive or remember the specific formulars in TRPO for approximating the objectives and constraints
+\end{itemize}
+
+\end{frame}
+%-----------------------------------------------------------------------
 %-----------------------------------------------------------------------
 \end{document}
