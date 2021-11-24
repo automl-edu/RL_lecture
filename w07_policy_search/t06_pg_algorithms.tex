@@ -42,7 +42,7 @@ $$\nabla_\theta \mathbb{E} [r_{t'}] = \mathbb{E} \left[r_{t'} \sum_{t=0}^{t'} \n
 Summing this formula over $t$, we obtain:
 
 \begin{eqnarray}
-V(\theta) = \nabla_\theta \mathbb{E}[R] &=& \left[ \sum_{t'=0}^{T-1} r_{t'} \sum^{t'}_{t=0} \nabla_\theta \log \pi_\theta (a_t \mid s_t)  \right]\nonumber\\
+\nabla_\theta V(\theta) = \nabla_\theta \mathbb{E}[R] &=& \left[ \sum_{t'=0}^{T-1} r_{t'} \sum^{t'}_{t=0} \nabla_\theta \log \pi_\theta (a_t \mid s_t)  \right]\nonumber\\
 &=& \left[ \sum_{t=0}^{T-1}  \nabla_\theta \log \pi_\theta (a_t \mid s_t)   \sum^{T-1}_{t=t} r_{t'}  \right]\nonumber
 \end{eqnarray}
 
@@ -83,7 +83,7 @@ REINFORCE:
 \end{enumerate}
 
 \begin{itemize}
-    \item Somehow Monte-Carlo but for policy gradient
+    \item Somehow Monte-Carlo for policy gradient
     \item[$\leadsto$] high variance
 \end{itemize}
 	
