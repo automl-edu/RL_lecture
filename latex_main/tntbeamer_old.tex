@@ -18,7 +18,11 @@
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{beamer}}
 \ProcessOptions\relax
 
-\LoadClass[t,xcolor={usenames,dvipsnames}]{beamer}
+\ifdefined\ishandout
+  \LoadClass[t,handout,xcolor={usenames,dvipsnames}]{beamer}
+\else
+  \LoadClass[t,xcolor={usenames,dvipsnames}]{beamer}
+\fi
 
 
 %%% Class Body
@@ -434,8 +438,8 @@
   \thispagestyle{empty}
   {%   
     \begin{tikzpicture}[remember picture,overlay]
-        \coordinate (A) at ($(current page.north west)+(0.05\paperwidth,-0.15\paperheight)$);
-        \coordinate (B) at ($(current page.south west)+(0.05\paperwidth,0.\paperheight)$);
+        \coordinate (A) at ($(current page.north west)+(0.05\paperwidth,0)$);
+        \coordinate (B) at ($(current page.south west)+(0.05\paperwidth,0)$);
         \draw[luhgrey, line width=3]%, cap=round]
             (A.center) -- (B.center);
     \end{tikzpicture}
@@ -475,13 +479,10 @@
           \end{tikzpicture}
     }
 }%
-\newcommand{\settitleheaderimage}[2]{
+\newcommand{\settitleheaderimage}[1]{
 \addtobeamertemplate{title page}{}{%
     \begin{tikzpicture}[remember picture,overlay]
         \node[anchor=north east,yshift=0pt] at (current page.north east) {#1};
-    \end{tikzpicture}
-    \begin{tikzpicture}[remember picture,overlay]
-        \node[anchor=north west,yshift=0pt] at (current page.north west) {#2};
     \end{tikzpicture}
 }
 }
@@ -820,7 +821,7 @@
     \unitlength1pt
     \hspace*{1em}\pgfuseimage{tntlogo}
     \begin{tabular}[b]{l}
-      \usebeamercolor{author}\insertshortauthor\\
+      \usebeamercolor{author}\insertauthor\\
       \usebeamercolor{author}\insertemail
     \end{tabular}\hfill
     \usebeamercolor{page number in head/foot}
@@ -932,47 +933,35 @@
       \else%
       {\hfill\insertsectionhead \ /  \insertsubsectionhead\hfill}
       \fi
-    %   \vspace{0.2\baselineskip}
+%       \vspace{0.2\baselineskip}
  \end{beamercolorbox}
     \vskip1ex
   \begin{beamercolorbox}[colsep=1.5pt,wd=\paperwidth]{lower separation line head}
   \end{beamercolorbox}
 }
 
-\defbeamertemplate*{frametitle}{luhstyle}[1][leftskip=\beamer@leftmargin, rightskip=\rightframetitlemargin]
+\defbeamertemplate*{frametitle}{luhstyle}[1][left]
 {%
     % copied from https://github.com/josephwright/beamer/blob/main/base/themes/outer/beamerouterthemedefault.sty
-    
-  % Remove whitespace between the area showing the section and the frametitle
   \ifbeamercolorempty[bg]{frametitle}{}{\nointerlineskip}%
-
-  % Define the width of the frametitle
   \@tempdima=\textwidth%
-  % set the width of the frametitle box to the whole pagewidth by adding left and right margins
-  \advance\@tempdima by\beamer@leftmargin%  
+  \advance\@tempdima by\beamer@leftmargin%
   \advance\@tempdima by\beamer@rightmargin%
   
-  % the total height of the box will be h = ht (distance from textline to top) + dp (distance below textline)
-  \providelength{\frametitleheight}
-  \setlength{\frametitleheight}{\logoheight}
-  \addtolength{\frametitleheight}{0.715ex}  % manually wiggled this number}{}
-  \begin{beamercolorbox}[#1,wd=\the\@tempdima,ht=\frametitleheight, dp=0.715ex]{frametitle}
+  % Added ht=-\logoheight to the colorbox
+  \begin{beamercolorbox}[sep=0.cm,#1,wd=\the\@tempdima,ht=\logoheight]{frametitle}
     \usebeamerfont{frametitle}%
     \usebeamercolor{frametitle}%
     \vbox{}\vskip-1ex%
     \if@tempswa\else\csname beamer@fte#1\endcsname\fi%
-
-    \strut  % add rule with not width but a certain height. ensure certain minimum height
-    \insertframetitle
-    \strut
-    \par  % add new paragraph   
+    \hskip0.5cm\strut\insertframetitle\strut\par%  % added hskip here
     {%
       \ifx\insertframesubtitle\@empty%
       \else%
       {\usebeamerfont{framesubtitle}\usebeamercolor[fg]{framesubtitle}\strut\insertframesubtitle\strut\par}%
       \fi
     }%
-    % \vskip-0.65ex%   % controls the vertical position of the frametitle. This way the letters are aligned to the logo IF no section is displayed at the top. Further, for this please set the background color of frametitle to white.
+    \vskip-0.65ex%   % controls the vertical position of the frametitle
     \if@tempswa\else\vskip-.3cm\fi% set inside beamercolorbox... evil here...
   \end{beamercolorbox}%
 }
@@ -1041,9 +1030,9 @@
 
 %% Style
 %...........................................
-\usepackage{url}
-\usepackage{dsfont}
-\usepackage{algorithmic}
+\RequirePackage{url}
+%\RequirePackage{dsfont}
+\RequirePackage{algorithmic}
 
 \mode<presentation>
 
@@ -1095,33 +1084,3 @@
 }
 
 \newcommand{\logoheight}{0.075\paperheight}
-\newcommand{\rightframetitlemargin}{0.15\paperwidth}
-
-\makeatletter
-% Commands from here: https://tex.stackexchange.com/a/184997
-\newcommand{\providelength}[1]{%
-  \@ifundefined{\expandafter\@gobble\string#1}
-   {% if #1 is undefined, do \newlength
-    \typeout{\string\providelength: making new length \string#1}%
-    \newlength{#1}%
-   }
-   {% else check whether #1 is actually a length
-    \sdaau@checkforlength{#1}%
-   }%
-}
-
-\newcommand{\sdaau@checkforlength}[1]{%
-  % get the first five characters from \meaning#1
-  \edef\sdaau@temp{\expandafter\sdaau@getfive\meaning#1TTTTT$}%
-  % compare with the string "\skip"
-  \ifx\sdaau@temp\sdaau@skipstring
-    \typeout{\string\providelength: \string#1 already a length}%
-  \else
-    \@latex@error
-      {\string#1 illegal in \string\providelength}
-      {\string#1 is defined, but not with \string\newlength}%
-  \fi
-}
-\def\sdaau@getfive#1#2#3#4#5#6${#1#2#3#4#5}
-\edef\sdaau@skipstring{\string\skip}
-\makeatother
