@@ -2,7 +2,7 @@
 \documentclass[aspectratio=169]{../latex_main/tntbeamer}  % you can pass all options of the beamer class, e.g., 'handout' or 'aspectratio=43'
 \input{../latex_main/preamble}
 \title[Meta-RL]{Meta Reinforcement Learning}
-\subtitle{Definition of Meta-RL\footnote{Based on a \href{https://lilianweng.github.io/lil-log/2019/06/23/meta-reinforcement-learning.html}{blog} by Lilian Weng}}
+\subtitle{Formalization of Meta-RL}
 
 
 \begin{document}
@@ -48,65 +48,33 @@
 \end{frame}
 %-----------------------------------------------------------------------
 %----------------------------------------------------------------------
-\begin{frame}[c]{Example Setting 1: Two Walking agents}
+\begin{frame}[c]{Contextual MDPs}
+	
+One way of formalizing Meta-RL are \emph{cMDPs}~\lit{Hallak et al., 2015}{https://arxiv.org/pdf/1502.02259.pdf}:
+\begin{itemize}
+    \item A cMDP $\mathcal{M}_{\mathcal{I}}$ is a set of MDPs: $\mathcal{M}_{\mathcal{I}} := \{M_i | i \in \mathcal{I}\}$
+    \item $\mathcal{S}$ and $\mathcal{A}$ are shared between all of them
+    \item $\mathcal{R}$ and $\mathcal{T}$ can vary between MDPs
+    \item $\mathcal{I}$ is a set of \emph{contexts}
+    \item The context $c_i$ decides how $\mathcal{R}_i$ and $\mathcal{T}_i$ look for $\mathcal{M}_i \in  \mathcal{M}_{\mathcal{I}}$
+    \item Task in cMDPs: Compute the optimal policy over $\mathcal{I}$
+		$$ \forall c_i \in \mathcal{I}: \pi^*(s, c_i)  \in \argmax_\pi V^\pi(s, c_i)$$
+\end{itemize}
+	
+\end{frame}
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{In Practice: CARL~\lit{Benjamins et al. 2021}{https://arxiv.org/pdf/2110.02102.pdf}}
 
 \begin{figure}
-\centering
-\includegraphics[scale=0.5]{images/cheetah}
-\includegraphics[scale=0.5]{images/ant}
-\caption{Two robots with different behavior.\footnote{Image Source: \href{https://arxiv.org/pdf/1703.03400.pdf}{MAML}}}
+    \centering
+    \includegraphics[width=0.75\textwidth]{w09_meta_rl/images/concept}
+    \caption{Contextual RL in CARL}
+    \label{fig:my_label}
 \end{figure}
 
 \end{frame}
 %-----------------------------------------------------------------------
 %----------------------------------------------------------------------
 
-\begin{frame}[c]{Example Setting 2: 100 Mazes}
-
-\begin{figure}
-\centering
-\includegraphics[scale=1]{images/maze}
-\caption{100 Mazes, each with a different goal to reach.\footnote{Image Source: \href{https://arxiv.org/pdf/2006.09641.pdf}{VDS}}}
-\end{figure}
-
-\end{frame}
-%-----------------------------------------------------------------------
-%----------------------------------------------------------------------
-
-\begin{frame}[c]{Example Setting 3: 200 Mazes}
-
-\begin{figure}
-\centering
-\includegraphics[scale=1]{images/maze}
-\includegraphics[scale=1]{images/maze2}
-\caption{Mazes of two layouts and 100 goals each.\footnote{Image Source: \href{https://arxiv.org/pdf/2006.09641.pdf}{VDS}}}
-\end{figure}
-	
-\end{frame}
-%-----------------------------------------------------------------------
-%----------------------------------------------------------------------
-\begin{frame}[c]{Key Approaches in Meta-RL}
-	
-	\begin{itemize}
-		\item Meta-Learning Hyperparameters
-		\begin{itemize}
-			\item Hyperparameter values for good performance
-			\item Alternative optimization methods
-		\end{itemize}
-		\item Meta-Learning the Training Dynamics
-		\begin{itemize}
-			\item Credit Assignment for state-action pairs
-			\item Problem-specific Exploration Strategies
-		\end{itemize}
-		\item Task Generation
-		\begin{itemize}
-			\item Task diversification for generalization
-			\item Curriculum Learning
-		\end{itemize}
-	\end{itemize}
-	
-	
-\end{frame}
-%-----------------------------------------------------------------------
-%-----------------------------------------------------------------------
 \end{document}

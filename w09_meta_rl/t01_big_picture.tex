@@ -11,16 +11,26 @@
 
 %-----------------------------------------------------------------------
 %----------------------------------------------------------------------
+\begin{frame}{What is Meta-RL?}
+    Do you have any examples?
+\end{frame}
+
+\begin{frame}{What is Meta-RL?}
+\begin{itemize}
+    \item Generalization?
+    \item Transfer?
+    \item Skill acquisition?
+    \item An outer loop?
+\end{itemize}
+\end{frame}
+
 \begin{frame}[c]{Can We Generalize beyond a given MDP?}
 	
 	\begin{itemize}
-		\item What happens if the environment changes? (non-stationary environments)
-		\begin{itemize}
-			\item Can we efficiently adapt our policy to changed transitions or reward functions?
-		\end{itemize}
+		\item What happens if the environment changes?
 		\smallskip
-		\item After a human player learned how to play Super Mario Bros in the first levels, they will also play fairly well the upcoming levels.
-		\item However, an RL agent potentially will fail.
+		\item After a human player learned how to play Super Mario Bros in the first levels, they will also play fairly well the upcoming levels
+		\item However, an RL agent will potentially  fail completely
 		\item[$\leadsto$] Strong limitations regarding the applications of a trained agent
 	\end{itemize}
 	
@@ -39,14 +49,14 @@
 		\item Can we train a policy that generalizes to new environments without any new training?
 	\end{enumerate}
 
-	\begin{itemize}
-		\item Assumption: We sample our environments i.i.d. from a fixed distribution
-		\begin{itemize}
-			\item Similar to the assumption in supervised learning, but on a meta-level
-			\item Training environments to train our agent on and test environments to check how well it performs.
-			\item We might have control how we sample from this distribution;\\ we might don't.
-		\end{itemize}
-	\end{itemize}
+	%\begin{itemize}
+	%	\item Assumption: We sample our environments i.i.d. from a fixed distribution
+	%	\begin{itemize}
+	%		\item Similar to the assumption in supervised learning, but on a meta-level
+	%		\item Training environments to train our agent on and test environments to check how well it performs.
+	%		\item We might have control how we sample from this distribution;\\ we might not.
+	%	\end{itemize}
+	%\end{itemize}
 			
 \end{frame}
 %-----------------------------------------------------------------------

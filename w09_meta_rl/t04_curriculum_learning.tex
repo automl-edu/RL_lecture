@@ -1,7 +1,7 @@
 % !TeX spellcheck = en_US
 \documentclass[aspectratio=169]{../latex_main/tntbeamer}  % you can pass all options of the beamer class, e.g., 'handout' or 'aspectratio=43'
 \input{../latex_main/preamble}
-\title[Curriculum RL]{Curriculum Reinforcement Learning\footnote{Based on a \href{https://lilianweng.github.io/lil-log/2020/01/29/curriculum-for-reinforcement-learning.html}{blog} by Lilian Weng}}
+\title[Curriculum RL]{Curriculum Reinforcement Learning}
 
 
 \begin{document}
@@ -62,6 +62,7 @@
 			\end{itemize}
 			\item Note: We cannot quantify the complexity of the optimal policy for a given MDP, because we have to measure these before actually solving the MDP
 		\end{itemize}
+		\item Learned estimation
 	\end{itemize}
 	
 
@@ -100,6 +101,67 @@
 		\item Sort the instances s.t. they go from easy to hard wrt this pretrained agent~\lit{Weinshall et al. 2018}{https://arxiv.org/abs/1802.03796}
 	\end{enumerate}
 	
+\end{frame}
+
+\begin{frame}[c]{Teacher-Guided Curriculum}
+	
+	\begin{itemize}
+		\item Idea: Expert teacher can use its own knowledge to create a curriculum
+		\item Question: who or what is an expert teacher?
+		\pause
+		\item Possible answers: "Common sense" methods, real-life expert decisions, a learner learning how to construct a curriculum, ...?
+	\end{itemize}
+	
+\end{frame}
+%-----------------------------------------------------------------------
+%-----------------------------------------------------------------------
+
+\begin{frame}[c]{The Teacher-Student Setup~\lit{Matiisen et al., 2017}{https://arxiv.org/pdf/1707.00183.pdf}}
+	
+	\begin{figure}
+	\centering
+	\includegraphics[scale= 0.7]{images/teacher_student.png}
+	\caption{Teacher-Student interaction}
+	\end{figure}
+	
+\end{frame}
+%-----------------------------------------------------------------------
+%-----------------------------------------------------------------------
+
+\begin{frame}[c]{The Teacher}
+	\begin{itemize}
+		\item The teacher observes the student's reward $x_t$
+		\item The action space consists of all instances $i$
+		\item The teacher's reward is the change in the agent's reward:
+			$$ r_t = x_t - x_{t-1}$$
+	\end{itemize}
+	
+\end{frame}
+%-----------------------------------------------------------------------
+%-----------------------------------------------------------------------
+
+\begin{frame}[c]{The Ideal Result~\lit{Matiisen et al., 2017}{https://arxiv.org/pdf/1707.00183.pdf}}
+	
+	\begin{figure}
+	\centering
+	\includegraphics[scale= 0.5]{images/ideal_teacher.png}
+	\caption{Teacher-Student interaction}
+	\end{figure}
+
+\end{frame}
+
+%-----------------------------------------------------------------------
+%-----------------------------------------------------------------------
+
+\begin{frame}[c]{Variations on the idea}
+
+	\begin{itemize}
+		\item The same method can be applied to continuously parameterized environments \lit{Portelas et al., 2019}{https://arxiv.org/pdf/1910.07224.pdf}
+		\item Teachers can also automatically generate instances e.g. by using GANs~\lit{Florensa et al. 2017}{https://arxiv.org/abs/1705.06366}
+		\item The teacher can be a fail-safe in safety-critical applications \lit{Turchetta et al., 2020}{https://papers.nips.cc/paper/2020/file/8df6a65941e4c9da40a4fb899de65c55-Paper.pdf}
+		\item Guided Policy Search \lit{Levine \& Koltun, 2013}{https://graphics.stanford.edu/projects/gpspaper/gps_full.pdf} uses an expert policy to sample trajectories (not necessarily across instances)
+	\end{itemize}
+
 \end{frame}
 
 %-----------------------------------------------------------------------

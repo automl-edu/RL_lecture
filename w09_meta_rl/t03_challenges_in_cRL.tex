@@ -1,0 +1,103 @@
+% !TeX spellcheck = en_US
+\documentclass[aspectratio=169]{../latex_main/tntbeamer}  % you can pass all options of the beamer class, e.g., 'handout' or 'aspectratio=43'
+\input{../latex_main/preamble}
+\title[Meta-RL]{Meta Reinforcement Learning}
+\subtitle{Challenges in Contextual RL}
+
+
+\begin{document}
+	
+	\maketitle
+
+%----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Why do we need separate methods in cRL?}
+
+\begin{itemize}
+	\item Some instances are already very hard on their own
+	\item Learning a policy across a task distribution is not trivial either
+	\item Conventional policy updates aren't necessarily good for every instance in $\mathcal{I}$
+	\item Having access to the context can help performance, but is not always guaranteed
+	\item Optimal hyperparameter might vary depending on the current instance
+\end{itemize}
+
+
+\end{frame}
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Learning a Task Distribution is Hard}
+	
+\begin{figure}
+    \centering
+    \includegraphics[width=0.75\textwidth]{w09_meta_rl/images/CARLPendulumEnv_mean_ep_rew_over_step_hidden.png}
+    \caption{Context variations on CARLPendulum. For most context features, difficulty increases with variation.}
+    \label{fig:my_label}
+\end{figure}
+	
+\end{frame}
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Uneven Learning}
+	
+\begin{figure}
+    \centering
+    \includegraphics[width=0.7\textwidth]{w09_meta_rl/images/ez_40_5_comb.png}
+    \caption{Performance per Instance over time. Instances are ordered according to performance at the start of training (left), but performance shifts dramatically to only a few hard instances (right).}
+    \label{fig:my_label}
+\end{figure}
+	
+\end{frame}
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Context Helps Learning~\lit{Benjamins et al. 2021}{https://arxiv.org/pdf/2110.02102.pdf}}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.75\textwidth]{w09_meta_rl/images/CARLPendulumEnv_mean_ep_rew_over_step_visibledtglmmax_speed.png}
+    
+    \label{fig:my_label}
+\end{figure}
+\centering Contextual RL in CARL
+
+\end{frame}
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+
+\begin{frame}[c]{Instability through Hyperparameters~\lit{Eimer et al. 2021}{http://www.tnt.uni-hannover.de/papers/data/1540/CARL_HPs_2021.pdf}}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.6\textwidth]{w09_meta_rl/images/pb2workers_CARLPendulumEnv_hidden_vs_visible.png}
+    \label{fig:my_label}
+\end{figure}
+\centering Hyperparamter Tuning on CARLLunarLander. The best configuration for visible context outperforms hidden context in evaluation, but the instability is greatly increased.
+
+\end{frame}
+
+\begin{frame}[c]{Key Approaches in Meta-RL}
+	
+	\begin{itemize}
+		\item Meta-Learning Hyperparameters
+		\begin{itemize}
+			\item Hyperparameter values for good performance
+			\item Alternative optimization methods
+		\end{itemize}
+		\item Meta-Learning the Training Dynamics
+		\begin{itemize}
+			\item Credit Assignment for state-action pairs
+			\item Problem-specific Exploration Strategies
+		\end{itemize}
+		\item Meta-Learning Policies
+		\begin{itemize}
+		    \item Multi-Task learning and Task Transfer
+			\item Smarter Updates across tasks
+			\item Curriculum Learning
+		\end{itemize}
+		\item Meta-Learning Representations
+	\end{itemize}
+	
+	
+\end{frame}
+%-----------------------------------------------------------------------
+%-----------------------------------------------------------------------
+\end{document}

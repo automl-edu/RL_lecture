@@ -11,6 +11,46 @@
 
 %----------------------------------------------------------------------
 %----------------------------------------------------------------------
+\begin{frame}[c]{Self-Paced Learning}
+	
+	\begin{itemize}
+		\item We can base the curriculum on the agent's performance instead of on instance features
+		\item There are different kinds of performance markers:
+		\pause
+		\begin{itemize}
+			\item Evaluation reward
+			\item Goals reached
+			\item Confidence in policy
+			\item Internal value function
+		\end{itemize}
+	\end{itemize}
+	
+\end{frame}
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+
+\begin{frame}[c]{Self-Paced Deep Reinforcement Learning~\lit{Klink et al. 2020}{https://arxiv.org/pdf/2004.11812.pdf}}
+	
+	\begin{itemize}
+		\item Goal: enable agent to solve specific very hard instances (common in robotics)
+		\item Idea: define (easy) start distribution and (hard) goal distribution of instances, then slowly shift towards the goal
+		\item Speed of the shifting depends on the agents state evaluations $V(s)$ as a progress measure
+	\end{itemize}
+	
+\end{frame}
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+
+\begin{frame}[c]{Curriculum Generation through Value Disagreement~\lit{Zhang et al. 2020}{https://arxiv.org/pdf/2006.09641.pdf}}
+	
+	\begin{itemize}
+		\item Idea: train an ensemble of agents and use the differences in their Q-values as a measure of uncertainty
+		\item Goals are proposed at a point where the ensemble starts to disagree, assuming that agreement means all agents have learned a good policy on this instance already
+		\item Note: currently this method is an extension of HER and thus only works if the transition function stays the same between instances. 
+	\end{itemize}
+	
+\end{frame}
+
 \begin{frame}[c]{SPaCE~\lit{Eimer et al. 2020}{https://www.tnt.uni-hannover.de/papers/data/1454/space.pdf}}
 	
 	\begin{itemize}

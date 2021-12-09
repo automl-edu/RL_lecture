@@ -72,12 +72,12 @@
 	
 	\begin{itemize}
 		\item Track all rewards you obtained by playing each action $a_k$ and compute mean $\mu(a_k)$ and standard deviation $\sigma(a_k)$ to estimate the underlying reward distribution
-		\item Optimistic in face of uncertainty by upper confidence bound:
+		\item "Optimistic in face of uncertainty" by upper confidence bound:
 		$$\mu(a_k) + \kappa \cdot \sigma(a_k) / \sqrt{N(a)}$$
 		\item Idea: Over time, we get more and more evidence for the best actions until we are sure that the best known is really the best
 		\medskip
 		\pause
-		\item To prevent premature convergence: Use optimistic initialization of each action s.t. all actions are played in the beginning
+		\item To prevent premature convergence: Use optimistic initialization of each action\\ s.t. all actions are played in the beginning
 	\end{itemize}
 	
 \end{frame}
@@ -106,7 +106,7 @@
 	
 	\begin{itemize}
 		\item Track all rewards you obtained by playing each action $a_k$ and compute mean $\mu(a_k)$ and standard deviation $\sigma(a_k)$ to estimate the underlying distribution
-		\item Draw from each estimated distribution a single realization and simply play the action with the best one
+		\item Draw from each estimated distribution a single realization and simply play the action with the best one, e.g.
 		$$ s_k \sim \mathcal{N}(\mu(a_k), \sigma(a_k))$$
 		$$ a \in \argmax_{a_k} s_k$$
 		\item In the limit, only the best performing action will be played with high probability
