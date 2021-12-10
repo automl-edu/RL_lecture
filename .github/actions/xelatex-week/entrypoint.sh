@@ -5,7 +5,7 @@
 
 cd $1
 sh -c "mkdir $2";
-for f in *.tex ; do
+for f in t*.tex ; do
   sh -c "xelatex -interaction=nonstopmode -jobname=${f%.*} \"\def\is$2{} \input{$f}\"" ;
   sh -c "mv ${f%.*}.pdf ${2}/${f%.*}.pdf";
 done
