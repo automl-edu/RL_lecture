@@ -1,0 +1,256 @@
+\PassOptionsToPackage{unicode=true}{hyperref} % options for packages loaded elsewhere
+\PassOptionsToPackage{hyphens}{url}
+%
+
+\documentclass[]{article}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\usepackage{fixltx2e} % provides \textsubscript
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provides euro and other symbols
+\else % if luatex or xelatex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Ligatures=TeX,Scale=MatchLowercase}
+\fi
+
+% use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+% use microtype if available
+\IfFileExists{microtype.sty}{%
+\usepackage[]{microtype}
+\UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\IfFileExists{parskip.sty}{%
+\usepackage{parskip}
+}{% else
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt plus 2pt minus 1pt}
+}
+\usepackage{hyperref}
+\hypersetup{
+            pdftitle={latex-math Macros},
+            pdfborder={0 0 0},
+            breaklinks=true}
+\urlstyle{same}  % don't use monospace font for urls
+\usepackage[margin=1in]{geometry}
+\usepackage{graphicx,grffile}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+\setlength{\emergencystretch}{3em}  % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{0}
+% Redefines (sub)paragraphs to behave more like sections
+\ifx\paragraph\undefined\else
+\let\oldparagraph\paragraph
+\renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+\let\oldsubparagraph\subparagraph
+\renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
+
+% set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+
+\usepackage{mathtools}
+\usepackage{bm}
+\usepackage{siunitx}
+\usepackage{dsfont}
+\usepackage{xspace}
+\usepackage{longtable}
+\usepackage{xcolor}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{dsfont}
+\usepackage{bm}
+\usepackage[english]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage{algorithm}
+\usepackage[ruled,vlined,algo2e,linesnumbered]{algorithm2e}
+\usepackage{booktabs}
+\usepackage{mathtools}
+%\documentclass[]{report}
+
+\DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator*{\argmin}{arg\,min}
+\newcommand{\vect}[1]{\mathbf{#1}}
+
+\input{../latex_main_old/macros.tex}
+
+% Title Page
+\title{RL Lecture: Notation Cheat Sheet}
+\author{M. Lindauer -- Leibniz University Hannover}
+\date{}
+
+
+\begin{document}
+
+\maketitle
+
+\section{Basics}
+
+\begin{eqnarray}
+	 p(s_{t+1} \mid s_t, a_t) &=& p(s_{t+1} \mid h_t, a_t) \\
+	 G_t &=& r_t + \gamma r_{t+1} + \gamma^2 r_{t+2} + \ldots\\
+	 V(s) &=& R(s) + \gamma \sum_{s' \in S} P(s'\mid s) V(s')\\
+	 V_k(s) &=& R(s) + \gamma \sum_{s' \in S} P(s' \mid s) V_{k-1}(s')\\
+	 R(s_t=s, a_t=a) &=& \mathbb{E}[r_t \mid s_t=s, a_t=a\\
+	 R^\pi (s) &=& \sum_{a\in A} \pi(a\mid s ) R(s,a) \\
+	 P^\pi (s'\mid s) &=& \sum_{a\in A} \pi(a \mid s) P(s' \mid s,a)\\
+	 V^\pi_k  &=& r(s, \pi(s)) + \gamma \sum_{s'\in S} p(s'\mid s, \pi(s)) V_{k-1}^\pi (s')\\
+	 Q^\pi(s,a) &=& R(s,a) + \gamma \sum_{s' \in S} P(s' \mid s,a) V^\pi(s')\\
+	 \pi_{i+1}(s) &\in& \argmax_{a\in A} Q^{\pi_i} (s,a). \forall s \in S \\
+    \max_a Q^\pi(s,a) &\geq& R(s,a) + \gamma \sum_{s' \in S} P(s' \mid s,a) V^\pi(s')\\
+    V^{\pi_2} &\geq& V^{\pi_1}: V^{\pi_2}(s) \geq V^{\pi_1}(s). \forall s \in S\\
+    BV(s) &=& \max_{a} [ R(s,a) + \gamma \sum_{s' \in S} p(s' \mid s,a)  V(s')  ]\\
+    V_{k+1}(s) &=& \max_{a\in A } R(s,a) + \gamma \sum_{s' \in S } P(s' \mid s,a) V_k(s') \\
+    \pi_{k+1}(s) &\in& \argmax_{a \in A} R(s,a) + \gamma \sum_{s' \in S} P(s' \mid s,a) V_k(s')
+\end{eqnarray}
+
+\newpage
+\section{Policy Evaluation}
+
+\begin{eqnarray}
+     V^\pi_k (s) &=& r(s, \pi(s)) + \gamma \sum_{s' \in S} p(s' \mid s, \pi(s)) V^\pi_{k-1} (s') \\
+     V^\pi (s) &=& \mathbb{E}_\pi [G_t \mid s_t = s] \approx \mathbb{E} [r_t + \gamma V_{k-1} \mid s_t = s]\\
+     V^\pi (s) &=& \mathbb{E}_\pi [r_t + \gamma V_{k-1} \mid s_t = s]\\
+     V^\pi(s) &=& V^\pi(s) + \alpha (\underbrace{[r_t + \gamma V^\pi (s_{t+1})]}_{\text{TD target}} - V^\pi(s))\\
+     \delta_t &=& r_t + \gamma V^\pi(s_{t+1}) - V^\pi (s)\\
+     G_t^{(n)} &=&  R_{t+1} + \gamma R_{t+2} + \ldots + \gamma^{n-1} R_{t+n} + \gamma^n V(s_{t+n})\\
+     G_t^\lambda &=& (1-\lambda) \sum_{n=1}^{\infty} \lambda^{n-1} G_t^{(n)}\\
+     V(s_t) &\gets& V(s_t) + \alpha \left(G_t^\lambda - V(s_t)\right)\\
+     E_t(s) &=& \gamma \lambda E_{t-1}(s) + \mathbf{1}(S_t=s)\\
+     \delta_t &=& R_{t+1} + \gamma V(s_{t+1}) - V(s_t)\\
+	V(s) &\gets& V(s) + \alpha \delta_t E_t(s)
+\end{eqnarray}
+
+
+\section{Model-free Control}
+\begin{eqnarray}
+      &\lim_{i\to\infty}& N_i(s,a) \to \infty\\
+      &\lim_{i\to \infty}& \pi(a\mid s) \to \argmax_{a\in A} Q(s,a)\\
+      Q(s_t,a_t) &\gets& Q(s_t, a_t) + \alpha (r_t + \gamma Q(s_{t+1}, a_{t+1}) - Q(s_t, a_t))\\
+\end{eqnarray}
+
+\section{Function Approximation}
+
+\begin{eqnarray}
+    \nabla J(\vect{w}) &=& \left[ \frac{\partial J}{\vect{w}_1} \ldots \frac{\partial J}{\vect{w}_n} \right]\\
+    \vect{w}_t &=& \vect{w}_{t-1} - \alpha \nabla_{\vect{w}} J(\vect{w}_{t-1})\\
+    J(\vect{w}) &=& \mathbb{E}_{\pi} [(V^\pi(s) - \hat{V}^\pi(s;\vect{w}))^2]\\
+    \Delta \vect{w} &=& - \frac{1}{2} \alpha \nabla_{\vect{w}} J(\vect{w})\\
+    \nabla_{\vect{w}} J(\vect{w}) &=& \nabla_{\vect{w}} \mathbb{E}_{\pi}[V^\pi (s) - \hat{V}^\pi (s; \vect{w})^2]\\
+    &=& \mathbb{E}_\pi [-2 (V^\pi(s) - \hat{V}^\pi (s;\vect{w})) \nabla_{\vect{w}} \hat{V}(s;\vect{w})]\\
+    \hat{V}^\pi(s; \vect{w}) &=& \sum_{j=1}^n \vect{x}_j (s) \vect{w}_j = \vect{x}(s)^T\vect{w}\\
+    \Delta \vect{w} &=& - \frac{1}{2} \alpha \nabla_{\vect{w}} J (\vect{w})\\
+    \Delta \vect{w} &=& -\frac{1}{2} \alpha(2(V^\pi(s) - \vect{x}(s)^T \vect{w})) \vect{x}(s)\\
+    \Delta \vect{w} &=& \alpha (G_t - \hat{V} (s_t; \vect{w})) \nabla_{\vect{w}}\hat{V}(s_t; \vect{w})\\
+    &=& \alpha (G_t - \hat{V} (s_t; \vect{w})) \vect{x}(s_t) \\
+    &=& \alpha (G_t - \vect{x}(s_t)^T \vect{w}) \vect{x}(s_t) \\
+    \text{MSVE}(\vect{w}_{MC}) &=& \min_{\vect{w}}\sum_{s \in S} d(s) (V^\pi (s) - \hat{V}^\pi(s;\vect{w}))^2 \\
+    J(\vect{w}) &=& \mathbb{E}_\pi [(V(s_{j+1}, \vect{w}) - \hat{V}^\pi(s_j;\vect{w}))^2]\\
+    &\approx& \mathbb{E}_\pi [(\underbrace{r_j + \gamma \hat{V}^\pi(s_{j+1}, \vect{w})}_{\text{target approximation}} - \hat{V}^\pi(s_j;\vect{w}))^2]\\
+    \Delta \vect{w} &=& \alpha( r + \gamma \hat{V}^\pi(s'; \vect{w}) - \hat{V}^\pi(s;\vect{w})) \nabla_{\vect{w}} \hat{V}^\pi (s;\vect{w})\\
+    &=& \alpha( r + \gamma \hat{V}^\pi(s'; \vect{w}) - \hat{V}^\pi(s;\vect{w})) \vect{x}(s)\\
+    &=& \alpha( r + \gamma \vect{x}(s')^T \vect{w} - \vect{x}(s)^T\vect{w}) \vect{x}(s)\\
+    \vect{w} &=& \vect{w} + \alpha( r + \gamma \vect{x}(s')^T \vect{w} - \vect{x}(s)^T\vect{w}) \vect{x}(s)\\
+    \text{MSVE}(\vect{w}_{TD}) &\leq& \frac{1}{1-\gamma} \min_\vect{w}\sum_{s\in S} d(s) (V^\pi(s) - \hat{V}(s;\vect{w}))^2\\
+    \Delta \vect{w} &=& \alpha(G_t - \hat{Q}(s_t,a_t; \vect{w})) \nabla_{\vect{w}} \hat{Q}(s_t, a_t; \vect{w})\\
+    \Delta \vect{w} &=& \alpha (r + \gamma \hat{Q}(s',a';\vect{w}) - \hat{Q}(s,a;\vect{w})) \nabla_{\vect{w}}\hat{Q}(s,a;\vect{w}) \\
+    \Delta \vect{w} &=& \alpha (r + \gamma \max_{a'} \hat{Q}(s',a';\vect{w}) - \hat{Q}(s,a;\vect{w})) \nabla_{\vect{w}}\hat{Q}(s,a;\vect{w}) 
+\end{eqnarray}
+
+\section{Deep Reinforcement Learning}
+
+\begin{eqnarray}
+    \Delta \vect{w} &=& \alpha (r + \gamma \max_{a'} \hat{Q}(s',a';\vect{w}) - \hat{Q}(s,a;\vect{w})) \nabla_{\vect{w}}\hat{Q}(s,a;\vect{w})\\
+    \Delta \vect{w} &=& \alpha (r + \gamma \max_{a'} \hat{Q}(s',a';\vect{w}^-) - \hat{Q}(s,a;\vect{w})) \nabla_{\vect{w}}\hat{Q}(s,a;\vect{w})\\
+    Q_1(s_t, a_t) &\gets& Q_1(s_t, a_t) + \alpha (r_t +\gamma \max_{a\in A} Q_2(s_{t+1}, a) - Q_1(s_t, a_t))\\
+    &&r + \gamma \overbrace{\hat{Q}(s', \underbrace{\argmax_{a' \in A} \hat{Q}(s',a';\vect{w})}_{};\vect{w}^-)}^{} - Q(s,a;\vect{w})\\
+    &&r + \gamma \min_{i=\{1,2\}}Q(s', \argmax_{a' \in A} Q(s', a'; \vect{w}); \vect{w}_i) - Q(s,a;\vect{w})\\
+    p_i &=& | r_i + \gamma \max_{a' \in A} Q(s_{i+1}, a'; \vect{w}^-) - Q(s_i,a_i;\vect{w}) |\\
+    P(i) &=& \frac{p_i^\beta}{\sum_k p_k^\beta}\\
+    A^\pi (s,a) &=& Q^\pi(s,a) - V^\pi(s) \\
+    Q(s,a;\vect{w}_1, \vect{w}_2, \vect{w}_3) &=& V(s;\vect{w}_1, \vect{w}_2) + A(s,a;\vect{w}_1, \vect{w}_3)\\
+    \hat{Q}(s,a;\vect{w}) &=& \hat{V}(s;\vect{w}) + \left( \hat{A}(s,a;\vect{w}) - \max_{a' \in \mathcal{A}} \hat{A}(s,a';\vect{w}) \right) \\
+    \hat{Q}(s,a;\vect{w}) &=& \hat{V}(s;\vect{w}) + \left( \hat{A}(s,a;\vect{w}) - \frac{1}{|\mathcal{A}|} \sum_{a' \in \mathcal{A}} \hat{A}(s,a';\vect{w}) \right)
+\end{eqnarray}
+
+\section{Policy Search}
+
+\begin{eqnarray}
+    \frac{\partial V(s_0, \theta)}{\partial \theta_k} &\approx& \frac{V(s_0, \theta + \epsilon u_k) - V(s_0, \theta)}{\epsilon}\\
+    \pi_\theta (s,a) &=& \exp(\phi(s,a)^\intercal\theta) / \sum_{a} \exp(\phi(s,a)^\intercal\theta)\\
+    \pi(s,a) &\sim& \mathcal{N}(\mu(s), \sigma^2) \text{ with }\mu(s) = \phi(s)^\intercal \theta\\
+    V(\theta) &=& \mathbb{E}\left[\sum_{t=0}^T R(s_t, a_t); \pi_\theta \right] = \sum_{\tau} P(\tau; \theta)R(\tau) \\
+    \theta^* &\in& \argmax_{\theta} V(\theta) = \argmax_{\theta}\sum_{\tau} P(\tau; \theta) R(\tau)\\
+    \nabla_\theta V(\theta) &=& \nabla_\theta \sum_{\tau} P(\tau; \theta)R(\tau)\\
+    &=& \sum_{\tau} P(\tau; \theta)  R(\tau) \nabla_\theta \log P(\tau; \theta)\\
+    \nabla_\theta V(\theta) &\approx& \frac{1}{m} \sum_{i=1}^{m} R(\tau^{(i)}) \nabla_\theta \log P(\tau^{(i)}; \theta)\\
+    \nabla_\theta \log P(\tau^{(i)}; \theta) &=& \nabla_\theta \log \left[ \rho(s_0) \prod_{t=0}^{T-1} \pi_\theta(a_t \mid s_t) P(s_{t+1} \mid s_t, a_t) \right]\\
+    &=& \nabla_\theta \left[ \log \rho(s_0) + \sum_{t=0}^{T-1} \log \pi_\theta(a_t \mid s_t) + \log P(s_{t+1}\mid s_t, a_t) \right]\\
+    &=& \sum_{t=0}^{T-1} \nabla_\theta \log \pi_\theta (a_t \mid s_t)\\
+    \theta^* &\in& \argmax_{\theta} V(\theta) = \argmax_{\theta}\sum_{\tau} P(\tau; \theta) R(\tau)\\
+    \nabla_\theta V(\theta) &\approx& \frac{1}{m} \sum_{i=1}^{m} R(\tau^{(i)}) \nabla_\theta \log P(\tau^{(i)}; \theta)\\
+    &=& \frac{1}{m} \sum_{i=1}^{m} R(\tau^{(i)}) \sum_{t=0}^{T-1} \underbrace{\nabla_\theta \log \pi_\theta (a_t^{(i)} \mid s_t^{(i)})}_{\text{Score Function}}\\
+    \nabla_\theta \mathbb{E}_\tau [R] &=& \mathbb{E}_\tau \left[ \left(\sum_{t=0}^{T-1} r_t\right) \left( \sum_{t=0}^{T-1} \nabla_\theta \log \pi_\theta(a_t \mid s_t) \right) \right]\\
+    \nabla_\theta \mathbb{E} [r_{t'}] &=& \mathbb{E} \left[r_{t'} \sum_{t=0}^{t'} \nabla_\theta \log \pi_\theta (a_t \mid s_t)\right]\\
+    \nabla_\theta V(\theta) &=& \nabla_\theta \mathbb{E}[R] = \mathbb{E} \left[ \sum_{t'=0}^{T-1} r_{t'} \sum^{t'}_{t=0} \nabla_\theta \log \pi_\theta (a_t \mid s_t)  \right]\\
+    &=& \mathbb{E} \left[ \sum_{t=0}^{T-1}  \nabla_\theta \log \pi_\theta (a_t \mid s_t)   \sum^{T-1}_{t'=t} r_{t'}  \right]\\
+    \Delta \theta_t &=& \alpha \nabla_\theta \log \pi_\theta (s_t, a_t) G_t\\
+    \nabla_\theta \mathbb{E}_\tau [R] &=& \mathbb{E}_\tau \left[ \sum_{t=0}^{T-1} \nabla_\theta \log \pi(a_t \mid s_t; \theta) \left( \sum_{t'=t}^{T-1} r_{t'} - b(s_t) \right) \right]\\
+    A^\pi(s,a) &=& Q^\pi(s,a) - V^\pi(s) 
+\end{eqnarray}
+
+\section{Exploration}
+
+\begin{eqnarray}
+    \hat{Q}_t(a_t) &=& \hat{Q}_{t-1} + \frac{1}{N_t(a_t)} (r_t - \hat{Q}_{t-1})\\
+    &&\mu(a_k) + \kappa \cdot \sigma(a_k) / \sqrt{N(a)}\\
+    a_t &\in& \argmax_{a \in A} Q(a) + \sqrt{\frac{2\log t }{N_t(a)}}\\
+    a_t &\in& \argmax_{a \in A} Q(s_t, a) + U(s_t, a) \\
+    a_t &\in& \argmax_{a \in A} Q(s_t, a) + U_1(s_t, a) + U_2(s_t, a)\\
+    \pi(s, a \mid h_t) &=& \mathbb{P} [Q^*(s,a) > Q^*(s,a'), \forall a' \neq a \mid h_t] \\
+    &=& \mathbb{E}_{P, R \mid h_t} \left[\mathbf{1}(a \in \argmax_{a \in A} Q^*(s,a))\right]\\
+    r_t &=& r^e_t + \beta r_t^i\\
+    p_n(s) &=&  \frac{\hat{N}_n(s)}{\hat{n}} \leq \frac{\hat{N}_n(s) + 1}{\hat{n} + 1} = p'_n(s)\\
+    r_t^i &=& (\hat{N}_n (s_t, a_t) + 0.01)^{-1/2} \\
+    && f: (s_t, a_t) \mapsto s_{t+1} \\
+    e(s_t, a_t) &=& || f(s_t, a_t) - s_{t+1}||_2^2\\
+    r_t^i &=& \frac{1}{k} \sum_{i=0}^{k-1} (e_{t-i-\tau} - e_{t-i})\\
+    \bar{e}_t &=& \frac{e_t}{\max_{i \leq t} e_i} \\
+    r_t^i &=& \frac{\bar{e}_t(s_t, a_t)}{t \cdot C}\\
+    r_t^i &=& || f(\phi(s_{t})) - \phi(s_{t+1})||^2_2\\
+    r_t  &=& r_t^i = ||f(\phi(s_t), a_t) - \phi(s_{t+1}) ||_2^2\\
+    &&\sum_t H(\Theta \mid e_t, a_t) - H(\Theta | s_{t+1}, e_t, a_t)\\
+    \sum_t H(\Theta \mid e_t, a_t) - H(\Theta | s_{t+1}, e_t, a_t) &=& \mathbb{E}_{s_{t+1}\sim P(\cdot\mid e_t, a_t))} \left[ D_{KL} (p(\theta \mid e_t, a_t, s_{t+1}) || p(\theta|e_t))  \right]
+\end{eqnarray}
+
+\section{Meta-RL}
+
+\begin{eqnarray}
+   && \forall c_i \in \mathcal{I}: \pi^*(s, c_i)  \in \argmax_\pi V^\pi(s, c_i)
+\end{eqnarray}
+
+\section{AutoRL}
+
+\begin{eqnarray}
+   \conf^* \in \argmin_{\conf \in \confs} f(\conf)\\
+   P(A \vert B) = \frac{P(B \vert A) \times  P(A)}{P(B)} \propto P(B \vert A) \times  P(A)\\
+   \cost_{\text{PBT}}^{(t)}(\conf)= \frac{\cost^{(t)}(\conf) - \cost^{(t-1)}(\conf)}{\Delta t}\\
+\end{eqnarray}
+
+\end{document}

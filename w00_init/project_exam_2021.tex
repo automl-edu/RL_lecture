@@ -1,0 +1,182 @@
+\documentclass[aspectratio=169]{../latex_main/tntbeamer}  % you can pass all options of the beamer class, e.g., 'handout' or 'aspectratio=43'
+\input{../latex_main/preamble}
+\title[RL: Exam]{Final Project for Exam}
+%\subtitle{Final Project for Exam}
+
+
+
+\begin{document}
+	
+	\maketitle
+
+%----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Reminder: Final Grading}
+	
+	\begin{itemize}
+		\item Implement a larger project (worth $1-2$ weeks full time)
+		\begin{itemize}
+			\item You can propose your own project idea!
+			\begin{itemize}
+				\item Hand-in a short summary of the idea and we will provide feedback regarding feasibility
+			\end{itemize}
+			\item Teamwork (at most 3) again possible
+			\begin{itemize}
+				\item Larger team $\to$ larger scope of the project
+			\end{itemize}
+		\end{itemize}
+		\item ``Exam''
+		\begin{itemize}
+			\item First $\sim 15$ min: Present your project idea and results 
+			\begin{itemize}
+				\item Of course, everyone will present the project on their own
+			\end{itemize}
+			\item Second 15min: We will ask further questions about your project and how it relates to stuff you learned in the lecture.
+		\end{itemize}	
+		\item You will have the choice between a virtual and on-site exam.
+	\end{itemize}
+	
+\end{frame}
+%----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Requirements}
+	\vspace{-1em}
+	\begin{itemize}
+		\item 2 different options for the scope of the project 
+		\begin{itemize}
+			\item see next slides
+		\end{itemize}
+		\pause
+		\item Proposal should include:
+			\begin{itemize}
+				\item Scope and main objective(s)
+				\item Which open-source frameworks you plan to use
+				\begin{itemize}
+					\item both for RL agents and for benchmark envs
+					\item some presented in the next (last) exercise
+				\end{itemize}
+				\item Amount for compute resources you will use
+				\item Rough time frame / milestones
+				\item[$\leadsto$] At most 1 page
+			\end{itemize}
+		\pause
+		\item Sound scientific  workflow
+		\begin{itemize}
+			\item Fill out reproducibility check list (see studip)
+		\end{itemize}
+		\pause
+		\item Hand in: source code, ML reproducibility check list and PDF presentation with at most 7 slides (excl. title slide)
+		\begin{itemize}
+			\item Proper code documentation; PEP8
+			\item Send us an invitation to a GitHub Repo
+			\item To both: eimer@tnt.uni-hannover.de, schubert@tnt.uni-hannover.de
+		\end{itemize}
+	\end{itemize}
+	
+\end{frame}
+%----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Option I: New Env}
+	
+	\begin{itemize}
+		\item Propose a new \& interesting benchmark environment / application for RL (incl. state, action, reward, transition, $\ldots$)
+		\begin{itemize}
+			\item Use OpenAI-Gym env API
+			\item Should be somehow related to preventing climate change
+		\end{itemize}
+		\item Minimal requirement: An RL agent (of your choice) can learn something reasonable
+		\begin{itemize}
+			\item That is, it performs better than a static or random policy
+			\item You can use already implemented RL algorithms
+			\item We will provide a list of recommended RL agents
+		\end{itemize}
+		\item Further goals could include:
+		\begin{itemize}
+			\item Impact of state or action space (e.g., size or encoding)
+			\item Reward signal or reward shaping
+			\item Does the Markov assumption hold true?
+		\end{itemize}
+		\item[$\leadsto$] Environment should not be too trivial (e.g., a small maze)
+	\end{itemize}
+	
+\end{frame}
+%----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Option II: RL Agent}
+	
+	\begin{itemize}
+		\item Implement an RL agent from scratch
+		\begin{itemize}
+		    \item Pick a (recent) RL paper and re-implement it
+			\item Don't use existing implementations!
+		\end{itemize}
+		\item Minimal requirement: Your RL agent can learn a reasonable policy\\ on a RL benchmark of your choice
+		\begin{itemize}
+			\item That is, it performs better than a static or random policy
+			\item You can use already implemented RL benchmark envs
+			\item We will provide a list of recommended RL envs in the next exercise session
+		\end{itemize}
+		\item Further goals could include:
+		\begin{itemize}
+			\item Variants of different algorithm components (e.g., experience replay)
+			\item Hyperparameter sensitivity study
+			\item Comparison against other baselines
+		\end{itemize}
+	\end{itemize}
+	
+\end{frame}
+%----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Score Distribution\footnote{Not the same scoring as in iML}}
+	\vspace{-1em}
+	\begin{itemize}
+		\item Idea, Topic \& Results: at most 25\\
+        (sufficiently challenging, interesting beyond lecture, gained insights, results, ...)
+        \item Implementation:  at most 25\\
+        (correctness, reproducibility, code documentation, code quality, ...)
+        \item Presentation: at most 25\\
+        (concise slides, clear message, structure, citations, plots, ...)
+        \item Answering of questions: at most 25\\
+        (correct, concise, knowledge, own ideas, ...)
+	\end{itemize}
+	\pause
+	\begin{itemize}
+	    \item 100-90: 1.0; 89 - 85: 1.3; 84 - 80: 1.7
+	    \item 79 - 75: 2.0; 74 - 70: 2.3; 69 - 65: 2.7
+	    \item 64 - 60: 3.0; 59 - 55: 3.3; 54 - 50: 3.7
+	    \item 49 - 45: 4.0; $<$ 45 : failed
+	\end{itemize}
+	
+\end{frame}
+%----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Deadlines}
+	
+	\begin{itemize}
+		\item Proposal Deadline: Jan 27th (AoE\footnote{Anywhere on Earth})
+		\begin{itemize}
+			\item Submit earlier to get feedback sooner!
+		\end{itemize}
+		\item Feedback for proposal: latest Feb 3rd
+		\item Results Deadline: March 4th (AoE) 
+		\item Exam: March 14th - March 18th (in the mornings)
+		\begin{itemize}
+			\item We will send you a link for registration to one of the possible slots
+		\end{itemize}
+	\end{itemize}
+	
+\end{frame}
+%----------------------------------------------------------------------
+
+
+\begin{frame}[c]{}
+	
+	\centering
+	\huge
+	Questions?
+	
+\end{frame}
+
+
+%-----------------------------------------------------------------------
+\end{document}

@@ -1,0 +1,218 @@
+% !TeX spellcheck = en_US
+\documentclass[aspectratio=169]{../latex_main/tntbeamer}  % you can pass all options of the beamer class, e.g., 'handout' or 'aspectratio=43'
+\input{../latex_main/preamble}
+\title[Meta-RL]{AutoRL}
+\subtitle{Dynamic AutoRL and Population-Based Training}
+
+
+\begin{document}
+	
+	\maketitle
+
+%-----------------------------------------------------------------------
+%-----------------------------------------------------------------------
+\begin{frame}[c]{Grid Search vs. Random Search as Training Goes on}
+	
+\centering
+Grid Search:\\
+\includegraphics[width=0.5\textwidth]{w10_autoRL/images/static_grid_new.png} 
+
+\bigskip
+Random Search:\\
+\includegraphics[width=0.5\textwidth]{w10_autoRL/images/static_random_new.png}
+
+$\leadsto$ For some hyperparamters, you might want to change them as the training goes on
+\end{frame}
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Massively Parallelized Random Search}
+
+\begin{tikzpicture}[node distance=2.1cm]
+%PreProcessing
+
+\node (l1) [activity, text width=12cm] {$\confI{1}$};
+\node (l2) [activity, below of=l1, node distance=1cm, text width=12cm] {$\confI{2}$};
+\node (l3) [activity, below of=l2, node distance=1cm, text width=12cm] {$\confI{3}$};
+\node (l4) [activity, below of=l3, node distance=1cm, text width=12cm] {$\confI{4}$};
+
+\draw[myarrow] ($(l4.west)+(0.0, -1.0)$) -- ($(l4.east)+(0.0, -1.0)$) node[below] {t};
+
+\end{tikzpicture}
+
+\bigskip
+\begin{itemize}
+	\item Sample many hyperparameter configurations $\confI{i}$ and evaluate them all in parallel
+	\pause
+	\item Pure exploration on a large population of configurations
+	\pause
+	\item[$\leadsto$] No dynamic adaptation
+\end{itemize}
+
+\end{frame}
+%----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Population-based Training \lit{Jaderberg et al. 2017}{https://arxiv.org/pdf/1711.09846.pdf}}
+
+\begin{tikzpicture}[node distance=2.1cm]
+%PreProcessing
+
+\node (l1) [activity, left color=red!100, right color=red!20] {$\confI{1}$};
+\node (l2) [activity, left color=red!100, right color=red!80, below of=l1, node distance=1cm] {$\confI{2}$};
+\node (l3) [activity, left color=red!100, right color=red!30, below of=l2, node distance=1cm] {$\confI{3}$};
+\node (l4) [activity, left color=red!100, right color=red!40, below of=l3, node distance=1cm] {$\confI{4}$};
+
+\draw[myarrow] ($(l4.west)+(0.0, -1.0)$) -- ($(l4.east)+(10.0, -1.0)$) node[below] {t};
+
+\pause
+
+\node (l12) [activity, right of=l1, left color=red!20, right color=yellow!10, node distance=4cm] {$\confI{1}$};
+\node (l22X) [right of=l2, node distance=1.85cm]{\textbf{X}};
+\node (l22) [activity, left color=red!30, right color=yellow!80, right of=l2, node distance=4cm]{$\confI{5} := \confI{3} + \epsilon_1$};
+\node (l32) [activity, left color=red!30, right color=yellow!80, right of=l3, node distance=4cm] {$\confI{3}$};
+\node (l42) [activity, left color=red!40, right color=yellow!10, right of=l4, node distance=4cm] {$\confI{4}$};
+
+\draw[myarrow] (l1.east) -- (l12.west);
+\draw[myarrow] (l3.east) -- (l22.west);
+\draw[myarrow] (l3.east) -- (l32.west);
+\draw[myarrow] (l4.east) -- (l42.west);
+
+\pause
+
+\node (l13X) [right of=l12, node distance=1.85cm]{\textbf{X}};
+\node (l13) [activity, left color=yellow!80, right color=red!10, right of=l12, node distance=4cm] {$\confI{6} := \confI{5} + \epsilon_2$};
+\node (l23) [activity, left color=yellow!80, right color=green!80, right of=l22, node distance=4cm]{$\confI{5}$};
+\node (l33) [activity, left color=yellow!80, right color=green!20, right of=l32, node distance=4cm] {$\confI{3}$};
+\node (l43X) [right of=l42, node distance=1.85cm]{\textbf{X}};
+\node (l43) [activity, left color=yellow!80, right color=green!10, right of=l42, node distance=4cm] {$\confI{7} := \confI{3} + \epsilon_3$};
+
+\draw[myarrow] (l22.east) -- (l13.west);
+\draw[myarrow] (l22.east) -- (l23.west);
+\draw[myarrow] (l32.east) -- (l33.west);
+\draw[myarrow] (l32.east) -- (l43.west);
+
+\end{tikzpicture}
+
+\begin{itemize}
+	\item The color indicates the performance over time
+	\item \textbf{X} indicates the termination of an RL agent training
+\end{itemize}
+
+\end{frame}
+%----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Population-based Training \lit{Jaderberg et al. 2017}{https://arxiv.org/pdf/1711.09846.pdf} \lit{Liang et al. 2020}{https://arxiv.org/pdf/2002.04225.pdf}}
+
+General workflow of PBT:
+
+\begin{enumerate}
+	\item Sample initial population
+	\begin{itemize}
+		\item Each population member is a combination of hyperparameter setting $\conf$ and (partially trained) model
+	\end{itemize}
+	\pause
+	\item Train population for a bit 
+	\pause
+	\item Tournament selection to drop poorly performing population members
+	\pause
+	\item Use mutation (and cross-over) to generate off-springs
+	\begin{itemize}
+		\item Change the hyperparameter settings, but inherits the partially trained model (+ pertubation)
+	\end{itemize}
+	\pause
+	\item[$\leadsto$] New population consists of so-far best performing ones and new off-springs
+	\pause
+	\item Go to 2.
+\end{enumerate}
+
+\pause
+See \lit{Deepmind Blog}{https://deepmind.com/blog/article/population-based-training-neural-networks} for a nice animation
+
+\end{frame}
+%----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Properties of Population-based Training (PBT)}
+
+\begin{itemize}
+	\item PBT returns an already trained model (e.g., DNN or RL policy)
+	\bigskip
+	\pause
+	\item PBT uses evolutionary computing to determine well-performing hyperparameter settings
+	\bigskip
+	\pause
+	\item Hyperparameter settings changes while training the agent
+	\bigskip
+	\pause
+	\item Since each population member (i.e., model) can be trained independently,\\ PBT can be efficiently parallelized
+	\begin{itemize}
+		\item[$\leadsto$] Drawback: requires substantial parallel compute resources
+	\end{itemize}
+\end{itemize}
+
+\end{frame}
+%----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Combining Population-based Training and Bayesian Optimization}
+
+\begin{itemize}
+	\item Bayesian Optimization (BO) is well known for its sample efficiency
+	\pause
+	\medskip
+	\item \alert{Idea:} Can we use BO to guide PBT? 
+	\pause
+	\medskip
+	\item[$\leadsto$] Less parallel compute resources are required(?)
+	\pause
+	\medskip
+	\item[$\leadsto$] Scales better to higher dimensional spaces(?)
+\end{itemize}
+
+\end{frame}
+%----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{PBT + BO: Outline}
+
+\begin{enumerate}
+	\item Sample initial population
+	\begin{itemize}
+		\item Each population member is a combination of hyperparameter setting $\conf$ and (partially trained) model
+	\end{itemize}
+	\item Train population for a bit 
+	\item Tournament selection to drop poorly performing population members
+	\item Use \alert{Bayesian optimization} to select new hyperparameter settings
+	\begin{itemize}
+		\item Change the hyperparameter settings, but inherits the partially trained model (+ pertubation)
+	\end{itemize}
+	\item[$\leadsto$] New population consists of so-far best performing ones and new off-springs
+	\item Go to 2.
+\end{enumerate}
+
+
+\end{frame}
+%----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{PBT  + BO = PB2 \lit{Parker-Holder et al. 2020}{https://arxiv.org/pdf/2002.02518.pdf}}
+
+\begin{itemize}
+	\item \alert{Challenge}: The cost depends on the previous $\confI{1}, \confI{2}. \ldots, \confI{t-1}$
+	\pause
+	\medskip
+	\item BO-Surrogate model predicts the cost improvement over time:
+\end{itemize}
+
+\begin{equation}
+\cost_{\text{PBT}}^{(t)}(\conf)= \frac{\cost^{(t)}(\conf) - \cost^{(t-1)}(\conf)}{\Delta t}\nonumber
+\end{equation}
+
+where $\cost^{(t)}(\conf)$ is the cost for a given hyperparameter setting at time step $t$.
+
+\bigskip
+\pause
+\begin{itemize}
+	\item Remark: Also add $\cost^{(t-1)}$ as an input to the BO-surrogate model to\\ ease the task of predicting the improvement
+\end{itemize}
+
+\end{frame}
+%----------------------------------------------------------------------
+
+%-----------------------------------------------------------------------
+\end{document}

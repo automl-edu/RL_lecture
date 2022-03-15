@@ -1,0 +1,268 @@
+\PassOptionsToPackage{unicode=true}{hyperref} % options for packages loaded elsewhere
+\PassOptionsToPackage{hyphens}{url}
+%
+
+\documentclass[]{article}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\usepackage{fixltx2e} % provides \textsubscript
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provides euro and other symbols
+\else % if luatex or xelatex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Ligatures=TeX,Scale=MatchLowercase}
+\fi
+
+% use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+% use microtype if available
+\IfFileExists{microtype.sty}{%
+\usepackage[]{microtype}
+\UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\IfFileExists{parskip.sty}{%
+\usepackage{parskip}
+}{% else
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt plus 2pt minus 1pt}
+}
+\usepackage{hyperref}
+\hypersetup{
+            pdftitle={latex-math Macros},
+            pdfborder={0 0 0},
+            breaklinks=true}
+\urlstyle{same}  % don't use monospace font for urls
+\usepackage[margin=1in]{geometry}
+\usepackage{graphicx,grffile}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+\setlength{\emergencystretch}{3em}  % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{0}
+% Redefines (sub)paragraphs to behave more like sections
+\ifx\paragraph\undefined\else
+\let\oldparagraph\paragraph
+\renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+\let\oldsubparagraph\subparagraph
+\renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
+
+% set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+
+\usepackage{mathtools}
+\usepackage{bm}
+\usepackage{siunitx}
+\usepackage{dsfont}
+\usepackage{xspace}
+\usepackage{longtable}
+\usepackage{xcolor}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{dsfont}
+\usepackage{bm}
+\usepackage[english]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage{algorithm}
+\usepackage[ruled,vlined,algo2e,linesnumbered]{algorithm2e}
+\usepackage{booktabs}
+\usepackage{mathtools}
+%\documentclass[]{report}
+
+\DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator*{\argmin}{arg\,min}
+\newcommand{\vect}[1]{\mathbf{#1}}
+
+\input{../latex_main_old/macros.tex}
+
+% Title Page
+\title{RL Lecture: Syllabus}
+\author{M. Lindauer -- Leibniz University Hannover}
+\date{}
+
+
+\begin{document}
+
+\maketitle
+
+\section{Basics}
+
+\begin{itemize}
+\itemsep-0.5em
+    \item Markov Assumption
+    \item Full vs Partially Observable
+    \item Markov Process/Chain
+    \item Markov Reward Process
+    \item Return
+    \item Value function
+    \item Discount factor
+    \item Bellman equation
+    \item Iterative algorithm for computing value of a MRP
+    \item Markov Decision Process
+    \item Distribution of start states
+    \item Policy
+    \item Iterative Policy Evaluation
+    \item Policy Search
+    \item Policy Iteration
+    \item State-Action Value 
+    \item Policy Improvement
+    \item Monotonic improvement in policy
+    \item Bellman backup operator
+    \item Value iteration
+    \item PI and VI as Bellman operations
+\end{itemize}
+
+\section{Policy Evaluation}
+
+\begin{itemize}
+\itemsep-0.5em
+    \item Dynamic programming
+    \item Monte Carlo Policy Evaluation
+    \item First-Visit MC
+    \item Bias, Varianc and MSE
+    \item Temporal difference learning
+    \item TD(0)
+    \item n-step return
+    \item $\lambda$-return
+    \item TD($\lambda$)
+    \item Eligibility traces
+    \item Backward view TD($\lambda$)
+    \item Bias and variance of model-free policy evaluation
+\end{itemize}
+
+
+\section{Model-free Control}
+
+\begin{itemize}
+\itemsep-0.5em
+    \item on- and off-policy learning
+    \item model-free PI
+    \item MC for on-policy q-evaluation
+    \item $\epsilon$-greedy exploration
+    \item monotonic $\epsilon$-greedy policy improvement
+    \item Greedy in the limit of inifinite Exploration
+    \item SARSA
+    \item Q-Learning
+    \item Maximization bias
+    \item Double Q-Learning
+\end{itemize}
+
+\section{Function Approximation}
+
+\begin{itemize}
+\itemsep-0.5em
+    \item value function approximation
+    \item (stochastic) gradient descent
+    \item Model Free VFA Policy Evaluation
+    \item Monte Carlo Value Function Approximation
+    \item Convergence Guarantees for LVF Approx. for Policy Evaluation
+    \item Temporal Difference (TD(0)) Learning with Value Function Approximation
+    \item Control using Value Function Approximation
+    \item Action-Value Function Approximation with an Oracle
+    \item Incremental Model-Free Control Approaches
+\end{itemize}
+
+\section{Deep Reinforcement Learning}
+
+\begin{itemize}
+\itemsep-0.5em
+    \item The Benefit of Deep Neural Network Approximators
+    \item DQN: Q-Learning with Value Function Approximation
+    \item Replay buffer
+    \item Fixed Q-Target
+    \item Double Q-Learning
+    \item Clipped Double Q-Learning
+    \item Prioritized experience replay
+    \item Dueling networks
+    \item Advantage function
+\end{itemize}
+
+\section{Policy Search}
+
+\begin{itemize}
+\itemsep-0.5em
+    \item Policy-based RL
+    \item Policy objective functions
+    \item Policy optimization with evolutionary strategies
+    \item Policy gradient
+    \item finite differences
+    \item analytic gradient
+    \item Parameterized policy
+    \item Likelihood ratio policy gradient
+    \item Score function
+    \item Policy gradient theorem
+    \item policy gradient: temporal structure
+    \item REINFORCE
+    \item Baseline
+    \item Vanilla Policy gradient algorithm
+    \item Step size
+    \item Auto Step-size selection
+    \item local approximation
+    \item conservative policy iteration
+    \item TRPO
+\end{itemize}
+
+\section{Exploration}
+
+\begin{itemize}
+\itemsep-0.5em
+    \item Bandit problem
+    \item Total regret and zero regret
+    \item Exploration vs. Exploitation
+    \item Optimistic initialization
+    \item $\epsilon$-greedy
+    \item Upper Confidence Bounds
+    \item Thompson Sampling
+    \item Bayesian Model-based RL
+    \item Hard exploration problem
+    \item Intrinsic reward
+    \item Count-based Exploration
+    \item Prediction-based exploration
+    \item Adaptive curiosity
+    \item Pure curiosity-drive learning
+    \item Variational information maximizing exploration
+\end{itemize}
+
+\section{Meta-RL}
+
+\begin{itemize}
+\itemsep-0.5em
+    \item Generalization in RL
+    \item cMDP
+    \item Contexts
+    \item Contexts and HPO
+    \item approaches in meta-RL
+    \item Curriculum RL
+    \item Task-specific curriculum
+    \item Automatic curriculum
+    \item teacher-guided curriculum
+    \item SPaCE
+\end{itemize}
+
+\section{AutoRL}
+
+\begin{itemize}
+\itemsep-0.5em
+    \item Grid Search
+    \item Random Search
+    \item Bayesian Optimization
+    \item Population-Based Training
+    \item PB2
+\end{itemize}
+
+\end{document}
