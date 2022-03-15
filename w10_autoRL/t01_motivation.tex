@@ -1,0 +1,87 @@
+% !TeX spellcheck = en_US
+\documentclass[aspectratio=169]{../latex_main/tntbeamer}  % you can pass all options of the beamer class, e.g., 'handout' or 'aspectratio=43'
+\input{../latex_main/preamble}
+\title[Meta-RL]{AutoRL}
+\subtitle{Motivation}
+
+
+\begin{document}
+	
+	\maketitle
+
+%-----------------------------------------------------------------------
+
+
+%----------------------------------------------------------------------
+\begin{frame}[c]{Problem of Hyperparameters}
+	
+	\begin{itemize}
+	    \item We have seen that many algorithms have important hyperparameters
+	    \item Some hyperparameters are dealt implicitly, as we have seen with the step size in TRPO
+	    \begin{itemize}
+	        \item but this introduced other hyperparameters; hopefully not so sensible
+	    \end{itemize}
+	    \item In fact, many RL algorithms are fairly brittle regarding their hyperparameter settings
+	\end{itemize}
+	
+\end{frame}
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{What are Hyperparameters in RL?}
+	
+	\begin{itemize}
+	    \item ...
+	\end{itemize}
+	
+\end{frame}
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{What are Hyperparameters in RL?}
+	
+	\begin{itemize}
+	    \item Learning rate
+	    \item Discount factor
+	    \item Exploration rate / strategy
+	    \item Reward shaping and reward proxies (e.g., subgoals)
+	    \item DNN architecture and everything related to training DNNs
+	    \item State preprocessing (e.g., images)
+	    \item Experience reply
+	    \item Choice of RL algorithm (DQN vs. REINFORCE vs. PPO vs. TRPO vs. ...)
+	    \item \ldots
+	\end{itemize}
+	
+\end{frame}
+%-----------------------------------------------------------------------
+\begin{frame}[c]{Grid Search vs. Random Search}
+	
+\centering
+Grid Search \hspace{10em} Random Search:\\
+\includegraphics[width=0.4\textwidth, trim=0 0 65em 0em, clip]{w10_autoRL/images/static_grid_new.png}
+\includegraphics[width=0.4\textwidth, trim=0 0 65em 0em, clip]{w10_autoRL/images/static_random_new.png}
+
+\end{frame}
+%-----------------------------------------------------------------------
+%-----------------------------------------------------------------------
+\begin{frame}[c]{Grid Search vs. Random Search}
+	
+\begin{itemize}
+    \item Grid Search:
+    \begin{itemize}
+        \item[+] Structured study
+        \item[-] Requires discretization (from an expert)
+        \item[-] Doesn't scale well to high dimensions
+        \item[-] Cannot be interrupted mid-way
+    \end{itemize}
+    \item Random Search
+    \begin{itemize}
+        \item[+/-] Less structured
+        \item[+] Works better if effective dimensionality is low 
+        \item[+] Better anytime behavior
+        \item[+] Easy to add more points later on
+        \item[-] Still very inefficient
+    \end{itemize}
+\end{itemize}
+\end{frame}
+%-----------------------------------------------------------------------
+
+\end{document}

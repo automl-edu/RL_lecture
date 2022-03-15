@@ -1,0 +1,200 @@
+% !TeX spellcheck = en_US
+\documentclass[aspectratio=169]{../latex_main/tntbeamer}  % you can pass all options of the beamer class, e.g., 'handout' or 'aspectratio=43'
+\input{../latex_main/preamble}
+\title[Meta-RL]{Wrap Up}
+\subtitle{---}
+
+
+\begin{document}
+	
+	\maketitle
+
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Course Overview}
+	
+	\begin{enumerate}
+		\item Big Picture
+		\item MDP, Policy, Value Iteration
+		\item Policy Evaluation
+		\item Model Free Control
+		\item Linear Function Approximation
+		\item Deep RL
+		\item Policy Gradient
+		\item Exploration
+		\item Meta-RL
+		\item Reproducibility in RL
+		\item Auto-RL
+		\item Project
+	\end{enumerate}
+	
+	\pause
+	$\leadsto$ More an introduction into RL!
+	
+\end{frame}
+%----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Further and Related Topics}
+	
+	\begin{itemize}
+	    \item Model-based RL
+	    \item Multi-Agent RL
+	    \item Imitation Learning
+	    \item Transfer Learning
+	    \item Offline (Batch) RL
+	    \item Control + Planning (e.g., MCTS)
+	    \item Game Theory
+	    \item \ldots
+	\end{itemize}
+\end{frame}
+%----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{AI Lectures at LUH}
+	
+	\centering
+	\includegraphics[width=0.54\textwidth]{w11_wrap_up/images/ai_courses_luh.PNG}
+	
+\end{frame}
+%----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{}
+	
+	\centering
+	\huge
+	Overview on Possible Master Thesis Topics with Us
+	
+\end{frame}
+%----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Multi-Fidelity Evaluations for cRL}
+	
+    \begin{itemize}
+		\item Level: MSc Thesis
+		\item Idea in a nutshell:
+		\begin{itemize}
+		    \item Evaluating contextual RL is expensive, but important for assessing the true performance
+		    \item Multi-fidelity allows us to use partial information (e.g., evaluation on less instances, less steps or shorter episodes)
+		    \item What does the correlation of evaluation method and true performance tell us about our algorithms?
+		    \item Evaluation on CARL (Context Adaptive Reinforcement Learning benchmark library)
+		\end{itemize}
+		\item Requirements: Python, Hands-on RL
+		\item Supervisor: Theresa Eimer / Carolin Benjamins
+	\end{itemize}
+	
+\end{frame}
+%----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Bootstrapped Meta-Learning in cRL}
+	
+    \begin{itemize}
+		\item Level: MSc Thesis
+		\item Idea in a nutshell:
+		\begin{itemize}
+		    \item Efficient and generalizable meta-learning is hard to achieve
+		    \item Bootstrap meta-learning bootstraps a task from a meta-learner and minimizes the distance to that task under some meta-metric
+		    \item Can we generalize this idea to contextual RL?
+		    \item What is the relationship between the RL and generalization meta-loss landscape?
+		    \item Evaluation on CARL (Context Adaptive Reinforcement Learning benchmark library)
+		\end{itemize}
+		\item Requirements: Python, Hands-on DL, AutoML
+		\item Supervisor: Theresa Eimer
+	\end{itemize}
+	
+\end{frame}
+%----------------------------------------------------------------------
+% %----------------------------------------------------------------------
+% \begin{frame}[c]{FACT optimization in the Outer Loop}
+	
+% \begin{itemize}
+%     \begin{itemize}
+% 		\item Level: MSc Thesis
+% 		\item Idea in a nutshell:
+% 		\begin{itemize}
+% 		    \item FACT = fairness, accountability, transparency 
+% 		    \item How can we make use of (multi-objective) AutoML for FACT optimization?
+% 		    \item Comparison to inner loop optimization, impact of different design decisions, use of multi-fidelity methods
+% 		\end{itemize}
+% 		\item Requirements: Python, AutoML, Hands-On ML (/RL)
+% 		\item Supervisor: Theresa Eimer
+% 	\end{itemize}
+% \end{itemize}
+	
+% \end{frame}
+% %----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Metrics of Generalization in CARL}
+	
+    \begin{itemize}
+		\item Level: MSc Thesis
+		\item Idea in a nutshell:
+		\begin{itemize}
+		    \item CARL: Context Adaptive Reinforcement Learning benchmark library
+		    \item We as humans do not need an explicit context information to learn how to generalize between tasks (e.g., we can easily grab different kinds of bottles without thinking about shape, size and weight of it)
+		    \item How can we learn/estimate what is useful context information for generalization?
+		    \item What is a good metric to compare the information degree of context information without expensive training of agents?
+		    \item Evaluation on CARL (Context Adaptive Reinforcement Learning benchmark library)
+		\end{itemize}
+		\item Requirements: Python, Hands-on RL
+		\item Supervisor: Aditya Mohan
+	\end{itemize}
+	
+\end{frame}
+%----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Context-Agnostic Latent Representations}
+	
+    \begin{itemize}
+		\item Level: MSc Thesis
+		\item Idea in a nutshell:
+		\begin{itemize}
+		    \item Besides explicit context information, we can observe what kind of states the agent observes, how the transitions work and what kind of reward signal it gets
+		    \item Can we make use of it to learn an latent embedding over the training tasks?
+		    \item Test it on the test tasks in a zero-short policy transfer scenario?
+		    \item Study and visualize the context space and check information degree compared to explicit context information
+		    \item Evaluation on CARL (Context Adaptive Reinforcement Learning benchmark library)
+		\end{itemize}
+		\item Requirements: Python, Hands-on RL
+		\item Supervisor: Aditya Mohan
+	\end{itemize}
+	
+\end{frame}
+%----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Model-based RL for cRL}
+	
+    \begin{itemize}
+		\item Level: MSc Thesis
+		\item Idea in a nutshell:
+		\begin{itemize}
+		    \item Model-based RL aims at learning the MDP (i.e,, tranisition dynamics and reward signal)
+		    \item for contextual RL with many MDPs, this gets much more complicated
+		    \item How can we efficiently extend model-based RL to contextual RL  with joint models?
+		    \item Evaluation on CARL (Context Adaptive Reinforcement Learning benchmark library)
+		\end{itemize}
+		\item Requirements: Python, Hands-on RL
+		\item Supervisor: Carolin Benjamins
+	\end{itemize}
+	
+\end{frame}
+%----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Context Changes during Episodes}
+	
+    \begin{itemize}
+		\item Level: MSc Thesis
+		\item Idea in a nutshell:
+		\begin{itemize}
+		    \item So far, we always considered stationary MDPs 
+		    \item What would happen if the MDP changes over time? $\leadsto$ non-stationary MDPs 
+		    \item How can we combine this idea with contextual RL? 
+		    \item How should an agent handle the situation if the context and the corresponding context information changes over time?
+		    \item Evaluation on CARL (Context Adaptive Reinforcement Learning benchmark library)
+		\end{itemize}
+		\item Requirements: Python, Hands-on RL
+		\item Supervisor: Carolin Benjamins
+	\end{itemize}
+	
+\end{frame}
+%----------------------------------------------------------------------
+
+\end{document}
