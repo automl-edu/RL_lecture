@@ -13,6 +13,41 @@
 
 %----------------------------------------------------------------------
 %----------------------------------------------------------------------
+\begin{frame}[c]{Team}
+	
+	\begin{columns}[T]
+		
+		\column{0.3\textwidth}
+		\centering
+		\includegraphics[height=7em]{images/marius}
+		
+		Prof. Dr.\\ Marius Lindauer
+		
+		\column{0.3\textwidth}
+		\centering
+		\includegraphics[height=7em]{images/caro}
+		
+		Carolin Benjamins\\
+		
+		\column{0.3\textwidth}
+		\centering
+		\includegraphics[height=7em]{images/aditya}
+		
+		Aditya Mohan \\
+		
+		
+		
+% 		\column{0.3\textwidth}
+% 		\centering
+% 		\includegraphics[height=10em]{images/eimer}
+		
+% 		Theresa Eimer\\
+	\end{columns}
+	
+	
+\end{frame}
+%----------------------------------------------------------------------
+%----------------------------------------------------------------------
 \begin{frame}[c]{Question}
 	
 	\centering
@@ -33,7 +68,7 @@
 \textit{``Machine learning is the science of getting computers to act\\
  without being explicitly programmed.''}
 
-\hfill by Andrew Ng
+\hfill by Andrew Ng (inspired by Arthur Samuel)
 
 \end{frame}
 %-----------------------------------------------------------------------
@@ -93,7 +128,7 @@
 	\end{enumerate}
 	
 	\pause
-	$\leadsto$ More an introduction into RL!
+	$\leadsto$ \alert{More an introduction into RL!}
 	
 \end{frame}
 %----------------------------------------------------------------------
@@ -101,92 +136,65 @@
 \begin{frame}[c]{Course Format}
 	
 	\begin{itemize}
-		\item Concepts over details
+		\item Concepts \& Details
 		\begin{itemize}
-			\item we provide references and links to papers\\ s.t. you can read up details!
+			\item We provide references and links to papers\\ s.t. you can read up more details! 
+			\item Nevertheless, we cover all the basic math for RL
 		\end{itemize}
 		\smallskip
 		\item Interactive lecture and exercise sessions
 		\begin{itemize}
-			\item short inputs ($\sim$10-20min) followed by Q\&A
-			\item interactive quizzes in exercise sessions to reinforce your knowledge
+		    \item Watch lecture at home!
+		    \item Discuss it with us on-site
+			\item Interactive quizzes in exercise sessions to reinforce your knowledge and understanding
 			\item[$\leadsto$] The success of it depends on whether you are willing to talk to us! 
 		\end{itemize}
 		\smallskip
 		\item (Mostly) Practical exercises
 		\begin{itemize}
-			\item implement it, use it and play with it!
+			\item Implement it, use it and play with it!
+			\item We will answer questions for the current exercise and partially discuss solutions from the last week in the on-site sessions
 		\end{itemize}
 	\end{itemize}
 	
 \end{frame}
 %----------------------------------------------------------------------
-%----------------------------------------------------------------------
-\begin{frame}[c]{Team}
-	
-	\begin{columns}[T]
-		
-		\column{0.3\textwidth}
-		\centering
-		\includegraphics[height=10em]{images/lindauer}
-		
-		Prof. Dr.\\ Marius Lindauer
-		
-		\column{0.3\textwidth}
-		\centering
-		\includegraphics[height=10em]{images/eimer}
-		
-		Theresa Eimer\\
-		
-		\column{0.3\textwidth}
-		\centering
-		\includegraphics[height=10em]{images/schubert}
-		
-		Frederik Schubert \\
-		
-		
-	\end{columns}
-	
-	
-\end{frame}
-%----------------------------------------------------------------------
+
 %----------------------------------------------------------------------
 \begin{frame}[c]{Organization (Lectures)}
 	
 	\begin{itemize}
-		\item Meeting each week Thursday at 2pm (s.t).
-		\pause
-		%\item I will try to limit the lecture to 90min, but since I would like to have an interactive lecture, let's be a bit flexible.
-		%\pause
-		\item Each week, the lecture is divided into small parts.
-		\pause
-		\item We will not record or stream the lecture
+		\item Lectures are pre-recorded
+		\item We will make them available on StudIP via Flowcast
+		\item[$\leadsto$] Flipped classroom lecture
+		\begin{itemize}
+		    \item You watch the lectures whenever it suits you
+		    \item We will discuss the lecture content in our on-site sessions
+		    \item[$\leadsto$] each week Thursday at 2pm (s.t).
+		    \item The meetings will not be recorded
+		\end{itemize}
 	\end{itemize}
 	
 \end{frame}
 %-----------------------------------------------------------------------
 
 %----------------------------------------------------------------------
-\begin{frame}[c]{Organization (Exercises)}
+\begin{frame}[c]{Details on On-Site Meetings}
 	
-	\begin{itemize}
-		\item Every Wednesday at 3pm
+	\begin{enumerate}
+	    \item Answering your questions regarding the videos
+	    \item Breakout groups discussing some more in-depth questions
+		\item Kahoot-Quiz
 		\begin{itemize}
-			\item Regular attendance highly recommended!
-			\item No recording
+		    \item Helps you to check whether you really understand the topics
+		    \item Gamified quiz 
 		\end{itemize}
-		\pause
-		\item Discussion of mini examples (e.g., Mars Robot)
-		\pause
-		\item Interactive Kahoot quiz
-		\pause
 		\item Feedback to exercise sheet
 		\begin{itemize}
 			\item You don't need to achieve any point threshold
 			\item But you need to submit something every week
 		\end{itemize}
-	
-	\end{itemize}
+	\end{enumerate}
 	
 \end{frame}
 %-----------------------------------------------------------------------
@@ -196,9 +204,12 @@
 	\begin{itemize}
 	\item Every week, a new exercise sheet
 	\begin{itemize}
-		\item exercise focus is one week behind the lecture topics
+		\item Exercise focus is aligned with the week's lecture topic
+		\begin{itemize}
+		    \item \alert{Deadline} is always Fridays at 4pm
+		\end{itemize}
 		\item Most exercises will be practical, i.e., you have to implement something
-		\item Team work highly recommended, team size at most 3! 
+		\item Teamwork highly recommended, team size at most 3! 
 		\pause
 		\item Build upon GitHub classroom $\leadsto$ enables auto-grading
 		\begin{itemize}
@@ -207,15 +218,16 @@
 			\item Submit solutions via git
 		\end{itemize}
 		\pause
-		\item Up to \alert{$9$ bonus points} for final grade, i.e., 3 grading boosts.
+		\item Up to \alert{$10$ bonus points} for final grade, i.e., $2$ grading boosts.
 		\begin{itemize}
 		    \item To get a bonus point, your solution has to be at least correct by $80\%$
+                \item We pick one team each week to present their solution in the live session -- if not able, no bonus point
 		\end{itemize}
 		\pause
 		\item If we catch anyone at obvious cheating (incl. plagiarism),\newline we will kick them out.
 	\end{itemize}
 	\pause
-	\item \alert{If you need help or have questions, use the chat!}
+	\item \alert{If you need help or have questions, use StudIP!}
 	\end{itemize}
 	
 \end{frame}
@@ -226,13 +238,18 @@
 Priority list:
 	\begin{enumerate}
 		\item Ask your friends and peers
-		\item Use our chat system via Mattermost (see Stud.IP for invitation link)
+		\item Stud.IP Forum
 		\begin{itemize}
-		    \item[$\leadsto$] Channel ``2021 RL Lecture''
+		    %\item[$\leadsto$] Channel ``2022 RL Lecture''
+		    \item Only use the lecture forum
 			\item You can also answer the questions of your peers! 
 			\item We will only reply if we have the feeling that it is necessary.
 		\end{itemize}
-		\item If there are organizational questions, contact Theresa or Frederik directly (via Mattermost)
+		\item If there are organizational questions, contact Carolin or Aditya directly 
+		\begin{itemize}
+		    \item Don't write them emails about how to solve an exercise or that you found a bug in the exercise
+		    \item[$\leadsto$] all of these belong into the Stud.IP forum
+		\end{itemize}
 		\item Only as the very last option, contact me ;-)
 	\end{enumerate}
 	

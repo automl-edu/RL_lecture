@@ -71,6 +71,29 @@
     \end{figure}
     
 \end{frame}
+%----------------------------------------------------------------------
+\begin{frame}[c]{Acquisition Function}
+
+\begin{itemize}
+    \item Goal to trade-off exploration and exploitation
+    \item \alert{Exploration:} Sample in unexplored areas with high uncertainty to check whether there are good samples
+    \item \alert{Exploitation:} Sample in the areas where you believe the best sample should be
+    \smallskip
+    \item We don't know the best exploration-exploitation trade-off
+    \item[$\leadsto$] There are different possible acquisition function for this trade-off
+    \smallskip
+    \item For example, upper-confidence bounds (UCB) or lower confidenec bounds (LCB)
+\end{itemize}
+
+\begin{equation}
+    \alpha_{\text{UCB}} = \mu + \kappa \sigma
+\end{equation}
+
+with $\mu$ being the posterior mean and $\sigma$ the posterior variance
+
+\end{frame}
+
+%----------------------------------------------------------------------
 
 %----------------------------------------------------------------------
 \begin{frame}[c]{Bayesian Optimization of a Blackbox Function in a Nutshell}

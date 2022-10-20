@@ -123,7 +123,7 @@
 		\item For $k=1$ until convergence
 		\begin{itemize}
 			\item For all $s$ in $S$:
-			$$V^\pi_k  = r(s, \pi(s)) + \gamma \sum_{s'\in S} p(s'\mid s, \pi(s)) V_{k-1}^\pi (s')$$
+			$$V^\pi_k (s)  = r(s, \pi(s)) + \gamma \sum_{s'\in S} p(s'\mid s, \pi(s)) V_{k-1}^\pi (s')$$
 		\end{itemize}
 	\end{itemize}
 	\item This is a Bellmann backup for a particular policy
