@@ -1,5 +1,5 @@
 # Alpine Docker image version
-ARG ALPINE_VERSION= "20220715"
+ARG ALPINE_VERSION="20220715"
 
 FROM alpine:${ALPINE_VERSION}
 
