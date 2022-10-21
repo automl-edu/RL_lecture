@@ -1,7 +1,7 @@
 # Alpine Docker image version
-#ARG ALPINE_VERSION=  "3.16.2" #"20220715" #"20201218"
+ARG ALPINE_VERSION=  3.16.2
 
-FROM alpine:3.16.2 #${ALPINE_VERSION}
+FROM alpine:${ALPINE_VERSION}
 
 # Installing packages
 # hadolint ignore=DL3018
