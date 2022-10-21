@@ -1,5 +1,5 @@
 # Alpine Docker image version
-ARG ALPINE_VERSION= 3.16.2 
+ARG ALPINE_VERSION= "20220715"
 
 FROM alpine:${ALPINE_VERSION}
 
@@ -7,8 +7,11 @@ FROM alpine:${ALPINE_VERSION}
 # hadolint ignore=DL3018
 RUN apk update && \
     apk add --no-cache \
+    	libicu-dev && \
+    apk add --no-cache \
         texlive-full && \
     rm -rf /var/cache/apk/
+
 
 # No 'xelatex' user
 #
