@@ -7,7 +7,7 @@ FROM alpine:${ALPINE_VERSION}
 # hadolint ignore=DL3018
 RUN apk update && \
     apk add --no-cache \
-    	libicu-dev && \
+    	icu-dev && \
     apk add --no-cache \
         texlive-full && \
     rm -rf /var/cache/apk/
