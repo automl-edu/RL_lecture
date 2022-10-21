@@ -1,5 +1,5 @@
 # Alpine Docker image version
-ARG ALPINE_VERSION="20220715"
+ARG ALPINE_VERSION="3.16.2"
 
 FROM alpine:${ALPINE_VERSION}
 
@@ -8,6 +8,8 @@ FROM alpine:${ALPINE_VERSION}
 RUN apk update && \
     apk add --no-cache \
     	icu-dev && \
+    apk add --no-cache \
+    	icu-data-full && \
     apk add --no-cache \
         texlive-full && \
     rm -rf /var/cache/apk/
