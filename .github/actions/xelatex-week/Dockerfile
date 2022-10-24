@@ -1,5 +1,5 @@
 # Alpine Docker image version
-ARG ALPINE_VERSION="20201218"
+ARG ALPINE_VERSION="3.16.2"
 
 FROM alpine:${ALPINE_VERSION}
 
@@ -9,6 +9,7 @@ RUN apk update && \
     apk add --no-cache \
         texlive-full && \
     rm -rf /var/cache/apk/
+
 
 # No 'xelatex' user
 #
