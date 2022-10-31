@@ -69,7 +69,7 @@
 	\end{eqnarray}
 	
 	\begin{itemize}
-		\item For example $\alpha_t= \frac{1}{T}$ satisfies the above condition
+		\item For example $\alpha_t= \frac{1}{t}$ satisfies the above condition
 		\pause
 		\item Would one want to use a step size choice that satisfies the above in
 		practice? Likely not.
@@ -116,7 +116,7 @@
 			\item Observe $(r_{t}, s_{t+1})$
 			\item Update Q 
 			$$Q(s_t,a_t) \gets Q(s_t, a_t) + \alpha (r_t + \gamma \max_{a\in A} Q(s_{t+1}, a) - Q(s_t, a_t))$$
-			\item $\pi(s_t) \in \argmax_{a\in A} Q(s_t, a)$ with probability $1-\epsilon$, else random
+			\item $\pi_b(s_t) \in \argmax_{a\in A} Q(s_t, a)$ with probability $1-\epsilon$, else random
 			\item $t = t+1$
 		\end{itemize} 
 	\end{itemize}
