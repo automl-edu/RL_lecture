@@ -26,7 +26,7 @@
 	\item Denote a state-action trajectory as 
 	$$ \tau = (s_0, a_0, r_0, \ldots, s_{T-1}, a_{T-1}, r_{T-1}, s_T) $$
 	\item Use $R(\tau) = \sum_{t=0}^{T} R(s_t, a_t)$ to be the sum of rewards for a trajectory~$\tau$
-	\item[$\leadsto$] Focusing for now on $V(s_0, \theta) = \sum_\tau P(\tau; \theta) R(\tau)$ 
+	\item[$\leadsto$] Focusing for now on $V(s_0; \theta) = \sum_\tau P(\tau; \theta) R(\tau)$ 
 	
 \end{itemize}
 
@@ -38,12 +38,14 @@
 \begin{itemize}
 	\item Assume policy $\pi_\theta$ is differentiable whenever it is non-zero\\
 	 and we know the gradient $\nabla_\theta \pi_\theta (s,a)$
-	\item Recall policy value is $V(s_0, \theta) = \mathrm{E}_{\pi_\theta}\left[ \sum_{t} r(s_t, a_t); \pi_\theta, s_0 \right]$
-	\item where the expectation is taken over the states and actions visited by $\pi_\theta$
+	\item Recall policy value is $V(s_0; \theta) = \mathrm{E}_{\pi_\theta}\left[ \sum_{t} r(s_t, a_t); \pi_\theta, s_0 \right]$
+        \begin{itemize}
+	   \item where the expectation is taken over the states and actions visited by $\pi_\theta$
+        \end{itemize}
 	\item We can re-express this in multiple ways
 	\begin{itemize}
-	    \item $V(s_0,\theta) = \sum_a \pi_\theta (a \mid s_0) Q(s_0, a; \theta)$
-	    \item $V(s_0, \theta) = \sum_\tau P(\tau; \theta) R(\tau)$ with $\tau$ being an trajectory
+	    \item $V(s_0;\theta) = \sum_a \pi_\theta (a \mid s_0) Q(s_0, a; \theta)$
+	    \item $V(s_0; \theta) = \sum_\tau P(\tau; \theta) R(\tau)$ with $\tau$ being an trajectory
 	\end{itemize}
 	\item[$\leadsto$] We will focus on the latter definition.
 \end{itemize}
@@ -76,10 +78,10 @@
 		\item Take the gradient with respect to $\theta$:
 		\small
 		\begin{eqnarray*}
-		\nabla_\theta V(\theta) &=& \nabla_\theta \sum_{\tau} P(\tau; \theta)R(\tau)\\
-		&=& \sum_{\tau} \nabla_\theta P(\tau; \theta)R(\tau)\\
-		&=& \sum_{\tau} \frac{P(\tau; \theta)}{P(\tau; \theta)} \nabla_\theta P(\tau; \theta)R(\tau)\\
-		&=& \sum_{\tau} P(\tau; \theta)  R(\tau) \underbrace{\frac{\nabla_\theta P(\tau; \theta)}{P(\tau; \theta)}}_{\text{likelihood ratio}} \\
+		\nabla_\theta V(\theta) &=& \nabla_\theta \sum_{\tau} P(\tau; \theta)R(\tau)\\ \pause
+		&=& \sum_{\tau} \nabla_\theta P(\tau; \theta)R(\tau)\\ \pause
+		&=& \sum_{\tau} \frac{P(\tau; \theta)}{P(\tau; \theta)} \nabla_\theta P(\tau; \theta)R(\tau)\\ \pause
+		&=& \sum_{\tau} P(\tau; \theta)  R(\tau) \underbrace{\frac{\nabla_\theta P(\tau; \theta)}{P(\tau; \theta)}}_{\text{likelihood ratio}} \\ \pause
 		&=& \sum_{\tau} P(\tau; \theta)  R(\tau) \nabla_\theta \log P(\tau; \theta)
 		\end{eqnarray*} 
 		

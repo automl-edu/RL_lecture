@@ -55,7 +55,7 @@
 		\item Loop
 		\begin{itemize}
 			\item Using policy $\pi$ sample episode $i = s_{i,1}, a_{i,1}, r_{i,1}, s_{i,2}, a_{i,2}, r_{i,2}, \ldots, s_{i, T_i}$
-			\item $G_{i,t} = r_{i,t} + \gamma r_{i,t+1}, \gamma^2 r_{i,t+2} + \ldots \gamma^{T_i -1} r_{i,T_i}$
+			\item $G_{i,t} = r_{i,t} + \gamma r_{i,t+1} + \gamma^2 r_{i,t+2} + \ldots \gamma^{T_i -1} r_{i,T_i}$
 			\item For each pair $(s,a)$ visited in episode $i$
 			\begin{itemize}
 				\item For first (or every) time $t$ that $(s,a)$ is visited in episode $i$:

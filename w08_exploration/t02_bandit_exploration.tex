@@ -33,9 +33,9 @@
 	
 	\begin{itemize}
 		\item Simple idea: initialize $\hat{Q}_0(a)$ to high values
-		\item Update action value by incremental Monte Carlo evaluations
+		\item Update action value incrementally
 		\item Starting with $N(a) > 0$
-		$$\hat{Q}_t(a_t) = \hat{Q}_{t-1} + \frac{1}{N_t(a_t)} (r_t - \hat{Q}_{t-1})$$
+		$$\hat{Q}_t(a_t) = \hat{Q}_{t-1}(a_t) + \frac{1}{N_t(a_t)} (r_t - \hat{Q}_{t-1}(a_t))$$
 		\item Encourages systematic exploration early on
 		\item But can still lock onto suboptimal action
 	\end{itemize}
@@ -49,7 +49,7 @@
 		\item play best known action $\hat{a}$ with probability $1-\epsilon$
 		\item play a random action $a \in \mathcal{A}$ with probability $\epsilon$ 
 		\smallskip
-		\item Question: Is this a zero-regret strategy?
+		\item Question: Is this a zero-regret strategy for a constant $\epsilon$?
 		\pause
 		\begin{itemize}
 			\item No, since with probability $\epsilon$ we will obtain a non-zero regret and therefore, even in the limit the regret will not go to zero, but obtain a linear regret.
@@ -73,7 +73,7 @@
 	\begin{itemize}
 		\item Track all rewards you obtained by playing each action $a_k$ and compute mean $\mu(a_k)$ and standard deviation $\sigma(a_k)$ to estimate the underlying reward distribution
 		\item "Optimistic in face of uncertainty" by upper confidence bound:
-		$$\mu(a_k) + \kappa \cdot \sigma(a_k) / \sqrt{N(a)}$$
+		$$\mu(a_k) + \kappa \cdot \sigma(a_k) / \sqrt{N(a_k)}$$
 		\item Idea: Over time, we get more and more evidence for the best actions until we are sure that the best known is really the best
 		\medskip
 		\pause

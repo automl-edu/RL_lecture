@@ -130,26 +130,29 @@ REINFORCE:
 		\end{itemize}
 		
 	\end{itemize}
-	
-	
+
+\bigskip
+
+$\leadsto$ Actor-Critic method
+ 
 \end{frame}
 %-----------------------------------------------------------------------
-%----------------------------------------------------------------------
-\begin{frame}[c]{Choosing the Baseline: Value Functions}
+% %----------------------------------------------------------------------
+% \begin{frame}[c]{Choosing the Baseline: Value Functions}
 	
-	\begin{itemize}
-		\item Recall $Q$-function:
-		$$Q^\pi(s,a) = \mathbb{E}_\pi [r_0 +  \gamma r_1 + \gamma^2 r_2 + \ldots \mid s_0 = s, a_0 = a ]$$
-		\item State-value function can serve as a great baseline
-		\begin{eqnarray}
-		V^\pi (s) &=& \mathbb{E}_\pi [r_0 +  \gamma r_1 + \gamma^2 r_2 + \ldots \mid s_0 = s]\nonumber\\	
-		&=& \mathbb{E}_{a\sim\pi} [Q^\pi(s,a)]\nonumber
-		\end{eqnarray}
-		\item Advantage function: Combining $Q$ with baseline $V$:
-		$$A^\pi(s,a) = Q^\pi(s,a) - V^\pi(s) $$
-	\end{itemize}
+% 	\begin{itemize}
+% 		\item Recall $Q$-function:
+% 		$$Q^\pi(s,a) = \mathbb{E}_\pi [r_0 +  \gamma r_1 + \gamma^2 r_2 + \ldots \mid s_0 = s, a_0 = a ]$$
+% 		\item State-value function can serve as a great baseline
+% 		\begin{eqnarray}
+% 		V^\pi (s) &=& \mathbb{E}_\pi [r_0 +  \gamma r_1 + \gamma^2 r_2 + \ldots \mid s_0 = s]\nonumber\\	
+% 		&=& \mathbb{E}_{a\sim\pi} [Q^\pi(s,a)]\nonumber
+% 		\end{eqnarray}
+% 		\item Advantage function: Combining $Q$ with baseline $V$:
+% 		$$A^\pi(s,a) = Q^\pi(s,a) - V^\pi(s) $$
+% 	\end{itemize}
 	
-\end{frame}
-%-----------------------------------------------------------------------
+% \end{frame}
+% %-----------------------------------------------------------------------
 %-----------------------------------------------------------------------
 \end{document}

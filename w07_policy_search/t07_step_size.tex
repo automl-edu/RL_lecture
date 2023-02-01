@@ -20,9 +20,9 @@
             \item Important in some applications
             \item PG often more stable than DQN
         \end{itemize} 
-        \item Gradient descent approaches update the weights a small step in direction of gradient
+        \item Gradient descent approaches update the weights a small step in direction of the gradient
         \item First order / linear approximation of the value function's dependence on the policy parameterization
-        \item Locally a good approximation; further aways less good
+        \item Locally a good approximation; further away less good
     \end{itemize}
 
 \end{frame}
@@ -77,7 +77,7 @@
         $$ V(\theta) = \mathbb{E}_{\pi_\theta} \left[ \sum_{t=0}^{\infty} \gamma^t r(s_t, a_t); \pi_\theta \right]$$
         \item Express value of $\Tilde{\pi}$ in terms of advantage of $\pi$
         \begin{eqnarray}
-        V(\Tilde{\theta}) &=& V(\theta) + \mathbb{E}_{\pi{\Tilde{\theta}}} \left[ \sum_{t=0}^{\infty} \gamma^t A_\pi(s_t, a_t) \right]\\
+        V(\Tilde{\theta}) &=& V(\theta) + \mathbb{E}_{\pi_{\Tilde{\theta}}} \left[ \sum_{t=0}^{\infty} \gamma^t A_\pi(s_t, a_t) \right]\\
         &=& V(\theta) + \sum_{s} \mu_{\Tilde{\pi}}(s) \sum_{a} \Tilde{\pi}(a \mid s) A_\pi(s_t, a_t) 
         \end{eqnarray}
         \item $ \mu_{\Tilde{\pi}}(s)$ is the discounted weighted frequency of state $s$ under policy $\Tilde{\pi}$
@@ -93,7 +93,7 @@
     \begin{itemize}
         \item Can we remove the dependency on the discounted visitation frequencies under the new policy?
         \item Substitute in the discounted visitation frequency under the current policy to define a new objective function:
-        $$ L_\pi(\Tilde{\pi}) = V(\theta) + \sum_{s} \alert{\mu_\pi (s)} + \sum_{a} \Tilde{\pi}(a \mid s) A_\pi(s,a)$$
+        $$ L_\pi(\Tilde{\pi}) = V(\theta) + \sum_{s} \alert{\mu_\pi (s)} \sum_{a} \Tilde{\pi}(a \mid s) A_\pi(s,a)$$
         \item Note that $L_{\pi_{\theta_0}}(\pi_{\theta_0}) = V(\theta_0)$
         \item Gradient of $L$ is identical to gradient of value function at policy parameterized evaluated at $\theta_0$: 
         $$\nabla_{\theta} L_{\pi_{\theta_0}}(\pi_{\theta_0})\mid_{\theta = \theta_0} = \nabla_\theta V(\theta)\mid_{\theta = \theta_0}$$
@@ -121,12 +121,13 @@
 	 \vspace{-1.5em}
     \begin{itemize}
         \item Would like to similarly obtain a lower bound on the potential performance for general stochastic policies (not just mixture policies)
-        \item Recall $ L_\pi(\Tilde{\pi}) = V(\theta) + \sum_{s} \alert{\mu_\pi (s)} + \sum_{a} \Tilde{\pi}(a \mid s) A_\pi(s,a)$ 
+        \item Recall $ L_\pi(\Tilde{\pi}) = V(\theta) + \sum_{s} \mu_\pi (s) \sum_{a} \Tilde{\pi}(a \mid s) A_\pi(s,a)$ 
     \end{itemize}
     
     \begin{block}{Theorem}
     Let $D_{TV}^{\max} (\pi_1, \pi_2) = \max_{s} D_{TV}(\pi_1(\cdot \mid s), \pi_2(\cdot\mid s)) = \max_{s} \max_{a} (\pi_1(a\mid s) -\pi_2 (a\mid s))$. Then
     $$V^{\pi_{new}} \geq L_{\pi_{old}} (\pi_{new}) - \frac{4\epsilon\gamma}{(1-\gamma)^2} (D_{TV}^{\max}(\pi_{old}, \pi_{new}))^2$$
+    \vspace{-0.3em}
     where $\epsilon = \max_{s,a}|A_\pi(s,a)|$
     \end{block}
     
@@ -143,7 +144,7 @@
 	
     \begin{itemize}
         \item Goal is to optimize
-        $$\max_{\theta}  L_{\pi_{old}} (\pi_{new}) -  \frac{4\epsilon\gamma}{(1-\gamma)^2} D_{KL}^{\max}(\pi_{old}, \pi_{new}) = L_{\pi_{old}} (\pi_{new}) -  C \cdot D_{KL}^{\max}(\pi_{old}, \pi_{new}) $$
+        $$ L_{\pi_{old}} (\pi_{new}) -  \frac{4\epsilon\gamma}{(1-\gamma)^2} D_{KL}^{\max}(\pi_{old}, \pi_{new}) = L_{\pi_{old}} (\pi_{new}) -  C \cdot D_{KL}^{\max}(\pi_{old}, \pi_{new}) $$
         where $C$ is the penalty coefficient (i.e. hyperparameter)
         \item The penalty (from theory) would be fairly small in practice
         \medskip
@@ -164,7 +165,7 @@
         \item Prior objective:
         $$ \max_{\theta} L_{\theta_{old}} (\theta)$$
         {\centering subject to $ D_{KL}^{s \sim \alert{\mu_{\theta_{old}}}} (\theta_{old}, \theta) \leq \delta$\\}
-        where $ L_\pi(\Tilde{\pi}) = V(\theta) + \sum_{s} \alert{\mu_\pi (s)} + \sum_{a} \Tilde{\pi}(a \mid s) \alert{A_\pi(s,a)}$ 
+        where $ L_\pi(\Tilde{\pi}) = V(\theta) + \sum_{s} \alert{\mu_\pi (s)} \sum_{a} \Tilde{\pi}(a \mid s) \alert{A_\pi(s,a)}$ 
         \item Don't know the visitation weights nor true advantage function
         \pause
         \item Instead do the following substitutions:
@@ -181,7 +182,7 @@
         \item Next substitution:
         $$\sum_{a} \pi_\theta (a\mid s_n) A_{\theta_{old}} (s_n, a) \to \mathbb{E}\left[ \frac{\pi_\theta(a \mid s_n)}{q(a\mid s_n)} A_{\theta_{old}} (s_n, a) \right] $$
         \item where $q$ is some sampling distribution over actions and $s_n$ is a particular sampled state
-        \item This second substitution is to use importance sampling to estimate the desired sum, enabling the use of an alternate sampling distribution $q$ (other than the new policy $\pi_\theta$)
+        \item This second substitution is to use \alert{importance sampling} to estimate the desired sum, enabling the use of an alternate sampling distribution $q$ (other than the new policy $\pi_\theta$)
         \pause
         \item Third substitution:
         $$ A_{\theta_{old}} \to Q_{\theta_{old}}$$
@@ -198,12 +199,12 @@
         $$ \max_\theta \mathbb{E}_{s\sim \mu_{\theta_{old}}, a \sim q} \left[ \frac{\pi_\theta(a \mid s_n)}{q(a\mid s_n)} A_{\theta_{old}} (s_n, a) \right]$$
         {\centering subject to $\mathbb{E}_{s\sim \mu_{\theta_{old}}} D_{KL}(\pi_{old}(\cdot \mid s), \pi_\theta (\cdot \mid s)) \leq \delta$ \\}
         \item Standard approach: sampling distribution is $q(a\mid s)$ is simply $\pi_{old}(a \mid s)$
-        \item For the vine procedure see the paper
+        %\item For the vine procedure see the paper
     \end{itemize}
     
-    \centering
-    \includegraphics[width=0.5\textwidth]{images/trpo.PNG}\\
-    \lit{Schulman et al. 2015}{https://arxiv.org/abs/1502.05477}
+    % \centering
+    % \includegraphics[width=0.5\textwidth]{images/trpo.PNG}\\
+    % \lit{Schulman et al. 2015}{https://arxiv.org/abs/1502.05477}
 
 \end{frame}
 %-----------------------------------------------------------------------
@@ -234,7 +235,7 @@
 	        \item Run policy for $T$ timesteps or $N$ trajectories
 	        \item At each timestep in each trajectory, compute target $Q^\pi(s_t, a_t)$ and baseline $b(s_t)$
 	        \item Compute estimated policy gradient $\hat{g}$
-	        \item Update the policy using $\hat{g}$, potentially constrained to a local region (i.e., try to ensure monotonic improviement)
+	        \item Update the policy using $\hat{g}$, potentially constrained to a local region\\ (i.e., try to ensure monotonic improviement)
 	    \end{enumerate}
 	\end{itemize}
 
@@ -250,7 +251,7 @@
     \item Can input prior knowledge in the form of specifying policy parameterization
     \item You should be familiar with REINFORCE and the policy gradient template on the previous slide
     \item Understand the where different estimators can be slotted in 
-    \item Don't have to be able to derive or remember the specific formulars in TRPO for approximating the objectives and constraints
+    \item (You don't have to be able to derive or remember the specific formulars in TRPO for approximating the objectives and constraints)
 \end{itemize}
 
 \end{frame}

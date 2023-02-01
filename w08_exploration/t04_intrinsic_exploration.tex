@@ -13,15 +13,21 @@
 %----------------------------------------------------------------------
 %----------------------------------------------------------------------
 \begin{frame}[c]{The Hard Exploration Problem}
-	
-	\begin{itemize}
+
+    \begin{columns}
+
+    \column{0.6\textwidth}
+
+    	\begin{itemize}
 		\item hard-exploration problems:
 		\begin{itemize}
 			\item very sparse rewards 
 			\item or even deceptive rewards
 		\end{itemize}
-		\medskip
 		\pause
+        \end{itemize}
+
+        \begin{itemize}
 		\item Examples
 		\begin{itemize}
 			\item Montezuma's Revenge (Atari): long sequence of steps needed to figure out that ``key'' is needed to open ``door''
@@ -33,6 +39,15 @@
 			\end{itemize}
 		\end{itemize}
 	\end{itemize}
+
+    \column{0.5\textwidth}
+
+    \includegraphics[width=0.7\textwidth]{images/montezuma}
+
+    \end{columns}
+ 
+
+
 
 \end{frame}
 %-----------------------------------------------------------------------
@@ -47,6 +62,7 @@
 			\item Children are driven by curiosity which helps to learn
 			\item Intrinsic rewards could be correlated with curiosity, surprise, familiarity of the state and more
 		\end{itemize}
+            \pause
 		\item Two main ideas for RL
 		\begin{itemize}
 			\item Discovery of novel states

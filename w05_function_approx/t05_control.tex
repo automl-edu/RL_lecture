@@ -74,8 +74,10 @@
 		\item Similar to policy evaluation, true state-action value function for a state is unknown and so substitute a target value
 		\item In Monte Carlo methods, use a return $G_t$ as a substitute target
 		$$\Delta \vect{w} = \alpha(G_t - \hat{Q}(s_t,a_t; \vect{w})) \nabla_{\vect{w}} \hat{Q}(s_t, a_t; \vect{w}) $$
+        \pause
 		\item For SARSA instead use a TD target $r+ \gamma \hat{Q}(s', a'; \vect{w})$ which leverages the current function approximations value
 		$$\Delta \vect{w} = \alpha (r + \gamma \hat{Q}(s',a';\vect{w}) - \hat{Q}(s,a;\vect{w})) \nabla_{\vect{w}}\hat{Q}(s,a;\vect{w}) $$
+        \pause
 		\item For Q-learning instead use a TD target $r + \gamma \max_{a'} \hat{Q}(s',a';\vect{w})$ which leverages the max of the current function approximations value
 		$$\Delta \vect{w} = \alpha (r + \gamma \max_{a'} \hat{Q}(s',a';\vect{w}) - \hat{Q}(s,a;\vect{w})) \nabla_{\vect{w}}\hat{Q}(s,a;\vect{w}) $$
 	\end{itemize}

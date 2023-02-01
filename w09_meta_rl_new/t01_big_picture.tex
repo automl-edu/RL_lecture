@@ -1,0 +1,64 @@
+% !TeX spellcheck = en_US
+\documentclass[aspectratio=169]{../latex_main/tntbeamer}  % you can pass all options of the beamer class, e.g., 'handout' or 'aspectratio=43'
+\input{../latex_main/preamble}
+\title[Meta-RL]{Meta Reinforcement Learning}
+\subtitle{The Big Picture}
+
+
+\begin{document}
+	
+	\maketitle
+
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}{What is Meta-RL?}
+    Do you have any examples?
+\end{frame}
+
+\begin{frame}{What is Meta-RL?}
+\begin{itemize}
+    \item Generalization?
+    \item Transfer?
+    \item Skill acquisition?
+    \item An outer loop?
+\end{itemize}
+\end{frame}
+
+\begin{frame}[c]{Can We Generalize beyond a given MDP?}
+	
+	\begin{itemize}
+		\item What happens if the environment changes?
+		\smallskip
+		\item After a human player learned how to play Super Mario Bros in the first levels, they will also play fairly well the upcoming levels
+		\item However, an RL agent will potentially  fail completely
+		\item[$\leadsto$] Strong limitations regarding the applications of a trained agent
+	\end{itemize}
+	
+\end{frame}
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Main Ideas}
+	
+	\begin{enumerate}
+		\item Can we use easy environments to learn how to behave in hard environments?
+		\pause
+		\item Can we train a policy that is easily adaptable to new environments?
+		\pause
+		\item Can we find better training dynamics across a set of environments?
+		\pause
+		\item Can we train a policy that generalizes to new environments without any new training?
+	\end{enumerate}
+
+	%\begin{itemize}
+	%	\item Assumption: We sample our environments i.i.d. from a fixed distribution
+	%	\begin{itemize}
+	%		\item Similar to the assumption in supervised learning, but on a meta-level
+	%		\item Training environments to train our agent on and test environments to check how well it performs.
+	%		\item We might have control how we sample from this distribution;\\ we might not.
+	%	\end{itemize}
+	%\end{itemize}
+			
+\end{frame}
+%-----------------------------------------------------------------------
+%-----------------------------------------------------------------------
+\end{document}

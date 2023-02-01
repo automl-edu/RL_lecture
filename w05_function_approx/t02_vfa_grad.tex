@@ -94,7 +94,7 @@
 		\item Use gradient descent to find a local minimum 
 		$$ \Delta \vect{w} = - \frac{1}{2} \alpha \nabla_{\vect{w}} J(\vect{w})$$
 		\item Stochastic gradient descent (SGD) uses a finite number of samples to compute an approximate gradient:
-		$$ \nabla_{\vect{w}} J(\vect{w}) = \nabla_{\vect{w}} \mathbb{E}_{\pi}[V^\pi (s) - \hat{V}^\pi (s; \vect{w})^2]$$
+		$$ \nabla_{\vect{w}} J(\vect{w}) = \nabla_{\vect{w}} \mathbb{E}_{\pi}[(V^\pi (s) - \hat{V}^\pi (s; \vect{w}))^2]$$
 		$$= \mathbb{E}_\pi [-2 (V^\pi(s) - \hat{V}^\pi (s;\vect{w})) \nabla_{\vect{w}} \hat{V}(s;\vect{w})]$$
 	\end{itemize}
 	

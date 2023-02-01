@@ -22,7 +22,7 @@
 		\item Then $Q(s,a_1) = Q(s,a_2) = 0 = V(s)$
 		\item Assume there are prior samples of taking action $a_1$ and $a_2$
 		\pause
-		\item Let $\hat{Q}(s,a_1)$, $\hat{Q}(s,a_2)$ be the \alert{finite} sample estimate of Q
+		\item Let $\hat{Q}(s,a_1)$, $\hat{Q}(s,a_2)$ be the \alert{finite} sample estimate of $Q$
 		\item Use an unbiased estimator for $Q$, e.g., $\hat{Q}(s,a_1) = \frac{1}{N(s,a_1)} \sum_{i=1}^{N(s,a_1)} r_i(s,a_1)$
 		\pause
 		\item Let $\hat{\pi}\in \argmax_{a}\hat{Q}(s,a)$ be the greedy policy wrt the estimated $\hat{Q}$
@@ -33,10 +33,9 @@
 \vspace{-1em}
 \begin{eqnarray}
 \hat{V}^{\hat{\pi}}(s) &=& \mathbb{E} [\max \hat{Q}(s,a_1), \hat{Q}(s,a_2)]\nonumber\\
-&\geq& \max [\mathbb{E}[\hat{Q}(s,a_1)],\mathbb{E}[\hat{Q}(s,a_2)]]\nonumber\\
+&\geq& \max [\mathbb{E}[\hat{Q}(s,a_1)],\mathbb{E}[\hat{Q}(s,a_2)]] \quad \leadsto \text{Jensens' inequality} \nonumber\\
 &=& \max[0,0] = V^\pi\nonumber
 \end{eqnarray}
-(where the inequality comes from Jensens' inequality.)
 	
 \end{frame}
 %--------------------------------------------------------------
