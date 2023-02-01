@@ -74,7 +74,7 @@ REINFORCE:
 	\item Initialize policy parameters $\theta$ arbitrarily
 	\item for each episode $\{s_1, a_1, r_2, \ldots, s_{T-1}, a_{T-1}, r_T \} \sim \pi_\theta $ do
 	\begin{itemize}
-		\item for $t=1$ to $T - 1$ do
+		\item for $t=0$ to $T - 1$ do
 		\begin{itemize}
 			\item $\theta := \theta + \alpha \nabla_\theta \log \pi_\theta (s_t, a_t) G_t $
 		\end{itemize}
