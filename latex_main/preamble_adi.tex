@@ -1,0 +1,128 @@
+\usepackage{dsfont}
+\usepackage{bm}
+\usepackage[english]{babel}
+\usepackage[T1]{fontenc}
+%\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\graphicspath{ {./figures/} }
+\usepackage{algorithm}
+\usepackage[ruled,vlined,algo2e,linesnumbered]{algorithm2e}
+\usepackage{hyperref}
+\usepackage{booktabs}
+\usepackage{mathtools}
+
+\usepackage{amsmath,amssymb}
+\usepackage{latexsym}
+
+\DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator*{\argmin}{arg\,min}
+
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.16}
+\usepackage{tikz}
+\usetikzlibrary{trees} 
+\usetikzlibrary{shapes.geometric}
+\usetikzlibrary{positioning,shapes,shadows,arrows,calc,mindmap}
+\usetikzlibrary{positioning,fadings,through}
+\usetikzlibrary{decorations.pathreplacing}
+\usetikzlibrary{intersections}
+\pgfdeclarelayer{background}
+\pgfdeclarelayer{foreground}
+\pgfsetlayers{background,main,foreground}
+\tikzstyle{activity}=[rectangle, draw=black, rounded corners, text centered, text width=8em]
+\tikzstyle{data}=[rectangle, draw=black, text centered, text width=8em]
+\tikzstyle{myarrow}=[->, thick, draw=black]
+
+% Define the layers to draw the diagram
+\pgfdeclarelayer{background}
+\pgfdeclarelayer{foreground}
+\pgfsetlayers{background,main,foreground}
+
+\input{../latex_main_old/macros}
+
+% Requires XeLaTeX or LuaLaTeX
+\usepackage{unicode-math}
+
+\usepackage{fontspec}
+%\setsansfont{Arial}
+\setsansfont{RotisSansSerifStd}[ 
+Path=../latex_main/fonts/,
+Extension = .otf,
+UprightFont = *-Regular,  % or *-Light
+BoldFont = *-ExtraBold,  % or *-Bold
+ItalicFont = *-Italic
+]
+\setmonofont{Cascadia}[
+	Path=../latex_main/fonts/,
+	Scale=0.8
+]
+
+% scale factor adapted; mathrm font added (Benjamin Spitschan @TNT, 2021-06-01)
+%\setmathfont[Scale=1.05]{Libertinus Math}
+%\setmathrm[Scale=1.05]{Libertinus Math}
+
+% other available math fonts are (not exhaustive)
+% Latin Modern Math
+% XITS Math
+% Libertinus Math
+% Asana Math
+% Fira Math
+% TeX Gyre Pagella Math
+% TeX Gyre Bonum Math
+% TeX Gyre Schola Math
+% TeX Gyre Termes Math
+
+% Literature References
+% #1 = Display Name
+% #2 = Url (without \href)
+\newcommand{\lit}[2]{\href{#2}{\footnotesize\color{black!60}[#1]}}
+
+\newcommand{\vect}[1]{\mathbf{#1}}
+
+%%% Beamer Customization
+%----------------------------------------------------------------------
+% (Don't) Show sections in frame header. Options: 'sections', 'sections light', empty
+\setbeamertemplate{headline}{empty}
+
+% Add header logo for normal frames
+\setheaderimage{
+	% \includegraphics[height=\logoheight]{figures/TNT_darkv4.pdf}
+\includegraphics[height=\logoheight]{../latex_main/figures/logo_short}~
+ \includegraphics[height=\logoheight]{../latex_main/figures/luh_logo_rgb_0_80_155.pdf}
+ 	
+	% \includegraphics[height=\logoheight]{figures/logo_tntluh.pdf}
+}
+
+% Header logo for title page
+\settitleheaderimage{
+	% \includegraphics[height=\logoheight]{figures/TNT_darkv4.pdf}
+	\includegraphics[height=\logoheight]{../latex_main/figures/luh_logo_rgb_0_80_155.pdf}
+	% \includegraphics[height=\logoheight]{figures/logo_tntluh.pdf}
+}
+
+% Title page: tntdefault 
+\setbeamertemplate{title page}[tntdefault]  % or luhstyle
+% Add optional title image here
+%\addtitlepageimagedefault{\includegraphics[width=0.65\textwidth]{figures/luh_default_presentation_title_image.jpg}}
+
+% Title page: luhstyle
+% \setbeamertemplate{title page}[luhstyle]
+% % Add optional title image here
+% \addtitlepageimage{\includegraphics[width=0.75\textwidth]{figures/luh_default_presentation_title_image.jpg}}
+
+\author[Aditya Mohan]{Aditya Mohan\\[1em]
+	\includegraphics[height=\logoheight]{../latex_main/figures/luh_logo_rgb_0_80_155.pdf}\qquad
+\includegraphics[height=2.2em]{../latex_main/figures/logo_short}\qquad
+%\includegraphics[height=2.2em]{../latex_main/figures/L3S.jpg}\qquad
+\includegraphics[height=2.2em]{../latex_main/figures/LAA.png}}
+\date{%Winter Term 2021/22
+}
+
+
+%%% Custom Packages
+%----------------------------------------------------------------------
+% Create dummy content
+\usepackage{blindtext}
+
+% Adds a frame with the current page layout. Just call \layout inside of a frame.
+\usepackage{layout}

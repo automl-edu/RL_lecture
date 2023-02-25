@@ -20,7 +20,7 @@
 	\begin{itemize}
 		\item $S$ is a (finite) set of Markov states $s \in S$
 		\item $A$ is a (finite) set of actions $a \in A$
-		\item $P$ is dynamics/transition model for each action, that specifies $P(s_{t+1} = s' \mid s_t=s, a_t=a)$
+		\item $P$ is the dynamics/transition model for each action, that specifies $P(s_{t+1} = s' \mid s_t=s, a_t=a)$
 		\item $R$ is a reward function 
 		$R(s_t=s, a_t=a) = \mathbb{E}[r_t \mid s_t=s, a_t=a] $
 		\begin{itemize}
@@ -49,7 +49,7 @@
 			\item $T \subset S$: set of terminal states
 			\begin{itemize}
 				\item important for episodic MDPs 
-				\item or if there is not fixed horizon, but the episodes should be finite
+				\item or if there is no fixed horizon, but the episodes should be finite
 			\end{itemize}
 		\pause
 			\item $\gamma$: discount factor
@@ -166,7 +166,7 @@ V^\pi_{k+1} (s_6) &=& 0  + \gamma [ p(s_6 \mid s_6, a_1) \cdot V^\pi_k(s_6) + p(
 	\begin{itemize}
 		\item deterministic
 		\item stationary (does not depend on time step)
-		\item Unique? $\leadsto$ Not necessarily, may have state-actions with identical optimal values
+		\item Unique? $\leadsto$ Not necessarily may have state-actions with identical optimal values
 	\end{itemize}
 \end{itemize}
 

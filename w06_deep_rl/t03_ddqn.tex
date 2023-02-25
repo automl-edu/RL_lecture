@@ -52,7 +52,7 @@
 		$$r + \gamma \overbrace{\hat{Q}(s', \underbrace{\argmax_{a' \in A} \hat{Q}(s',a';\vect{w})}_{\text{Action selection: }\vect{w}};\vect{w}^-)}^{\text{Action evaluation: }\vect{w}^-} - Q(s,a;\vect{w})$$
 		
 		\pause
-		\item Allows flipping between both weight sets frequently 
+		\item Allows flipping between both weights sets frequently 
 		\begin{itemize}
 			\item alternatively, Polyak averaging:
 					$$ w^- \gets \tau w + (1 - \tau)w^- $$
@@ -69,7 +69,7 @@
 	\begin{itemize}
 		\item Extend this idea to DQN
 		\item Again having two independent Q-networks with $\vect{w}_1$ and $\vect{w}_2$
-		\item Take minimum action value for successor state
+		\item Take minimum action value for the successor state
 		\item TD-error:
 		$$r + \gamma \min_{i=\{1,2\}}Q(s', \argmax_{a' \in A} Q(s', a'; \vect{w}); \vect{w}_i) - Q(s,a;\vect{w})$$
 		\begin{itemize}

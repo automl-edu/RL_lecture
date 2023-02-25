@@ -20,7 +20,7 @@
 			\item Approximate policy evaluation using value function approximation
 			\item Perform $\epsilon$-greedy policy improvement
 		\end{itemize}
-		\item Can be unstable. Generally involves intersection of the following:
+		\item Can be unstable. Generally involves the intersection of the following:
 		\begin{itemize}
 			\item Function approximation
 			\item Bootstrapping
@@ -71,7 +71,7 @@
 \begin{frame}[c]{Incremental Model-Free Control Approaches}
 
 	\begin{itemize}
-		\item Similar to policy evaluation, true state-action value function for a state is unknown and so substitute a target value
+		\item Similar to policy evaluation, the true state-action value function for a state is unknown and so substitute a target value
 		\item In Monte Carlo methods, use a return $G_t$ as a substitute target
 		$$\Delta \vect{w} = \alpha(G_t - \hat{Q}(s_t,a_t; \vect{w})) \nabla_{\vect{w}} \hat{Q}(s_t, a_t; \vect{w}) $$
         \pause

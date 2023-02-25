@@ -1,7 +1,7 @@
 % !TeX spellcheck = en_US
 \documentclass[aspectratio=169]{../latex_main/tntbeamer}  % you can pass all options of the beamer class, e.g., 'handout' or 'aspectratio=43'
 \input{../latex_main/preamble}
-\title[Meta-RL]{AutoRL}
+\title[AutoRL]{AutoRL}
 \subtitle{Motivation}
 
 
@@ -17,7 +17,7 @@
 	
 	\begin{itemize}
 	    \item We have seen that many algorithms have important hyperparameters
-	    \item Some hyperparameters are dealt implicitly, as we have seen with the step size in TRPO
+	    \item Some hyperparameters are dealt with implicitly, as we have seen with the step size in TRPO
 	    \begin{itemize}
 	        \item but this introduced other hyperparameters; hopefully not so sensible
 	    \end{itemize}
@@ -27,17 +27,9 @@
 \end{frame}
 %-----------------------------------------------------------------------
 %----------------------------------------------------------------------
-\begin{frame}[c]{What are Hyperparameters in RL?}
-	
-	\begin{itemize}
-	    \item ...
-	\end{itemize}
-	
-\end{frame}
-%-----------------------------------------------------------------------
-%----------------------------------------------------------------------
-\begin{frame}[c]{What are Hyperparameters in RL?}
-	
+\begin{frame}[c]{Exemplary Hyperparameters in RL}
+
+        \pause
 	\begin{itemize}
 	    \item Learning rate
 	    \item Discount factor
@@ -49,6 +41,29 @@
 	    \item Choice of RL algorithm (DQN vs. REINFORCE vs. PPO vs. TRPO vs. ...)
 	    \item \ldots
 	\end{itemize}
+	
+\end{frame}
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Objectives of AutoRL}
+
+	\begin{itemize}
+            \item There are several options for what to optimize the hyperparameters
+            \item Quality of your value network, for example, TD Error on all the collected observations $(s, a, r, s')$ 
+               $$ r + \gamma \max_{a'} \hat{Q}(s',a';\vect{w}) - \hat{Q}(s,a;\vect{w})$$
+            \begin{itemize}
+                \item Disadvantage: the policy can still be suboptimal even for small TD error
+            \end{itemize}
+            \smallskip
+            \pause
+            \item Expected (Discounted) Return
+            $$\mathbb{E}[G_t \mid s_t=s]$$
+            \begin{itemize}
+                \item[$\leadsto$] Evaluate several episodes for the final policy
+                \item Advantage: Well aligned with our objective of determining the best possible policy
+                \item Disadvantage: Expensive to evaluate since it requires interaction with the environment
+            \end{itemize}
+        \end{itemize}
 	
 \end{frame}
 %-----------------------------------------------------------------------
