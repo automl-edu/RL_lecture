@@ -30,7 +30,7 @@
 	\item Initialize $\pi_0(s)$ randomly for all states $s$
 	\item While $i == 0$ or\\ $||\pi_i - \pi_{i-1}||_1 > 0$ (L1-norm, measures if the policy changed for any state)
 	\begin{itemize}
-		\item $V^{\pi_i} \gets$ MDP V-function policy evaluation of $\pi$
+		\item $V^{\pi_i} \gets$ MDP V-function policy evaluation of $\pi_i$
 		\item $\pi_{i+1} \gets$ Policy improvement
 		\item $i \gets i+1$
 	\end{itemize}
