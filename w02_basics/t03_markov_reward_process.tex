@@ -24,7 +24,7 @@
 		\item Discount factor $\gamma \in [0,1]$
 	\end{itemize}
 	\item Note: no actions
-	\item If finite number (N) of states, we can express $R$ as a vector
+	\item If a finite number (N) of states, we can express $R$ as a vector
 \end{itemize}
 
 \end{frame}
@@ -82,7 +82,7 @@ $$ V(s)  = \mathbb{E}[G_t \mid s_t=s] = \mathbb{E}[r_t + \gamma r_{t+1} + \gamma
 		\item Mathematically convenient (avoid infinite returns and values)
 		\item Humans often act as if there’s a discount factor $\gamma < 1$
 		\item $\gamma = 0$: Only care about immediate reward
-		\item $\gamma = 1$: Future reward is as beneficial as immediate reward
+		\item $\gamma = 1$: Future reward is as beneficial as an immediate reward
 		\item If episode lengths are always finite, can use $\gamma = 1$ (but don't have to)
 	\end{itemize}
 	

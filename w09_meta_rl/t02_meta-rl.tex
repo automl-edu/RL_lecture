@@ -18,7 +18,7 @@
 	\begin{itemize}
 		\item $S$ is a (finite) set of Markov states $s \in S$
 		\item $A$ is a (finite) set of actions $a \in A$
-		\item $P$ is dynamics/transition model for each action, that specifies $P(s_{t+1} = s' \mid s_t=s, a_t=a)$
+		\item $P$ is the dynamics/transition model for each action, that specifies $P(s_{t+1} = s' \mid s_t=s, a_t=a)$
 		\item $R$ is a reward function 
 		$R(s_t=s, a_t=a) = \mathbb{E}[r_r \mid s_t=s, a_t=a] $
 		\begin{itemize}
@@ -49,8 +49,6 @@
 %-----------------------------------------------------------------------
 %----------------------------------------------------------------------
 
-\todo[inline]{Format this better for align with the speaking style}
-
 \begin{frame}[c]{Contextual MDPs}
 	
 One way of formalizing Meta-RL are \emph{cMDPs}~\lit{Hallak et al., 2015}{https://arxiv.org/pdf/1502.02259.pdf}:
@@ -67,8 +65,6 @@ One way of formalizing Meta-RL are \emph{cMDPs}~\lit{Hallak et al., 2015}{https:
 \end{frame}
 %-----------------------------------------------------------------------
 %----------------------------------------------------------------------
-
-\todo[inline ]{Not required here -- talk about the general picture at first}
 
 \begin{frame}[c]{In Practice: CARL~\lit{Benjamins et al. 2021}{https://arxiv.org/pdf/2110.02102.pdf}}
 

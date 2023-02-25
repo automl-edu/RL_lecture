@@ -1,0 +1,65 @@
+% !TeX spellcheck = en_US
+\documentclass[aspectratio=169]{../latex_main/tntbeamer}  % you can pass all options of the beamer class, e.g., 'handout' or 'aspectratio=43'
+\input{../latex_main/preamble_adi}
+\title[Meta-RL]{Meta Reinforcement Learning}
+\subtitle{Recap: Formalizing the Meta-Learning Problem}
+
+
+\begin{document}
+	
+\maketitle
+
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}{Supervised Meta-Learning}
+
+    \centering
+    \vspace{-1em}
+    \includegraphics[width=0.73\textwidth]{images/t02/few-shot-classification.png}
+
+    \footnote{Image source: \url{https://lilianweng.github.io/posts/2018-11-30-meta-learning/}}
+\end{frame}
+
+
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}{Supervised Meta-Learning}
+    We train the algorithm on a set of tasks $\mathcal{D}^{train}$ and then test in on a separate set of tasks that were held out $\mathcal{D}^{test}$
+    \pause
+    \vfill 
+    
+    \begin{itemize}
+        \item \textbf{Meta-Training:} Let $x$ be the set of input images and $y$ the set of output labels, learn a map $f(\mathcal{D}^{train}, x) \to y$
+        \pause
+        \item \textbf{Meta-Testing:} Measure the performance of $f$ by making predictions on $\mathcal{D}^{test}$ and measuring some metric over these predictions (like accuracy)
+        \pause
+        \item \textbf{Generalization:} Let $\phi$ be the parameters of the model that approximates $f$ and $\mathcal{L}$ some loss function. The generalization gap is given by 
+        \[
+            \eta(\phi) = \mathbb{E}_{(x,y) \sim \mathcal{D}^{test}}\big [\mathcal{L} (f_\phi, x, y)] - \mathbb{E}_{(x,y) \sim \mathcal{D}^{train}}\big [\mathcal{L} (f_\phi, x, y)] 
+        \]
+    \end{itemize}
+\end{frame}
+
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}{Meta-Learning using RNNs~\lit{Andrychowicz et. al}{https://arxiv.org/abs/1606.04474}}
+    \begin{center}
+        \vspace{-1em}
+       \includegraphics[width=0.5\textwidth]{images/t02/RNN.png} 
+    \end{center}
+    
+    \pause
+    \begin{itemize}
+        \item \textbf{Meta-Training:} Optimize the weights $\theta$ and the hidden state $h_i$ of the RNN by sequentially feeding in $(x_i, y_i) \sim \mathcal{D}^{train}$
+        \pause
+        \item \textbf{Meta-Testing: } Given $\phi_i = [h_i, \theta]$, use samples $(x_{test}, y_{test}) \sim \mathcal{D}^{test}$ to evaluate the loss $\mathcal{L}(\phi_i, \mathcal{D}^{test})$
+        \pause
+        \item \textbf{Meta-Learning:} $ \theta^* \in \argmin_\theta \sum_{j=1}^n \mathcal{L} ( \phi_i, \mathcal{D}^{test}_j)$, where $\phi_i = f_\theta(\mathcal{D}_i^{train})$
+        \begin{itemize}
+            \item with $\mathcal{D}_i$ being $i^{th}$ observation of the dataset.
+        \end{itemize}
+    \end{itemize}
+
+\end{frame}
+
+\end{document}

@@ -1,0 +1,115 @@
+% !TeX spellcheck = en_US
+\documentclass[aspectratio=169]{../latex_main/tntbeamer}  % you can pass all options of the beamer class, e.g., 'handout' or 'aspectratio=43'
+\input{../latex_main/preamble}
+\title[AutoRL]{AutoRL}
+\subtitle{PBT Combined with Bayesian Optimization}
+
+
+\begin{document}
+	
+	\maketitle
+
+
+%----------------------------------------------------------------------
+\begin{frame}[c]{Combining Population-based Training and Bayesian Optimization}
+
+\begin{itemize}
+	\item Bayesian Optimization (BO) is well known for its sample efficiency, but cannot change hyperparameters dynamically while training
+        \item PBT can change hyperparameter dynamically, but is not very sample efficient.
+	\pause
+	\medskip
+	\item \alert{Idea:} Can we use BO to guide PBT? 
+	\pause
+	\medskip
+	\item[$\leadsto$] Less parallel compute resources are required (?)
+	\pause
+	\medskip
+	\item[$\leadsto$] Scales better to higher dimensional spaces (?)
+\end{itemize}
+
+\end{frame}
+%----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{PBT + BO: Outline}
+
+\begin{enumerate}
+	\item Sample initial population
+	\begin{itemize}
+		\item Each population member is a combination of hyperparameter setting $\conf$ and (partially trained) model
+	\end{itemize}
+	\item Train population for a bit 
+	\item Tournament selection to drop poorly performing population members
+	\item Use \alert{Bayesian optimization} to select new hyperparameter settings
+	\begin{itemize}
+		\item Change the hyperparameter settings, but inherits the partially trained model (+ pertubation)
+	\end{itemize}
+	\item[$\leadsto$] New population consists of so-far best performing ones and new off-springs
+	\item Go to 2.
+\end{enumerate}
+
+
+\end{frame}
+%----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{PBT  + BO = PB2 \lit{Parker-Holder et al. 2020}{https://arxiv.org/pdf/2002.02518.pdf}}
+
+\begin{itemize}
+	\item \alert{Challenge}: The cost depends on the previous $\confI{1}, \confI{2}. \ldots, \confI{t-1}$
+	\pause
+	\medskip
+	\item BO-Surrogate model predicts the cost improvement over time:
+\end{itemize}
+
+\begin{equation}
+\cost_{\text{PBT}}^{(t)}(\conf)= \frac{\cost^{(t)}(\conf) - \cost^{(t-1)}(\conf)}{\Delta t}\nonumber
+\end{equation}
+
+where $\cost^{(t)}(\conf)$ is the cost for a given hyperparameter setting at time step $t$.
+
+\bigskip
+\pause
+\begin{itemize}
+	\item Remark: Also add $\cost^{(t-1)}$ as an input to the BO-surrogate model to\\ ease the task of predicting the improvement
+\end{itemize}
+
+\end{frame}
+%----------------------------------------------------------------------
+
+%----------------------------------------------------------------------
+\begin{frame}[c]{PB2: Advantages and Disadvantages}
+
+\begin{columns}[T] % align columns
+\begin{column}{.48\textwidth}
+
+
+\begin{block}{Advantages}
+\begin{itemize}
+  \item Sample efficient ($\leadsto$ BO)
+  \item Natively Parallel ($\leadsto$ PBT)
+  \item Hyperparameters can be adjusted dynamically while training ($\leadsto$ PBT)
+\end{itemize}
+\end{block}
+
+\end{column}%
+
+\hfill%
+\pause 
+\begin{column}{.48\textwidth}
+
+\begin{block}{Disadvantages}
+\begin{itemize}
+  \item (neglectable) overhead because of model training in each iteration 
+  \item Crucially relies on robust surrogate model
+  \item BO is used to solve a non-stationary problem and thus requires extrapolation capabilities
+  \item A-priori unclear which hyperparameters need dynamical adaptation 
+\end{itemize}
+\end{block}
+
+\end{column}
+\end{columns}
+
+\end{frame}
+%----------------------------------------------------------------------
+
+%-----------------------------------------------------------------------
+\end{document}

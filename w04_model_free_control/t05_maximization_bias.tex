@@ -44,8 +44,8 @@
 	
 	\begin{itemize}
 		\item The greedy policy w.r.t. estimated Q values can yield\\ a maximization bias during finite-sample learning
-		\item Avoid using max of estimates as estimate of max of true values
-		\item Instead split samples and use to create two independent unbiased
+		\item Avoid using the max of estimates as an estimate of the max of true values
+		\item Instead split samples and use them to create two independent unbiased
 		estimates of\\ $Q_1(s_1, a_i)$ and $Q_2(s_1, a_i). \forall a\in A$
 		\begin{itemize}
 			\item Use one estimate to select max action: $a^* \in \argmax_{a \in A} Q_1(s_1, a)$
@@ -82,7 +82,7 @@
 		\end{itemize}
 		\bigskip
 		\pause
-		\item[$\leadsto$] Doubles the memory, same computation requirements, data requirements are subtle\\ -- might reduce amount of exploration needed due to lower bias
+		\item[$\leadsto$] Doubles the memory, same computation requirements, data requirements are subtle\\ -- might reduce the amount of exploration needed due to lower bias
 	\end{itemize}
 	
 	

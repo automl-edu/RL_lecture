@@ -1,0 +1,182 @@
+\documentclass[aspectratio=169]{../latex_main/tntbeamer}  % you can pass all options of the beamer class, e.g., 'handout' or 'aspectratio=43'
+\input{../latex_main/preamble_adi}
+\title[Meta-RL]{Meta Reinforcement Learning}
+\subtitle{Important concepts in Meta-RL}
+
+
+\begin{document}
+	
+\maketitle
+
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}{Meta-RL with RNNs~\lit{Duan et al., 2017}{https://arxiv.org/pdf/1611.02779.pdf}}
+    \begin{center}
+        \includegraphics[width=0.6\textwidth]{images/t04/RNN-RL.png}
+    \end{center}
+
+    \begin{itemize}
+        \item $f_\theta (\mathcal{M}_i)$ improves policy with experience from $\mathcal{M_i}$
+        \item The RNN state is not reset between episodes
+        \item By optimizing the reward over the whole meta-step (i.e. all the inner steps in one update), the RNN policy learns to explore.
+        \item the history of experiences $(s_t, a_t, r_t, s_{t+1})$ acts as implicit context
+    \end{itemize}
+    \vfill 
+    
+\end{frame}
+
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}{Gradient-Based Meta-RL}
+    
+    \textbf{(Inner Loop) Standard RL:} 
+    \begin{enumerate}
+        \item Collect a trajectory $\tau_t = \{s_t, a_t, r_{t}, ...\}$ using a policy $\pi_\theta$ on a given MDP $\mathcal{M}_i$.
+        \item Evaluate some RL objective $\mathcal{L}(\theta, \tau)$ (e.g. Bellman Error or Policy Gradient objective) on the collected trajectory
+        \item Calculate a gradient estimate $\kappa(\tau, \theta) = - \frac{\partial \mathcal{L}(\theta, \tau)}{\partial \theta}$
+        \item Compute updated policy parameters  $\phi = \theta +  \alpha \kappa(\tau, \theta)$, for some learning rate $\alpha$
+    \end{enumerate}
+
+    \pause
+    \vfill
+    \textbf{(Outer Loop) Gradient-Based Meta-RL:} 
+    \begin{enumerate}
+        \item Compute a second-order gradient using $\phi$
+        \item Update $\theta$ to $\theta'$ using this second-order gradient
+    \end{enumerate} 
+
+\end{frame}
+
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------    
+\begin{frame}{Model-Agnostic Meta-RL~\lit{Finn et al., 2017}{https://arxiv.org/abs/1703.03400}}
+    
+    \textbf{RL Objective:} Policy Gradient Objective 
+    
+    % $\mathcal{L}(\theta, \tau) = \mathbb{E}_{\pi_\theta (\tau)} \big [G(\tau) \big ]$
+
+    \vfill 
+    For $N$ MDPs $\mathcal{M}_i \in \mathcal{M}^{train}$:
+    \begin{itemize}
+        \item Sample $K$ new trajectories $\tau_1, \tau_2, ..., \tau_K$
+        \item Compute the inner gradient $f_i$ by interacting with each MDP 
+        \item Compute the updated parameters $\phi_i = \theta +  \alpha f_i$ for each MDP
+        \item Sample $m$ new trajectories $\tau'$ using $\pi_{\phi_i}$
+    \end{itemize}
+
+    \vfill
+    Update $\theta$ using a new learning rate $\beta$ and sum of inner gradients on $\phi_i$ and $\tau_i'$ across the selected tasks:
+    \[
+        \theta' = \theta + \beta \sum_{i=1}^{N} \kappa(\phi_i, \tau'_i)  
+    \]
+    
+    
+\end{frame}
+
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}{Model-Agnostic Meta-RL~\lit{Finn et al., 2017}{https://arxiv.org/abs/1703.03400}}
+
+    What is happening?
+    \begin{itemize}
+        \item The inner gradient $\kappa(\theta, \tau)$ tells us about moving towards the optimal parameters $\theta_i^*$ ($\phi_i$ is just an intermediate step in this process) for each MDP $\mathcal{M}_i \in \mathcal{M}^{train}$ 
+        \item The outer gradient $\kappa(\phi, \tau)$ tells us the effect moving towards the optimal parameters~$\theta^*$ across the selected MDPs.
+        \item We move $\theta$ to a point from where fine-tuning on any of the above tasks becomes a matter of a few gradient steps (optimally, 1)
+    \end{itemize}
+
+    \centering
+    \includegraphics[width=0.25\textwidth]{w09_meta_rl_new/images/t04/maml.png}
+
+    \footnote{Image source: \url{https://arxiv.org/abs/1703.03400}}
+    
+\end{frame}
+
+
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}{Meta-Policy Gradients~\lit{Xu et al., 2018}{https://arxiv.org/abs/1805.09801}}
+ 
+    \textbf{Approaches so far:} 
+    \begin{itemize}
+        \item \textbf{RNN:} The Meta-learned parameters are implicit.
+        \item \textbf{MAML:} Update $\theta$ for a bunch of tasks
+    \end{itemize}
+
+    \vfill
+    \textbf{In essence:}
+    \begin{itemize}
+        \item They don't separate the inner RL agent from the Meta-Learned algorithm
+        \item They focus on a bunch of different tasks and the focus is on meta-learning across them
+        \item By just adjusting the model weights $\theta$ we might be limiting generalization
+    \end{itemize}
+
+    \vfill
+    \textbf{Setup:} Meta-learn hyperparameters (e.g. discount factor  $\gamma$) of an RL agent using an outer objective other than $\mathcal{L}$ in a single lifetime
+  
+\end{frame}
+
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}{Meta-Policy Gradients~\lit{Xu et al., 2018}{https://arxiv.org/abs/1805.09801}}
+
+    Let $\lambda$ be a set of hyperparameters on which our policy parameters $\theta$ depend (e.g. $\gamma$).\\
+
+    \vfill
+    \textbf{Inner update rule:} Let $\mathcal{L} (\tau, \theta, \lambda)$ be the inner objective and $\kappa(\tau, \theta, \lambda) = -\alpha \frac{\partial \mathcal{L} (\tau, \theta, \lambda)}{\partial \theta}$
+    \[
+        \phi = \theta + \kappa(\tau, \theta, \lambda)
+    \]
+
+    \vfill
+    \textbf{Outer update rule:} Let $\bar{\mathcal{L}}(\tau', \phi, \lambda)$ be the outer objective
+    \[
+        \frac{\partial \bar{\mathcal{L}}(\tau', \phi, \lambda)}{\partial \lambda} =  \frac{\partial \bar{\mathcal{L}}(\tau', \phi, \lambda)}{\partial \phi} .  \frac{d \phi}{d \lambda}
+    \]
+    
+\end{frame}
+
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}{Meta-Policy Gradients~\lit{Xu et al., 2018}{https://arxiv.org/abs/1805.09801}}
+
+    Expanding $\frac{d \phi}{d \lambda}$, we get:
+    \[
+     \begin{split}
+         \frac{d \phi}{d \lambda} & = \frac{d [\theta + \kappa(\tau, \theta, \lambda)]}{d \lambda} \\
+         & = \frac{d \theta}{d\lambda} + \frac{\partial f}{\partial \lambda} + \frac{\partial f}{\partial \theta } \frac{d \theta}{ d \lambda} \\
+          & = \big ( I + \frac{\partial f}{\partial \theta} \big ) \frac{d \theta}{d \lambda} + \frac{\partial f}{\partial \lambda}
+    \end{split}
+    \]
+
+    \pause
+    Let  $z =  \frac{d \phi}{d \lambda}$ and $\mu = ( I + \frac{\partial f}{\partial \theta} \big )$, then the above equation becomes
+    \[
+        z' = \mu z + \frac{\partial f}{\partial \lambda}
+    \]
+
+    \vfill
+    Since $z'$ depends on $z$, we can accumulate gradients and tackle large computations\\
+        
+\end{frame}
+
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}{Meta-Policy Gradients~\lit{Xu et al., 2018}{https://arxiv.org/abs/1805.09801}}
+    
+    Our final outer update now looks like:
+    \[
+        \lambda' = \lambda - \beta \frac{\partial \bar{\mathcal{L}}(\tau', \phi, \lambda)}{\partial \phi} \bigg [ \mu z +  \frac{\partial f}{\partial \lambda} \bigg ]
+    \]
+
+    \vfill
+    So, our steps are:
+    \begin{itemize}
+        \item Compute $\phi = \theta +  \kappa(\tau, \theta, \lambda)$
+        \item Accumulate the resulting gradients into a trace 
+        \item Sample a new trajectory $\tau'$ using the meta-objective $\bar\mathcal{L}$
+        \item Update $\lambda$ using the above equation 
+    \end{itemize}
+
+\end{frame}
+
+\end{document}

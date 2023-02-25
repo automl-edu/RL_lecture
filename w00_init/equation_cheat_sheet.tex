@@ -91,7 +91,7 @@
 \input{../latex_main_old/macros.tex}
 
 % Title Page
-\title{RL Lecture: Notation Cheat Sheet}
+\title{RL Lecture: Equation Cheat Sheet}
 \author{M. Lindauer -- Leibniz University Hannover}
 \date{}
 
@@ -239,18 +239,18 @@
     \sum_t H(\Theta \mid e_t, a_t) - H(\Theta | s_{t+1}, e_t, a_t) &=& \mathbb{E}_{s_{t+1}\sim P(\cdot\mid e_t, a_t))} \left[ D_{KL} (p(\theta \mid e_t, a_t, s_{t+1}) || p(\theta|e_t))  \right]
 \end{eqnarray}
 
-\section{Meta-RL}
+% \section{Meta-RL}
 
-\begin{eqnarray}
-   && \forall c_i \in \mathcal{I}: \pi^*(s, c_i)  \in \argmax_\pi V^\pi(s, c_i)
-\end{eqnarray}
+% \begin{eqnarray}
+%    && \forall c_i \in \mathcal{I}: \pi^*(s, c_i)  \in \argmax_\pi V^\pi(s, c_i)
+% \end{eqnarray}
 
 \section{AutoRL}
 
 \begin{eqnarray}
    \conf^* \in \argmin_{\conf \in \confs} f(\conf)\\
    P(A \vert B) = \frac{P(B \vert A) \times  P(A)}{P(B)} \propto P(B \vert A) \times  P(A)\\
-   \cost_{\text{PBT}}^{(t)}(\conf)= \frac{\cost^{(t)}(\conf) - \cost^{(t-1)}(\conf)}{\Delta t}\\
+   \cost_{\text{PBT}}^{(t)}(\conf)= \frac{\cost^{(t)}(\conf) - \cost^{(t-1)}(\conf)}{\Delta t}
 \end{eqnarray}
 
 \end{document}

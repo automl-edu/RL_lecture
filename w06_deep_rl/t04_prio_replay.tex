@@ -18,7 +18,7 @@
 \begin{itemize}
 	\item In tabular TD-learning, \alert{order} of replaying updates could help speed
 	learning
-	\item Repeating some updates seem to better propagate info than others
+	\item Repeating some updates seems to better propagate info than others
 	\item Systematic ways to prioritize updates?
 \end{itemize}
 	
@@ -35,7 +35,7 @@
 		\begin{itemize}
 			\item 		Number of updates needed to converge
 		\end{itemize}
-		\item Oracle is not a practical method but illustrates impact of ordering
+		\item Oracle is not a practical method but illustrates the impact of ordering
 	\end{itemize}
 	
 \end{frame}
@@ -45,10 +45,10 @@
 	
 	\begin{itemize}
 		\item Let $i$ be the index of the $i$-th tuple of experience $(s_i,a_i,r_i,s_{i+1})$
-		\item Sample tuples for update using priority function
+		\item Sample tuples for the update using priority function
 		\item Priority of a tuple $i$ is proportional to DQN error
 		$$ p_i = | r_i + \gamma \max_{a' \in A} Q(s_{i+1}, a'; \vect{w}^-) - Q(s_i,a_i;\vect{w}) |$$
-		\item Update $p_i$ every update. $p_i$ for new tuples is set to maximum value
+		\item Update $p_i$ every update. $p_i$ for new tuples is set to the maximum value
 		\item One method: proportional (stochastic prioritization)
 		$$ P(i) = \frac{p_i^\beta}{\sum_k p_k^\beta}$$
 		\item $\beta = 0$ yields random selections 
