@@ -1,7 +1,7 @@
 % !TeX spellcheck = en_US
 \documentclass[aspectratio=169]{../latex_main/tntbeamer}  % you can pass all options of the beamer class, e.g., 'handout' or 'aspectratio=43'
 \input{../latex_main/preamble}
-\title[Meta-RL]{AutoRL}
+\title[AutoRL]{AutoRL}
 \subtitle{Dynamic AutoRL and Population-Based Training}
 
 
@@ -35,7 +35,7 @@ $\leadsto$ For some hyperparamters, you might want to change them as the trainin
 \node (l3) [activity, below of=l2, node distance=1cm, text width=12cm] {$\confI{3}$};
 \node (l4) [activity, below of=l3, node distance=1cm, text width=12cm] {$\confI{4}$};
 
-\draw[myarrow] ($(l4.west)+(0.0, -1.0)$) -- ($(l4.east)+(0.0, -1.0)$) node[below] {t};
+\draw[myarrow] ($(l4.west)+(0.0, -1.0)$) -- ($(l4.east)+(0.0, -1.0)$) node[below] {training RL agent for time $t$};
 
 \end{tikzpicture}
 
@@ -61,7 +61,7 @@ $\leadsto$ For some hyperparamters, you might want to change them as the trainin
 \node (l3) [activity, left color=red!100, right color=red!30, below of=l2, node distance=1cm] {$\confI{3}$};
 \node (l4) [activity, left color=red!100, right color=red!40, below of=l3, node distance=1cm] {$\confI{4}$};
 
-\draw[myarrow] ($(l4.west)+(0.0, -1.0)$) -- ($(l4.east)+(10.0, -1.0)$) node[below] {t};
+\draw[myarrow] ($(l4.west)+(0.0, -1.0)$) -- ($(l4.east)+(10.0, -1.0)$) node[below] {training RL agent for time $t$};
 
 \pause
 
@@ -150,69 +150,5 @@ See \lit{Deepmind Blog}{https://deepmind.com/blog/article/population-based-train
 
 \end{frame}
 %----------------------------------------------------------------------
-%----------------------------------------------------------------------
-\begin{frame}[c]{Combining Population-based Training and Bayesian Optimization}
 
-\begin{itemize}
-	\item Bayesian Optimization (BO) is well known for its sample efficiency
-	\pause
-	\medskip
-	\item \alert{Idea:} Can we use BO to guide PBT? 
-	\pause
-	\medskip
-	\item[$\leadsto$] Less parallel compute resources are required(?)
-	\pause
-	\medskip
-	\item[$\leadsto$] Scales better to higher dimensional spaces(?)
-\end{itemize}
-
-\end{frame}
-%----------------------------------------------------------------------
-%----------------------------------------------------------------------
-\begin{frame}[c]{PBT + BO: Outline}
-
-\begin{enumerate}
-	\item Sample initial population
-	\begin{itemize}
-		\item Each population member is a combination of hyperparameter setting $\conf$ and (partially trained) model
-	\end{itemize}
-	\item Train population for a bit 
-	\item Tournament selection to drop poorly performing population members
-	\item Use \alert{Bayesian optimization} to select new hyperparameter settings
-	\begin{itemize}
-		\item Change the hyperparameter settings, but inherits the partially trained model (+ pertubation)
-	\end{itemize}
-	\item[$\leadsto$] New population consists of so-far best performing ones and new off-springs
-	\item Go to 2.
-\end{enumerate}
-
-
-\end{frame}
-%----------------------------------------------------------------------
-%----------------------------------------------------------------------
-\begin{frame}[c]{PBT  + BO = PB2 \lit{Parker-Holder et al. 2020}{https://arxiv.org/pdf/2002.02518.pdf}}
-
-\begin{itemize}
-	\item \alert{Challenge}: The cost depends on the previous $\confI{1}, \confI{2}. \ldots, \confI{t-1}$
-	\pause
-	\medskip
-	\item BO-Surrogate model predicts the cost improvement over time:
-\end{itemize}
-
-\begin{equation}
-\cost_{\text{PBT}}^{(t)}(\conf)= \frac{\cost^{(t)}(\conf) - \cost^{(t-1)}(\conf)}{\Delta t}\nonumber
-\end{equation}
-
-where $\cost^{(t)}(\conf)$ is the cost for a given hyperparameter setting at time step $t$.
-
-\bigskip
-\pause
-\begin{itemize}
-	\item Remark: Also add $\cost^{(t-1)}$ as an input to the BO-surrogate model to\\ ease the task of predicting the improvement
-\end{itemize}
-
-\end{frame}
-%----------------------------------------------------------------------
-
-%-----------------------------------------------------------------------
 \end{document}

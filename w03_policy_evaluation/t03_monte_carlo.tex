@@ -21,8 +21,7 @@
 		\item Efficiently compute a good estimate of a policy $\pi$
 	\end{itemize}
 	\smallskip
-	\item For example: Estimate expected total purchases during an online shopping
-	session for a new automated product recommendation policy
+	\item For example Estimate expected total purchases during an online shopping session for a new automated product recommendation policy
 \end{itemize}
 
 
@@ -41,7 +40,7 @@
 	\end{itemize}
  	\smallskip
 	\item Simple idea: Value = mean return
-	\item If trajectories are all finite, sample set of trajectories \& average returns
+	\item If trajectories are all finite, sample a set of trajectories \& average returns
 \end{itemize}
 
 \end{frame}
@@ -50,10 +49,10 @@
 \begin{frame}[c]{Monte Carlo (MC) Policy Evaluation}
 
 \begin{itemize}
-	\item If trajectories are all finite, sample set of trajectories \& average returns
+	\item If trajectories are all finite, sample a set of trajectories \& average returns
 	\item Does \alert{not} require MDP dynamics/rewards
 	\item No bootstrapping
-	\item Does not assume state is Markov
+	\item Does not assume the state is Markov
 	\item Can only be applied to episodic MDPs
 	\begin{itemize}
 		\item Averaging over returns from a complete episode
@@ -73,10 +72,10 @@
 	\end{itemize}
 	\item $G_t = r_t + \gamma r_{t+1} + \gamma^2 r_{t+2} + \ldots$ in MDP $M$ under policy $\pi$
 	\item $V^\pi (s) = \mathbb{E} [G_t \mid s_t = s]$
-	\item MC computes empirical mean return
+	\item MC computes the empirical mean return
 	\item Often do this in an incremental fashion
 	\begin{itemize}
-		\item After each episode, update estimate of $V^\pi$
+		\item After each episode, update the estimate of $V^\pi$
 	\end{itemize}
 \end{itemize}
 

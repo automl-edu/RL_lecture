@@ -36,7 +36,7 @@ Loop
 \begin{frame}[c]{Recap: Bias, Variance and MSE}
 
 \begin{itemize}
-	\item Consider a statistical model that is parameterized by $\theta$ and that determines
+	\item Consider a statistical model parameterized by $\theta$ where $\theta$ determines
 	a probability distribution over observed data $P(x|\theta)$
 	\item Consider a statistic $\hat{\theta}$ that provides an estimate of $\theta$ and is a function of
 	observed data $x$
@@ -101,7 +101,7 @@ Properties:
 		\pause
 		\item Requires episodic settings
 		\begin{itemize}
-			\item Episode must end before data from episode can be used to update $V$
+			\item Episode must end before data from the episode can be used to update $V$
 
 		\end{itemize}
 		
@@ -119,7 +119,7 @@ Properties:
 			\item $G_{i,t} = r_{i,t} + \gamma r_{i,t+1} + \gamma^2 r_{i,t+2} + \ldots$ under policy $\pi$
 			\item $V^\pi (s) = \mathbb{E}[G_t \mid s_t = s]$
 		\end{itemize}
-		\item Simple: Estimates expectation by empirical average (given episodes sampled from policy of interest)
+		\item Simple: Estimates expectation by empirical average (given episodes sampled from the policy of interest)
 		\item Updates $V$ estimate using sample of return to approximate the expectation
 		\item No bootstrapping
 		\item Does not assume Markov process

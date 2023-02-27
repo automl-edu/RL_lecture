@@ -29,7 +29,7 @@
 \begin{frame}[c]{Recall: Incremental Model-Free Control Approaches}
 	
 \begin{itemize}
-	\item Similar to policy evaluation, true state-action value function for a state is unknown and so substitute a target value
+	\item Similar to policy evaluation, the true state-action value function for a state is unknown and so substitute a target value
 	\item In Monte Carlo methods, use a return $G_t$ as a substitute target
 	$$\Delta \vect{w} = \alpha(G_t - \hat{Q}(s_t,a_t; \vect{w})) \nabla_{\vect{w}} \hat{Q}(s_t, a_t; \vect{w}) $$
 	\item For SARSA instead use a TD target $r+ \gamma \hat{Q}(s', a'; \vect{w})$ which leverages the current function approximations value
@@ -60,7 +60,7 @@
 	\item End-to-end learning of values $Q(s, a)$ from pixels $s$
 	\item Input state $s$ is stack of raw pixels from last $4$ frames
 	\item Output is $Q(s, a)$ for $18$ joystick/button positions
-	\item Reward is change in score for that step
+	\item Reward is changed in score for that step
 	\item Network architecture and hyperparameters fixed across all games
 \end{itemize}
 
@@ -125,12 +125,12 @@
 %-----------------------------------------------------------------------
 %----------------------------------------------------------------------
 \begin{frame}[c]{DQNs: Fixed Q-Targets}
-	
+	\vspace{-1em}
 	\begin{itemize}
 		\item To help improve stability, fix the \alert{target weights} used in the target calculation for multiple updates
 		\item Target network uses a different set of weights than the weights being updated
 		\item Let parameters $\vect{w}^-$ be the set of weights used in the target and $\vect{w}$ be the weights that are being updated
-		\item Slight change to computation of target value:
+		\item Slight change to the computation of target value:
 		\begin{itemize}
 			\item $(s,a,r,s')\sim \mathcal{D}$: sample experience tuple from the dataset
 			\item Compute the target value for the sampled $s$: $r+\gamma \max_{a'} \hat{Q}(s',a';\vect{w}^-)$

@@ -3,7 +3,7 @@
 \input{../latex_main/preamble}
 \title[Meta-RL]{Meta Reinforcement Learning}
 \subtitle{Challenges in Contextual RL}
-
+\usepackage{todonotes}
 
 \begin{document}
 	
@@ -11,13 +11,13 @@
 
 %----------------------------------------------------------------------
 %----------------------------------------------------------------------
+
 \begin{frame}[c]{Why do we need separate methods in cRL?}
 
 \begin{itemize}
 	\item Some instances are already very hard on their own
 	\item Learning a policy across a task distribution is not trivial either
 	\item Conventional policy updates aren't necessarily good for every instance in $\mathcal{I}$
-	\item Having access to the context can help performance, but is not always guaranteed
 	\item Optimal hyperparameter might vary depending on the current instance
 \end{itemize}
 

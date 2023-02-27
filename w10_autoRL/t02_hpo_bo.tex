@@ -1,7 +1,7 @@
 % !TeX spellcheck = en_US
 \documentclass[aspectratio=169]{../latex_main/tntbeamer}  % you can pass all options of the beamer class, e.g., 'handout' or 'aspectratio=43'
 \input{../latex_main/preamble}
-\title[Meta-RL]{AutoRL}
+\title[AutoRL]{AutoRL}
 \subtitle{Bayesian Optimization}
 
 
@@ -36,7 +36,7 @@
 \medskip
 \pause
 
-        \item Today, we'll discuss a \alert{Bayesian} approach for solving such blackbox optimization problems
+        \item Let's discuss a \alert{Bayesian} approach for solving such blackbox optimization problems
 \medskip
 \pause
         \item Blackbox optimization can be used for hyperparameter optimization (HPO)
@@ -76,20 +76,22 @@
 
 \begin{itemize}
     \item Goal to trade-off exploration and exploitation
-    \item \alert{Exploration:} Sample in unexplored areas with high uncertainty to check whether there are good samples
-    \item \alert{Exploitation:} Sample in the areas where you believe the best sample should be
+    \begin{itemize}
+        \item \alert{Exploration:} Sample in unexplored areas with high uncertainty to check\\ whether there are good samples
+        \item \alert{Exploitation:} Sample in the areas where you believe the best sample should be
+    \end{itemize}
     \smallskip
     \item We don't know the best exploration-exploitation trade-off
     \item[$\leadsto$] There are different possible acquisition function for this trade-off
     \smallskip
-    \item For example, upper-confidence bounds (UCB) or lower confidenec bounds (LCB)
+    \item For example, lower-confidence bounds (LCB)
 \end{itemize}
 
 \begin{equation}
-    \alpha_{\text{UCB}} = \mu + \kappa \sigma
+    \alpha_{\text{UCB}}(\conf) = \mu(\conf) - \kappa \sigma(\conf)
 \end{equation}
 
-with $\mu$ being the posterior mean and $\sigma$ the posterior variance
+with $\mu$ being the posterior mean and $\sigma$ the posterior variance at point $\conf$
 
 \end{frame}
 
@@ -163,31 +165,31 @@ General approach
 \end{minipage}
 \end{center}
 \end{frame}
-%-----------------------------------------------------------------------
-\begin{frame}[c]{Bayesian Optimization: Origin of the Name}
+% %-----------------------------------------------------------------------
+% \begin{frame}[c]{Bayesian Optimization: Origin of the Name}
 
-\begin{itemize}
-    \item Bayesian optimization uses \alert{Bayes' theorem}: 
-    	\begin{equation*}
-    	    P(A \vert B) = \frac{P(B \vert A) \times  P(A)}{P(B)}
-    	    \propto P(B \vert A) \times  P(A)
-    	\end{equation*} 
-    \item Bayesian optimization uses this to compute a posterior over functions: 
-        \begin{equation*}
-            P(\func \vert \dataset_{1:\bocount}) \propto P(\dataset_{1:\bocount} \vert \func) \times P(\func), \text{~~~~ where } \dataset_{1:\bocount} = \left \{ \conf_{1:\bocount}, \cost(\conf_{1:\bocount}) \right\}
-        \end{equation*} 
-\pause
-\vspace*{-0.5cm}
-    \item Meaning of the individual terms:
-        \begin{itemize}
-            \item $P(f)$ is the \alert{prior} over functions, which represents our belief about the space of possible objective functions \alert{before} we see any data
-            \item $\dataset_{1:\bocount}$ is the \alert{data} (or observations, evidence)
-            \item $P(\dataset_{1:\bocount} \vert \func)$ is the likelihood of the data given a function
-            \item $P(\func \vert \dataset_{1:\bocount})$ is the \alert{posterior} probability over functions given the data
-        \end{itemize}
-    \end{itemize}
-\end{frame}
-%-----------------------------------------------------------------------
+% \begin{itemize}
+%     \item Bayesian optimization uses \alert{Bayes' theorem}: 
+%     	\begin{equation*}
+%     	    P(A \vert B) = \frac{P(B \vert A) \times  P(A)}{P(B)}
+%     	    \propto P(B \vert A) \times  P(A)
+%     	\end{equation*} 
+%     \item Bayesian optimization uses this to compute a posterior over functions: 
+%         \begin{equation*}
+%             P(\func \vert \dataset_{1:\bocount}) \propto P(\dataset_{1:\bocount} \vert \func) \times P(\func), \text{~~~~ where } \dataset_{1:\bocount} = \left \{ \conf_{1:\bocount}, \cost(\conf_{1:\bocount}) \right\}
+%         \end{equation*} 
+% \pause
+% \vspace*{-0.5cm}
+%     \item Meaning of the individual terms:
+%         \begin{itemize}
+%             \item $P(f)$ is the \alert{prior} over functions, which represents our belief about the space of possible objective functions \alert{before} we see any data
+%             \item $\dataset_{1:\bocount}$ is the \alert{data} (or observations, evidence)
+%             \item $P(\dataset_{1:\bocount} \vert \func)$ is the likelihood of the data given a function
+%             \item $P(\func \vert \dataset_{1:\bocount})$ is the \alert{posterior} probability over functions given the data
+%         \end{itemize}
+%     \end{itemize}
+% \end{frame}
+% %-----------------------------------------------------------------------
 \begin{frame}[c]{Bayesian Optimization: Advantages and Disadvantages}
 
 \begin{columns}[T] % align columns

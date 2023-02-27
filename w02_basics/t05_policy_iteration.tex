@@ -17,7 +17,7 @@
 \begin{itemize}
 	\item One option is searching to compute the best policy
 	\item Number of deterministic policies is $|A|^{|S|}$
-	\item Policy iteration is generally more efficient than enumeration
+	\item Policy iteration is generally more efficient than an enumeration
 \end{itemize}
 
 \end{frame}
@@ -30,7 +30,7 @@
 	\item Initialize $\pi_0(s)$ randomly for all states $s$
 	\item While $i == 0$ or\\ $||\pi_i - \pi_{i-1}||_1 > 0$ (L1-norm, measures if the policy changed for any state)
 	\begin{itemize}
-		\item $V^{\pi_i} \gets$ MDP V-function policy evaluation of $\pi$
+		\item $V^{\pi_i} \gets$ MDP V-function policy evaluation of $\pi_i$
 		\item $\pi_{i+1} \gets$ Policy improvement
 		\item $i \gets i+1$
 	\end{itemize}
@@ -53,7 +53,7 @@
 \begin{frame}[c]{Policy Improvement}
 
 \begin{itemize}
-	\item Compute state-action value of a policy $\pi_i$
+	\item Compute the state-action value of a policy $\pi_i$
 	\begin{itemize}
 		\item For $s$ in $S$ and $a$ in $A$:
 				$$Q^\pi(s,a) = R(s,a) + \gamma \sum_{s' \in S} P(s' \mid s,a) V^\pi(s')$$
@@ -99,7 +99,7 @@ Q^\pi(s,a) = R(s,a) + \gamma \sum_{s' \in S} P(s' \mid s,a) V^\pi(s')\nonumber\\
 		\item Our expected sum of rewards is at least as good as if we had always
 		followed $\pi_i$
 	\end{itemize}
-	\item But new proposed policy is to always follow $\pi_{i+1}$
+	\item But the new proposed policy is to always follow $\pi_{i+1}$
 \end{itemize}
 
 \end{frame}
@@ -131,7 +131,7 @@ Q^\pi(s,a) = R(s,a) + \gamma \sum_{s' \in S} P(s' \mid s,a) V^\pi(s')\nonumber\\
 		\item $\pi_{i+1} \gets$ Policy \alert{improvement}
 		\item $i \gets i+1$
 	\end{itemize}
-	\item \alert{If policy doesn't change, can it ever change?}
+	\item \alert{If the policy doesn't change, can it ever change?}
 	\item \alert{Is there a maximum of iterations of policy iteration?}
 \end{itemize}
 

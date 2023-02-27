@@ -1,0 +1,142 @@
+% !TeX spellcheck = en_US
+\documentclass[aspectratio=169]{../latex_main/tntbeamer}  % you can pass all options of the beamer class, e.g., 'handout' or 'aspectratio=43'
+\input{../latex_main/preamble}
+\title[AutoRL]{AutoRL}
+\subtitle{Increasing Efficiency of AutoRL}
+
+
+\begin{document}
+	
+	\maketitle
+
+
+%----------------------------------------------------------------------
+\begin{frame}[c]{AutoRL tailored to RL}
+
+\begin{itemize}
+    \item Bayesian Optimization and PBT can be applied to all kinds of HPO problems
+    \item RL has some special traits that, for example, supervised learning does not have
+    \item How can we exploit these RL traits to have even more efficient AutoRL approaches?
+\end{itemize}
+
+\end{frame}
+%----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Shared Replay Buffer}
+
+\begin{columns}
+
+\column{0.5\textwidth}
+
+\centering
+\includegraphics[width=0.65\textwidth]{images/searl.jpg}
+
+\footnotesize
+Source: \lit{Franke et al. 2021}{https://openreview.net/pdf?id=hSjxQ3B7GWq}
+
+\column{0.5\textwidth}
+
+\begin{itemize}
+    \item Training several agents in parallel (e.g., PBT or PB2) implies that all of them acquire experience ($s_t, a_t, r_t, s_{t+1}$)
+    \item Off-policy RL algorithms can make of these (e.g., DQN)
+    \item Idea: Share replay buffer among all agents
+    \begin{itemize}
+        \item[$\leadsto$] Ensure that each agent plays at least an entire episode before making use of the shared replay buffer again
+    \end{itemize}
+\end{itemize}
+
+\end{columns}
+
+
+\end{frame}
+%----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Growing Network Size}
+
+
+\begin{itemize}
+    \item Obviously, the DL architecture is important for training an agent\\ (e.g., see Table~1 in \lit{Stanic et al. 2022}{https://arxiv.org/pdf/2208.03374.pdf})
+    \item Commonly, the network size (both policy and value networks) is fixed at the beginning of training
+    \item However, it is unclear how complex a task is and thus the required complexity of the RL network
+    \item Observation: At the beginning, RL agents learn simple tasks first
+    \item Idea: Increase network complexity over time \lit{Franke et al. 2021}{https://openreview.net/pdf?id=hSjxQ3B7GWq}
+    \begin{itemize}
+        \item For example, Lamarckian operators allow growing a network without changing its predictions (e.g., widening layers or adding layers) \lit{Chen et al. 2015}{https://arxiv.org/abs/1511.05641}\lit{Elsken et al. 2019}{https://openreview.net/pdf?id=ByME42AqK7}
+    \end{itemize}
+    
+\end{itemize}
+
+\end{frame}
+%----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Generalization to Similar Tasks}
+
+\begin{columns}
+
+\column{0.5\textwidth}
+
+\centering
+\includegraphics[width=0.65\textwidth]{images/cart-pole.png}
+
+\column{0.5\textwidth}
+
+\begin{itemize}
+    \item Transferability across environments can be important~\lit{Zhang et al. 2021}{https://arxiv.org/abs/2102.13651} 
+    \begin{itemize}
+        \item After deploying RL agents can lead to slight variations of the environments (e.g., sim2real gap)
+        \item It is not desirable to re-configure an RL agent for all minor environment changes
+        \item Open question: When is re-configuration necessary depending on the environment change?
+    \end{itemize}
+    \item HPO is crucial for learning agents that can generalize to similar environments~\lit{Eimer et al. 2021}{https://www.tnt.uni-hannover.de/papers/data/1540/CARL_HPs_2021(1).pdf}
+\end{itemize}
+
+\end{columns}
+
+\end{frame}
+%----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Multi-fidelity Optimization for AutoRL}
+
+\begin{columns}
+
+\column{0.5\textwidth}
+
+\centering
+\includegraphics[width=0.8\textwidth]{images/mf_opt.jpg}
+
+\column{0.5\textwidth}
+
+\begin{itemize}
+    \item Speeding up AutoML is possibly by making decisions about well-performing models after partial training (e.g., dataset subsets or training for a few epochs)
+    \item Same idea can be applied to AutoRL; efficient decisions can be done on
+    \begin{itemize}
+        \item Evaluation on a few random seeds (both agent and environment)
+        \item Partial training
+        \item Evaluation (and training) on short episode lengths
+        \item Evaluation on a few environment variations
+    \end{itemize}
+\end{itemize}
+
+\end{columns}
+
+\end{frame}
+%----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Survey on AutoRL}
+
+\begin{itemize}
+    \item[$\leadsto$] \lit{Parker-Holder et al. 2022}{https://arxiv.org/abs/2201.03916} 
+    \item Further ideas:
+    \begin{itemize}
+        \item Using meta-gradients
+        \item Automated reward shaping
+        \item Design of environments and curriculum learning
+    \end{itemize}
+    \item Holy grail: Learning to learn RL algorithms
+\end{itemize}
+
+\end{frame}
+%----------------------------------------------------------------------
+
+%-----------------------------------------------------------------------
+\end{document}

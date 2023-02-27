@@ -1,0 +1,195 @@
+% !TeX spellcheck = en_US
+\documentclass[aspectratio=169]{../latex_main/tntbeamer}  % you can pass all options of the beamer class, e.g., 'handout' or 'aspectratio=43'
+\input{../latex_main/preamble_adi}
+\title[Meta-RL]{Meta Reinforcement Learning}
+\subtitle{Formalizing the Meta-Reinforcement Learning Problem}
+
+
+\begin{document}
+	
+\maketitle
+
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}{Key Ingredients in Meta-Learning}
+
+    \begin{itemize}
+        \item Training set of features and labels $\mathcal{D}^{train}$
+        \item Test set of features and labels $\mathcal{D}^{train}$
+        \item (Inner and outer) loss functions for evaluation
+        \item Generalization Gap \[
+            \eta(\phi) = \mathbb{E}_{(x,y) \sim \mathcal{D}^{test}}\big [\mathcal{L} (f_\phi, x, y)] - \mathbb{E}_{(x,y) \sim \mathcal{D}^{train}}\big [\mathcal{L} (f_\phi, x, y)] 
+        \]
+    \end{itemize}
+    
+    \vfill 
+    
+    \pause
+    \centering
+    \textbf{How can we create something like this for RL?}
+
+\end{frame}
+
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}{Generalization in RL}
+
+    In RL, \textbf{task = MDP}
+    
+    \begin{columns}
+        \column{0.5\textwidth} 
+        \begin{center}
+            \includegraphics[width=0.5\textwidth]{images/t03/cart-pole.png}\\
+            Cart-Pole
+            \end{center}
+        
+        \column{0.5\textwidth}
+        \begin{center}
+           \begin{itemize}
+               \item \textbf{State-Space:} position of the cart, the velocity of the cart, the angle of the pole, the velocity of the pole at the tip
+               \item \textbf{Action Space:} Apply 1 unit of the force to the left, Apply 1 unit of the force to the right
+           \end{itemize}
+            
+        \end{center}
+    
+    \end{columns}
+
+    \footnote{Image source: \url{https://arxiv.org/abs/1703.03400}}
+
+\end{frame}
+
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}{Generalization in RL}
+    \begin{columns}
+        \column{0.5\textwidth} 
+        \begin{center}
+            \includegraphics[width=0.5\textwidth]{images/t03/cart-pole.png}\\
+            Cart-Pole
+            \end{center}
+        
+        \column{0.5\textwidth}
+        \begin{center}
+           \begin{itemize}
+               \item \textbf{Q:} What happens when we change the length of the pole $l$ by $5\%$ during test time? What about $10\%$? How about the mass of the cart $M$? ...
+               \pause 
+               \item \textbf{Answer:} The performance of the agent drops significantly, even leading to it completely failing on the environment
+           \end{itemize}
+            
+        \end{center}
+    
+    \end{columns}
+
+    \footnote{Image source: \url{https://arxiv.org/abs/1703.03400}}
+\end{frame}
+
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}{Generalization in RL}
+
+    \textbf{Truth bombs:}
+    
+    \begin{itemize}
+        \item The standard RL agent learns to solve an inherent optimization problem that assumes these parameters to be fixed. Slightly changing them breaks most of the agents out there.
+        \item The standard framework of MDPs cannot model these changes unless we consider them to be part of the state-space
+        \item As soon as we start changing other properties that can impact the dynamics of the environment, our optimal policy changes. Thus, the same training regime cannot lead to an optimal policy anymore.
+    \end{itemize}
+
+\end{frame}
+
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}{Going Beyond Vanilla MDPs}
+
+    So, what is the solution?
+    
+    \begin{itemize}
+        \item \textbf{Observation:} Changing something like the mass of the cart influences the transition function $P(s'|s,a)$ 
+        \pause
+        \item \textbf{Idea:} Why not treat these additional changing values as some  form of side information that influences the MDP? \pause  $\leadsto$ \textbf{Context} $c$
+    \end{itemize}
+    
+    \pause
+    \textbf{Key:} 
+    \begin{itemize}
+        \item We can model the problem as a set of MDPs $\mathcal{M}^c$, each of which is the variation, e.g., of the vanilla cart-pole MDP, where the transition function has changed. 
+        \item The things that influence the change in the transition function are called context variables.
+    \end{itemize}
+
+\end{frame}
+
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}{Contextual MDPs}
+    \begin{block}{Definition~\lit{Hallak et al., 2015}{https://arxiv.org/pdf/1502.02259.pdf}}
+        $ \mathcal{M} = ( \mathcal{C}, \mathcal{S}, \mathcal{A}, \mathcal{E} ) $ . 
+        where
+        \begin{itemize}
+            \item $\mathcal{C}$ is the context space (we can sometimes assume that is a Euclidean space)
+            \item $\mathcal{E}$ is a function that maps a context $c \in \mathcal{C}$ to the transitions, rewards, and initial state distributions of an MDP $\mathcal{E}(c) = \{ P^c(.|.,.), R^c(.,.), \rho_0^c(.,.)\}$
+        \end{itemize} 
+
+        \pause
+        \vfill
+        
+        Given a $c \in \mathcal{C}$, we can generate an MDP $\mathcal {M}^c = ( \mathcal{S}, \mathcal{A}, R^c, P^c, \gamma,  \rho_0^c )$
+        
+    \end{block}
+
+    \pause
+    \vfill
+    \textbf{Disclaimer: }Contextual MDPs are just one way to represent the joint class of MDPs. There are many others, but they are out of the scope of this lecture.
+
+\end{frame}
+
+
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}{Formulating the Meta-RL problem}
+
+    Given a space of contexts $\mathcal{C}$
+    
+    \begin{itemize}
+        \item \textbf{Meta-Training:} Sample a subset $\mathcal{C}^{train} \subset \mathcal{C}$ and train an RL agent on the $\mathcal{M}_{c_i} \forall c_i \in \mathcal{C}^{train}$
+        \item \textbf{Meta-testing:} Evaluate the performance of the trained policy on another set of contexts $\mathcal{C}^{test} \subset \mathcal{C} / \mathcal{C}^{train}$
+        \item \textbf{Meta-Learning objective:} Maximize the returns on $\mathcal{C}^{test}$
+        \item \textbf{Generalization Gap:} Given a learned policy $\pi$ 
+        \[
+            \eta(\pi) = \mathbb{E}_{c \sim \mathcal{C}^{tr}}\big [ \sum_{i=0}^{\infty} \gamma^{i} R_i (\pi, \mathcal{M}^c)] - \mathbb{E}_{c \sim \mathcal{C}^{ts}}\big [\sum_{i=0}^{\infty} \gamma^{i} R_i (\pi, \mathcal{M}^c)]   
+        \]
+    \end{itemize}
+
+\end{frame}
+
+
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}{Formulating the Meta-RL problem}
+    \begin{itemize}
+        \item \textbf{Generic Supervised Learning:} $\theta^* \in \argmin_\theta \mathbb{E}_{(x,y) \sim \mathcal{D}^{train}} \big [\mathcal{L}(\theta, x, y) \big ]$ 
+        \vfill
+    
+        \item \textbf{Generic Meta-Learning:} $\theta^* \in \argmin_\theta \sum_{j=1}^n\mathcal{L}(\phi_i, \mathcal{D}^{test}_j)$ where $\phi_i = f_\theta (\mathcal{D}^{train}_i)$ 
+        \vfill
+    
+        \item \textbf{Generic RL:} $\theta^* \in \argmax_\theta \mathbb{E}_{\pi_\theta(\tau)}\big [ R(\tau, \mathcal{M}^{train}) \big ]$ 
+        \vfill
+        
+        \item \textbf{Meta-RL:} $\theta^* \in \argmax_\theta \sum_{j=1}^n \mathbb{E}_{\pi_{\phi_i} (\tau)}\big[ R(\tau, \mathcal{M}_j^{test}) \big ]$ where $\phi_i= f_\theta (\mathcal{M}^{train}_i)$
+    \end{itemize}
+
+\end{frame}
+
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}{What Can Be Context?}
+    \begin{itemize}
+        \item Dynamics of the environment
+        \item Trajectories
+        \item Tasks (Multi-Task Learning)
+        \item Structural information about the environment
+        \item Language (User instructions) 
+    \end{itemize}
+\end{frame}
+
+\end{document}

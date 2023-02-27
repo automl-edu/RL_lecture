@@ -1,0 +1,197 @@
+% !TeX spellcheck = en_US
+\documentclass[aspectratio=169]{../latex_main/tntbeamer}  % you can pass all options of the beamer class, e.g., 'handout' or 'aspectratio=43'
+\input{../latex_main/preamble_adi}
+\title[Meta-RL]{Meta Reinforcement Learning}
+\subtitle{The Big Picture}
+
+
+\begin{document}
+	
+	\maketitle
+
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}{What do we want to achieve today ...}
+
+    \centering
+    \includegraphics[width=0.5\textwidth]{w09_meta_rl_new/images/t01/Buzz.png}
+
+    \begin{itemize}
+        \item To put all of these words into a framework
+        \item A bunch of perspectives through which we can look and understand techniques in Meta-RL
+    \end{itemize}
+
+\end{frame}
+
+
+
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}{An Ode to Prior Knowledge}
+
+    \begin{columns}
+    \column{0.5\textwidth} 
+        \begin{center}
+        \textbf{Breakout}\\ \\
+        \includegraphics[width=0.5\textwidth]{images/t01/breakout.jpg}\\
+        
+        \end{center}
+        
+        \column{0.5\textwidth}
+        \begin{center}
+        \textbf{Montezuma's Revenge} \\
+        \includegraphics[width=0.5\textwidth]{images/t01/montezuma.jpg}\\
+
+    \end{center}
+    
+    \end{columns}
+        
+        
+    \pause
+
+    \begin{columns}
+        \column{0.5\textwidth} 
+        \centering
+        Pretty Easy for a standard DQN
+
+        \column{0.5\textwidth}
+        \centering
+        Almost Impossible for a standard DQN
+    \end{columns}
+    
+    \footnote{Image source: \url{https://paperswithcode.com/task/atari-games}}
+
+\end{frame}
+
+
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}{An ode to Prior Knowledge}
+
+    Breakout:
+    \begin{itemize}
+        \item \textbf{Actions:} FIRE, RIGHT, LEFT
+        \item \textbf{Rewards:} Score points by destroying bricks in the wall
+    \end{itemize}
+    
+    \vfill
+    
+    Montezuma's Revenge:
+    \begin{itemize}
+        \item \textbf{Actions:} Set of 17 actions including movement and firing the gun
+        \item \textbf{Rewards:} Getting a Key, Opening a Door
+        \item \textbf{Ambiguity:} Getting killed by a skull gives no rewards (good? bad?)
+    \end{itemize}
+    
+    \vfill
+    \pause
+    \noindent
+    \textbf{Key point:} We know what to do because we \textbf{understand} what most sprites mean
+
+\end{frame}
+
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}{Transferring skills}
+
+    Prior knowledge helps us incrementally acquire new skills
+    \vfill
+    
+    \begin{center}
+        \includegraphics[width=0.8\textwidth]{images/t01/transfer.png} % made by Aditya using CC-sources
+    \end{center}
+    
+    \vfill
+    \pause
+    \textbf{Transfer Learning:} Can we train our agents to learn new skills better by leveraging prior knowledge?
+    
+
+\end{frame}
+
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}{Transfer Learning}
+
+Using experience from one (set of) tasks for faster learning and better adaptation to a new (set of) tasks
+
+\begin{itemize}
+    \item \textbf{Shots:} Number of attempts of learning in the target domain
+    \item \textbf{Zero-Shot:} When we don't perform any learning in the target domain
+    \item \textbf{Few-Shot:} We perform few attempts
+\end{itemize}
+
+\begin{center}
+    \includegraphics[width=0.5\textwidth]{images/t01/transfer-learning.png}
+\end{center}
+
+
+\end{frame}
+
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}{Multi-Task Learning}
+
+Train on many tasks and then transfer to a new task
+
+
+
+\begin{center}
+    \includegraphics[width=0.6\textwidth]{images/t01/multi-task-learning.png}
+\end{center}
+
+
+\end{frame}
+
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}{Meta-Learning}
+
+Train on many tasks to figure out how to learn more efficiently!
+\begin{itemize}
+    \item Learn how to Learn! (L2L)
+\end{itemize}
+
+\vfill
+\pause
+What can we meta-learn?
+\begin{itemize}
+    \item Hyperparameters: Optimizer configurations
+    \item Optimization methods
+    \item Training Dynamics: credit assignment, models
+    \item Representations ...
+\end{itemize}
+
+\end{frame}
+
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}{Benefits of Meta-Learning}
+
+\begin{itemize}
+    \item Improved sample efficiency
+    \item A faster learner for new tasks i.e. quicker adaptation
+    \item Intelligent exploration 
+    \item Acquiring the right features more quickly
+    \item Robustness to changes in the environment
+    \item Generalization to different kinds of tasks
+\end{itemize}    
+\end{frame}
+
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}{Storing Prior Knowledge}
+
+\begin{itemize}
+    \item \textbf{Q-Function:} tells us which actions or states are good
+    \item \textbf{Policy:} tells us which actions (or states) are good
+    \item \textbf{Models of the Environment:} What are the laws of physics that govern the world?
+    \item \textbf{Features:} Provide us with good representations of states
+
+
+\end{itemize}
+\vfill
+
+\end{frame}
+
+
+\end{document}

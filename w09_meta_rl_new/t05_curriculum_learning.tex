@@ -1,0 +1,169 @@
+% !TeX spellcheck = en_US
+\documentclass[aspectratio=169]{../latex_main/tntbeamer}  % you can pass all options of the beamer class, e.g., 'handout' or 'aspectratio=43'
+\input{../latex_main/preamble_adi}
+\title[Curriculum RL]{Curriculum Reinforcement Learning}
+
+
+\begin{document}
+	
+	\maketitle
+
+%----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{From Easy to Hard}
+
+
+\begin{itemize}
+	\item We humans also learn step by step
+	\begin{itemize}
+		\item E.g., in math, we learn first basic arithmetics before we later learn complex derivatives and integrals
+		\item E.g., in this lecture, we first talked about simple planning on MDPs, before we talked about complex meta-RL ideas
+	\end{itemize}
+	\smallskip
+	\item \alert{Idea:} break down complex concepts into simpler concepts s.t. we can start from the easy ones and build up the complex one
+	\item \alert{Challenge}: How can we design a curriculum starting from simple to hard tasks?
+	\begin{itemize}
+		\item A poorly designed curriculum might even harm learning.
+	\end{itemize}
+	\item \alert{Challenge}: How do we avoid catastrophic forgetting by training on another instance?
+\end{itemize}
+
+
+\end{frame}
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Task-Specific Curriculum Learning~\lit{Bengio et al. 2009}{https://dl.acm.org/doi/10.1145/1553374.1553380}}
+
+	\begin{enumerate}
+		\item Cleaner Examples may yield better generalization faster.
+		\item Gradually introducing more difficult examples speeds up online training.
+	\end{enumerate}
+
+	\begin{itemize}
+		\item Results by \lit{Zaremba and Sutskever. 2014}{https://arxiv.org/abs/1410.4615} indicated that one should mix in easy tasks to not forget how to solve these.
+	\end{itemize}
+
+	
+\end{frame}
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{How to Quantify Complexity/Difficulty of an Env?}
+	
+	\begin{itemize}
+		\item Human specification
+		\begin{itemize}
+			\item parameterized generator for environments that allow to control the complexity by hand
+			\item or we can measure meta-features of the different envs, e.g.
+			\begin{itemize}
+				\item Size of maze
+				\item distance between start state and end state
+				\item Fraction of floor space to walls
+				\item ...
+			\end{itemize}
+			\item Note: We cannot quantify the complexity of the optimal policy for a given MDP, because we have to measure these before actually solving the MDP
+		\end{itemize}
+		\item Learned estimation
+	\end{itemize}
+	
+
+\end{frame}
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Automatic Curriculum Generation}
+	
+	\begin{itemize}
+		\item In contrast to a hand-designed curriculum before training starts, the curriculum is generated on the fly for any instances in the domain
+		\item Criteria for the ordering have to be provided or computed during runtime
+		\item While criteria need to be computed during runtime, they do not need to be hand-designed
+	\end{itemize}
+	
+\end{frame}
+
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Example Criterion 1: Manual Difficulty Ratings}
+	
+	\begin{enumerate}
+		\item Idea: define a function to rate env difficulty
+		\item Example: POET~\lit{Wang et al. 2019}{https://arxiv.org/pdf/1901.01753.pdf}\footnote{Image source: \href{https://eng.uber.com/poet-open-ended-deep-learning/}{Uber AI}}
+	\end{enumerate}
+	\centering
+	
+	\includegraphics[scale=0.5]{images/t05/poet.PNG}			
+\end{frame}
+
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Example Criterion 2: External Model}
+	
+	\begin{enumerate}
+		\item Minimal loss w.r.t another policy being pretrained on other tasks as criterion
+		\item Sort the instances s.t. they go from easy to hard wrt this pretrained agent~\lit{Weinshall et al. 2018}{https://arxiv.org/abs/1802.03796}
+	\end{enumerate}
+	
+\end{frame}
+
+\begin{frame}[c]{Teacher-Guided Curriculum}
+	
+	\begin{itemize}
+		\item Idea: Expert teacher can use its own knowledge to create a curriculum
+		\item Question: who or what is an expert teacher?
+		\pause
+		\item Possible answers: "Common sense" methods, real-life expert decisions, a learner learning how to construct a curriculum, ...?
+	\end{itemize}
+	
+\end{frame}
+%-----------------------------------------------------------------------
+%-----------------------------------------------------------------------
+
+\begin{frame}[c]{The Teacher-Student Setup~\lit{Matiisen et al., 2017}{https://arxiv.org/pdf/1707.00183.pdf}}
+	
+	\begin{figure}
+	\centering
+	\includegraphics[scale= 0.7]{images/t05/teacher_student.png}
+	\caption{Teacher-Student interaction}
+	\end{figure}
+	
+\end{frame}
+%-----------------------------------------------------------------------
+%-----------------------------------------------------------------------
+
+\begin{frame}[c]{The Teacher}
+	\begin{itemize}
+		\item The teacher observes the student's reward $x_t$
+		\item The action space consists of all instances $i$
+		\item The teacher's reward is the change in the agent's reward:
+			$$ r_t = x_t - x_{t-1}$$
+	\end{itemize}
+	
+\end{frame}
+%-----------------------------------------------------------------------
+%-----------------------------------------------------------------------
+
+\begin{frame}[c]{The Ideal Result~\lit{Matiisen et al., 2017}{https://arxiv.org/pdf/1707.00183.pdf}}
+	
+	\begin{figure}
+	\centering
+	\includegraphics[scale= 0.5]{images/t05/ideal_teacher.png}
+	\caption{Teacher-Student interaction}
+	\end{figure}
+
+\end{frame}
+
+%-----------------------------------------------------------------------
+%-----------------------------------------------------------------------
+
+\begin{frame}[c]{Variations on the idea}
+
+	\begin{itemize}
+		\item The same method can be applied to continuously parameterized environments \lit{Portelas et al., 2019}{https://arxiv.org/pdf/1910.07224.pdf}
+		\item Teachers can also automatically generate instances e.g. by using GANs~\lit{Florensa et al. 2017}{https://arxiv.org/abs/1705.06366}
+		\item The teacher can be a fail-safe in safety-critical applications \lit{Turchetta et al., 2020}{https://papers.nips.cc/paper/2020/file/8df6a65941e4c9da40a4fb899de65c55-Paper.pdf}
+		\item Guided Policy Search \lit{Levine \& Koltun, 2013}{https://graphics.stanford.edu/projects/gpspaper/gps_full.pdf} uses an expert policy to sample trajectories (not necessarily across instances)
+	\end{itemize}
+
+\end{frame}
+
+%-----------------------------------------------------------------------
+%-----------------------------------------------------------------------
+\end{document}

@@ -22,8 +22,8 @@
 	\item with history $h_t = (a_1, s_1, r_1, \ldots, a_t, s_t, r_t)$
 	\pause
 	\medskip
-	\item \alert{Question:} Hypertension control: let state be current blood pressure, and action be whether to take medication or not. Is this system Markov?
-	\item \alert{Question:} Website shopping: state is current product viewed by customer, and action is what other product to recommend. Is this system Markov?
+	\item \alert{Question:} Hypertension control: let the state be current blood pressure, and action be whether to take medication or not. Is this system Markov?
+	\item \alert{Question:} Website shopping: the state is the current product viewed by the customer, and action is what other product to recommend. Is this system Markov?
 \end{itemize}
 
 \end{frame}
@@ -36,7 +36,7 @@
 		\begin{itemize}
 			\item Setting state as history always Markov: $s_t = h_t$
 		\end{itemize}
-		\item In practice often assume most recent observation is sufficient statistic
+		\item In practice often assume the most recent observation is a sufficient statistic
 		of history: $s_t = o_t$
 		\item State representation has big implications for:
 		\begin{itemize}
@@ -63,7 +63,7 @@
 		\end{itemize}
 		\pause
 		\medskip
-		\item In theory, we can transform any partially observable process into a fully observable by modelling non-deterministic state transitions and any possible outcome of the hidden information
+		\item In theory, we can transform any partially observable process into a fully observable one by modeling non-deterministic state transitions and any possible outcome of the hidden information
 		\begin{itemize}
 			\item In practice, often infeasible
 			\item special subfield of RL that deals with such POMDP problems

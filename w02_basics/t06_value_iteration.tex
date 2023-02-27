@@ -18,7 +18,7 @@
 	\item Policy iteration computes optimal value and policy
 	\item Value iteration is another technique
 	\begin{itemize}
-		\item Idea: Maintain optimal value of starting in a state $s$ if we have a finite 	number of steps k left in the episode
+		\item Idea: Maintain the optimal value of starting in a state $s$ if we have a finite 	number of steps k left in the episode
 		\item Iterate to consider longer and longer episode
 	\end{itemize}
 
@@ -56,7 +56,7 @@
 	\begin{itemize}
 		\item For each state $s$
 		$$V_{k+1}(s) = \max_{a\in A } R(s,a) + \gamma \sum_{s' \in S } P(s' \mid s,a) V_k(s') $$
-		\item View as Bellmann backup on value function
+		\item View as Bellmann backup on the value function
 		$$V_{k+1} = BV_k$$
 		$$\pi_{k+1}(s) \in \argmax_{a \in A} R(s,a) + \gamma \sum_{s' \in S} P(s' \mid s,a) V_k(s') $$
 	\end{itemize}
@@ -72,7 +72,7 @@
 	\item  Bellman backup operator $B^\pi$ for a particular policy is defined as
 	$$ B^\pi V (s) = R^\pi (s) + \gamma \sum_{s' \in S}  P^\pi(s' \mid s ) V (s')  $$
 	\item Policy evaluation amounts to computing the fixed point of $B^\pi$
-	\item To do policy evaluation, repeatedly apply operator until $V$ stops changing
+	\item To do policy evaluation, repeatedly apply the operator until $V$ stops changing
 	$$V^\pi = B^\pi B^\pi B^\pi B^\pi \ldots B^\pi V$$
 	\end{itemize}
 

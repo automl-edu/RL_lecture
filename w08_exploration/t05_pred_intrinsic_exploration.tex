@@ -35,7 +35,7 @@
 	
 	\begin{itemize}
 		\item Memory of all observed state transitions $M = (s_t, a_t, s_{t+1})$
-		\item Split the state space $S$ similarly as in decision node:
+		\item Split the state space $S$ similarly as in decision trees:
 		\begin{itemize}
 			\item Split only if enough states were observed
 			\item Variance of states in each leaf should be minimal
@@ -72,16 +72,16 @@
 \begin{frame}[c]{State Encoding}
 	
 
-	State should be encoded to reduce the state space
+	State should be encoded in such a way that it reduces the state space
 	\begin{itemize}
 		\item hash-function~\lit{Tang et al. 2016}{https://arxiv.org/abs/1611.04717}
 		\item Autoencoder~\lit{Stadie et al. 2015}{https://arxiv.org/abs/1507.00814}
 		\item Self-supervised inverse dynamic models~\lit{Pathak et al. 2017}{https://arxiv.org/abs/1705.05363}
-		$$g: (\phi(s_t), \phi(s_{t+1})) \mapsto a_t $$
+		$$g: (s_t, s_{t+1}) \mapsto h(\phi(s_t), \phi(s_{t+1})) = \hat{a}_t $$
 		\begin{itemize}
 			\item The encoding will focus on the parts of state features that influenced the agent behavior
 			\item Use $\phi$ to learn a forward model $f: (\phi(s_t), a_t) \mapsto \phi(s_{t+1})$
-			$$ r_t^i = || f(\phi(s_{t})) - \phi(s_{t+1})||^2_2$$
+			$$ r_t^i = || f(\phi(s_{t}), a_t) - \phi(s_{t+1})||^2_2$$
 		\end{itemize}
 	\end{itemize}
 	
@@ -89,7 +89,7 @@
 \end{frame}
 %-----------------------------------------------------------------------
 %----------------------------------------------------------------------
-\begin{frame}[c]{Pure Curiosity-drive Learning~\lit{Burda et al. 2018}{https://arxiv.org/abs/1808.04355}}
+\begin{frame}[c]{Pure Curiosity-driven Learning~\lit{Burda et al. 2018}{https://arxiv.org/abs/1808.04355}}
 	
 	\begin{itemize}
 		\item Pure exploration and ignoring the extrinsic reward signal
@@ -149,7 +149,7 @@
 		\item Not trivial to approximate whether similar states were already visited in non-trivial MDPs
 		\begin{itemize}
 		    \item Count-based density estimation
-		    \item 
+		    \item Model-based forward or inverse models
 		\end{itemize}
 	\end{itemize}
 	
