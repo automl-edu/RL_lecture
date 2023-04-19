@@ -12,12 +12,12 @@ jobs:
     name: Compile
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: compile week ${{ inputs.week }} with xelatex
         uses: ./.github/actions/xelatex-week
         with:
           folder: ${{ inputs.week }}
-      - uses: actions/upload-artifact@v2
+      - uses: actions/upload-artifact@v3
         with:
           name: Slides ${{ inputs.week }}
           path: ${{ inputs.week }}/*.pdf
