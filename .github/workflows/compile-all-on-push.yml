@@ -28,13 +28,13 @@ jobs:
                 "handout",
         ]
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: compile week ${{ matrix.week }} with xelatex
         uses: ./.github/actions/xelatex-week
         with:
           folder: ${{ matrix.week }}
           mode: ${{ matrix.mode }}
-      - uses: actions/upload-artifact@v2
+      - uses: actions/upload-artifact@v3
         with:
           name: Slides ${{ matrix.week }} (${{ matrix.mode }})
           path: ${{ matrix.week }}/${{ matrix.mode }}/*.pdf
@@ -59,8 +59,8 @@ jobs:
             "w11_wrap_up"
         ]
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/download-artifact@v2
+      - uses: actions/checkout@v3
+      - uses: actions/download-artifact@v3
         with:
           name: Slides ${{ matrix.week }} (handout)
           path: ${{ matrix.week }}/
