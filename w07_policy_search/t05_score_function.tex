@@ -63,7 +63,7 @@ $\hat{g}_i = f(x_i) \nabla_\theta \log p(x_i \mid \theta)$
 The policy gradient theorem generalizes the likelihood ratio approach:
 \begin{block}{Theorem}
 For any differentiable policy $\pi_\theta$, the policy gradient is
-$$\nabla_\theta= \mathbb{E}_{\pi_\theta} [\nabla_\theta \log \pi_\theta(s,a) Q^{\pi_\theta}(s,a)] $$
+$$\nabla_\theta V(\theta) = \mathbb{E}_{\pi_\theta} [\nabla_\theta \log \pi_\theta(s,a) Q^{\pi_\theta}(s,a)] $$
 
 \end{block}
 	
