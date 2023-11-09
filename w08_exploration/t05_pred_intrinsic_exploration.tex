@@ -94,7 +94,7 @@
 	\begin{itemize}
 		\item Pure exploration and ignoring the extrinsic reward signal
 		$$r_t  = r_t^i = ||f(\phi(s_t), a_t) - \phi(s_{t+1}) ||_2^2 $$
-		\item Study on different state encodings: compact, sufficient and stable
+		\item Study on different state encodings: compact, sufficient, and stable
 		\begin{enumerate}
 			\item Raw image pixels; no encoding
 			\item Neural network with fixed random weights
@@ -106,7 +106,7 @@
 			\item No clear winner overall
 			\item Random network quite competitive
 			\item IDF can generalize better (e.g., learn IDF on one Super Mario Bros level and then test it on another)
-			\item On the noisy TV env, IDF performed best, followed by random network, but overall very hard to learn anything reasonable (wrt extrinsic reward)
+			\item On the noisy TV env, IDF performed best, followed by the random network, but overall very hard to learn anything reasonable (wrt extrinsic reward)
 		\end{itemize}
 	\end{itemize}
 	
@@ -118,7 +118,7 @@
 	
 	\begin{itemize}
 		\item Idea: maximize information gain about the agent's belief of env dynamics.
-		\item Information gain often measured by reduction in entropy
+		\item Information gain is often measured by a reduction in entropy
 		
 		\begin{eqnarray}
 		&&\sum_t H(\Theta \mid e_t, a_t) - H(\Theta | s_{t+1}, e_t, a_t)\nonumber\\

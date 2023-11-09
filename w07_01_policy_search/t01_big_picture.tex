@@ -15,7 +15,7 @@
 \begin{frame}[c]{Policy-Based Reinforcement Learning}
 
 \begin{itemize}
-	\item In the last lecture we approximated the value or action-value function
+	\item In the last lecture, we approximated the value or action-value function
 	using parameters $\vect{w}$,
 	$$V_{\vect{w}}(s) \approx V^\pi(s)$$
 	$$Q_{\vect{w}}(s,a) \approx Q^\pi (s,a) $$
@@ -23,7 +23,7 @@
 	\begin{itemize}
 		\item e.g., using $\epsilon$-greedy
 	\end{itemize}	
-	\item Now, we will directly parametrize the policy, and will typically
+	\item Now, we will directly parametrize the policy and will typically
 	use $\theta$ to show parameterization:
 	$$\pi_\theta (s,a) = \mathbb{P}[ a\mid s; \theta] $$
 	\item Goal is to find a policy $\pi$ with the highest value function $V^\pi$
@@ -33,30 +33,30 @@
 \end{frame}
 %-----------------------------------------------------------------------
 %----------------------------------------------------------------------
-\begin{frame}[c]{Value-Based and Policy-Based RL}
+\begin{frame}[c]{Value-Based vs. Policy-Based RL}
 
 	\begin{itemize}
 		\item Value-based
 		\begin{itemize}
-			\item Learn Value function
-			\item implicit policy (e.g., $\epsilon$-greedy)
+			\item Learnt value function
+			\item Implicit policy (e.g., $\epsilon$-greedy)
 		\end{itemize}
 		\item Policy-based
 		\begin{itemize}
 			\item No explicit value function
-			\item learnt policy
+			\item Learnt policy
 		\end{itemize}
-		\item Actor-Critic
+		\item Combined: Actor-Critic
 		\begin{itemize}
-			\item Learn Value Function
-			\item Learn Policy
+			\item Learnt value function (critic)
+			\item Learnt policy (actor)
 		\end{itemize}
 		
 	\end{itemize}		
 	
 \end{frame}
 %-----------------------------------------------------------------------
-\begin{frame}[c]{Advantages of Policy-Based RL}
+\begin{frame}[c]{Policy-Based vs Value-Based RL Methods}
 Advantages:
 \begin{itemize}
     \item Better convergence properties
@@ -69,7 +69,7 @@ Advantages:
 Disadvantages:
 \begin{itemize}
     \item Typically converge to a local rather than a global optimum
-    \item Evaluating a policy is typically inefficient and high variance
+    \item Evaluating a policy is typically inefficient and has high variance
 \end{itemize}
 
 \end{frame}
@@ -78,8 +78,8 @@ Disadvantages:
 	
 \begin{itemize}
 	\item So far have focused on deterministic policies
-	\item Now we are thinking about direct policy search in RL, will focus
-	heavily on stochastic policies
+	\item Now we are thinking about direct policy search in RL
+    \item Heavy focus on stochastic policies
 \end{itemize}
 
 \end{frame}
@@ -94,7 +94,7 @@ Disadvantages:
 			\item Rock beats scissors
 			\item Paper beats rock
 		\end{itemize}
-		\item Let state be history of prior actions (rock, paper and scissors) and if
+		\item Let state be the history of prior actions (rock, paper, and scissors) and if
 		won or lost
 		\item Is deterministic policy optimal? Why or why not?
 		\pause
@@ -122,7 +122,7 @@ Disadvantages:
 		\end{itemize}
 		\item Compare value-based RL, using an approximate value function
 		$$Q_\theta (s,a) = f(\phi(s,a); \vect{w})$$
-		\item To policy-based RL, using a parametrized policy
+		\item To policy-based RL, using a parameterized policy
 		$$\pi_\theta(s,a) = g(\phi(s,a); \theta) $$ 
 	\end{itemize}
 	
@@ -159,7 +159,7 @@ Disadvantages:
 		\item An optimal \alert{stochastic} policy will randomly move E or W in grey states
 		$$\pi_\theta\text{(wall to N and S, move E)} = 0.5 $$
 		$$\pi_\theta\text{(wall to N and S, move W)} = 0.5 $$
-		\item It will reach the goal state in a few steps with high probability
+		\item It will reach the goal state in a few steps with a high probability
 		\item Policy-based RL can learn the optimal stochastic policy
 	\end{itemize}
 	
@@ -171,16 +171,16 @@ Disadvantages:
 	\begin{itemize}
 		\item Goal: given a policy $\pi_\theta(s,a)$ with parameters $\theta$, find best $\theta^*$
 		\begin{itemize}
-		    \item \alert{Remark}: Before, we used $\vect{w}$ for the parameters of our approximation. To make it clear, that we talk about the parameters of the policy, we use $\theta$ now.
+		    \item \alert{Remark}: Before, we used $\vect{w}$ for the parameters of our approximation. To make it clear that we talk about the parameters of the policy, we use $\theta$ now.
 		\end{itemize}
-		\item But how do we measure the quality for a policy $\pi_\theta$
-		\item In episodic environments, we can use policy value at start state $V(s_0; \theta)$
-		\item In continuing environments we can use:
+		\item But how do we measure the quality of a given policy $\pi_\theta$?
+		\item In continual (i.e., non-episodic) environments, we can use:
 		\begin{itemize}
-		    \item the average value $\sum_{s} d^{\pi}(s) V^{\pi}(s)$
+		    \item the average value $\sum_{s} d^{\pi}(s) V^{\pi}(s)$\footnote{$d^\pi(s)$ is the probability being in state $s$ under policy $\pi$}
 		    \item or the average reward per time-step $\sum_{s} d^{\pi}(s) \sum_{a} \pi(s,a)r(s,a)$
 		\end{itemize}
-		\item For simplicity, we will mostly discuss the episodic case
+        \item In episodic environments, we can use the policy value at starting state $\sum_{s_0} \rho(s_0) V(s_0; \theta)$
+		\item For simplicity, we will discuss the episodic case.
 	\end{itemize}
 	
 \end{frame}

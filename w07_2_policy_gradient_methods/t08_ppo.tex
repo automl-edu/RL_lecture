@@ -1,0 +1,131 @@
+% !TeX spellcheck = en_US
+\documentclass[aspectratio=169]{../latex_main/tntbeamer}  % you can pass all options of the beamer class, e.g., 'handout' or 'aspectratio=43'
+\input{../latex_main/preamble}
+\title[RL: Policy Gradient]{RL: Policy Search}
+\subtitle{Step Size and Trust Region: PPO}
+
+
+\begin{document}
+	
+	\maketitle
+
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}{The State Of The Art in Policy Gradient Methods}
+We combine all improvements from this lecture into one algorithm:
+    \begin{itemize}
+        \item Policy gradient estimation from Monte Carlo samples
+        \item Actor-Critic algorithm with value estimation
+        \item Limited updates to improve continuously
+    \end{itemize}
+\end{frame}
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Common Template of Policy Gradient Algorithms}
+
+	\begin{itemize}
+	    \item For $i= 1,2,\ldots$ do
+	    \begin{enumerate}
+	        \item Run policy for $T$ timesteps or $N$ trajectories
+	        \item At each timestep in each trajectory, compute baseline $b(s_t)$
+	        \item Compute surrogate objective $L$
+	        \item Update the policy to optimize $L$ $\leadsto$ constrain the update to ensure policy improvement
+	    \end{enumerate}
+	\end{itemize}
+
+\end{frame}
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{The Current Standard: PPO Algorithm~\lit{Schulman et al. 2017}{https://arxiv.org/pdf/1707.06347.pdf}}
+
+	\begin{itemize}
+	    \item For $i= 1,2,\ldots$ do
+	    \begin{enumerate}
+	        \item Run policy for $T$ timesteps or $N$ trajectories
+            \item At each timestep in each trajectory, \alert{compute advantage using value function $V$}
+	        \item Compute surrogate objective $L$
+            \item \alert{Clip $L$} for large updates 
+            \item Add the \alert{value loss} term to $L$ 
+            \item Add a term to $L$ that provides a \alert{bonus for entropy}
+            \item Update the policy to optimize $L$
+            \item \alert{Update target value function $V^{target}$}
+	    \end{enumerate}
+	\end{itemize}
+
+\end{frame}
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Update I: The CLIP Objective}
+
+	\begin{itemize}
+	    \item Recall our surrogate objective $L$:
+     $$\mathbb{E}_{s\sim \mu_{\pi_{old}}, a \sim \pi_{old}} \left[ \frac{\pi_{new}(a \mid s_n)}{\pi_{old}(a\mid s_n)} A_{\pi_{old}} (s_n, a) \right]$$
+        \item We want to ensure similarity between the old and new policy and thus improvement
+        \item Instead of trying to approximate the distance between the old and new policy explicitly with a KL divergence (which can be hard to compute), we simply clip the importance sampling term:
+        $$L = L^{CLIP} = \mathbb{E}_{s\sim \mu_{\pi_{old}}, a \sim \pi_{old}} \left[ min( r(\pi_{new}) A_{\pi_{old}} (s_n, a), clip(r(\pi_{new}), 1-\epsilon, 1+\epsilon) A_{\pi_{old}} ) \right]$$
+        with $r(\pi) = \frac{\pi_new(a \mid s_n)}{\pi_{old}(a\mid s_n)}$
+        \item This penalizes large changes away from the old policy by limiting the advantage from them
+	\end{itemize}
+
+\end{frame}
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Update II: The Value Error}
+
+\begin{columns}
+
+    \column{0.3\textwidth}
+
+\centering
+        \includegraphics[scale=0.2]{w07_2_policy_gradient_methods/images/ac-arch.pdf}
+
+    \column{0.7\textwidth}
+
+\begin{itemize}
+	    \item A second change to our PG template is the addition of a value error loss term for learning $V$
+        \item This term is updating the value function $V$ (used for advantage estimation)
+        \item This is part of the overall objective since in practice a single network predicts policy and values
+        \item We add the hyperparameter $c_1$ to weigh it against the policy improvement term
+        \item Our updated objective is:
+        $$L = L^{CLIP} + c_1  \mathbb{E}_{s\sim \mu_{\pi_{old}}, a \sim \pi_{old}} \left[ (V(s_n) - V^{target}(s_n))^2 \right] $$
+        $$= L^{CLIP} + c_1 L^V$$
+	\end{itemize}
+
+\end{columns}
+
+        
+	
+
+
+
+\end{frame}
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Update III: The Entropy Bonus}
+
+	\begin{itemize}
+	    \item The entropy bonus is added to ensure sufficient exploration ($\to$ maximize entropy!)
+        \item It measures the entropy $H$ of our current policy across the states of our sampled trajectories
+        \item We introduce the hyperparameter $c_2$ to weigh it against the other loss terms
+        \item Now we have the full PPO objective:
+        $$L^{PPO} = L^{CLIP} + c_1 L^V + c_2 \mathbb{E}_{s\sim \mu_{\pi_{old}}, a \sim \pi_{old}} \left[ H(\pi_{old}, s_n) \right] $$
+        $$= L^{CLIP} + c_1 L^V + c_2 L^{ENT}$$
+	\end{itemize}
+
+\end{frame}
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Policy Gradient Summary}
+
+\begin{itemize}
+    \item Extremely popular and useful set of approaches
+    \item Can input prior knowledge in the form of specifying policy parameterization
+    \item You should be familiar with REINFORCE and the policy gradient template
+    \item Understand where different estimators can be slotted in 
+    \item (You don't have to be able to derive or remember the specific formulas in PPO for approximating the objectives and constraints)
+\end{itemize}
+
+\end{frame}
+%-----------------------------------------------------------------------
+%-----------------------------------------------------------------------
+\end{document}

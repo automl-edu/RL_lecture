@@ -28,8 +28,6 @@
 %-----------------------------------------------------------------------
 %----------------------------------------------------------------------
 \begin{frame}[c]{Monte Carlo Value Function Approximation (VFA)}
-	
-	
 	\begin{itemize}
 		\item Return $G_t$ is an unbiased but noisy sample of the true expected return $V^\pi(s_t)$
 		\item Therefore, we can reduce MC VFA to doing supervised learning on a set of (state, return) pairs; $\langle s_1, G_1 \rangle, \langle s_2, G_2 \rangle,\ldots, \langle s_T, G_T \rangle$
@@ -37,16 +35,16 @@
 			\item Substitute $G_t$ for the true $V^\pi(s)$ when fit function approximator
 		\end{itemize}
 		\item Concretely when using linear VFA for policy evaluation
-		
-		\begin{eqnarray}
-		 \Delta \vect{w} &=& \alpha (G_t - \hat{V} (s_t; \vect{w})) \nabla_{\vect{w}}\hat{V}(s_t; \vect{w}) \nonumber\\
-		 &=& \alpha (G_t - \hat{V} (s_t; \vect{w})) \vect{x}(s_t) \nonumber\\
-		 &=& \alpha (G_t - \vect{x}(s_t)^T \vect{w}) \vect{x}(s_t) \nonumber
-		\end{eqnarray}
+		\vspace{-.2cm}
+		\begin{eqnarray*}
+		 \Delta \vect{w} &=&- (1/2) \alpha \nabla_{\vect{w}} J (\vect{w})\\
+          &=& - (1/2) \alpha \nabla_{\vect{w}} (-2(G_t - \vect{x}(s)^T \vect{w})) \hat{V}(s_t; \vect{w})\\
+          &=& \alpha (G_t - \hat{V} (s_t; \vect{w})) \nabla_{\vect{w}}\hat{V}(s_t; \vect{w}) \\
+		 &=& \alpha (G_t - \hat{V} (s_t; \vect{w})) \vect{x}(s_t)\\
+		 &=& \alpha (G_t - \vect{x}(s_t)^T \vect{w}) \vect{x}(s_t)
+		\end{eqnarray*}
 		
 		\item Note: $G_t$ may be a very noisy estimate of true return
-		\item Note(2): We dropped the factor $2$ and see it as part of $\alpha$
-		
 	\end{itemize}
 	
 \end{frame}
@@ -54,22 +52,27 @@
 %----------------------------------------------------------------------
 \begin{frame}[c]{MC Linear Value Function Approximation for Policy
 		Evaluation}
-	
 
-Initialize $\vect{w}= \mathbf{0}$, $k=1$\\
-Loop	
-	\begin{itemize}
-		\item Sample $k$-th episode $s_{k,1}, a_{k,1}, r_{k,1}, s_{k,2}, a_{k,2}, r_{k,2}, \ldots$
-		\item for $t=1, \ldots, L_k$ do
-		\begin{itemize}
-			\item If First visit to $s_{k,t}$ in episode $k$ then
-			\begin{itemize}
-					\item $G_t(s) = \sum_{j}^{L_k} r_{k,j}$
-					\item Update weights by $\alpha (G_t - \vect{x}(s_{k,t})^T \vect{w}) \vect{x}(s_{k,t})$
-			\end{itemize}
-		\end{itemize}
-	\item $k = k + 1$
-	\end{itemize}
+    \begin{algorithm}[H]
+        \caption{Monte Carlo Value Function Approximation}
+        \DontPrintSemicolon
+        \LinesNotNumbered
+        \KwIn{{}\\
+        $\alpha$ - Learning rate,\\
+        $K$ - number of episodes,\\
+        $L_k$ - episode Length}
+        \textbf{Initialise}:  $\vect{w}= \mathbf{0}$, $k=1$\\
+        \While{$k \leq K$}{
+            Sample $k-th$ episode $s_{k,1}, a_{k,1}, r_{k,1}, s_{k,2}, a_{k,2}, r_{k,2}, \ldots$\\
+            \For{$t \gets 1,2,...L_k$}{
+                \If{First visit to state}{
+                    {$G_t(s) \gets \sum_{j}^{L_k} r_{k,j}$}\\
+                    Update weights by $\alpha (G_t - \vect{x}(s_{k,t})^T \vect{w}) \vect{x}(s_{k,t})$
+                }
+            }
+        }
+    \KwOut{Return: $\hat{V}(\cdot)$}
+    \end{algorithm}
 	
 \end{frame}
 %-----------------------------------------------------------------------

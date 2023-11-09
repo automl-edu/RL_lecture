@@ -1,0 +1,126 @@
+% !TeX spellcheck = en_US
+\documentclass[aspectratio=169]{../latex_main/tntbeamer}  % you can pass all options of the beamer class, e.g., 'handout' or 'aspectratio=43'
+\input{../latex_main/preamble}
+\title[RL: Policy Gradient]{RL: Policy Search}
+\subtitle{Step Size and Trust Region}
+
+
+\begin{document}
+	
+	\maketitle
+
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Fixing Policy Gradient III: Limiting Update Size}
+\begin{itemize}
+    \item We can approximate the return for the gradient computation using samples
+    \item We can stabilize that return to a degree using value estimation
+    \item Important: value estimation does not solve the variance problem; it can only reduce variance
+    \item It's still possible to sample very good or bad trajectories and thus perform extreme updates
+\end{itemize}	
+\bigskip
+$\leadsto$ The policy can still change drastically with only one update
+\end{frame}
+
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Why are Step Sizes a Big Deal in RL?}
+	
+    \begin{itemize}
+        \item Step size (aka learning rate) is important in any gradient-based approach
+        \item Supervised learning: Step too far $\leadsto$ next updates might fix it
+        \item Reinforcement learning:
+        \begin{itemize}
+            \item Step too far $\leadsto$ bad policy
+            \item Next batch: collected under bad policy
+            \item \alert{Policy is determining data collection!} 
+            \begin{itemize}
+                \item Essentially controlling exploration and exploitation trade-off due to particular policy parameters and the stochasticity of the policy
+            \end{itemize}
+            \item May not be able to recover from a bad choice $\leadsto$ collapse in performance
+        \end{itemize}
+    \end{itemize}
+
+\end{frame}
+
+%----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Policy Gradient and Step Size}
+	
+    \begin{itemize}
+        \item Goal: Each step of policy gradient yields an updated policy $\pi'$ whose value is greater than\\ (or equal) to the prior policy $\pi$: $V^{\pi'} \geq V^\pi$
+        \begin{itemize}
+            \item Monotonic improvement
+            \item Important in some applications
+            \item PG often more stable than DQN
+        \end{itemize} 
+        \item Gradient descent approaches update the weights a small step in direction of the gradient
+        \item First order / linear approximation of the value function's dependence on the policy parameterization
+        \item Locally a good approximation; further away less good
+    \end{itemize}
+
+\end{frame}
+
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Policy Gradient Methods with Auto-Step-Size Selection}
+	
+    \begin{itemize}
+        \item Can we automatically ensure the updated policy $\pi'$ has a value greater than (or equal to) the prior policy $V^{\pi'} \geq V^\pi$?
+        \item We will:
+        \begin{itemize}
+            \item Consider this question for the policy gradient setting
+            \item Try to address this by modifying step size
+            \item Introduce an algorithm implementing such an auto-adaption approach
+        \end{itemize}
+    \end{itemize}
+
+\end{frame}
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Objective Function}
+	
+    \begin{itemize}
+        \item Goal: find policy parameters that maximize the value function
+        $$ V(\theta) = \mathbb{E}_{\pi_\theta} \left[ \sum_{t=0}^{\infty} \gamma^t r(s_t, a_t) \right]$$
+        \item Having access to samples from the current policy $\pi_\theta$ 
+        \item But what if we want to predict the value of a different policy ($\leadsto$ off-policy learning)?
+    \end{itemize}
+
+\end{frame}
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Objective Function}
+	\vspace{-1em}
+    \begin{itemize}
+        \item Goal: find policy parameters that maximize value function
+        $$ V(\theta) = \mathbb{E}_{\pi_\theta} \left[ \sum_{t=0}^{\infty} \gamma^t r(s_t, a_t)\right]$$
+        \item Express value of a second policy $\Tilde{\pi}$ in terms of advantage of original policy $\pi$
+        \begin{eqnarray}
+        V(\Tilde{\theta}) &=& V(\theta) + \mathbb{E}_{\pi_{\Tilde{\theta}}} \left[ \sum_{t=0}^{\infty} \gamma^t A_\pi(s_t, a_t) \right] \nonumber\\
+        &=& V(\theta) + \sum_{s} \mu_{\Tilde{\pi}}(s) \sum_{a} \Tilde{\pi}(a \mid s) A_\pi(s_t, a_t) \nonumber
+        \end{eqnarray}
+        %\item $ \mu_{\Tilde{\pi}}(s)$ is the discounted weighted frequency of state $s$ under policy $\Tilde{\pi}$
+        \item Assume for now that we know the true advantage $A_\pi$ and $\Tilde{\pi}$
+        \item But we cannot compute the above if we don't know $\mu(\Tilde{\pi})$,\\ i.e., the state distribution under the newly proposed policy (a.k.a. state visitation frequency)
+    \end{itemize}
+
+\end{frame}
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Local Approximation}
+	
+    \begin{itemize}
+        \item Can we remove the dependency on the discounted visitation frequencies under the new policy?
+        \item Substitute in the state distribution under the \alert{current} policy to define a new objective function to \alert{maximize}:
+        $$ L_\pi(\Tilde{\pi}) = V(\theta) + \sum_{s} \alert{\mu_\pi (s)} \sum_{a} \Tilde{\pi}(a \mid s) A_\pi(s,a)$$
+        \item Note that $L_{\pi_{\theta}}(\pi_{\theta}) = V(\theta)$ since the unweighted sum of $A_\pi$ is zero
+        \item Thus, the gradient of $L$ is identical to the gradient of the value function at policy parameterized by $\theta_0$: 
+        $$\nabla_{\theta} L_{\pi_{\theta'}}(\pi_{\theta'})\mid_{\theta = \theta'} = \nabla_\theta V(\theta)\mid_{\theta = \theta'}$$
+    \end{itemize}
+
+\end{frame}
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+
+\end{document}

@@ -1,0 +1,82 @@
+% !TeX spellcheck = en_US
+\documentclass[aspectratio=169]{../latex_main/tntbeamer}  % you can pass all options of the beamer class, e.g., 'handout' or 'aspectratio=43'
+\input{../latex_main/preamble}
+\title[RL: Big Picture]{RL: Policy Gradient Methods}
+\subtitle{The Big Picture}
+
+
+
+\begin{document}
+	
+	\maketitle
+
+%----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Policy Gradient Methods}
+
+\begin{itemize}
+	\item Before, we showed how to find a good policy without value approximation\\ by directly optimizing the policy gradient
+	\item But:
+        \begin{itemize}
+            \item scalability of black-box optimizers might be limited
+            \item the finite difference method is noisy and inefficient 
+        \end{itemize}
+	\item We showed the policy gradient can be computed analytically\\
+        $\leadsto$ How exactly can we leverage this in RL algorithms?
+\end{itemize}
+
+\end{frame}
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Recap: Policy Gradient Theorem}
+
+	\begin{itemize}
+		\item For any differentiable policy $\pi_\theta$ and objective function $J$, the policy gradient is $$\nabla_\theta J_\theta= \mathbb{E}_{\pi_\theta} [Q^{\pi_\theta}(s,a) \nabla_\theta \log \pi_\theta(s,a) ] $$
+		\item To compute this gradient, we only need trajectories from $\pi_\theta$ and its Q-function $Q^{\pi_\theta}$
+        \item A trajectory is a tuple $\tau = (s_0, a_0, r_1, \ldots, s_{T-1}, a_{T-1}, r_{T-1}, s_T)$
+	\end{itemize}		
+\bigskip
+	$\leadsto$ The data we collect through environment interactions is enough to compute the gradient
+    \newline
+    \textbf{Problem}: the gradient estimate is unbiased but very noisy (i.e., high variance)
+\end{frame}
+%-----------------------------------------------------------------------
+%-----------------------------------------------------------------------
+\begin{frame}[c]{A Simple Policy Gradient Update}
+\begin{enumerate}
+	\item for each episode $\{s_0, a_0, r_1, \ldots, s_{T-1}, a_{T-1}, r_T \} \sim \pi_\theta $ do
+	\begin{itemize}
+		\item for $t=0$ to $T - 1$ do
+		\begin{itemize}
+			\item $\theta := \theta + \alpha Q^{\pi_\theta}(s,a) \nabla_\theta \log \pi_\theta (s_t, a_t)  $ 
+		\end{itemize}
+	\end{itemize}
+	\item return $\theta$
+\end{enumerate}
+
+\medskip
+Note: This is gradient ascent ($+$) and not gradient descent
+
+\pause
+\medskip
+\textbf{Questions:} How do we estimate $Q^{\pi_\theta}(s,a)$ efficiently? Can we make the gradient estimation less noisy?
+\end{frame}
+%-----------------------------------------------------------------------
+%-----------------------------------------------------------------------
+\begin{frame}[c]{Policy Gradient Algorithms}
+\begin{itemize}
+    \item We can construct algorithms using the policy gradient to update a policy function iteratively
+    \item The policy can be modeled in different ways; though DNNs are the most common
+    \item We can use algorithmic improvements to stabilize the gradient estimation
+    \pause
+    \item In this module, we will introduce some of them:
+    \begin{itemize}
+        \item Estimation via sampling: REINFORCE
+        \item Utilizing value baselines: Actor-Critic
+        \item Limiting the size of each policy update: PPO
+    \end{itemize}
+\end{itemize}
+\end{frame}
+%-----------------------------------------------------------------------
+%-----------------------------------------------------------------------
+\end{document}

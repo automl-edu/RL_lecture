@@ -65,13 +65,24 @@
 %----------------------------------------------------------------------
 \begin{frame}[c]{Temporal Difference [TD(0)] Learning Algorithm}
 	
-	Input: $\alpha$\\
-	Initialize $V^\pi(s) = 0. \forall s \in S$\\
-	Loop\\
-	\begin{itemize}
-		\item Sample tuple $(s_t, a_t, r_t, s_{t+1})$
-		\item $V^\pi(s) = V^\pi(s) + \alpha (\underbrace{[r_t + \gamma V^\pi (s_{t+1})]}_{\text{TD target}} - V^\pi(s))$
-	\end{itemize}
+	\begin{algorithm}[H]
+    \caption{TD(0)}
+    \LinesNotNumbered
+    \DontPrintSemicolon
+    \KwIn{{}\\
+    $\pi$ - Policy to evaluate\\
+    $\alpha$ - Learning Rate}
+    \textbf{Initialise}: $V^\pi(s) = 0 \quad \forall s \in S$
+    
+    \While{Not converged}{
+        Sample tuple $(s_t, a_t, r_t, s_{t+1})$
+
+        Compute $\text{TD target} = r_t + \gamma V^\pi (s_{t+1})$
+        
+        $V^\pi(s) \gets V^\pi(s) + \alpha ([\text{TD target}] - V^\pi(s))$
+    }
+    \KwOut{{} Return $V^\pi$}
+\end{algorithm}
 	
 \end{frame}
 %-----------------------------------------------------------------------

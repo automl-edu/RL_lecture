@@ -63,6 +63,21 @@ $$V^\pi (s) = \mathbb{E}_\pi [G_t \mid s_t = s] \approx \mathbb{E} [r_t + \gamma
 \end{frame}
 %-----------------------------------------------------------------------
 %----------------------------------------------------------------------
+\begin{frame}[c]{What do we mean by bootstrapping?}
+\begin{itemize}
+    \item We want to get an exact state value $V^\pi(s)$. 
+    \item To do this, we would ideally need to roll the whole sequence out
+    \item \textbf{Problem:} What if the sequence is too long, or even infinite? 
+    \item \textbf{Idea:} We treat the current state value as an estimate of the exact value and run with it
+    \begin{itemize}
+        \item This adds bias to the process since we are basically treating the estimation as truth
+    \end{itemize}
+    \item \textbf{Key:} If we refine this estimation over time, then we can get closer to the actual value 
+    \item \alert{"Pull ourselves out, by the bootstraps"    }
+\end{itemize}
+\end{frame}
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
 \begin{frame}[c]{Policy Evaluation: $V^\pi = \mathbb{E}[G_t \mid s_t = s]$}
 
 \begin{itemize}

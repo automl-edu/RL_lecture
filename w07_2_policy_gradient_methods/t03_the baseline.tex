@@ -1,0 +1,125 @@
+% !TeX spellcheck = en_US
+\documentclass[aspectratio=169]{../latex_main/tntbeamer}  % you can pass all options of the beamer class, e.g., 'handout' or 'aspectratio=43'
+\input{../latex_main/preamble}
+\title[RL: Policy Gradient]{RL: Policy Search}
+\subtitle{Policy Gradient Algorithms}
+
+
+
+\begin{document}
+	
+	\maketitle
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Fixing Policy Gradient II: Value Baselines}
+
+\begin{itemize}
+	\item We identified a problem: using the sampled return introduces a lot of variance in our gradient estimation:
+ $$\theta := \theta + \alpha \nabla_\theta \log \pi_\theta (s_t, a_t) G_t $$
+    \item So: we need to offset the noise we incur from using the return samples
+    \item Ideally, we want to keep the gradient unbiased
+\end{itemize}
+	$\leadsto$ \alert{Idea}: We use a baseline for the return estimation to reduce variance without introducing bias
+\end{frame}
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Fixing Policy Gradient II: Value Baselines}
+
+\begin{itemize}
+	\item Reduce variance by introducing a baseline $b(s)$ to remove the influence of future actions
+	
+	$$\nabla_\theta \mathbb{E}_\tau [R] = \mathbb{E}_\tau \left[ \sum_{t=0}^{T-1} \nabla_\theta \log \pi(a_t \mid s_t; \theta) \left( \sum_{t'=t}^{T-1} r_{t'} - \alert{b(s_t)} \right) \right] $$
+	
+	\item For any choice of $b$, gradient estimator is unbiased
+	\item Near-optimal choice is our approximation of the expected return
+	$$b(s_t) \approx \mathbb{E} [r_t + r_{t+1} +\ldots + r_{T-1}] $$
+	
+	\item Interpretation: increase logprob of action $a_t$ proportionally to how much returns $\sum_{t'=t}^{T-1} r_{t'}$ are better than expected
+	
+\end{itemize}
+\end{frame}
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Why Does This Not Introduce Bias?}
+
+\begin{itemize}
+	\item Mathematically, when we distribute the sum on the right side we get two terms: the original policy gradient term, and an \alert{expectation that includes the baseline}: 
+    $$ \mathbb{E}_\tau \bigg [ \nabla_\theta \log \pi(a_t \mid s_t; \theta) \cdot b(s_t) \bigg ]$$
+	
+	$$= \mathbb{E}_{s_{0;t},a_{0;t-1}} \left[ b(s_t)  \cdot \mathbb{E}_{a_t} \left[ \nabla_\theta \log \pi(a_t \mid s_t; \theta) \right] \right] $$
+    
+    $$=\mathbb{E}_\tau \left[ b(s_t) \cdot 0 \right] $$
+	
+	\item The expectation goes to zero because of the log derivative trick \href{https://danieltakeshi.github.io/2017/03/28/going-deeper-into-reinforcement-learning-fundamentals-of-policy-gradients/}{\alert{(click here for more details)}}
+
+	\item More intuitively: there's no additional bias because we only re-weigh the action $a_t$ at timestep $t$ with a function $b$ that does not depend on the action at all
+	
+\end{itemize}
+	
+\end{frame}
+% %-----------------------------------------------------------------------
+\begin{frame}[c]{Intuition: Why Does It Help?}
+
+\begin{itemize}
+	\item Usually we would assume not changing the bias will also not change the variance
+	
+	\item In this case, it does since we offset the effect of our sampling procedure
+ 
+	\item While the expectations in our gradient are technically constant, in practice, we approximate them with samples
+
+    \item As we have seen, samples can diverge greatly over the course of a single training run
+	
+	\item With the baseline, we can get better updates on diverse samples since now we can remove the influence of future actions on each return step
+ \newline
+ $\leadsto$ Bringing the approximation of the expectation closer to the theoretical true value
+\end{itemize}
+	
+\end{frame}
+%----------------------------------------------------------------------
+% \begin{frame}[c]{”Vanilla” Policy Gradient Algorithm}
+	
+% 	\begin{itemize}
+% 		\item Initialize policy parameters $\theta$ and baseline $b$
+% 		\item for iteration$=1,2,\ldots$ do
+% 		\begin{itemize}
+% 			\item Collect a set of trajectories by executing the current policy
+% 			\item At each time step $t$ in each trajectory $\tau^i$, compute
+% 			\begin{itemize}
+% 				\item Return $G_t^i= \sum_{t'=t}^{T-1} r_{t'}^i$ and
+% 				\item Advantage estimate $\hat{A}^i_t = G^i_t - b(s_t)$
+% 			\end{itemize}
+% 			\item Re-fit the baseline by minimizing $\sum_i \sum_t || b(s_t) - G^i_t||^2$
+% 			\item Update the policy, using a policy gradient estimate $\hat{g}$
+% 			\begin{itemize}
+% 				\item which is a sum of terms $\nabla_\theta \log \pi(a_t \mid s_t; \theta) \hat{A}_t$
+% 				\item Apply gradient $\hat{g}$ by any DL-optimizer (e.g., SGD or ADAM)
+% 			\end{itemize}
+% 		\end{itemize}
+		
+% 	\end{itemize}
+
+% \bigskip
+
+% $\leadsto$ Actor-Critic method
+ 
+% \end{frame}
+%-----------------------------------------------------------------------
+% %----------------------------------------------------------------------
+% \begin{frame}[c]{Choosing the Baseline: Value Functions}
+	
+% 	\begin{itemize}
+% 		\item Recall $Q$-function:
+% 		$$Q^\pi(s,a) = \mathbb{E}_\pi [r_0 +  \gamma r_1 + \gamma^2 r_2 + \ldots \mid s_0 = s, a_0 = a ]$$
+% 		\item State-value function can serve as a great baseline
+% 		\begin{eqnarray}
+% 		V^\pi (s) &=& \mathbb{E}_\pi [r_0 +  \gamma r_1 + \gamma^2 r_2 + \ldots \mid s_0 = s]\nonumber\\	
+% 		&=& \mathbb{E}_{a\sim\pi} [Q^\pi(s,a)]\nonumber
+% 		\end{eqnarray}
+% 		\item Advantage function: Combining $Q$ with baseline $V$:
+% 		$$A^\pi(s,a) = Q^\pi(s,a) - V^\pi(s) $$
+% 	\end{itemize}
+	
+% \end{frame}
+% %-----------------------------------------------------------------------
+%-----------------------------------------------------------------------
+\end{document}

@@ -167,7 +167,7 @@ $$\vect{x}(s) = \begin{pmatrix}
 		\item Recall weight update:
 		$$ \Delta \vect{w} = - \frac{1}{2} \alpha \nabla_{\vect{w}} J (\vect{w})$$
 		\item Update (- step size $\times$ prediction error $\times$ feature value)
-		$$ \Delta \vect{w} = -\frac{1}{2} \alpha(2(V^\pi(s) - \vect{x}(s)^T \vect{w})) \vect{x}(s)$$
+		$$ \Delta \vect{w} = -\frac{1}{2} \alpha(-2(V^\pi(s) - \vect{x}(s)^T \vect{w})) \vect{x}(s)$$
 		
 	\end{itemize}
 	

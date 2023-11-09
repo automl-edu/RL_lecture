@@ -1,4 +1,4 @@
-\documentclass[aspectratio=169]{../latex_main/tntbeamer}  % you can pass all options of the beamer class, e.g., 'handout' or 'aspectratio=43'
+\documentclass[aspectratio=169, handout]{../latex_main/tntbeamer}  % you can pass all options of the beamer class, e.g., 'handout' or 'aspectratio=43'
 \input{../latex_main/preamble}
 
 \title[ML-RL: Big Picture]{Welcome to the RL Lecture}
@@ -61,7 +61,6 @@
 	
 \end{frame}
 %-----------------------------------------------------------------------
-%----------------------------------------------------------------------
 \begin{frame}[c]{Machine Learning}
 
 \centering
@@ -119,65 +118,41 @@
 		\item Model Free Control
 		\item Linear Function Approximation
 		\item Deep RL
-		\item Policy Gradient
+		\item Policy Gradient I + II
 		\item Exploration
-		\item Meta-RL
-		\item Reproducibility in RL
-		\item Auto-RL
+		%\item Meta-RL
+            \item Auto-RL		
+            \item Reproducibility in RL
 		\item Project
 	\end{enumerate}
 	
 	\pause
-	$\leadsto$ \alert{More an introduction into RL!}
+	$\leadsto$ \alert{More an introduction into RL! Next semester SOTA RL!}
 	
 \end{frame}
-%----------------------------------------------------------------------
-%----------------------------------------------------------------------
-\begin{frame}[c]{Course Format}
-	
-	\begin{itemize}
-		\item Concepts \& Details
-		\begin{itemize}
-			\item We provide references and links to papers\\ s.t. you can read up more details! 
-			\item Nevertheless, we cover all the basic math for RL
-		\end{itemize}
-		\smallskip
-		\item Interactive lecture and exercise sessions
-		\begin{itemize}
-		    \item Watch lecture at home!
-		    \item Discuss it with us on-site
-			\item Interactive quizzes in exercise sessions to reinforce your knowledge and understanding
-			\item[$\leadsto$] The success of it depends on whether you are willing to talk to us! 
-		\end{itemize}
-		\smallskip
-		\item (Mostly) Practical exercises
-		\begin{itemize}
-			\item Implement it, use it and play with it!
-			\item We will answer questions for the current exercise and partially discuss solutions from the last week in the on-site sessions
-		\end{itemize}
-	\end{itemize}
-	
-\end{frame}
-%----------------------------------------------------------------------
 
 %----------------------------------------------------------------------
-\begin{frame}[c]{Organization (Lectures)}
-	
+\begin{frame}[c]{Course Format}
+
+\begin{itemize}
+	\item Concepts over details
 	\begin{itemize}
-		\item Lectures are pre-recorded
-		\item We will make them available on StudIP via Flowcast
-		\item[$\leadsto$] Flipped classroom lecture
-		\begin{itemize}
-		    \item You watch the lectures whenever it suits you
-		    \item We will discuss the lecture content in our on-site sessions
-		    \item[$\leadsto$] each week Thursday at 2pm (s.t).
-		    \item The meetings will not be recorded
-		\end{itemize}
-            \item If you are sick (or have symptoms), please send me an email in advance and we will set up a hybrid meeting via Zoom
+	  \item we provide references and links to papers\\ s.t. you can read up details!
 	\end{itemize}
-	
+	\smallskip
+	\item Interactive lecture
+	\begin{itemize}
+	  \item more efficient learning through self-reflection
+	\end{itemize}
+	\smallskip
+	\item Practical exercises and projects
+	\begin{itemize}
+	  \item implement it, use it and play with it!
+	\end{itemize}
+\end{itemize}
+
 \end{frame}
-%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
 %----------------------------------------------------------------------
 \begin{frame}[c]{Why Videos?}
 
@@ -210,113 +185,227 @@
 \end{frame}
 %-----------------------------------------------------------------------
 %----------------------------------------------------------------------
-\begin{frame}[c]{Details on On-Site Meetings}
-	
-	\begin{enumerate}
-	    \item Answering your questions regarding the videos
-	    \item Breakout groups discussing some more in-depth questions
-		\item Kahoot-Quiz
-		\begin{itemize}
-		    \item Helps you to check whether you really understand the topics
-		    \item Gamified quiz 
-		\end{itemize}
-		\item Feedback to exercise sheet
-		\begin{itemize}
-			\item You don't need to achieve any point threshold
-			%\item But you need to submit something every week
-                \item There is no extra exercise slot
-                \item[$\leadsto$] Consultation hour: 
-                \begin{itemize}
-                    \item You can meet with Aditya and/or Carolin Fridays from 13:00 - 14:30 
-                    \item They will clarify all your detailed questions regarding the exercise
-                    \item Send them an email beforehand to make an appointment
-                \end{itemize}
-		\end{itemize}
-	\end{enumerate}
-	
-\end{frame}
-%-----------------------------------------------------------------------
-%----------------------------------------------------------------------
-\begin{frame}[c]{Organization (Exercise Assignments)}
-	
-	\begin{itemize}
-	\item Every week, a new exercise sheet
-		\item Exercise focus is aligned with the week's lecture topic
-		\begin{itemize}
-		    \item \alert{Deadline} is always Fridays at 4pm
-		\end{itemize}
-		\item Most exercises will be practical, i.e., you have to implement something
-		\item Teamwork highly recommended, team size at most 3! 
-		\pause
-		\item Build upon GitHub classroom $\leadsto$ enables auto-grading
-		\begin{itemize}
-			\item There will be an invitation link each week on each exercise sheet.
-			\item You will have to click on the link on exercise sheet one to be able to form groups.
-			\item Submit solutions via git
-		\end{itemize}
-		\pause
-            \item Don't cheat (incl. plagiarism)
-            \begin{itemize}
-              \item First time cheating: $0$ points for exercise
-              \item Second time cheating: failing the course
-            \end{itemize}
-            \pause
-            \item Exercises are not mandatory\\ \alert{BUT: quite unlikely that you will pass the course without doing them}
-	\end{itemize}
-	
-\end{frame}
-%-----------------------------------------------------------------------
-%----------------------------------------------------------------------
-\begin{frame}[c]{Bonus Points}
+\begin{frame}[c]{Organization (Exercises)}
 
 \begin{itemize}
-
-  \item Up to \alert{$8$ bonus points} for final grade
+  \item Every week new exercise sheet
   \begin{itemize}
-      \item Solve at least $80\%$ of an exercise sheet to obtain a bonus point
-      \item $4$ bonus points $\leadsto$ grading boost by 0.3/0.4
+    \item before Week N: watch videos of Lecture N (on your own)
+    \item Week N (Thursday): discussion of questions, quiz, and presentation of exercise solutions about Lecture N
+    \item Week N (Friday, 17:00): The exercise sheet for Lecture N is due
+    \item[$\leadsto$] \alert{Reasoning:} (i) You watch the videos; (ii) you work directly on the exercises to deepen your understanding; (iii) you discuss missing pieces with us; (iv) you complete the exercise (if not already done).
   \end{itemize}
-  \item We will (sometimes) ask someone of you to present your solution 
+  \item Optional exercise/consultation slot on Thursday 4pm - 5:30pm. 
   \begin{itemize}
-      \item We will only ask students who got at least 80\% correct
-      \item If you refuse or fail to present your solution, you lose 2 bonus points
+      \item Request it in advance if you are in need for that!
+  \end{itemize}
+  \item Most exercises will be practical, i.e., you have to implement something
+  \begin{itemize}
+    \item Expected work load: 1.5h - 2h each week
+  \end{itemize}
+  \item Teamwork highly recommended, team size at most 3! 
+  \item Build upon GitHub classroom $\leadsto$ enables auto-grading
+  \begin{itemize}
+      \item There will be an invitation link each week -- distributed via StudIP
   \end{itemize}
 \end{itemize}
 
 \end{frame}
 %-----------------------------------------------------------------------
 %----------------------------------------------------------------------
-\begin{frame}[c]{You need help?}
-	
-Priority list:
-	\begin{enumerate}
-		\item Ask your friends and peers
-		\item Stud.IP Forum
-		\begin{itemize}
-		    %\item[$\leadsto$] Channel ``2022 RL Lecture''
-		    \item Only use the lecture forum
-			\item You can also answer the questions of your peers! 
-			\item We will only reply if we have the feeling that it is necessary.
-		\end{itemize}
-		\item If there are organizational questions, contact Carolin or Aditya directly 
-		\begin{itemize}
-		    \item Don't write them emails about how to solve an exercise or that you found a bug in the exercise
-		    \item[$\leadsto$] all of these belong into the Stud.IP forum
-		\end{itemize}
-		\item Only as the very last option, contact me ;-)
-	\end{enumerate}
-	
+\begin{frame}[c]{Bonus Points for Final Grade}
+
+\begin{itemize}
+  \item Up to \alert{$8$ bonus points} by solving the exercises
+  \begin{itemize}
+      \item Solving Level 1 and 2 of an exercise sheet to obtain $1$ bonus point
+      \item Solving Level 3 of an exercise sheet to obtain another $1$ bonus point
+  \end{itemize}
+  \item Up to \alert{$4$ bonus points} for presenting your solution in our Thursday meetings before the exercise deadline
+  \begin{itemize}
+      \item $1$ bonus point for volunteering to present your current solution
+      \item additional $1$ bonus point for presenting a complete solution
+      \item[$\leadsto$] at most $2$ bonus points for presenting each week 
+       \item Can also be done as a group or as an individual 
+      \begin{itemize}
+        \item Only those who are there and are part of the presentation can get these bonus points
+      \end{itemize}
+  \end{itemize}
+      \item $4$ bonus points $\leadsto$ grading boost by 0.3/0.4 (e.g., $1.7 \mapsto 1.3$)
+\end{itemize}
+
 \end{frame}
 %-----------------------------------------------------------------------
-\begin{frame}{AI Courses at LUH}
-    
-    \centering
-    \vspace{-2em}
-    \includegraphics[width=0.38\textwidth]{images/aicources22.png}
+%----------------------------------------------------------------------
+\begin{frame}[c]{Don't cheat}
+
+\begin{itemize}
+  \item Don't cheat (incl. plagiarism)
+  \begin{itemize}
+    \item First time cheating: $0$ points for exercise
+    \item Second time cheating: failing the course
+  \end{itemize}
+  \pause
+  \item Exercises are not mandatory\\ \alert{BUT: quite unlikely that you will pass the course without doing them}
+  \medskip
+  \item If you think that it will help you to understand a solution better, we will not stop you from using Co-Pilot, GPT4 or similar systems
+  \begin{itemize}
+      \item However, you might learn less by using AI systems compared to solving it on your own
+      \item These systems can be frustrating if you don't have the underlying skills yourself. It will solve $80\%$ for you, but if you don't know how to solve the other $20\%$ yourself, you still screwed up.
+      \item \alert{Mandatory:} Mark whenever an AI system supported you!
+  \end{itemize}
+\end{itemize}
+
+\end{frame}
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Live Discussion}
+
+\begin{itemize}
+  \item Every week at Thursday: 14:15 (s.t) - 15:45am\\ 
+  \item Room F128, Building 1101 (Welfengarten 1)
+  \pause
+  \item Warning: Does not replace watching the recorded lecture videos!
+  \pause
+  \smallskip
+  \item Components:
+  \begin{enumerate}
+       \item You can ask anything related to the recent lecture videos or exercises
+      \item Break-out to discuss questions in small groups 
+      \item \alert{Interactive quiz} where you can check whether you understood the main points\\ $\leadsto$ \alert{Important for passing the course!}
+      \pause
+      \item Presentation of exercise solutions
+  \end{enumerate}
+  \pause
+  \medskip
+  \item No recordings of the live sessions
+\end{itemize}
+
+\end{frame}
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Get in Touch with Us}
+
+\begin{itemize}
+  \item Live session every Thursday (14:15 s.t.)
+  \item \alert{Use the forum in StudIP for all kind of questions}
+  \begin{itemize}
+      \item Only use the "lecture" course and not the "exercise" course in StudIP!
+  \end{itemize}
+  \item Don't send us emails
+  \begin{itemize}
+      \item[$\leadsto$] Only in case of emergencies
+  \end{itemize}
+\end{itemize}
+
+\end{frame}
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Sick or Symptoms}
+
+\begin{itemize}
+  \item COVID and other flu are still unpleasant (to say the least)
+  \item If you have symptoms, please stay at home and do not infect others
+  \item If you tell us in advance (i.e., send us an email), we can offer a hybrid setup s.t. you can join online.
+\end{itemize}
+
+\end{frame}
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Requirements for Attending}
+
+\begin{itemize}
+  \item Knowledge and hands-on exp. in \alert{Machine Learning}\\ 
+  \begin{itemize}
+    \item Classification, regression, clustering, decision tree, training-test split, cross validation, pre-processing \ldots
+    \item as offered by Prof. Rosenhahn
+    \item to catch up (if nec.): \url{https://www.coursera.org/learn/machine-learning} 
+  \end{itemize}
+  \pause
+  \item Knowledge and hands-on exp. in \alert{Deep Learning} (PyTorch)\\ 
+  \begin{itemize}
+    \item feed-forward network, recurrent network, convolutions, learning rates, regularization, \ldots 
+    \item to catch up (if nec.): \url{https://course.fast.ai/}
+  \end{itemize}
+  \pause
+  \item Experience in \alert{Python and git}\\ 
+  \begin{itemize}
+    \item all exercises will require 
+    that you implement something in~Python and\\ submit the solution to a git repo
+  \end{itemize}
+\end{itemize}
+
+\end{frame}
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Minimal (not sufficient!) Requirements for Passing}
+
+\begin{itemize}
+  \item We will have a quiz each week
+  \item To have the chance to pass the course, you need to correctly answer at least $50\%$ of all questions
+  \begin{itemize}
+      \item In exchange, I will not further bother you with theory questions during the exam (see next slide)
+  \end{itemize}
+  \item If you should be sick, please notify Aditya or Carolin s.t. this week will not count for you
+  \item If you should fail this threshold, we will offer a short written exam at the end of the lecture period to compensate for it.
+    \begin{itemize}
+        \item if you failed that too, you failed the entire course prematuarly
+    \end{itemize}
+  \item This part is only about passing and will otherwise not influence your grade.
+\end{itemize}
+
+\end{frame}
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Final Project Exam}
+
+\begin{itemize}
+  \item Implement a larger project (worth $1-2$ weeks full time)
+  \begin{itemize}
+		\item You can either propose a topic yourself or we will propose topics that you can choose from
+            \item Write a 1-page project proposal (incl. a research question, required steps and evaluation strategy) $\leadsto$ we will provide feedback on whether we believe that the project will be feasible or not
+ 		\item Team work with up to $3$ students possible
+  \end{itemize}
+  \pause
+  \item Exam: Poster Presentation
+	\begin{itemize}
+            \item You will provide peer feedback to one poster of others
+		\item We all meet for a day in February
+            \item You will present your project results as a poster
+            \begin{itemize}
+                \item We will provide a template for the poster and also will print it for you
+            \end{itemize}
+            \item Presentation will be done in two or three groups (depending on the number of students) s.t. some students are free to check out the others' posters
+	\end{itemize}	
+  \item Tentative date: February 15th 2024
+\end{itemize}
 
 \end{frame}
 %----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Additional Resources}
 
+\begin{itemize}
+  \item To get a deep understanding of RL,\\ you should also read some papers 
+  \item We provide links to important papers after each video
+  \item RL book: 
+  \begin{itemize}
+      \item \url{https://www.andrew.cmu.edu/course/10-703/textbook/BartoSutton.pdf}
+      \begin{itemize}
+          \item Warning: uses a different notation
+      \end{itemize}
+    \item Video lectures -- click on it!
+    \begin{itemize}
+        \item \lit{Emma Brunskill (2019-20)}{https://www.youtube.com/watch?v=FgzM3zpZ55o&list=PLRQmQC3wIq9yxKVK1qc0r2nPuInn92LmK&index=1}
+        \item \lit{Sergey Levine (2020)}{https://www.youtube.com/playlist?list=PL_iWQOsE6TfURIIhCrlt-wj9ByIVpbfGc}
+        \item \lit{David Silver (2015)}{https://www.youtube.com/playlist?list=PLbWDNovNB5mqFBgq7i3MY6Ui4zudcvNFJ}
+        \item \lit{Robot Learning by Jan Peters (2021)}{https://learn.ki-campus.org/courses/moocrobot-tud2021}
+    \end{itemize}
+  \end{itemize}
+\end{itemize}
+
+\end{frame}
+%----------------------------------------------------------------------
 \begin{frame}{Leibniz AI Academy}
     
     \centering
@@ -335,102 +424,15 @@ Priority list:
 
 \end{frame}
 %----------------------------------------------------------------------
-\begin{frame}[c]{Requirements for Attending}
-
-        \vspace{-1em}
-	\begin{itemize}
-		\item Basics of \alert{AI} (recommended)
-		\begin{itemize}
-			\item Search, planning, optimization \ldots, expectations, \ldots
-		\end{itemize}
-		\pause
-		\item Basics of \alert{Machine Learning} (mandatory)
-		\begin{itemize}
-			\item Classification, regression, clustering, decision tree, training-test split, cross validation, pre-processing \ldots
-			\item For example, ML lecture by Prof. Rosenhahn
-			\item to catch up (if nec.):
-			\url{https://www.coursera.org/learn/machine-learning} 
-		\end{itemize}
-		\pause
-		\item Knowledge and hands-on exp. in \alert{Deep Learning} (PyTorch)\\ (mandatory)
-		\begin{itemize}
-			\item feed-forward network, recurrent network, convolutions, learning rates, regularization, \ldots 
-			\item For example, DL lecture by Prof. Anand
-			\item to catch up (if nec.): \url{https://course.fast.ai/}
-		\end{itemize}
-		\pause
-		\item Experience in \alert{Python and git} (mandatory)
-		\begin{itemize}
-			\item nearly all exercises will require 
-			that you implement something in~Python and submit the solution to a git repo
-		\end{itemize}
-	\end{itemize}
-	\pause
-	$\leadsto$ If you solved the self-assessment test, you should be ready.
-	
-\end{frame}
-%-----------------------------------------------------------------------
-%----------------------------------------------------------------------
-\begin{frame}[c]{Final Grading}
-	
-	\begin{itemize}
-		\item Implement a larger project (worth $1-2$ weeks full time)
-		\begin{itemize}
-			\item You can propose your own project idea!
-			\begin{itemize}
-				\item Hand-in a short summary of the idea (half a page) and we will provide feedback regarding feasibility
-			\end{itemize}
-			\item Teamwork (at most 3) again possible
-			\begin{itemize}
-				\item Larger team $\to$ larger scope of the project
-			\end{itemize}
-		\end{itemize}
-		\item ``Exam''
-		\begin{itemize}
-			\item First $15$ minutes: Present your project idea and results
-			% \begin{itemize}
-			% 	\item Of course, everyone will present the project on their own
-			% \end{itemize}
-			\item Second 15+min: We will ask further questions about your project and how it relates to stuff you learned in the lecture.
-		\end{itemize}	
-            \item \alert{Tentative dates}: Feb 27th - March 3rd (mornings)
-	%	\item You will have the choice between a virtual and on-site exam.
-	\end{itemize}
-	
-\end{frame}
-%----------------------------------------------------------------------
-%----------------------------------------------------------------------
-\begin{frame}[c,fragile]{Material}
-	
-	\begin{itemize}
-		\item Slides: \url{https://github.com/automl-edu/RL_lecture}
-		\item Additional Material:
-		\begin{itemize}
-    		\item To get a deep understanding of RL,\\ you should also read some papers 
-    		\item RL book by Sutton and Barto: 
-    		\url{https://www.andrew.cmu.edu/course/10-703/textbook/BartoSutton.pdf}
-    		\item Video lectures -- click on it!
-    		\begin{itemize}
-    			\item \lit{Emma Brunskill (2019-20)}{https://www.youtube.com/watch?v=FgzM3zpZ55o&list=PLRQmQC3wIq9yxKVK1qc0r2nPuInn92LmK&index=1}
-    			\item \lit{Sergey Levine (2020)}{https://www.youtube.com/playlist?list=PL_iWQOsE6TfURIIhCrlt-wj9ByIVpbfGc}
-    			\item \lit{David Silver (2015)}{https://www.youtube.com/playlist?list=PLbWDNovNB5mqFBgq7i3MY6Ui4zudcvNFJ}
-    			\item \lit{Robot Learning by Jan Peters (2021)}{https://learn.ki-campus.org/courses/moocrobot-tud2021}
-		\end{itemize}
-	\end{itemize}
-	\end{itemize}
-	
-\end{frame}
-%----------------------------------------------------------------------
 %----------------------------------------------------------------------
 \begin{frame}[c]{Opportunities and Risks}
-	
-	\vspace{-1em}
-	RL is an advanced lecture and we present it for the third time
-	
-	\medskip
-	\pause
-	
-	Opportunities:
+
+RL is an advanced lecture and we update it each time.
+
+\bigskip
+\pause
+
+Opportunities:
 	\begin{itemize}
 		\item RL is a very hot topic these days
 		\item We will start with the basics and go step by step to the more advanced (research) topics
@@ -445,42 +447,371 @@ Priority list:
 		\item The origins of RL go back to robotics, control, theory on bandits and computer science\\ $\leadsto$ different notations
 		\item You will find some typos and issues in the slides\newline $\leadsto$ please tell us if you find something
 	\end{itemize}
-	
-	\pause
-	$\to$ Give us some feedback and we will improve the course!
-	
-	
-\end{frame}
-%-----------------------------------------------------------------------
-%----------------------------------------------------------------------
-\begin{frame}[c]{Additional Bonus Point}
 
-\begin{itemize}
-    \item GitHub repo:
-    \begin{itemize}
-        \item Slides: \url{https://github.com/automl-edu/RL_lecture}
-    \end{itemize}
-    \item If you find bugs in the slides or exercises,\\ you can obtain bonus points:
-    \begin{itemize}
-        \item 0.5 point for every major bug in an equation
-        \item 0.1 point for every typo in the slides
-        \item 0.5 point for every code bug in the exercise
-    \end{itemize}
-    \item At most 4 points $\leadsto$ 1 grading boost
-    \item Submit a PR to our repos and ensure that we can decipher your real name
-\end{itemize}
+\medskip
+$\to$ Give us some feedback and we will improve the course!
 
 
 \end{frame}
 %-----------------------------------------------------------------------
+
 \begin{frame}[c]{}
-	
-	\centering
-	\huge
-	Questions?
-	
+
+\centering
+\huge
+Questions?
+
 \end{frame}
+%----------------------------------------------------------------------
+% %----------------------------------------------------------------------
+% \begin{frame}[c]{Course Format}
+	
+% 	\begin{itemize}
+% 		\item Concepts \& Details
+% 		\begin{itemize}
+% 			\item We provide references and links to papers\\ s.t. you can read up more details! 
+% 			\item Nevertheless, we cover all the basic math for RL
+% 		\end{itemize}
+% 		\smallskip
+% 		\item Interactive lecture and exercise sessions
+% 		\begin{itemize}
+% 		    \item Watch lecture at home!
+% 		    \item Discuss it with us on-site
+% 			\item Interactive quizzes in exercise sessions to reinforce your knowledge and understanding
+% 			\item[$\leadsto$] The success of it depends on whether you are willing to talk to us! 
+% 		\end{itemize}
+% 		\smallskip
+% 		\item (Mostly) Practical exercises
+% 		\begin{itemize}
+% 			\item Implement it, use it and play with it!
+% 			\item We will answer questions for the current exercise and partially discuss solutions from the last week in the on-site sessions
+% 		\end{itemize}
+% 	\end{itemize}
+	
+% \end{frame}
+% %----------------------------------------------------------------------
+
+% %----------------------------------------------------------------------
+% \begin{frame}[c]{Organization (Lectures)}
+	
+% 	\begin{itemize}
+% 		\item Lectures are pre-recorded
+% 		\item We will make them available on StudIP via Flowcast
+% 		\item[$\leadsto$] Flipped classroom lecture
+% 		\begin{itemize}
+% 		    \item You watch the lectures whenever it suits you
+% 		    \item We will discuss the lecture content in our on-site sessions
+% 		    \item[$\leadsto$] each week Thursday at 2pm (s.t).
+% 		    \item The meetings will not be recorded
+% 		\end{itemize}
+%             \item If you are sick (or have symptoms), please send me an email in advance and we will set up a hybrid meeting via Zoom
+% 	\end{itemize}
+	
+% \end{frame}
+% %-----------------------------------------------------------------------
+% %----------------------------------------------------------------------
+% \begin{frame}[c]{Why Videos?}
+
+% \begin{itemize}
+%   \item Advantages of videos:
+%   \begin{itemize}
+%       \item Neither YOUTUBE nor NETFLIX VIDEOS!
+%       \item Watch it whenever (wherever) you want
+%       \item Watch it at your own speed
+%       \begin{itemize}
+%           \item[$\leadsto$] Stop it if you need time to think about it
+%       \end{itemize}
+%       \item Go back and watch it again, if you missed or forgot something
+%       \item Annotate questions on the fly %(e.g., using the Miro boards)
+%       \item Take notes of what you have learned $\leadsto$ Learning Diary
+%       \item After each video ($\sim$10-20min), you can take a break and\\ think about what you learned in this video (and whether you understood it)
+%   \end{itemize}
+%   \medskip
+%   \pause
+%   \item Risks and challenges:
+%   \begin{itemize}
+%       \item You have to be self-disciplined 
+%       \item You have to wait with your questions until our meetings
+%       \begin{itemize}
+%           \item[$\leadsto$] Use the StudIP forum to discuss with your peers
+%       \end{itemize}
+%   \end{itemize}
+% \end{itemize}
+
+% \end{frame}
+% %-----------------------------------------------------------------------
+% %----------------------------------------------------------------------
+% \begin{frame}[c]{Details on On-Site Meetings}
+	
+% 	\begin{enumerate}
+% 	    \item Answering your questions regarding the videos
+% 	    \item Breakout groups discussing some more in-depth questions
+% 		\item Kahoot-Quiz
+% 		\begin{itemize}
+% 		    \item Helps you to check whether you really understand the topics
+% 		    \item Gamified quiz 
+% 		\end{itemize}
+% 		\item Feedback to exercise sheet
+% 		\begin{itemize}
+% 			\item You don't need to achieve any point threshold
+% 			%\item But you need to submit something every week
+%                 \item There is no extra exercise slot
+%                 \item[$\leadsto$] Consultation hour: 
+%                 \begin{itemize}
+%                     \item You can meet with Aditya and/or Carolin Fridays from 13:00 - 14:30 
+%                     \item They will clarify all your detailed questions regarding the exercise
+%                     \item Send them an email beforehand to make an appointment
+%                 \end{itemize}
+% 		\end{itemize}
+% 	\end{enumerate}
+	
+% \end{frame}
+% %-----------------------------------------------------------------------
+% %----------------------------------------------------------------------
+% \begin{frame}[c]{Organization (Exercise Assignments)}
+	
+% 	\begin{itemize}
+% 	\item Every week, a new exercise sheet
+% 		\item Exercise focus is aligned with the week's lecture topic
+% 		\begin{itemize}
+% 		    \item \alert{Deadline} is always Fridays at 4pm
+% 		\end{itemize}
+% 		\item Most exercises will be practical, i.e., you have to implement something
+% 		\item Teamwork highly recommended, team size at most 3! 
+% 		\pause
+% 		\item Build upon GitHub classroom $\leadsto$ enables auto-grading
+% 		\begin{itemize}
+% 			\item There will be an invitation link each week on each exercise sheet.
+% 			\item You will have to click on the link on exercise sheet one to be able to form groups.
+% 			\item Submit solutions via git
+% 		\end{itemize}
+% 		\pause
+%             \item Don't cheat (incl. plagiarism)
+%             \begin{itemize}
+%               \item First time cheating: $0$ points for exercise
+%               \item Second time cheating: failing the course
+%             \end{itemize}
+%             \pause
+%             \item Exercises are not mandatory\\ \alert{BUT: quite unlikely that you will pass the course without doing them}
+% 	\end{itemize}
+	
+% \end{frame}
+% %-----------------------------------------------------------------------
+% %----------------------------------------------------------------------
+% \begin{frame}[c]{Bonus Points}
+
+% \begin{itemize}
+
+%   \item Up to \alert{$8$ bonus points} for final grade
+%   \begin{itemize}
+%       \item Solve at least $80\%$ of an exercise sheet to obtain a bonus point
+%       \item $4$ bonus points $\leadsto$ grading boost by 0.3/0.4
+%   \end{itemize}
+%   \item We will (sometimes) ask someone of you to present your solution 
+%   \begin{itemize}
+%       \item We will only ask students who got at least 80\% correct
+%       \item If you refuse or fail to present your solution, you lose 2 bonus points
+%   \end{itemize}
+% \end{itemize}
+
+% \end{frame}
+% %-----------------------------------------------------------------------
+% %----------------------------------------------------------------------
+% \begin{frame}[c]{You need help?}
+	
+% Priority list:
+% 	\begin{enumerate}
+% 		\item Ask your friends and peers
+% 		\item Stud.IP Forum
+% 		\begin{itemize}
+% 		    %\item[$\leadsto$] Channel ``2022 RL Lecture''
+% 		    \item Only use the lecture forum
+% 			\item You can also answer the questions of your peers! 
+% 			\item We will only reply if we have the feeling that it is necessary.
+% 		\end{itemize}
+% 		\item If there are organizational questions, contact Carolin or Aditya directly 
+% 		\begin{itemize}
+% 		    \item Don't write them emails about how to solve an exercise or that you found a bug in the exercise
+% 		    \item[$\leadsto$] all of these belong into the Stud.IP forum
+% 		\end{itemize}
+% 		\item Only as the very last option, contact me ;-)
+% 	\end{enumerate}
+	
+% \end{frame}
+% %-----------------------------------------------------------------------
+% \begin{frame}{AI Courses at LUH}
+    
+%     \centering
+%     \vspace{-2em}
+%     \includegraphics[width=0.38\textwidth]{images/aicources22.png}
+
+% \end{frame}
+% %----------------------------------------------------------------------
+
+% \begin{frame}{Leibniz AI Academy}
+    
+%     \centering
+%     \vspace{-2em}
+%     \includegraphics[width=0.6\textwidth]{images/laa.png}
+
+% \end{frame}
+% %----------------------------------------------------------------------
+% \begin{frame}{Leibniz AI Academy}
+    
+%     \centering
+%    % \vspace{-2em}
+%     \includegraphics[width=0.7\textwidth]{images/LAI-New-Blue.png}
+
+%     $\leadsto$ more details at \url{https://www.ai-academy.uni-hannover.de/}
+
+% \end{frame}
+% %----------------------------------------------------------------------
+% \begin{frame}[c]{Requirements for Attending}
+
+%         \vspace{-1em}
+% 	\begin{itemize}
+% 		\item Basics of \alert{AI} (recommended)
+% 		\begin{itemize}
+% 			\item Search, planning, optimization \ldots, expectations, \ldots
+% 		\end{itemize}
+% 		\pause
+% 		\item Basics of \alert{Machine Learning} (mandatory)
+% 		\begin{itemize}
+% 			\item Classification, regression, clustering, decision tree, training-test split, cross validation, pre-processing \ldots
+% 			\item For example, ML lecture by Prof. Rosenhahn
+% 			\item to catch up (if nec.):
+% 			\url{https://www.coursera.org/learn/machine-learning} 
+% 		\end{itemize}
+% 		\pause
+% 		\item Knowledge and hands-on exp. in \alert{Deep Learning} (PyTorch)\\ (mandatory)
+% 		\begin{itemize}
+% 			\item feed-forward network, recurrent network, convolutions, learning rates, regularization, \ldots 
+% 			\item For example, DL lecture by Prof. Anand
+% 			\item to catch up (if nec.): \url{https://course.fast.ai/}
+% 		\end{itemize}
+% 		\pause
+% 		\item Experience in \alert{Python and git} (mandatory)
+% 		\begin{itemize}
+% 			\item nearly all exercises will require 
+% 			that you implement something in~Python and submit the solution to a git repo
+% 		\end{itemize}
+% 	\end{itemize}
+% 	\pause
+% 	$\leadsto$ If you solved the self-assessment test, you should be ready.
+	
+% \end{frame}
+% %-----------------------------------------------------------------------
+% %----------------------------------------------------------------------
+% \begin{frame}[c]{Final Grading}
+	
+% 	\begin{itemize}
+% 		\item Implement a larger project (worth $1-2$ weeks full time)
+% 		\begin{itemize}
+% 			\item You can propose your own project idea!
+% 			\begin{itemize}
+% 				\item Hand-in a short summary of the idea (half a page) and we will provide feedback regarding feasibility
+% 			\end{itemize}
+% 			\item Teamwork (at most 3) again possible
+% 			\begin{itemize}
+% 				\item Larger team $\to$ larger scope of the project
+% 			\end{itemize}
+% 		\end{itemize}
+% 		\item ``Exam''
+% 		\begin{itemize}
+% 			\item First $15$ minutes: Present your project idea and results
+% 			% \begin{itemize}
+% 			% 	\item Of course, everyone will present the project on their own
+% 			% \end{itemize}
+% 			\item Second 15+min: We will ask further questions about your project and how it relates to stuff you learned in the lecture.
+% 		\end{itemize}	
+%             \item \alert{Tentative dates}: Feb 27th - March 3rd (mornings)
+% 	%	\item You will have the choice between a virtual and on-site exam.
+% 	\end{itemize}
+	
+% \end{frame}
+% %----------------------------------------------------------------------
+% %----------------------------------------------------------------------
+% \begin{frame}[c,fragile]{Material}
+	
+% 	\begin{itemize}
+% 		\item Slides: \url{https://github.com/automl-edu/RL_lecture}
+% 		\item Additional Material:
+% 		\begin{itemize}
+%     		\item To get a deep understanding of RL,\\ you should also read some papers 
+%     		\item RL book by Sutton and Barto: 
+%     		\url{https://www.andrew.cmu.edu/course/10-703/textbook/BartoSutton.pdf}
+%     		\item Video lectures -- click on it!
+%     		\begin{itemize}
+%     			\item \lit{Emma Brunskill (2019-20)}{https://www.youtube.com/watch?v=FgzM3zpZ55o&list=PLRQmQC3wIq9yxKVK1qc0r2nPuInn92LmK&index=1}
+%     			\item \lit{Sergey Levine (2020)}{https://www.youtube.com/playlist?list=PL_iWQOsE6TfURIIhCrlt-wj9ByIVpbfGc}
+%     			\item \lit{David Silver (2015)}{https://www.youtube.com/playlist?list=PLbWDNovNB5mqFBgq7i3MY6Ui4zudcvNFJ}
+%     			\item \lit{Robot Learning by Jan Peters (2021)}{https://learn.ki-campus.org/courses/moocrobot-tud2021}
+% 		\end{itemize}
+% 	\end{itemize}
+% 	\end{itemize}
+	
+% \end{frame}
+% %----------------------------------------------------------------------
+% %----------------------------------------------------------------------
+% \begin{frame}[c]{Opportunities and Risks}
+	
+% 	\vspace{-1em}
+% 	RL is an advanced lecture and we present it for the third time
+	
+% 	\medskip
+% 	\pause
+	
+% 	Opportunities:
+% 	\begin{itemize}
+% 		\item RL is a very hot topic these days
+% 		\item We will start with the basics and go step by step to the more advanced (research) topics
+% 		\item The course will provide a solid background for doing a master project/thesis in our group 
+% 	\end{itemize}
+	
+% 	\pause
+	
+% 	Challenges:
+% 	\begin{itemize}
+% 		\item The research on RL is very active and there is so much progress\newline $\leadsto$ impossible to catch up with state of the art with one course
+% 		\item The origins of RL go back to robotics, control, theory on bandits and computer science\\ $\leadsto$ different notations
+% 		\item You will find some typos and issues in the slides\newline $\leadsto$ please tell us if you find something
+% 	\end{itemize}
+	
+% 	\pause
+% 	$\to$ Give us some feedback and we will improve the course!
+	
+	
+% \end{frame}
+% %-----------------------------------------------------------------------
+% %----------------------------------------------------------------------
+% \begin{frame}[c]{Additional Bonus Point}
+
+% \begin{itemize}
+%     \item GitHub repo:
+%     \begin{itemize}
+%         \item Slides: \url{https://github.com/automl-edu/RL_lecture}
+%     \end{itemize}
+%     \item If you find bugs in the slides or exercises,\\ you can obtain bonus points:
+%     \begin{itemize}
+%         \item 0.5 point for every major bug in an equation
+%         \item 0.1 point for every typo in the slides
+%         \item 0.5 point for every code bug in the exercise
+%     \end{itemize}
+%     \item At most 4 points $\leadsto$ 1 grading boost
+%     \item Submit a PR to our repos and ensure that we can decipher your real name
+% \end{itemize}
 
 
-%-----------------------------------------------------------------------
+% \end{frame}
+% %-----------------------------------------------------------------------
+% \begin{frame}[c]{}
+	
+% 	\centering
+% 	\huge
+% 	Questions?
+	
+% \end{frame}
+
+
+% %-----------------------------------------------------------------------
 \end{document}

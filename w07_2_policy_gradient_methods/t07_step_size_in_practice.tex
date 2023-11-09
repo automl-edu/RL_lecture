@@ -1,0 +1,84 @@
+% !TeX spellcheck = en_US
+\documentclass[aspectratio=169]{../latex_main/tntbeamer}  % you can pass all options of the beamer class, e.g., 'handout' or 'aspectratio=43'
+\input{../latex_main/preamble}
+\title[RL: Policy Gradient]{RL: Policy Search}
+\subtitle{Step Size and Trust Region}
+
+
+\begin{document}
+	
+	\maketitle
+
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Optimization of Parameterized Policies}
+	
+    \begin{itemize}
+        \item Goal is to optimize
+        $$ L_{\pi_{old}} (\pi_{new}) -  \frac{4\epsilon\gamma}{(1-\gamma)^2} D_{KL}^{\max}(\pi_{old}, \pi_{new}) = L_{\pi_{old}} (\pi_{new}) -  C \cdot D_{KL}^{\max}(\pi_{old}, \pi_{new}) $$
+        where $C$ is the penalty coefficient (i.e. hyperparameter)
+        \item The penalty  would be fairly small in practice (as we know from theory)
+        \medskip
+        \item Since the penalty depends on the KL divergence between old and new policy, we can constrain the update to keep divergence low:
+        \begin{eqnarray}
+        \max_{\theta} L_{\pi_{old}} (\pi_{new})\\
+        \text{subject to } D_{KL}^{s \sim \mu_{\pi_{old}}} (\pi_{old}, \pi_{new}) \leq \delta
+        \end{eqnarray}
+        \item This uses the average KL instead of max (the max requires the KL to be bounded at all states and yields an impractical number of constraints)
+    \end{itemize}
+    
+\end{frame}
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{From Theory to Practice}
+	
+    \begin{itemize}
+        \item Current objective:
+        $$ \max_{\theta} L_{\pi_{old}} (\pi_{new})$$
+        {\centering subject to $ D_{KL}^{s \sim \alert{\mu_{\pi_{old}}}} (\pi_{old}, \pi_{new}) \leq \delta$\\}
+        where $ L_{\pi_{old}}(\pi_{new}) = V(\pi_{old}) + \sum_{s} \alert{\mu_{\pi_{old}}(s)} \sum_{a} \pi_{new}(a \mid s) \alert{A_{\pi_{old}}(s,a)}$ 
+        \item But: in practice we don't know the visitation weights nor true advantage function
+        \pause
+        \item Step 1: estimate $\mu_\pi$ using samples we have already collected:
+        $$ \sum_{s} \mu_\pi (s) \to \frac{1}{1- \gamma} \mathbb{E}_{s\sim \mu_{\pi_{old}}} [\ldots]$$
+        \item[$\leadsto$] estimate $\mu_\pi (s)$ wrt the sampled trajectories we have already
+    \end{itemize}
+
+\end{frame}
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{From Theory to Practice II}
+	
+    \begin{itemize}
+        \item Step 2: use \alert{importance sampling} to estimate the desired sum:
+        $$\sum_{a} \pi_{new} (a\mid s_n) A_{\pi_{old}} (s_n, a) \to \mathbb{E}\left[ \frac{\pi_{new}(a \mid s_n)}{q(a\mid s_n)} A_{\pi_{old}} (s_n, a) \right] $$
+        \item where $q$ is some sampling distribution over actions and $s_n$ is a particular sampled state
+        \item Now we are able to use samples from $q$ (instead of the new policy $\pi_{new}$)
+        \pause
+        \item Step 3:
+        $$ A_{\theta_{old}} \to Q_{\theta_{old}}$$
+        \item Note that these substitutions do not change the solution to the optimization problem
+    \end{itemize}
+
+\end{frame}
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Policy Gradient with Step Size Adaption}
+	
+    \begin{itemize}
+        \item Optimize new surrogate objective $L$:
+        $$ \mathbb{E}_{s\sim \mu_{\pi_{old}}, a \sim q} \left[ \frac{\pi_{new}(a \mid s_n)}{q(a\mid s_n)} Q_{\pi_{old}} (s_n, a) \right]$$
+        {\centering subject to $\mathbb{E}_{s\sim \mu_{\pi_{old}}} D_{KL}(\pi_{old}(\cdot \mid s), \pi_{new} (\cdot \mid s)) \leq \delta$ \\}
+        \item Standard approach: sampling distribution $q(a\mid s)$ is simply $\pi_{old}(a \mid s)$
+        \item Then we can compute this update using existing samples and don't need to evaluate $\pi_{new}$
+        %\item For the vine procedure see the paper
+    \end{itemize}
+    
+    % \centering
+    % \includegraphics[width=0.5\textwidth]{images/trpo.PNG}\\
+    % \lit{Schulman et al. 2015}{https://arxiv.org/abs/1502.05477}
+
+\end{frame}
+
+
+\end{document}
