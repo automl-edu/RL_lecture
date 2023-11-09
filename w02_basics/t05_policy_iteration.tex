@@ -25,16 +25,18 @@
 %----------------------------------------------------------------------
 \begin{frame}[c]{MDP Policy Iteration (PI)}
 
-\begin{itemize}
-	\item Set $i=0$
-	\item Initialize $\pi_0(s)$ randomly for all states $s$
-	\item While $i == 0$ or\\ $||\pi_i - \pi_{i-1}||_1 > 0$ (L1-norm, measures if the policy changed for any state)
-	\begin{itemize}
-		\item $V^{\pi_i} \gets$ MDP V-function policy evaluation of $\pi_i$
-		\item $\pi_{i+1} \gets$ Policy improvement
-		\item $i \gets i+1$
-	\end{itemize}
-\end{itemize}
+\begin{algorithm}[H]
+  \caption{Policy Iteration}
+  \DontPrintSemicolon
+  \textbf{Initialise}: $i \leftarrow 0$\\
+  \textbf{Initialise}: $\pi_i$ as random policy\\
+  \While{$i == 0$ or $||\pi_i - \pi_{i-1}||_1 > 0$}{
+    $V^{\pi_i} \gets$ MDP V-function policy evaluation of $\pi_i$\\
+    $\pi_{i+1} \gets$ Policy improvement\\
+    $i \gets i+1$
+  }
+  \KwOut{{}Return $\pi_i, V^{\pi_i}$}
+\end{algorithm}
 
 \end{frame}
 %-----------------------------------------------------------------------
@@ -71,16 +73,18 @@
 %----------------------------------------------------------------------
 \begin{frame}[c]{MDP Policy Iteration (PI)}
 
-\begin{itemize}
-	\item Set $i=0$
-	\item Initialize $\pi_0(s)$ randomly for all states $s$
-	\item While $i == 0$ or $||\pi_i - \pi_{i-1}||_1 > 0$ (L1-norm, measures if the policy changed for any state)
-	\begin{itemize}
-		\item $V^{\pi_i} \gets$ MDP V function policy \alert{evaluation} of $\pi$ \hspace{1em} $\leadsto$ use $Q$
-		\item $\pi_{i+1} \gets$ Policy \alert{improvement}
-		\item $i \gets i+1$
-	\end{itemize}
-\end{itemize}
+\begin{algorithm}[H]
+  \caption{Policy Iteration}
+  \DontPrintSemicolon
+  \textbf{Initialise}: $i \leftarrow 0$\\
+  \textbf{Initialise}: $\pi_i$ as random policy\\
+  \While{$i == 0$ or $||\pi_i - \pi_{i-1}||_1 > 0$}{
+    $V^{\pi_i} \gets$ MDP V-function policy \alert{evaluation} of $\pi_i$ $\leadsto$ use $Q$\\
+    $\pi_{i+1} \gets$ Policy \alert{improvement}\\
+    $i \gets i+1$
+  }
+  \KwOut{{}Return $\pi_i, V^{\pi_i}$}
+\end{algorithm}
 
 \end{frame}
 %-----------------------------------------------------------------------
@@ -122,15 +126,19 @@ Q^\pi(s,a) = R(s,a) + \gamma \sum_{s' \in S} P(s' \mid s,a) V^\pi(s')\nonumber\\
 %----------------------------------------------------------------------
 \begin{frame}[c]{MDP Policy Iteration (PI): Check your Understanding}
 
+\begin{algorithm}[H]
+  \caption{Policy Iteration}
+  \DontPrintSemicolon
+  \textbf{Initialise}: $i \leftarrow 0$\\
+  \textbf{Initialise}: $\pi_i$ as random policy\\
+  \While{$i == 0$ or $||\pi_i - \pi_{i-1}||_1 > 0$}{
+    $V^{\pi_i} \gets$ MDP V-function policy \alert{evaluation} of $\pi_i$ $\leadsto$ use $Q$\\
+    $\pi_{i+1} \gets$ Policy \alert{improvement}\\
+    $i \gets i+1$
+  }
+  \KwOut{{}Return $\pi_i, V^{\pi_i}$}
+\end{algorithm}
 \begin{itemize}
-	\item Set $i=0$
-	\item Initialize $\pi_0(s)$ randomly for all states $s$
-	\item While $i == 0$ or\\ $||\pi_i - \pi_{i-1}||_1 > 0$ (L1-norm, measures if the policy changed for any state)
-	\begin{itemize}
-		\item $V^{\pi_i} \gets$ MDP V function policy \alert{evaluation} of $\pi$ \hspace{1em} $\leadsto$ use $Q$
-		\item $\pi_{i+1} \gets$ Policy \alert{improvement}
-		\item $i \gets i+1$
-	\end{itemize}
 	\item \alert{If the policy doesn't change, can it ever change?}
 	\item \alert{Is there a maximum of iterations of policy iteration?}
 \end{itemize}

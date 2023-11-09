@@ -1,4 +1,3 @@
-% !TeX spellcheck = en_US
 \documentclass[aspectratio=169]{../latex_main/tntbeamer}  % you can pass all options of the beamer class, e.g., 'handout' or 'aspectratio=43'
 \input{../latex_main/preamble}
 \title[RL: Model Free Control]{Model Free Control}
@@ -14,15 +13,22 @@
 %----------------------------------------------------------------------
 \begin{frame}[c]{Recap Model-free Policy Iteration}
 	
-	\begin{itemize}
-		\item Initialize policy $\pi$
-		\item Repeat:
-		\begin{itemize}
-			\item Policy evaluation: compute $Q^\pi$
-			\item Policy improvement: update $\pi$ given $Q^\pi$
-		\end{itemize}
-		\bigskip
-		\pause
+    \begin{algorithm}[H]
+        \caption{General Model Free Control Algorithm}
+        \DontPrintSemicolon
+        \LinesNotNumbered
+        \textbf{Initialise}: $\pi$ randomly
+        
+        \While{not finished}{
+            \textbf{Policy evaluation:} compute $Q^{\pi_i}$
+            
+            \textbf{Policy improvement:} update $\pi_{i+1}(s) \in \argmax_{a \in A} Q^{\pi_i} (s,a)$
+        }
+        \KwOut{{} Return $\pi$}
+    \end{algorithm}
+    \bigskip
+    \pause
+    \begin{itemize}
 		\item Policy may be suboptimal
 		\begin{itemize}
 			\item If $\pi$ is deterministic, we may not observe all possible actions $a\in A$ in a state $s$
@@ -73,7 +79,7 @@
 \begin{frame}[c]{Monotonic $\epsilon$-greedy Policy Improvement}
 	\vspace{-1em}
 	\begin{itemize}
-		\item Theorem: For any $\epsilon$-greedy policy $\pi_i$, the $\epsilon$-greedy policy wrt $Q^{\pi}_i$ is a monotonic improvement $V^{\pi_{i+1}} \geq V^{\pi_i}$
+		\item Theorem: For any $\epsilon$-greedy policy $\pi_i$, the $\epsilon$-greedy policy w.r.t. $Q^{\pi}_i$ is a monotonic improvement $V^{\pi_{i+1}} \geq V^{\pi_i}$
 	\end{itemize}
 
 \footnotesize

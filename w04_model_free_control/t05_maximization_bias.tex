@@ -2,7 +2,7 @@
 \documentclass[aspectratio=169]{../latex_main/tntbeamer}  % you can pass all options of the beamer class, e.g., 'handout' or 'aspectratio=43'
 \input{../latex_main/preamble}
 \title[RL: Model Free Control]{Model Free Control}
-\subtitle{Bias Maximization and Double Q-Learning}
+\subtitle{Maximization Bias and Double Q-Learning}
 
 
 
@@ -61,42 +61,45 @@
 %----------------------------------------------------------------------
 \begin{frame}[c]{Double Q-Learning for Full MDP}	
 	
-	\begin{itemize}
-		\item Initialization:
-		\begin{itemize}
-			\item $Q_1(s,a)$ and $Q_2(s,a)$ $\forall s \in S, a\in A$
-			\item $t= 0$
-			\item initial state $s_t = s_0$
-		\end{itemize}
-		\item Loop
-		\begin{itemize}
-			\item Select $a_t$ using $\epsilon$-greedy $\pi(s) \in \argmax_{a \in A} Q_1(s_t, a) + Q_2(s_t , a)$
-			\item Observe $(r_t, s_{t+1})$
-			\item With 50-50 probability either
-			\begin{enumerate}
-				\item $Q_1(s_t, a_t) \gets Q_1(s_t, a_t) + \alpha (r_t +\gamma Q_2(s_{t+1}, \argmax_{a \in A} Q_1(s_{t+1},a) ) - Q_1(s_t, a_t))$\\
-				or
-				\item $Q_2(s_t, a_t) \gets Q_2(s_t, a_t) + \alpha (r_t +\gamma Q_1(s_{t+1}, \argmax_{a \in A} Q_2(s_{t+1},a) ) - Q_2(s_t, a_t))$
-			\end{enumerate}
-			\item $t = t + 1 $
-		\end{itemize}
-		\bigskip
-		\pause
-		\item[$\leadsto$] Doubles the memory, same computation requirements, data requirements are subtle\\ -- might reduce the amount of exploration needed due to lower bias
-	\end{itemize}
+	\begin{algorithm}[H]
+        \caption{Double Q-Learning}
+        \DontPrintSemicolon
+        \LinesNotNumbered
+        \KwIn{{}\\
+        $s_o$ - start state, $\alpha$ - learning rate\\}
+        
+        \textbf{Initialise}: $Q_{1}(s,a) \leftarrow \quad  Q_{2}(s,a) \leftarrow\quad \forall s \in S, a \in A$, $t \gets 0$
+    
+        \While{Not converged}{
+            {Take action $a_t \in \argmax Q_1(s_t,a) + Q_2(s_t,a)$}, Observe ($r_t$, $s_{t+1}$)\\
+            \If {with probability~ $0.5$}{
+                $Q_1(s_t, a_t) \gets Q_1(s_t, a_t) + \alpha (r_t +\gamma Q_2(s_{t+1}, \argmax_{a \in A} Q_1(s_{t+1},a) ) - Q_1(s_t, a_t))$
+            }
+            \Else{
+                $Q_2(s_t, a_t) \gets Q_2(s_t, a_t) + \alpha (r_t +\gamma Q_1(s_{t+1}, \argmax_{a \in A} Q_2(s_{t+1},a) ) - Q_2(s_t, a_t))$
+            }
+            $t \gets t+1$
+        }    
+        \KwOut{{} Return $Q$}    
+    \end{algorithm}
 	
 	
 \end{frame}
 %--------------------------------------------------------------
 %----------------------------------------------------------------------
 \begin{frame}[c]{Double Q-Learning~\lit{Sutton \& Barto 2018}{http://incompleteideas.net/book/RLbook2020.pdf}}
-	
+
+ \begin{itemize}
+     \item[$\leadsto$] Doubles the memory, same computation requirements, data requirements are subtle\\ -- might reduce the amount of exploration needed due to lower bias
+ \end{itemize}
+ \bigskip
+ \pause
 \begin{center}
-\includegraphics[width=0.8\textwidth]{images/double_q.png}
+\includegraphics[width=0.4\textwidth]{images/double_q.png}
 \end{center}
 
 Due to the maximization bias, Q-learning spends much more time
-selecting sub-optimal actions ("left") than double Q-learning.
+selecting sub-optimal actions ("left") than double Q-learning. (Note: $5\%$ exploration rate)
 	
 	
 \end{frame}

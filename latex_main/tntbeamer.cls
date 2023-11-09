@@ -1043,7 +1043,6 @@
 %...........................................
 \usepackage{url}
 \usepackage{dsfont}
-\usepackage{algorithmic}
 
 \mode<presentation>
 

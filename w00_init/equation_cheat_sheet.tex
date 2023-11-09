@@ -6,7 +6,6 @@
 \usepackage{lmodern}
 \usepackage{amssymb,amsmath}
 \usepackage{ifxetex,ifluatex}
-\usepackage{fixltx2e} % provides \textsubscript
 \ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
   \usepackage[T1]{fontenc}
   \usepackage[utf8]{inputenc}
@@ -106,7 +105,7 @@
 	 p(s_{t+1} \mid s_t, a_t) &=& p(s_{t+1} \mid h_t, a_t) \\
 	 G_t &=& r_t + \gamma r_{t+1} + \gamma^2 r_{t+2} + \ldots\\
 	 V(s) &=& R(s) + \gamma \sum_{s' \in S} P(s'\mid s) V(s')\\
-	 V_k(s) &=& R(s) + \gamma \sum_{s' \in S} P(s' \mid s) V_{k-1}(s')\\
+	 V_k(s) &=& R(s) + \gamma \sum_{s' \in S} P(s' \mid s) V_{k-1}(s')]\\
 	 R(s_t=s, a_t=a) &=& \mathbb{E}[r_t \mid s_t=s, a_t=a\\
 	 R^\pi (s) &=& \sum_{a\in A} \pi(a\mid s ) R(s,a) \\
 	 P^\pi (s'\mid s) &=& \sum_{a\in A} \pi(a \mid s) P(s' \mid s,a)\\
@@ -140,9 +139,13 @@
 
 \section{Model-free Control}
 \begin{eqnarray}
-      &\lim_{i\to\infty}& N_i(s,a) \to \infty\\
-      &\lim_{i\to \infty}& \pi(a\mid s) \to \argmax_{a\in A} Q(s,a)\\
+    %  Q^\pi(s,a) &=& \frac{G(s,a)}{N(s,a)}\\
+      \pi_{i+1}(s) &\in& \argmax_{a \in A} Q^{\pi_i}(s,a)\\
+      Q^{\pi_i}(s,\pi_{i+1}(s)) &\geq& \sum_{a \in A} \pi_i(a|s) Q^{\pi_i}(s,a)= V^{\pi_i}(s)\nonumber\\
       Q(s_t,a_t) &\gets& Q(s_t, a_t) + \alpha (r_t + \gamma Q(s_{t+1}, a_{t+1}) - Q(s_t, a_t))\\
+      Q(s_t,a_t) &\gets& Q(s_t, a_t) + \alpha (r_t + \gamma \max_{a' \in A} Q(s_{t+1}, a') - Q(s_t, a_t))\\
+      \hat{V}^{\hat{\pi}}(s) &\geq& V^\pi(s)\\
+      Q_1(s_t,a_t) &\gets& Q_1(s_t,a_t) + \alpha (r_t + \gamma Q_2(s_t+1, \argmax_{a \in A}Q_1(s_{t+1},a)) - Q_1(s_t,a_t))
 \end{eqnarray}
 
 \section{Function Approximation}
@@ -155,17 +158,16 @@
     \nabla_{\vect{w}} J(\vect{w}) &=& \nabla_{\vect{w}} \mathbb{E}_{\pi}[V^\pi (s) - \hat{V}^\pi (s; \vect{w})^2]\\
     &=& \mathbb{E}_\pi [-2 (V^\pi(s) - \hat{V}^\pi (s;\vect{w})) \nabla_{\vect{w}} \hat{V}(s;\vect{w})]\\
     \hat{V}^\pi(s; \vect{w}) &=& \sum_{j=1}^n \vect{x}_j (s) \vect{w}_j = \vect{x}(s)^T\vect{w}\\
-    \Delta \vect{w} &=& - \frac{1}{2} \alpha \nabla_{\vect{w}} J (\vect{w})\\
-    \Delta \vect{w} &=& -\frac{1}{2} \alpha(2(V^\pi(s) - \vect{x}(s)^T \vect{w})) \vect{x}(s)\\
+    \Delta \vect{w} &=& -\frac{1}{2} \alpha(-2(V^\pi(s) - \vect{x}(s)^T \vect{w})) \vect{x}(s)\\
     \Delta \vect{w} &=& \alpha (G_t - \hat{V} (s_t; \vect{w})) \nabla_{\vect{w}}\hat{V}(s_t; \vect{w})\\
-    &=& \alpha (G_t - \hat{V} (s_t; \vect{w})) \vect{x}(s_t) \\
-    &=& \alpha (G_t - \vect{x}(s_t)^T \vect{w}) \vect{x}(s_t) \\
+    &=& \alpha (G_t - \hat{V} (s_t; \vect{w})) \vect{x}(s_t) \nonumber\\
+    &=& \alpha (G_t - \vect{x}(s_t)^T \vect{w}) \vect{x}(s_t) \nonumber\\
     \text{MSVE}(\vect{w}_{MC}) &=& \min_{\vect{w}}\sum_{s \in S} d(s) (V^\pi (s) - \hat{V}^\pi(s;\vect{w}))^2 \\
     J(\vect{w}) &=& \mathbb{E}_\pi [(V(s_{j+1}, \vect{w}) - \hat{V}^\pi(s_j;\vect{w}))^2]\\
-    &\approx& \mathbb{E}_\pi [(\underbrace{r_j + \gamma \hat{V}^\pi(s_{j+1}, \vect{w})}_{\text{target approximation}} - \hat{V}^\pi(s_j;\vect{w}))^2]\\
+    &\approx& \mathbb{E}_\pi [(\underbrace{r_j + \gamma \hat{V}^\pi(s_{j+1}, \vect{w})}_{\text{target approximation}} - \hat{V}^\pi(s_j;\vect{w}))^2]\nonumber \\
     \Delta \vect{w} &=& \alpha( r + \gamma \hat{V}^\pi(s'; \vect{w}) - \hat{V}^\pi(s;\vect{w})) \nabla_{\vect{w}} \hat{V}^\pi (s;\vect{w})\\
-    &=& \alpha( r + \gamma \hat{V}^\pi(s'; \vect{w}) - \hat{V}^\pi(s;\vect{w})) \vect{x}(s)\\
-    &=& \alpha( r + \gamma \vect{x}(s')^T \vect{w} - \vect{x}(s)^T\vect{w}) \vect{x}(s)\\
+    &=& \alpha( r + \gamma \hat{V}^\pi(s'; \vect{w}) - \hat{V}^\pi(s;\vect{w})) \vect{x}(s) \nonumber\\
+    &=& \alpha( r + \gamma \vect{x}(s')^T \vect{w} - \vect{x}(s)^T\vect{w}) \vect{x}(s) \nonumber\\
     \vect{w} &=& \vect{w} + \alpha( r + \gamma \vect{x}(s')^T \vect{w} - \vect{x}(s)^T\vect{w}) \vect{x}(s)\\
     \text{MSVE}(\vect{w}_{TD}) &\leq& \frac{1}{1-\gamma} \min_\vect{w}\sum_{s\in S} d(s) (V^\pi(s) - \hat{V}(s;\vect{w}))^2\\
     \Delta \vect{w} &=& \alpha(G_t - \hat{Q}(s_t,a_t; \vect{w})) \nabla_{\vect{w}} \hat{Q}(s_t, a_t; \vect{w})\\

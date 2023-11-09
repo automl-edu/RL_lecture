@@ -16,7 +16,7 @@
 
 \begin{itemize}
 %	\item Define $V(\theta) = V(s_0, \theta)$ to make explicit the dependence of the value on the policy parameters [but don't confuse with value function approximation, where parameterized value function]
-	\item Assume episodic MDPs 
+	\item Assume episodic MDPs $\leadsto$ Only interested in gradients w.r.t. $s_0$
 	\item Policy gradient algorithms search for a \alert{local} maximum in $V(s_0;\theta)$ by ascending the gradient of the policy, w.r.t parameters $\theta$
 	$$\Delta \theta = \alpha \nabla_\theta V(s_0; \theta) $$
 	where $\alpha$ is the learning rate (step-size) and\\ $\nabla_\theta V(s_0; \theta)$ is the policy gradient
@@ -36,11 +36,11 @@
 
         \vspace{-1em}
 	\begin{itemize}
-		\item To evaluate policy gradient of $\pi_\theta(s,a)$
+		\item To evaluate the gradient of $\nabla_\theta V(s_0; \theta)$
 		\item For each dimension $k\in [1,n]$
 		\begin{itemize}
 			\item Estimate $k$-th partial derivative of objective function wrt $\theta$
-			\item By pertubating $\theta$ by small amount $\epsilon$ in $k$-th dimension
+			\item Perturb $\theta$ by small amount $\epsilon$ in $k$-th dimension
 			$$\frac{\partial V(s_0; \theta)}{\partial \theta_k} \approx \frac{V(s_0; \theta + \epsilon u_k) - V(s_0; \theta)}{\epsilon} $$
 			where $u_k$ is a unit vector with $1$ in $k$-th component and $0$ elsewhere
 		\end{itemize}
@@ -54,7 +54,7 @@
 		\item Uses $\geq n$ evaluations to compute policy gradient in $n$ dimensions
 		\begin{itemize}
 			\item[$\leadsto$] fairly inefficient for doing a single update!
-			\item[$\leadsto$] weight space should be small --- no computer vision
+			\item[$\leadsto$] weight space should be small --- no computer vision model sizes
 		\end{itemize}
 		\pause
 		\item Simple, noisy, inefficient -- but sometimes effective

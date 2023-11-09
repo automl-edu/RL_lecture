@@ -31,23 +31,33 @@
 %----------------------------------------------------------------------
 \begin{frame}[c]{General Form of SARSA Algorithm}
 	
-	\begin{itemize}
-		\item Initialization:
-		\begin{itemize}
-			\item $\epsilon$-greedy policy 
-			\item $t=0$
-			\item initial state $s_t = s_0$
-		\end{itemize} 
-		\item Loop
-		\begin{itemize}
-			\item Take action $a_t \sim \pi(s_t)$
-			\item Observe $(r_t, s_{t+1})$, $a_{t+1} \sim \pi(s_{t+1})$
-			\item Update Q given $(s_t, a_t, r_t, s_{t+1}, a_{t+1})$:
-			$$Q(s_t,a_t) \gets Q(s_t, a_t) + \alpha (r_t + \gamma Q(s_{t+1}, a_{t+1}) - Q(s_t, a_t))$$
-			\item $\pi(s_t) \in \argmax_{a\in A} Q(s_t, a)$ with probability $1-\epsilon$, else random
-			\item $t = t+1$
-		\end{itemize} 
-	\end{itemize}
+	\begin{algorithm}[H]
+        \caption{SARSA}
+        \DontPrintSemicolon
+        \LinesNotNumbered
+        \KwIn{{}\\
+        $s_o$ - start state and $\alpha$ - learning rate\\}
+        \textbf{Initialise}: $\pi \gets$ random policy and $t \gets 0$
+    
+        \While{Not converged}{
+            Take action $a_t \sim \pi(s_t)$
+            
+            Observe ($r_t$, $s_{t+1}$)
+            
+            $a_{t+1} \sim \pi(s_{t+1})$
+            
+            $Q(s_t, a_t) \leftarrow Q(s_t, a_t) + \alpha (r_t + \gamma Q(s_{t+1}, a_{t+1}) - Q(s_t, a_t))$
+
+            Update $\pi(s_t)$ based on $Q$ (e.g., $\epsilon$-greedy)
+            
+            
+            $t \gets t+1$
+        }
+        
+        $\pi \gets$ GreedyPolicy(Q)
+        
+        \KwOut{{} Return $\pi, Q$}    
+    \end{algorithm}
 	
 \end{frame}
 %--------------------------------------------------------------
@@ -101,25 +111,56 @@
 \end{frame}
 %--------------------------------------------------------------
 %----------------------------------------------------------------------
+% \begin{frame}[c]{Q-Learning with $\epsilon$-greedy Exploration}
+	
+% 	\begin{itemize}
+% 		\item Initialization:
+% 		\begin{itemize}
+% 			\item $Q(s,a)=0. \forall s \in S, a \in A$
+% 			\item $t=0$
+% 			\item initial state $s_t = s_0$
+% 		\end{itemize} 
+% 		\item Loop
+% 		\begin{itemize}
+% 			\item Take action $a_{t} \sim \pi_b(s_{t})$ 
+% 			\item Observe $(r_{t}, s_{t+1})$
+% 			\item Update Q 
+% 			$$Q(s_t,a_t) \gets Q(s_t, a_t) + \alpha (r_t + \gamma \max_{a\in A} Q(s_{t+1}, a) - Q(s_t, a_t))$$
+% 			\item $\pi_b(s_t) \in \argmax_{a\in A} Q(s_t, a)$ with probability $1-\epsilon$, else random
+% 			\item $t = t+1$
+% 		\end{itemize} 
+% 	\end{itemize}
+	
+% \end{frame}
+
 \begin{frame}[c]{Q-Learning with $\epsilon$-greedy Exploration}
 	
-	\begin{itemize}
-		\item Initialization:
-		\begin{itemize}
-			\item $Q(s,a)=0. \forall s \in S, a \in A$
-			\item $t=0$
-			\item initial state $s_t = s_0$
-		\end{itemize} 
-		\item Loop
-		\begin{itemize}
-			\item Take action $a_{t} \sim \pi_b(s_{t})$ 
-			\item Observe $(r_{t}, s_{t+1})$
-			\item Update Q 
-			$$Q(s_t,a_t) \gets Q(s_t, a_t) + \alpha (r_t + \gamma \max_{a\in A} Q(s_{t+1}, a) - Q(s_t, a_t))$$
-			\item $\pi_b(s_t) \in \argmax_{a\in A} Q(s_t, a)$ with probability $1-\epsilon$, else random
-			\item $t = t+1$
-		\end{itemize} 
-	\end{itemize}
+	\begin{algorithm}[H]
+        \caption{Tabular Q-Learning}
+        \DontPrintSemicolon
+        \LinesNotNumbered
+        
+        \KwIn{{}\\
+        $\pi_b$ - behaviour policy, $s_o$ - start state, $\alpha$ - learning rate\\}
+    
+       \textbf{Initialise}: $Q(s,a) \leftarrow 0 \quad \forall s \in S, a \in A$
+        
+        \textbf{Initialise}: $t \gets 0$
+    
+        \While{Not converged}{
+            Take action $a_t \sim \pi_b(s_t)$, i.e. with probability $1-\epsilon$ follow $Q$, else random
+            
+            Observe ($r_t$, $s_{t+1}$)
+            
+            $Q(s_t, a_t) \leftarrow Q(s_t, a_t) + \alpha (r_t + \gamma \max_{a' \in A} Q(s_{t+1}, a') - Q(s_t, a_t))$
+            
+            $t \gets t+1$
+        }
+        
+        $\pi \gets$ GreedyPolicy($Q$)
+        
+        \KwOut{{} Return $\pi, Q$}    
+    \end{algorithm}
 	
 \end{frame}
 %--------------------------------------------------------------
@@ -140,7 +181,18 @@
 			\item The algorithm is GLIE
 		\end{itemize}
 	\end{itemize}
-	
+\end{frame}
+%--------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{SARSA vs. Q-Learning (Example)}
+\begin{center}
+    \includegraphics[width = .5\linewidth]{w04_model_free_control/images/cliff_walking.png}
+\end{center}
+\begin{itemize}
+    \item SARSA will learn the safe path
+    \item Q-Learning will learn the optimal path
+    \item Why?
+\end{itemize}
 \end{frame}
 %--------------------------------------------------------------
 %-----------------------------------------------------------------------

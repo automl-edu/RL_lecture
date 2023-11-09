@@ -71,12 +71,16 @@ $$ G_t^{(n)} =  R_{t+1} + \gamma R_{t+2} + \ldots + \gamma^{n-1} R_{t+n} + \gamm
 	\column{0.5\textwidth}
 	
 	\begin{itemize}
-		\item The $\lambda$-return $G_t^ {\lambda}$ combines all $n$-steps returns $G_t^{(n)}$
-		\item Using weight $(1-\lambda) \lambda^{n-1}$
-		$$G_t^\lambda = (1-\lambda) \sum_{n=1}^{T-t-2} \lambda^{n-1} G_t^{(n)} + \lambda^{T-t-1} G_t$$
-		$$ \sum_{n=1}^{T-t-2} (1-\lambda) \lambda^{n-1} + \lambda^{T-t-1} = 1 $$
-		\item Forward-view TD($\lambda$)
-		$$V(s_t) \gets V(s_t) + \alpha \left(G_t^\lambda - V(s_t)\right) $$
+		\item $G_t^{\lambda}$ averages all $n$-steps returns $G_t^{(n)}$		with weights $(1-\lambda) \lambda^{n-1}$
+         \vspace{-0.1cm}
+         \begin{align*}
+             &G_t^\lambda = (1-\lambda) \sum_{n=1}^{T-t-2} \lambda^{n-1} G_t^{(n)} + \lambda^{T-t-1} G_t\\
+            & \text{that sum up to}\\
+             &1 = \sum_{n=1}^{T-t-2} (1-\lambda) \lambda^{n-1} + \lambda^{T-t-1}
+         \end{align*}
+		 \item Forward-view TD($\lambda$)
+            \vspace{-0.1cm}
+		  $$V(s_t) \gets V(s_t) + \alpha \left(G_t^\lambda - V(s_t)\right) $$
 	\end{itemize}
 
 \column{0.5\textwidth}
@@ -96,12 +100,15 @@ $$ G_t^{(n)} =  R_{t+1} + \gamma R_{t+2} + \ldots + \gamma^{n-1} R_{t+n} + \gamm
 %-----------------------------------------------------------------------
 
 %----------------------------------------------------------------------
-\begin{frame}[c]{Backward View TD($\lambda$)}
+\begin{frame}[c]{Backward View TD($\lambda$) - Motivation}
 	
 	\begin{itemize}
-		\item Forward view provides a theory
-		\item Backward view provides a mechanism
-		\item Update online, every step, from incomplete sequences
+		\item Problem: Forward view needs information on what will happen in future states
+            \item Idea: Do not compute returns for the following but past transitions 
+            \begin{itemize}
+                \item[$\leadsto$] Backwards View TD($\lambda$) to approximate forwards view
+                \item Update online, every step, from incomplete sequences
+            \end{itemize}
 	\end{itemize}	
 	
 \end{frame}
@@ -131,7 +138,7 @@ E_t(s) &=& \gamma \lambda E_{t-1}(s) + \mathbf{1}(S_t=s) \nonumber
 \end{frame}
 %-----------------------------------------------------------------------
 %----------------------------------------------------------------------
-\begin{frame}[c]{Backward View TD($\lambda$)}
+\begin{frame}[c]{Backward View TD($\lambda$) + Eligibility Traces}
 	
 
 \begin{itemize}

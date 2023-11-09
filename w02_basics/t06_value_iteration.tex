@@ -49,19 +49,21 @@
 %----------------------------------------------------------------------
 \begin{frame}[c]{Value Iteration (VI)}
 
-\begin{itemize}
-	\item  Set $k = 1$
-	\item Initialize $V_0(s) = 0$ for all states $s$
-	\item Loop until convergence
-	\begin{itemize}
-		\item For each state $s$
-		$$V_{k+1}(s) = \max_{a\in A } R(s,a) + \gamma \sum_{s' \in S } P(s' \mid s,a) V_k(s') $$
-		\item View as Bellmann backup on the value function
-		$$V_{k+1} = BV_k$$
-		$$\pi_{k+1}(s) \in \argmax_{a \in A} R(s,a) + \gamma \sum_{s' \in S} P(s' \mid s,a) V_k(s') $$
-	\end{itemize}
-	
-\end{itemize}
+\begin{algorithm}[H]
+    \caption{Value Iteration}
+    \textbf{Initialise}: $k \gets 1$\\
+    \textbf{Initialise}: $V_0(s) \gets 0 \quad \forall s \in S$\\
+    \While{$k == 1$ or $V_{k+1} \not\approx V_k$}{
+        \For{each state $s \in S$}{
+             $V_{k+1}(s) \gets \max_{a\in A } \bigg (R(s,a) + \gamma \sum_{s' \in S } P(s' \mid s,a) V_k(s')\bigg)$
+        }
+        $V_{k+1} \gets BV_k$\\
+        $k \gets k+1$
+    }
+    $\pi \leftarrow$ extract policy from $V_k$
+    
+    \KwOut{{}Return $\pi, V_k$}
+\end{algorithm}
 
 \end{frame}
 %-----------------------------------------------------------------------

@@ -16,6 +16,25 @@
 
 \begin{itemize}
 	\item We now compute the policy gradient analytically
+	\item \textbf{Assumption:} The policy $\pi_\theta$ is differentiable whenever it is non-zero\\
+	 and we can compute the gradient $\nabla_\theta \pi_\theta (s,a)$
+        \item For example, if we represent $\pi_\theta (s,a)$ with functions differentiable w.r.t $\theta$, such as:
+        \begin{itemize}
+                \item Softmax: $\pi_\theta (s,a) = \exp(\phi(s,a)^\intercal\theta) / \sum_{a} \exp(\phi(s,a)^\intercal\theta)$
+                \item Gaussian: $\pi(s,a) \sim \mathcal{N}(\mu(s), \sigma^2)$ with $\mu(s) = \phi(s)^\intercal \theta$
+                \item or a DNN
+        \end{itemize}
+
+\end{itemize}
+
+\end{frame}
+
+%----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Computing the Gradient Analytically}
+
+\begin{itemize}
+	\item We now compute the policy gradient analytically
 	\item Assume policy $\pi_\theta$ is differentiable whenever it is non-zero\\
 	 and we know the gradient $\nabla_\theta \pi_\theta (s,a)$, for example:
 	 \begin{itemize}
@@ -26,7 +45,7 @@
 	\item Denote a state-action trajectory as 
 	$$ \tau = (s_0, a_0, r_0, \ldots, s_{T-1}, a_{T-1}, r_{T-1}, s_T) $$
 	\item Use $R(\tau) = \sum_{t=0}^{T} R(s_t, a_t)$ to be the sum of rewards for a trajectory~$\tau$
-	\item[$\leadsto$] Focusing for now on $V(s_0; \theta) = \sum_\tau P(\tau; \theta) R(\tau)$ 
+	\item[$\leadsto$] Focusing on maximizing $V(\theta) = V(s_0; \theta) = \sum_\tau P(\tau; \theta) R(\tau)$ 
 	
 \end{itemize}
 
@@ -37,15 +56,15 @@
 
 \begin{itemize}
 	\item Assume policy $\pi_\theta$ is differentiable whenever it is non-zero\\
-	 and we know the gradient $\nabla_\theta \pi_\theta (s,a)$
-	\item Recall policy value is $V(s_0; \theta) = \mathrm{E}_{\pi_\theta}\left[ \sum_{t} r(s_t, a_t); \pi_\theta, s_0 \right]$
+	 and we can compute the gradient $\nabla_\theta \pi_\theta (s,a)$
+	\item Recall policy value is $V(s_0; \theta) = \mathrm{E}\left[ \sum_{t} r(s_t, a_t); \pi_\theta, s_0 \right]$
         \begin{itemize}
 	   \item where the expectation is taken over the states and actions visited by $\pi_\theta$
         \end{itemize}
 	\item We can re-express this in multiple ways
 	\begin{itemize}
 	    \item $V(s_0;\theta) = \sum_a \pi_\theta (a \mid s_0) Q(s_0, a; \theta)$
-	    \item $V(s_0; \theta) = \sum_\tau P(\tau; \theta) R(\tau)$ with $\tau$ being an trajectory
+	    
 	\end{itemize}
 	\item[$\leadsto$] We will focus on the latter definition.
 \end{itemize}
@@ -58,9 +77,9 @@
 	\begin{itemize}
 		\item Denote a state-action trajectory as 
 		$$ \tau = (s_0, a_0, r_0, \ldots, s_{T-1}, a_{T-1}, r_{T-1}, s_T) $$
-		\item Use $R(\tau) = \sum_{t=0}^{T} R(s_t, a_t)$ to be the sum of rewards for $\tau$
+		\item Use $R(\tau) = \sum_{t=0}^{T} R(s_t, a_t)$ to be the undiscounted return for $\tau$
 		\item Policy value is 
-		$$V(\theta) = \mathbb{E}\left[\sum_{t=0}^T R(s_t, a_t); \pi_\theta \right] = \sum_{\tau} P(\tau; \theta)R(\tau) $$
+		$$V(\theta) = V(s_0; \theta) = \mathbb{E}\left[\sum_{t=0}^T R(s_t, a_t); \pi_\theta \right] = \sum_{\tau} P(\tau; \theta)R(\tau) $$
 		where $P(\tau; \theta)$ is used to denote the probability over trajectories when executing policy $\pi_\theta$
 		\item In this notation, our goal is to find the policy parameters $\theta^*$
 		$$\theta^* \in \argmax_{\theta} V(\theta) = \argmax_{\theta}\sum_{\tau} P(\tau; \theta) R(\tau) $$
@@ -75,16 +94,39 @@
 	\begin{itemize}
 		\item Our goal is to find the policy parameters $\theta^*$
 		$$\theta^* \in \argmax_{\theta} V(\theta) = \argmax_{\theta}\sum_{\tau} P(\tau; \theta) R(\tau) $$
+            \item[$\leadsto$] hard to compute because transition dynamics are required for $P(\tau; \theta)$
+  
 		\item Take the gradient with respect to $\theta$:
 		\small
 		\begin{eqnarray*}
 		\nabla_\theta V(\theta) &=& \nabla_\theta \sum_{\tau} P(\tau; \theta)R(\tau)\\ \pause
 		&=& \sum_{\tau} \nabla_\theta P(\tau; \theta)R(\tau)\\ \pause
 		&=& \sum_{\tau} \frac{P(\tau; \theta)}{P(\tau; \theta)} \nabla_\theta P(\tau; \theta)R(\tau)\\ \pause
-		&=& \sum_{\tau} P(\tau; \theta)  R(\tau) \underbrace{\frac{\nabla_\theta P(\tau; \theta)}{P(\tau; \theta)}}_{\text{likelihood ratio}} \\ \pause
-		&=& \sum_{\tau} P(\tau; \theta)  R(\tau) \nabla_\theta \log P(\tau; \theta)
+		&=& \sum_{\tau} P(\tau; \theta)  R(\tau) \underbrace{\frac{\nabla_\theta P(\tau; \theta)}{P(\tau; \theta)}}_{\text{likelihood ratio}} \\ 
 		\end{eqnarray*} 
 		
+	\end{itemize}
+	
+\end{frame}
+
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Likelihood Ratio Policy Gradient II}
+	\vspace{-1.5em}
+	\begin{itemize}
+		\item Our goal is to find the policy parameters $\theta^*$
+		$$\theta^* \in \argmax_{\theta} V(\theta) = \argmax_{\theta}\sum_{\tau} P(\tau; \theta) R(\tau) $$
+		\item Take the gradient with respect to $\theta$:
+		\small
+		\begin{eqnarray*}
+		\nabla_\theta V(\theta) &=& \sum_{\tau} P(\tau; \theta)  R(\tau) \underbrace{\frac{\nabla_\theta P(\tau; \theta)}{P(\tau; \theta)}}_{\text{likelihood ratio}} \\ 
+		\end{eqnarray*}
+            \item Apply $ \frac{\nabla z }{z} = \nabla \log(z)$ to the likelihood ratio:
+            \begin{eqnarray*}
+                \nabla_\theta V(\theta) = \sum_{\tau} P(\tau; \theta)  R(\tau) \nabla_\theta \log P(\tau; \theta)
+            \end{eqnarray*}
+            \item Spoiler: The log-likelihood helps us turn products into sums and, thus, makes the term more tractable.
+     	
 	\end{itemize}
 	
 \end{frame}
@@ -96,8 +138,8 @@
 		\item Our goal is to find the policy parameters $\theta^*$
 		$$\theta^* \in \argmax_{\theta} V(\theta) = \argmax_{\theta}\sum_{\tau} P(\tau; \theta) R(\tau) $$
 		\item Take the gradient with respect to $\theta$:
-		$$ \nabla_\theta V(\theta) = \sum_{\tau} P(\tau; \theta)  R(\tau) \nabla_\theta \log P(\tau; \theta) $$
-		\item Approximate with empirical estimate for $m$ sample trajectories under
+		$$ \nabla_\theta V(\theta) = \sum_{\tau} P(\tau; \theta)  R(\tau) \nabla_\theta \log P(\tau; \theta) $$ 
+		\item Approximate with an empirical estimate for $m$ sample trajectories under
 		policy $\pi_\theta$:
 		$$\nabla_\theta V(\theta) \approx \frac{1}{m} \sum_{i=1}^{m} R(\tau^{(i)}) \nabla_\theta \log P(\tau^{(i)}; \theta) $$
 		
@@ -109,7 +151,7 @@
 \begin{frame}[c]{Decomposing the Trajectories Into States and Actions}
 	
 	\begin{itemize}
-		\item Approximate with empirical estimate for $m$ sample trajectories under
+		\item Approximate with an empirical estimate for $m$ sample trajectories under
 		policy $\pi_\theta$:
 		$$\nabla_\theta V(\theta) \approx \frac{1}{m} \sum_{i=1}^{m} R(\tau^{(i)}) \nabla_\theta \log P(\tau^{(i)}; \theta) $$
 	\end{itemize}

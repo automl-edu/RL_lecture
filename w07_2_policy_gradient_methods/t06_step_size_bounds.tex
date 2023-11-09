@@ -1,0 +1,63 @@
+% !TeX spellcheck = en_US
+\documentclass[aspectratio=169]{../latex_main/tntbeamer}  % you can pass all options of the beamer class, e.g., 'handout' or 'aspectratio=43'
+\input{../latex_main/preamble}
+\title[RL: Policy Gradient]{RL: Policy Search}
+\subtitle{Step Size and Trust Region}
+
+
+\begin{document}
+	
+	\maketitle
+
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Conservative Policy Iteration}
+	
+    \begin{itemize}
+        \item Can we lower bound the improvement gained by optimizing the policy gradient?
+        \item Consider mixture policies that blend an old policy and a different policy $\pi'$ ($\approx$ the step size):
+        $$\pi_{new}(a \mid s) = (1 - \alpha) \pi_{old} (a \mid s) + \alpha \pi'(a \mid s) $$
+        \item In this case, we can guarantee a lower bound on the difference between $\pi_{old}$ and $\pi_{new}$:
+        $$ L_{\pi_{old}}(\pi_{new}) = V_{{\pi_{old}}} + \sum_{s} \mu_{\pi_{old}} (s) \sum_{a} \pi_{new}(a \mid s) A_{\pi_{old}}(s,a)$$
+        $$ V_{\pi_{new}} = V_{{\pi_{old}}} + \sum_{s} \mu_{\pi_{new}} (s) \sum_{a} \pi_{new}(a \mid s) A_{\pi_{old}}(s,a)$$
+        $$ V_{\pi_{new}} - L_{\pi_{old}}(\pi_{new}) = \alert{(\sum_{s} \mu_{\pi_{new}}(s) - \sum_{s} \mu_{\pi_{old}} (s))} \sum_{a} \pi_{new}(a \mid s) A_{\pi_{old}}(s,a)$$
+    \end{itemize}
+
+\end{frame}
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Conservative Policy Iteration}
+	
+    \begin{itemize}
+        \item The improvement is bounded by the difference in visitation frequencies
+        \item Substituted with the mixture parameters, we get:
+        $$V^{\pi_{new}} \geq L_{\pi_{old}} (\pi_{new}) - \frac{2\epsilon\gamma}{(1- \gamma)^2} \alpha^2 \geq V^{\pi_{old}}$$
+        where $\epsilon = \max_{s} \mathbb{E}_{a \sim \pi'(a \mid s) [A_\pi(s,a)]}$
+        \item How can we express the difference in visitation frequencies between policies generally?
+    \end{itemize}
+
+\end{frame}
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Find the Lower-Bound in General Stochastic Policies}
+	
+	 \vspace{-1.5em}
+    \begin{itemize}
+        \item Would like to similarly obtain a lower bound on the potential performance for general stochastic policies (not just mixture policies)
+        \item Recall that the deciding factor for the lower bound is the degree of difference between the generated trajectories
+    \end{itemize}
+    
+    \begin{block}{Theorem}
+    Let $D_{TV}^{\max} (\pi_1, \pi_2) = \max_{s} D_{TV}(\pi_1(\cdot \mid s), \pi_2(\cdot\mid s)) = \max_{s} \max_{a} (\pi_1(a\mid s) -\pi_2 (a\mid s))$. Then
+    $$V^{\pi_{new}} \geq L_{\pi_{old}} (\pi_{new}) - \frac{4\epsilon\gamma}{(1-\gamma)^2} (D_{TV}^{\max}(\pi_{old}, \pi_{new}))^2$$
+    \vspace{-0.3em}
+    where $\epsilon = \max_{s,a}|A_\pi(s,a)|$
+    \end{block}
+    
+    \begin{itemize}
+        \item Note that $D_{TV}(p,q)^2 \leq D_{KL}(p,q)$ for prob. distribution $p$ and $q$, so:
+        $$ V^{\pi_{new}} \geq  L_{\pi_{old}} (\pi_{new}) -  \frac{4\epsilon\gamma}{(1-\gamma)^2} D_{KL}^{\max}(\pi_{old}, \pi_{new}) $$
+    \end{itemize}
+
+\end{frame}
+\end{document}

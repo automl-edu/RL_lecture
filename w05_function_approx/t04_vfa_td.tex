@@ -81,14 +81,19 @@
 %----------------------------------------------------------------------
 \begin{frame}[c]{Temporal Difference (TD(0)) Learning\\ with Value Function Approximation}
 
-Initialize $\vect{w}= 0$, $k=1$;\\
-Loop
-	\begin{itemize}
-		\item Sample tuple $(s_k, a_k, r_k, s_{k+1})$ given $\pi$
-		\item Update weights:
-		$$ \vect{w} = \vect{w} + \alpha( r + \gamma \vect{x}(s')^T \vect{w} - \vect{x}(s)^T\vect{w}) \vect{x}(s) $$
-		\item $k = k + 1$
-	\end{itemize}
+    \begin{algorithm}[H]
+        \caption{TD(0) Value Function Approximation}
+        \DontPrintSemicolon
+        \LinesNotNumbered
+        \KwIn{{}\\
+        $\alpha$ - Learning rate}
+        \textbf{Initialise}:  $\vect{w}= \mathbf{0}$, $k=1$\\
+        \While{Not converged}{
+           {Sample tuple $(s_k, a_k, r_k, s_{k+1})$ given $\pi$}\\
+           Update weights by $\alpha( r + \gamma \vect{x}(s')^T \vect{w} - \vect{x}(s)^T\vect{w}) \vect{x}(s) $
+        }
+        \KwOut{Return: $\hat{V}(\cdot)$}
+    \end{algorithm}
 
 \end{frame}
 %-----------------------------------------------------------------------

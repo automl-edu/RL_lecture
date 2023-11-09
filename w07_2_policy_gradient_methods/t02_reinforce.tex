@@ -1,0 +1,105 @@
+% !TeX spellcheck = en_US
+\documentclass[aspectratio=169]{../latex_main/tntbeamer}  % you can pass all options of the beamer class, e.g., 'handout' or 'aspectratio=43'
+\input{../latex_main/preamble}
+\title[RL: Policy Gradient]{RL: Policy Gradient}
+\subtitle{Policy Gradient Algorithm: REINFORCE}
+
+
+
+\begin{document}
+	
+	\maketitle
+
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Fixing Policy Gradient I: Use Temporal Structure}
+\vspace{-1.5em}
+We know:
+$$ \nabla_\theta V(\theta) = \nabla_\theta \mathbb{E}_\tau [R(\tau)] = \mathbb{E}_\tau \left[ R(\tau) \left( \sum_{t=0}^{T-1} \nabla_\theta \log \pi_\theta(a_t \mid s_t) \right) \right]$$
+	
+And since $R(\tau) = \sum_{t'=0}^{T-1} r_{t'}$:
+
+$$
+     \nabla_\theta \mathbb{E}[R(\tau)] = \mathbb{E} \left[  \bigg ( \sum_{t'=0}^{T-1} r_{t'} \bigg ) \bigg ( \sum^{t'}_{t=0} \nabla_\theta \log \pi_\theta (a_t \mid s_t) \bigg )  \right]
+$$
+
+We can distribute $\sum_{t'=0}^{T-1} r_{t'}$ inside the second sum to get
+
+$$
+    \nabla_\theta V(\theta) = \nabla_\theta \mathbb{E}[R(\tau)] = \mathbb{E} \bigg [ \sum_{t=0}^{T-1}  \nabla_\theta \log \pi_\theta (a_t \mid s_t) \sum^{T-1}_{t'=0} r_{t'}  \bigg ]
+$$
+
+	
+\end{frame}
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Policy Gradient: Use Temporal Structure}
+	
+\begin{itemize}
+        \item Note that the return at timestep $t$ cannot impact returns at timesteps $t' < t$. So, we can change the sum $\sum_{t'=0}^{T-1} r_{t'}$ to $\sum_{t'=t}^{T-1} r_{t'}$. These are \textbf{future rewards}.
+
+        $$
+             \nabla_\theta \mathbb{E}[R(\tau)] = \mathbb{E} \bigg [ \sum_{t=0}^{T-1}  \nabla_\theta \log \pi_\theta (a_t \mid s_t) \underbrace{\sum^{T-1}_{t'=t} r_{t'} }_{\text{future rewards}} \bigg ]
+        $$
+
+        \item[$\leadsto$] If we consider less sampled rewards, the estimate will have less variance.
+	\item Recall for a particular trajectory $\tau^{(i)}$, $\sum_{t'=t}^{T-1} r_{t'}^{(i)}$ is the return $G_t^{(i)}$
+    \item We estimate the value of the expectation using $m$ trajectories:
+\end{itemize}
+
+$$\nabla_\theta \mathbb{E}[R(\tau)] \approx \frac{1}{m} \sum_{i=1}^m \sum_{t=0}^{T-1} \nabla_\theta \log \pi_\theta (a_t,s_t) G_t^{(i)} $$
+
+	
+\end{frame}
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Monte-Carlo Policy Gradient (REINFORCE)}
+	
+REINFORCE is an algorithm that approximates the policy gradient using sampled trajectories in this manner:
+
+$$ \Delta \theta_t = \alpha \nabla_\theta \log \pi_\theta (s_t, a_t) G_t $$
+	
+	
+REINFORCE:
+\begin{enumerate}
+	\item Initialize policy parameters $\theta$ arbitrarily
+	\item for each episode $\{s_0, a_0, r_1, \ldots, s_{T-1}, a_{T-1}, r_T \} \sim \pi_\theta $ do
+	\begin{itemize}
+		\item for $t=0$ to $T - 1$ do
+		\begin{itemize}
+			\item $\theta := \theta + \alpha \nabla_\theta \log \pi_\theta (s_t, a_t) G_t $
+		\end{itemize}
+	\end{itemize}
+	\item return $\theta$
+\end{enumerate}
+
+\begin{itemize}
+    \item Policy gradient via Monte Carlo sampling
+    \item[$\leadsto$] still high variance
+\end{itemize}
+	
+\end{frame}
+%-----------------------------------------------------------------------
+%----------------------------------------------------------------------
+\begin{frame}[c]{Where Does The Variance Come From?}
+	
+\begin{itemize}
+	\item Sampling trajectories will not necessarily lead to similar results from non-deterministic policies and environments
+    \item Example: 3 steps in a Gridworld
+\end{itemize}
+
+ \begin{figure}
+     \centering
+\includegraphics[width=0.3\textwidth]{w07_2_policy_gradient_methods/images/grid1.pdf}
+\includegraphics[width=0.3\textwidth]{w07_2_policy_gradient_methods/images/grid2.pdf}
+\includegraphics[width=0.3\textwidth]{w07_2_policy_gradient_methods/images/grid3.pdf}
+     \label{fig:enter-label}
+ \end{figure}
+
+	$\leadsto$ three very different gradient estimates
+    \pause 
+    \newline
+    $\leadsto$ \alert{three very different updates}
+\end{frame}
+%-----------------------------------------------------------------------
+\end{document}

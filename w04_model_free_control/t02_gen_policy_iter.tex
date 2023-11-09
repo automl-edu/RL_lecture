@@ -13,15 +13,21 @@
 %----------------------------------------------------------------------
 %----------------------------------------------------------------------
 \begin{frame}[c]{Recall Policy Iteration}
-
+\begin{algorithm}[H]
+  \caption{Policy Iteration}
+  \DontPrintSemicolon
+  \textbf{Initialise}: $i \leftarrow 0$\\
+  \textbf{Initialise}: $\pi_i$ as random policy\\
+  \While{$i == 0$ or $||\pi_i - \pi_{i-1}||_1 > 0$}{
+    $V^{\pi_i} \gets$ MDP V-function policy evaluation of $\pi_i$\\
+    $\pi_{i+1} \gets$ Policy improvement\\
+    \vspace{-13pt}
+    $$\pi'(s) \in \argmax_{a \in A} R(s,a) + \gamma \sum_{s' \in S} P(s' \mid s,a) V^\pi (s') = \argmax_{a \in A} Q^\pi (s,a) $$\\
+    \vspace{-17pt}
+    $i \gets i+1$\\
+  }
+\end{algorithm}
 \begin{itemize}
-	\item Initialize policy $\pi$
-	\item Repeat:
-	\begin{itemize}
-		\item Policy evaluation: compute $V^\pi$
-		\item Policy improvement: update $\pi$
-	$$\pi'(s) \in \argmax_{a \in A} R(s,a) + \gamma \sum_{s' \in S} P(s' \mid s,a) V^\pi (s') = \argmax_{a \in A} Q^\pi (s,a) $$
-	\end{itemize}
 	\item Now want to do the above two steps \alert{without} access to the true dynamics and reward models
 	\item Before we introduced methods for model-free policy evaluation
 \end{itemize}
@@ -31,40 +37,46 @@
 %----------------------------------------------------------------------
 \begin{frame}[c]{Model-Free Policy Iteration}
 	
-	\begin{itemize}
-		\item Initialize policy $\pi$
-		\item Repeat:
-		\begin{itemize}
-			\item Policy evaluation: compute $Q^\pi$
-			\item Policy improvement: update $\pi$
-		\end{itemize}
-	\end{itemize}
+	\begin{algorithm}[H]
+    \caption{General Model Free  Policy Iteration}
+    \DontPrintSemicolon
+    \LinesNotNumbered
+    \textbf{Initialise}: $\pi$ randomly
+    
+    \While{not finished}{
+        \textbf{Policy evaluation:} compute $Q^{\pi_i}$
+        
+        \textbf{Policy improvement:} update $\pi_{i+1}(s) \in \argmax_{a \in A} Q^{\pi_i} (s,a)$
+    }
+    \KwOut{{} Return $\pi$}
+\end{algorithm}
 	
 \end{frame}
 %--------------------------------------------------------------
 %----------------------------------------------------------------------
 \begin{frame}[c]{MC for On-Policy Q-Evaluation}
 	
-	\begin{itemize}
-		\item Initialize $\forall s\in S, a\in A$:
-		\begin{itemize}
-			\item $N(s,a) = 0$
-			\item $G(s,a) = 0$
-			\item $Q^\pi(s,a) =0$
-		\end{itemize}
-		\item Loop
-		\begin{itemize}
-			\item Using policy $\pi$ sample episode $i = s_{i,1}, a_{i,1}, r_{i,1}, s_{i,2}, a_{i,2}, r_{i,2}, \ldots, s_{i, T_i}$
-			\item $G_{i,t} = r_{i,t} + \gamma r_{i,t+1} + \gamma^2 r_{i,t+2} + \ldots \gamma^{T_i -1} r_{i,T_i}$
-			\item For each pair $(s,a)$ visited in episode $i$
-			\begin{itemize}
-				\item For first (or every) time $t$ that $(s,a)$ is visited in episode $i$:
-				\item $N(s,a) = N(s,a) + 1$
-				\item $G(s,a) = G(s,a) + G_{i,t}$
-				\item Update estimate $Q^\pi(s,a) = G(s,a) /N(s,a)$
-			\end{itemize}
-		\end{itemize}
-	\end{itemize}
+ \begin{algorithm}[H]
+    \caption{First Visit Monte Carlo}
+    \DontPrintSemicolon
+    \LinesNotNumbered
+    
+    \KwIn{{}\\ $\pi$ - Policy to evaluate}
+    
+    \textbf{Initialise}: $N(s) \gets 0 \quad \forall s \in S$ \tcp*{Amount of times $s$ visited}
+    \textbf{Initialise}: $G(s) \gets 0 \quad \forall s \in S$ \tcp*{Accumulated discounted returns}
+    \While{not converged}{
+        Sample episode $i = s_{i,1}, a_{i,1}, r_{i,1}, s_{i,2}, a_{i,2}, r_{i,2}, \ldots,s_{i,n}$
+        
+        \If{s visited for the first time in current episode}{
+            $N(s,a) \leftarrow N(s) + 1$
+            
+            $G(s,a) \leftarrow G(s) + G_{i,t}$
+            
+            $Q^\pi(s,a) \leftarrow G(s,a)/N(s.a)$
+        }
+    }
+\end{algorithm}
 	
 \end{frame}
 %--------------------------------------------------------------

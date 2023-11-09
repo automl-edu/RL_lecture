@@ -1,0 +1,437 @@
+\documentclass[11pt,a4paper,ngerman]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{babel}
+\usepackage{amsmath}
+\usepackage{algorithm}
+\usepackage[ruled,vlined,algo2e,linesnumbered]{algorithm2e}
+\usepackage{amsfonts}
+\newcommand{\vect}[1]{\mathbf{#1}}
+
+\DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator*{\argmin}{arg\,min}
+
+\begin{document}
+
+\section{Policy Iteration}
+\subsection{Old version}
+\begin{itemize}
+	\item Set $i=0$
+	\item Initialize $\pi_0(s)$ randomly for all states $s$
+	\item While $i == 0$ or\\ $||\pi_i - \pi_{i-1}||_1 > 0$ (L1-norm, measures if the policy changed for any state)
+	\begin{itemize}
+		\item $V^{\pi_i} \gets$ MDP V-function policy evaluation of $\pi_i$
+		\item $\pi_{i+1} \gets$ Policy improvement
+		\item $i \gets i+1$
+	\end{itemize}
+\end{itemize}
+\subsection{New Version}
+
+\begin{algorithm}[H]
+  \caption{Policy Iteration}
+  \DontPrintSemicolon
+  \textbf{Initialise}: $i \leftarrow 0$\\
+  \textbf{Initialise}: $\pi_i$ as random policy\\
+  \While{$i == 0$ or $||\pi_i - \pi_{i-1}||_1 > 0$}{
+    $V^{\pi_i} \gets$ MDP V-function policy evaluation of $\pi_i$\\
+    $\pi_{i+1} \gets$ Policy improvement\\
+    $i \gets i+1$
+  }
+  \KwOut{{}Return $\pi_i, V^{\pi_i}$}
+\end{algorithm}
+
+\newpage
+
+\section{Value Iteration}
+\subsection{Old Version}
+\begin{itemize}
+	\item  Set $k = 1$
+	\item Initialize $V_0(s) = 0$ for all states $s$
+	\item Loop until convergence
+	\begin{itemize}
+		\item For each state $s$
+		$$V_{k+1}(s) = \max_{a\in A } R(s,a) + \gamma \sum_{s' \in S } P(s' \mid s,a) V_k(s') $$
+		\item View as Bellmann backup on the value function
+		$$V_{k+1} = BV_k$$
+		$$\pi_{k+1}(s) \in \argmax_{a \in A} R(s,a) + \gamma \sum_{s' \in S} P(s' \mid s,a) V_k(s') $$
+	\end{itemize}
+\end{itemize}
+\subsection{New Version}
+\begin{algorithm}[H]
+    \caption{Value Iteration}
+    \textbf{Initialise}: $k \gets 1$\\
+    \textbf{Initialise}: $V_0(s) \gets 0 \quad \forall s \in S$\\
+    \While{$k == 1$ or $V_{k+1} \not\approx V_k$}{
+        \For{each state $s \in S$}{
+             $V_{k+1}(s) \gets \max_{a\in A } \bigg (R(s,a) + \gamma \sum_{s' \in S } P(s' \mid s,a) V_k(s')\bigg)$
+        }
+        $V_{k+1} \gets BV_k$\\
+        $k \gets k+1$
+    }
+    $\pi \leftarrow$ extract policy from $V_k$
+    
+    \KwOut{{}Return $\pi, V_k$}
+\end{algorithm}
+
+\newpage
+
+\section{First Visit Monte Carlo}
+\subsection{Old Version}
+Initialize $N(s) = 0$, $G(s) = 0$ $\forall s \in S$\\
+Loop 
+\begin{itemize}
+	\item Sample episode $i = s_{i,1}, a_{i,1}, r_{i,1}, s_{i,2}, a_{i,2}, r_{i,2}, \ldots,s_{i,n}$
+	\item Define $G_{i,t} = r_{i,t} + \gamma r_{i,t+1} + \gamma^2 r_{i,t+2} + \ldots$
+	\item For each state $s$ visited in episode $i$
+	\begin{itemize}
+		\item for first time $t$ that state $s$ is visited in episode $i$
+		\begin{itemize}
+			\item Increment counter of total first visits: $N(s) = N(s) + 1$
+			\item Increment total return $G(s) = G(s) + G_{i,t}$
+			\item Update estimate $V^\pi (s) = G(s) /N(s)$
+		\end{itemize}
+	\end{itemize}
+\end{itemize}
+
+
+\begin{algorithm}
+    \caption{First Visit Monte Carlo}
+    \DontPrintSemicolon
+    \LinesNotNumbered
+    
+    \KwIn{{}\\ $\pi$ - Policy to evaluate}
+    
+    \textbf{Initialise}: $N(s) \gets 0 \quad \forall s \in S$ \tcp*{Amount of times $s$ visited}
+    \textbf{Initialise}: $G(s) \gets 0 \quad \forall s \in S$ \tcp*{Accumulated discounted returns}
+    \While{not converged}{
+        Sample episode $i = s_{i,1}, a_{i,1}, r_{i,1}, s_{i,2}, a_{i,2}, r_{i,2}, \ldots,s_{i,n}$
+        
+        \If{s visited for the first time in current episode}{
+            $N(s) \leftarrow N(s) + 1$
+            
+            $G(s) \leftarrow G(s) + G_{i,t}$
+            
+            $V^\pi (s) \leftarrow G(s)/N(s)$
+        }
+    }
+    \KwOut{{} Return $V^\pi$}
+\end{algorithm}
+
+\newpage
+\section{TD(0)}
+\subsection{Old Version}
+	Input: $\alpha$\\
+	Initialize $V^\pi(s) = 0. \forall s \in S$\\
+	Loop\\
+	\begin{itemize}
+		\item Sample tuple $(s_t, a_t, r_t, s_{t+1})$
+		\item $V^\pi(s) = V^\pi(s) + \alpha (\underbrace{[r_t + \gamma V^\pi (s_{t+1})]}_{\text{TD target}} - V^\pi(s))$
+	\end{itemize}
+\subsection{New Version}
+
+\begin{algorithm}[H]
+    \caption{TD(0)}
+    \LinesNotNumbered
+    \DontPrintSemicolon
+    \KwIn{{}\\
+    $\pi$ - Policy to evaluate\\
+    $\alpha$ - Learning Rate}
+    \textbf{Initialise}: $V^\pi(s) = 0 \quad \forall s \in S$
+    
+    \While{Not converged}{
+        Sample tuple $(s_t, a_t, r_t, s_{t+1})$
+
+        Compute $\text{TD target} = r_t + \gamma V^\pi (s_{t+1})$
+        
+        $V^\pi(s) \gets V^\pi(s) + \alpha ([\text{TD target}] - V^\pi(s))$
+    }
+    \KwOut{{} Return $V^\pi$}
+\end{algorithm}
+\newpage
+
+\section{Model Free Control}
+\subsection{Old Version}
+	\begin{itemize}
+		\item Given an estimate $Q^{\pi_i}(s,a) \forall s\in S, a \in A$
+		\item Update new policy
+		$$\pi_{i+1}(s) \in \argmax_{a \in A} Q^{\pi_i} (s,a) $$
+	\end{itemize}
+ 
+\subsection{New Version}
+
+\begin{algorithm}[H]
+    \caption{General Model Free Control Algorithm}
+    \DontPrintSemicolon
+    \LinesNotNumbered
+    \textbf{Initialise}: $\pi$ randomly
+    
+    \While{not finished}{
+        \textbf{Policy evaluation:} compute $Q^{\pi_i}$
+        
+        \textbf{Policy improvement:} update $\pi_{i+1}(s) \in \argmax_{a \in A} Q^{\pi_i} (s,a)$
+    }
+    \KwOut{{} Return $\pi$}
+\end{algorithm}
+
+\newpage
+
+\section{SARSA}
+\subsection{Old Version}
+	\begin{itemize}
+		\item Initialization:
+		\begin{itemize}
+			\item $\epsilon$-greedy policy 
+			\item $t=0$
+			\item initial state $s_t = s_0$
+		\end{itemize} 
+		\item Loop
+		\begin{itemize}
+			\item Take action $a_t \sim \pi(s_t)$
+			\item Observe $(r_t, s_{t+1})$, $a_{t+1} \sim \pi(s_{t+1})$
+			\item Update Q given $(s_t, a_t, r_t, s_{t+1}, a_{t+1})$:
+			$$Q(s_t,a_t) \gets Q(s_t, a_t) + \alpha (r_t + \gamma Q(s_{t+1}, a_{t+1}) - Q(s_t, a_t))$$
+			\item $\pi(s_t) \in \argmax_{a\in A} Q(s_t, a)$ with probability $1-\epsilon$, else random
+			\item $t = t+1$
+		\end{itemize} 
+	\end{itemize}
+ 
+ \subsection{New Version}
+ \textbf{Question:} Do we return the greedy policy here or the epsilon greedy policy
+\begin{algorithm}
+    \caption{SARSA}
+    \DontPrintSemicolon
+    \LinesNotNumbered
+    \KwIn{{}\\
+    $s_o$ - start state\\
+    $\alpha$ - learning rate\\}
+    \textbf{Initialise}: $\pi \gets$ random policy
+    
+    \textbf{Initialise}: $t \gets 0$
+
+    \While{Not converged}{
+        Take action $a_t \sim \pi(s_t)$
+        
+        Observe ($r_t$, $s_{t+1}$)
+        
+        $a_{t+1} \sim \pi(s_{t+1})$
+        
+        $Q(s_t, a_t) \leftarrow Q(s_t, a_t) + \alpha (r_t + \gamma Q(s_{t+1}, a_{t+1}) - Q(s_t, a_t))$
+        
+        $\pi(s_t)\in \argmax_{a \in A} Q(s_t, a)$ with probability $1-\epsilon$, else random
+        
+        $t \gets t+1$
+    }
+    
+    $\pi \gets$ GreedyPolicy(Q)
+    
+    \KwOut{{} Return $\pi, Q$}    
+\end{algorithm}
+
+\newpage
+
+\section{Tabular Q-Learing}
+\subsection{Old Version}
+\begin{itemize}
+		\item Initialization:
+		\begin{itemize}
+			\item $Q(s,a)=0. \forall s \in S, a \in A$
+			\item $t=0$
+			\item initial state $s_t = s_0$
+		\end{itemize} 
+		\item Loop
+		\begin{itemize}
+			\item Take action $a_{t} \sim \pi_b(s_{t})$
+			\item Observe $(r_{t}, s_{t+1})$
+			\item Update Q 
+			$$Q(s_t,a_t) \gets Q(s_t, a_t) + \alpha (r_t + \gamma \max_{a\in A} Q(s_{t+1}, a) - Q(s_t, a_t))$$
+			\item $\pi_b(s_t) \in \argmax_{a\in A} Q(s_t, a)$ with probability $1-\epsilon$, else random
+			\item $t = t+1$
+		\end{itemize} 
+	\end{itemize}
+\subsection{New Version}
+
+\begin{algorithm}
+    \caption{Tabular Q-Learning}
+    \DontPrintSemicolon
+    \LinesNotNumbered
+    
+    \KwIn{{}\\
+    $\pi_b$ - behaviour policy\\
+    $s_o$ - start state\\
+    $\alpha$ - learning rate\\}
+
+   \textbf{Initialise}: $Q(s,a) \leftarrow 0 \quad \forall s \in S, a \in A$
+    
+    \textbf{Initialise}: $t \gets 0$
+
+    \While{Not converged}{
+        Take action $a_t \sim \pi(s_t)$
+        
+        Observe ($r_t$, $s_{t+1}$)
+        
+        $a_{t+1} \sim \pi(s_{t+1})$
+        
+        $Q(s_t, a_t) \leftarrow Q(s_t, a_t) + \alpha (r_t + \gamma Q(s_{t+1}, a_{t+1}) - Q(s_t, a_t))$
+        
+        $\pi(s_t)\in \argmax_{a \in A} Q(s_t, a)$ with probability $1-\epsilon$, else random
+        $t \gets t+1$
+        $\pi \gets$ GreedyPolicy(Q)
+    }
+
+    
+    \KwOut{{} Return $\pi, Q$}    
+\end{algorithm}
+
+\newpage
+\section{Double Q-Learning}
+\subsection{Old Version}
+\begin{itemize}
+    \item Initialization:
+    \begin{itemize}
+        \item $Q_1(s,a)$ and $Q_2(s,a)$ $\forall s \in S, a\in A$
+        \item $t= 0$
+        \item initial state $s_t = s_0$
+    \end{itemize}
+    \item Loop
+    \begin{itemize}
+        \item Select $a_t$ using $\epsilon$-greedy $\pi(s) \in \argmax_{a \in A} Q_1(s_t, a) + Q_2(s_t , a)$
+        \item Observe $(r_t, s_{t+1})$
+        \item With 50-50 probability either
+        \begin{enumerate}
+            \item $Q_1(s_t, a_t) \gets Q_1(s_t, a_t) + \alpha (r_t +\gamma Q_2(s_{t+1}, \argmax_{a \in A} Q_1(s_{t+1},a) ) - Q_1(s_t, a_t))$\\
+            or
+            \item $Q_2(s_t, a_t) \gets Q_2(s_t, a_t) + \alpha (r_t +\gamma Q_1(s_{t+1}, \argmax_{a \in A} Q_2(s_{t+1},a) ) - Q_2(s_t, a_t))$
+        \end{enumerate}
+        \item $t = t + 1 $
+    \end{itemize}
+\end{itemize}
+\subsection{New Version}
+
+\textbf{How exactly do we initialize the Q tables, what do we return}
+\begin{algorithm}
+    \caption{Double Q-Learning}
+    \DontPrintSemicolon
+    \LinesNotNumbered
+    \KwIn{{}\\
+    $s_o$ - start state\\
+    $\alpha$ - learning rate\\}
+    
+    \textbf{Initialise}: $Q_{1}(s,a) \leftarrow 0 \quad \forall s \in S, a \in A$
+    
+    \textbf{Initialise}: $Q_{2}(s,a) \leftarrow 0 \quad \forall s \in S, a \in A$
+    
+    \textbf{Initialise}: $t \gets 0$
+
+    \While{Not converged}{
+        {Take action $a_t \in \argmax Q_1(s_t,a) + Q_2(s_t,a)$}\\
+        Observe ($r_t$, $s_{t+1}$)\\
+        $x \sim U(0,1)$\\
+        \If {$x \leq 0.5$}{
+            $Q_1(s_t, a_t) \gets Q_1(s_t, a_t) + \alpha (r_t +\gamma Q_2(s_{t+1}, \argmax_{a \in A} Q_1(s_{t+1},a) ) - Q_1(s_t, a_t))$
+        }
+        \Else{
+            $Q_2(s_t, a_t) \gets Q_2(s_t, a_t) + \alpha (r_t +\gamma Q_1(s_{t+1}, \argmax_{a \in A} Q_2(s_{t+1},a) ) - Q_2(s_t, a_t))$
+        }
+        $t \gets t+1$
+    }    
+    \KwOut{{} Return $\pi, Q$}    
+\end{algorithm}
+
+\newpage
+\section{First Visit Monte Carlo Approx}
+\subsection{Old Version}
+Initialize $\vect{w}= \mathbf{0}$, $k=1$\\
+Loop	
+	\begin{itemize}
+		\item Sample $k$-th episode $s_{k,1}, a_{k,1}, r_{k,1}, s_{k,2}, a_{k,2}, r_{k,2}, \ldots$
+		\item for $t=1, \ldots, L_k$ do
+		\begin{itemize}
+			\item If First visit to $s_{k,t}$ in episode $k$ then
+			\begin{itemize}
+					\item $G_t(s) = \sum_{j}^{L_k} r_{k,j}$
+					\item Update weights by $\alpha (G_t - \vect{x}(s_{k,t})^T \vect{w}) \vect{x}(s_{k,t})$
+			\end{itemize}
+		\end{itemize}
+	\item $k = k + 1$
+	\end{itemize}
+\subsection{New Version}
+
+\begin{algorithm}[H]
+    \caption{Monte Carlo Value Function Approximation}
+    \DontPrintSemicolon
+    \LinesNotNumbered
+    \KwIn{{}\\
+    $\alpha$ - Learning rate,\\
+    $K$ - number of episodes,\\
+    $L_k$ - episode Length}
+    \textbf{Initialise}:  $\vect{w}= \mathbf{0}$, $k=1$\\
+    \While{$k \leq K$}{
+        Sample $k-th$ episode $s_{k,1}, a_{k,1}, r_{k,1}, s_{k,2}, a_{k,2}, r_{k,2}, \ldots$\\
+        \For{$t \gets 1,2,...L_k$}{
+            \If{First visit to state}{
+                {$G_t(s) \gets \sum_{j}^{L_k} r_{k,j}$}\\
+                Update weights by $\alpha (G_t - \vect{x}(s_{k,t})^T \vect{w}) \vect{x}(s_{k,t})$
+            }
+        }
+    }
+\KwOut{Return: $\hat{V}(\cdot)$}
+\end{algorithm}
+
+\newpage
+
+
+\section{VFA TD}
+\subsection{Old Version}
+Initialize $\vect{w}= 0$, $k=1$;\\
+Loop
+	\begin{itemize}
+		\item Sample tuple $(s_k, a_k, r_k, s_{k+1})$ given $\pi$
+		\item Update weights b<
+		$$ \vect{w} = \vect{w} + \alpha( r + \gamma \vect{x}(s')^T \vect{w} - \vect{x}(s)^T\vect{w}) \vect{x}(s) $$
+		\item $k = k + 1$
+	\end{itemize}
+
+\begin{algorithm}[H]
+    \caption{TD(0) Value Function Approximation}
+    \DontPrintSemicolon
+    \LinesNotNumbered
+    \KwIn{{}\\
+    $\alpha$ - Learning rate}
+    \textbf{Initialise}:  $\vect{w}= \mathbf{0}$, $k=1$\\
+    \While{Not converged}{
+       {Sample tuple $(s_k, a_k, r_k, s_{k+1})$ given $\pi$}\\
+       Update weights by $\alpha( r + \gamma \vect{x}(s')^T \vect{w} - \vect{x}(s)^T\vect{w}) \vect{x}(s) $
+    }
+\KwOut{Return: $\hat{V}(\cdot)$}
+\end{algorithm}
+
+\newpage
+
+\begin{algorithm}[H]
+	\scriptsize
+	\DontPrintSemicolon
+	\KwIn{{}\\{$\theta_0$ - Initial policy vector parameters}\\
+		{$T$ - time budget}\\
+		{$\lambda$ - Population size}\\
+		{$\mu$ - Parent population size}\\
+		{$\sigma$ - Mutation step-size}\\
+		{$F(\theta)$ - Fitness function for policy evaluation}\\
+	}
+	\For{$j \in \{1 \ldots \mu\}$}{
+		$ w_j = \frac{log(\mu+0.5)-log(j)}{\sum\nolimits_{k=1}^\mu log(\mu+0.5)-log(k)} $ \\
+	}
+	\For{$t=0,1, \ldots, T$}{
+		\For{$i=1,2, \ldots, \lambda$}{ 
+			{$\epsilon_i\sim\mathcal{N}(0,I)$}\;\\
+			$s_i\leftarrow F(\theta_t+\sigma\cdot\epsilon_i)$
+		}
+		Sort $(\epsilon_1,\ldots,\epsilon_\lambda)$ according to $s$ in descending order\\
+		{Update policy: $\theta_{t+1}\leftarrow \theta_t + \sigma\cdot\sum\nolimits_{j=1}^\mu w_j\cdot\epsilon_j$}
+	}
+	\KwOut{{} Return best found policy $\theta_t$}
+	\caption{Canonical Evolution Strategy}\label{alg:canonical}
+\end{algorithm}
+
+
+\end{document}
